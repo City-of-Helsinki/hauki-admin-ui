@@ -46,8 +46,8 @@ COPY ./scripts/env.sh .
 COPY .env .
 
 # Add bash
-RUN apt-get update
-RUN apt-get install bash
+# RUN apt-get update
+# RUN apt-get install bash
 
 # Make script executable
 RUN chmod +x env.sh
