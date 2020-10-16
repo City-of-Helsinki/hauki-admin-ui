@@ -31,7 +31,7 @@ COPY --chown=appuser:appuser . .
 RUN yarn build
 
 # =============================
-FROM nginx:1.19 as production
+FROM rhel8/nginx-116 as production
 # =============================
 
 # Copy static build
