@@ -34,8 +34,10 @@ RUN yarn build
 FROM rhel8/nginx-116 as production
 # =============================
 
+RUN whoami
+
 # Copy static build
-COPY --from=staticbuilder --chown=nginx:nginx /app/build /usr/share/nginx/html
+COPY --from=staticbuilder /app/build /usr/share/nginx/html
 
 # Copy nginx config
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
@@ -51,9 +53,6 @@ COPY .env .
 
 # Make script executable
 RUN chmod +x env.sh
-
-# FIXME: Not sure if this is safe to do, just a hack to make the image work
-RUN chmod +w /usr/share/nginx/html
 
 # USER nginx
 
