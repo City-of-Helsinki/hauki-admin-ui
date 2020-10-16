@@ -34,7 +34,12 @@ RUN yarn build
 FROM rhel8/nginx-116 as production
 # =============================
 
-RUN whoami
+USER root
+
+RUN chgrp -R 0 /usr/share/nginx/html && \
+    chmod -R g=u /usr/share/nginx/html
+
+USER 1001
 
 # Copy static build
 COPY --from=staticbuilder /app/build /usr/share/nginx/html
