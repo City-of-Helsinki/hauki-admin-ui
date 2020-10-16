@@ -52,7 +52,7 @@ RUN apt-get install bash
 # Make script executable
 RUN chmod +x env.sh
 
-USER nginx
+# USER nginx
 
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
 
