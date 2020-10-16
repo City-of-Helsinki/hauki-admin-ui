@@ -52,6 +52,9 @@ COPY .env .
 # Make script executable
 RUN chmod +x env.sh
 
+# FIXME: Not sure if this is safe to do, just a hack to make the image work
+RUN chmod +w /usr/share/nginx/html
+
 # USER nginx
 
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
