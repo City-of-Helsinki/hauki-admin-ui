@@ -29,8 +29,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "react-test-renderer": "^16.13.1",
-    "typescript": "~3.7.2"
+    "react-test-renderer": "^16.13.1"
   },
   "scripts": {
     "start": "API_URL=${API_URL:=http://localhost:8080} USE_AXE=${USE_AXE:=true} ./scripts/env.sh && cp env-config.js ./public/ && react-scripts start",
@@ -83,6 +82,7 @@
     "start-server-and-test": "^1.11.3",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
-    "stylelint-value-no-unknown-custom-properties": "^3.0.0"
+    "stylelint-value-no-unknown-custom-properties": "^3.0.0",
+    "typescript": "^3.7.5"
   }
 }
