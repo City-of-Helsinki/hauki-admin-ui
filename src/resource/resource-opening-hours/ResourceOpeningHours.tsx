@@ -86,19 +86,17 @@ const OpeningPeriodsList = ({
           </Button>
         </div>
       </header>
-      <ul className="opening-periods-list" data-test={id}>
-        {datePeriods.length > 0 ? (
-          datePeriods.map((datePeriod: DatePeriod) => (
+      {datePeriods.length > 0 ? (
+        <ul className="opening-periods-list" data-test={id}>
+          {datePeriods.map((datePeriod: DatePeriod) => (
             <li key={datePeriod.id}>
               <OpeningPeriod datePeriod={datePeriod} />
             </li>
-          ))
-        ) : (
-          <li>
-            <OpeningPeriodsNotFound text={notFoundLabel} />
-          </li>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <OpeningPeriodsNotFound text={notFoundLabel} />
+      )}
     </section>
   );
 };
