@@ -1,7 +1,7 @@
 import React from 'react';
 import './Weekdays.scss';
 import { ArrayField } from 'react-hook-form';
-import { TimeSpanFormFormat, FormWeekdays } from '../../common/lib/types';
+import { TimeSpanFormFormat, FormWeekdays } from '../../../common/lib/types';
 
 const DayCheckbox = ({
   register,

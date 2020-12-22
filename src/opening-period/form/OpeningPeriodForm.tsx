@@ -18,8 +18,8 @@ import {
   formatApiTimeSpansToFormFormat,
   formatTimeSpansToApiFormat,
 } from './form-helpers/form-helpers';
-import OpeningPeriodDescription from '../description/OpeningPeriodDescription';
-import TimeSpan from '../time-span/TimeSpan';
+import OpeningPeriodDescription from './description/OpeningPeriodDescription';
+import TimeSpan from './time-span/TimeSpan';
 import './OpeningPeriodForm.scss';
 
 interface OpeningPeriodFormData {

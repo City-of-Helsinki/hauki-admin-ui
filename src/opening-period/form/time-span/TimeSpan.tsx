@@ -7,7 +7,7 @@ import TimeInput from './TimeInput';
 import {
   ResourceStateOption,
   TimeSpanFormFormat,
-} from '../../common/lib/types';
+} from '../../../common/lib/types';
 
 export default function TimeSpan({
   item,
