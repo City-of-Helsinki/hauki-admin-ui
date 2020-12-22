@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="node" />
 // ***********************************************************
 // This example plugins/index.ts can be used to load plugins
 //
@@ -16,9 +17,13 @@
  * @type {Cypress.PluginConfig}
  */
 
-// params: on, config
-
-export default function (): void {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+// module.exports = function (on, config)
+module.exports = function plugins(on: Cypress.PluginEvents): void {
+  on('task', {
+    log(message: string) {
+      // eslint-disable-next-line no-console
+      console.log(message);
+      return null;
+    },
+  });
+};

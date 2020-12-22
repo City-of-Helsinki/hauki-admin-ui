@@ -1,0 +1,43 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.remove-time-span-button.remove-time-span-button {
+  color: var(--color-coat-of-arms);
+}
+
+.start-and-end-time-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.start-time-container-label {
+  display: block;
+}
+
+.dash-between-start-and-end-time-container {
+  display: flex;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
+}
+
+.time-span-state-container {
+  width: 307px;
+}
+
+.time-span-state {
+  font-family: HelsinkiGrotesk-Regular, Arial, sans-serif;
+}
+
+.time-span-description-container {
+  width: 386px;
+}
+
+.time-span-description {
+  font-family: HelsinkiGrotesk-Regular, Arial, sans-serif;
+}
+
+.time-span-first-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}

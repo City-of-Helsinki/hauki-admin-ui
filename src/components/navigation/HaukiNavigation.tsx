@@ -1,70 +1,66 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Navigation } from 'hds-react';
+import api from '../../common/utils/api/api';
+import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
+import './HaukiNavigation.scss';
+import { ErrorToast } from '../notification/Toast';
 
 export default function HaukiNavigation(): JSX.Element {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | undefined>();
+  const authProps: Partial<AuthContextProps> = useAuth();
+  const { authTokens, clearAuth } = authProps;
+  const history = useHistory();
+  const isAuthenticated = !!authTokens;
 
-  interface LanguageOption {
-    label: string;
-    value: string;
-  }
-
-  const languageOptions: LanguageOption[] = [
-    { label: 'Suomeksi', value: 'fi' },
-    { label: 'Svenska', value: 'sv' },
-    { label: 'English', value: 'en' },
-  ];
-
-  const [language, setLanguage] = useState(languageOptions[0]);
-  const formatSelectedValue = ({ value }: LanguageOption): string =>
-    value.toUpperCase();
+  const signOut = async (): Promise<void> => {
+    try {
+      const isAuthInvalidated = await api.invalidateAuth();
+      if (isAuthInvalidated) {
+        setSignOutError(undefined);
+        if (clearAuth) {
+          clearAuth();
+        }
+        history.push('/');
+      } else {
+        setSignOutError('Uloskirjautuminen hylättiin.');
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Sign out failed:', e.message);
+      setSignOutError(
+        `Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ${e}`
+      );
+    }
+  };
 
   return (
     <Navigation
+      theme={{
+        '--header-background-color': 'var(--hauki-header-background-color)',
+        '--header-color': 'var(--hauki-header-color)',
+      }}
       className="navigation-header"
       title="Aukiolot"
-      menuCloseAriaLabel="Avaa menu"
-      menuOpenAriaLabel="Sulje menu"
+      menuToggleAriaLabel="Menu"
       skipTo="#main"
       skipToContentLabel="Siirry pääsisältöön">
-      {authenticated && (
-        <Navigation.Row>
-          <Navigation.Item label="Toimipistehaku" />
-          <Navigation.Item label="Paikat" />
-          <Navigation.Item label="Anna palautetta" />
-          <Navigation.Item label="Tietoa palvelusta" />
-        </Navigation.Row>
-      )}
-
       <Navigation.Actions>
         <Navigation.User
-          authenticated={authenticated}
+          authenticated={isAuthenticated}
           label="Kirjaudu"
-          onSignIn={(): void => setAuthenticated(true)}
-          userName="John Doe">
+          userName={authTokens && authTokens[TokenKeys.usernameKey]}>
           <Navigation.Item
-            label="Profiili"
-            href="https://hel.fi"
+            label="Kirjaudu ulos"
             target="_blank"
             variant="primary"
-          />
-          <Navigation.Item
-            as="button"
-            type="button"
-            onClick={(): void => setAuthenticated(false)}
-            variant="secondary"
-            label="Kirjaudu ulos"
+            onClick={(): Promise<void> => signOut()}
           />
         </Navigation.User>
-
-        <Navigation.LanguageSelector
-          ariaLabel="Valittu kieli"
-          options={languageOptions}
-          formatSelectedValue={formatSelectedValue}
-          onLanguageChange={setLanguage}
-          value={language}
-        />
       </Navigation.Actions>
+      {signOutError && (
+        <ErrorToast label="Uloskirjautuminen epäonnistui" text={signOutError} />
+      )}
     </Navigation>
   );
 }

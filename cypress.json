@@ -3,6 +3,7 @@
   "ignoreTestFiles": "**/examples/*.spec.js",
   "trashAssetsBeforeRuns": false,
   "env": {
-    "target-id": "tprek:8100"
+    "resource-id": "tprek:8215",
+    "auth-query-parameters": ""
   }
 }

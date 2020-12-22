@@ -1,0 +1,11 @@
+@import '~hds-core/lib/components/text-input/text-input.css';
+
+.custom-time-input-wrapper {
+  display: inline-flex !important;
+  flex-direction: column !important;
+}
+
+.custom-time-input {
+  -webkit-appearance: initial !important;
+  padding-right: var(--spacing-s) !important;
+}

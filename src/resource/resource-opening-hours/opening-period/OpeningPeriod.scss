@@ -1,0 +1,47 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.opening-period {
+  font-family: HelsinkiGrotesk-Regular, Arial, sans-serif;
+  box-sizing: border-box;
+  background-color: var(--opening-period-background-color);
+  padding: 6px $spacing-m;
+
+  h4 {
+    margin: 0;
+    word-break: break-all;
+  }
+}
+
+.opening-period-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-left: -$spacing-m;
+
+  > * {
+    margin-left: $spacing-m;
+  }
+}
+
+.opening-period-row-column {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.opening-period-dates {
+  flex-basis: 18ch;
+  flex-grow: 1;
+  line-height: $lineheight-l;
+}
+
+.opening-period-title {
+  display: flex;
+  flex-grow: 600;
+  justify-content: normal;
+}
+
+.opening-period-edit-link {
+  margin-left: auto;
+}

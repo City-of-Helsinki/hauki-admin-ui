@@ -1,0 +1,18 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.opening-period-section-title {
+  font-size: $fontsize-heading-xxs;
+}
+
+.opening-period-title-input {
+  max-width: 400px;
+}
+
+.opening-period-optional-description {
+  margin-bottom: $spacing-layout-2-xs;
+  width: calc(0.5808333 * 100%);
+
+  @media screen and (max-width: $breakpoint-m) {
+    width: 100%;
+  }
+}

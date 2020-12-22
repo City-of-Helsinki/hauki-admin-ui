@@ -30,5 +30,5 @@ steps:
   displayName: 'Yarn run tests'
 
 - script: |
-    CI=true yarn test-cypress-headless
+    CI=true yarn test-cypress-with-test-api
   displayName: 'Yarn run cypress (e2e) tests'

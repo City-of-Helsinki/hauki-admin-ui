@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Collapse from './Collapse';
 
 describe(`<Collapse />`, () => {
-  test('should hide content', () => {
+  it('should hide content', () => {
     const collapse = mount(
       <Collapse
         isOpen={false}
@@ -18,7 +18,7 @@ describe(`<Collapse />`, () => {
     expect(collapse.find('p').getDOMNode()).not.toBeVisible();
   });
 
-  test('should show content when clicked', () => {
+  it('should show content when clicked', () => {
     const collapse = mount(
       <Collapse
         isOpen={false}

@@ -1,0 +1,28 @@
+// Based on https://github.com/City-of-Helsinki/palvelutarjotin-admin/blob/release-0.1.0/src/common/components/textInput/inputWrapper.module.scss
+@import '~hds-core/lib/components/text-input/text-input.css';
+@import '~hds-core/lib/utils/helpers.css';
+
+.root {
+  --icon-width: 1.5rem;
+}
+
+.inputWrapper {
+  height: auto;
+}
+
+.hasIcon {
+  .inputWrapper {
+    &::after {
+      right: var(--icon-width) !important;
+    }
+  }
+}
+
+.requiredIndicator {
+  color: var(--color-black-90);
+  display: inline-block;
+  font-size: var(--fontsize-body-xl);
+  line-height: 1;
+  margin-left: var(--spacing-2-xs);
+  transform: translateY(var(--spacing-3-xs));
+}

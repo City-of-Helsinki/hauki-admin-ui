@@ -5,17 +5,39 @@
 html {
   height: 100%;
   margin: 0;
+  background-color: var(--hauki-content-background-color);
 }
 
 body {
   color: var(--hauki-content-text-color);
   height: 100%;
+  overflow-y: overlay;
   display: flex;
   flex-direction: column;
-  font-family: var(--font-default);
+  font-family: var(--hauki-default-font);
   margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
+}
+
+fieldset {
+  padding: 0 !important;
+  margin-right: 0;
+  margin-left: 0;
+  border: none;
+  min-width: min-content;
+}
+
+label {
+  font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
 }
 
 #root {
@@ -27,4 +49,26 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.text-danger {
+  color: var(--color-brick-dark);
+}
+
+.button-icon {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: var(--spacing-xs) var(--spacing-s);
+
+  &:hover {
+    background-color: var(--button-icon-hover-background-color);
+  }
+
+  &:focus {
+    border-radius: 0;
+    outline: 2px solid var(--button-icon-focus-border-color);
+  }
 }

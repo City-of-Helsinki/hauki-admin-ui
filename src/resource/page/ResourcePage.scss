@@ -1,0 +1,36 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.resource-details-section {
+  border-bottom: 1px solid var(--hauki-content-border-color);
+  padding: var(--spacing-layout-2-xs) 0;
+}
+
+.resource-info-title-wrapper {
+  align-items: center;
+  display: flex;
+}
+
+.resource-info-title-add-on {
+  margin-left: auto;
+}
+
+.resource-info-title {
+  font-size: var(--fontsize-heading-l);
+  margin-top: 0;
+  margin-bottom: var(--spacing-xs);
+}
+
+.resource-info-subtitle {
+  color: var(--color-coat-of-arms);
+  font-size: $fontsize-heading-m;
+  margin-top: $spacing-2-xs;
+}
+
+.resource-info-address {
+  display: inline-block;
+  font-style: normal;
+}
+
+.resource-description-text {
+  white-space: pre-wrap;
+}

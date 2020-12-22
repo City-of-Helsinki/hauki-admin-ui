@@ -44,9 +44,9 @@ const CollapseButton = ({
       onClick={(): void => toggleOpen()}>
       {children}
       {isOpen ? (
-        <IconAngleUp className="collapse-button-icon" aria-hidden="true" />
+        <IconAngleUp className="collapse-button-icon" aria-hidden />
       ) : (
-        <IconAngleDown className="collapse-button-icon" aria-hidden="true" />
+        <IconAngleDown className="collapse-button-icon" aria-hidden />
       )}
     </button>
   );

@@ -1,0 +1,69 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.opening-period-form {
+  .form-control {
+    margin-top: $spacing-m;
+  }
+
+  input[type="text"] {
+    display: block;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  margin-top: $spacing-xl;
+}
+
+.opening-period-time-period {
+  display: flex;
+  align-items: center;
+}
+
+.dash-between-begin-and-end-date {
+  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
+  margin: 2rem 10px 0;
+}
+
+.opening-period-final-action-row-container {
+  margin-top: 116px;
+}
+
+.opening-period-final-action-button.opening-period-final-action-button.opening-period-final-action-button {
+  margin-right: $spacing-m;
+}
+
+.form-section {
+  padding: $spacing-layout-xs;
+  background-color: white;
+  margin-bottom: $spacing-layout-xs;
+}
+
+.opening-period-time-span-list {
+  border-bottom: 1px solid var(--hauki-content-border-color);
+  margin: 0;
+  padding: 0 0 var(--spacing-layout-xs);
+  position: relative;
+}
+
+.opening-period-time-span-list-item {
+  list-style: none;
+  border-top: var(--spacing-4-xs) solid var(--primary-color);
+  margin: $spacing-2-xl 0 0;
+  padding: 0;
+
+  &:first-child {
+    border-top: none;
+    margin-top: 0;
+  }
+}
+
+.add-new-time-span-button {
+  margin-top: $spacing-l;
+}
+
+.time-span-group {
+  border-top: var(--spacing-3-xs) solid var(--color-coat-of-arms);
+}

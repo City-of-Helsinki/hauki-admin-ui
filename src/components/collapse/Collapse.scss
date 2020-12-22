@@ -1,8 +1,5 @@
-.collapse {
-  border-bottom: 1px solid var(--hauki-content-border-color);
-}
-
 .collapse-button {
+  align-items: center;
   background-color: transparent;
   border: 0 none;
   box-sizing: border-box;
@@ -17,9 +14,10 @@
 }
 
 .collapse-header {
-  color: var(--color-coat-of-arms-blue);
+  color: var(--collapse-header-color);
   font-size: var(--fontsize-heading-m);
   margin-bottom: var(--spacing-s);
+  margin-top: var(--spacing-s);
 }
 
 .collapse-button-icon {

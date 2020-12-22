@@ -1,0 +1,112 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.opening-periods-header {
+  min-height: 4rem;
+  background-color: var(--opening-periods-header-background-color);
+  color: var(--opening-periods-header-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-left: $spacing-m;
+  padding-right: $spacing-m;
+}
+
+.opening-period-header-button.opening-period-header-button {
+  font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
+  color: var(--opening-periods-header-button-color);
+  border-color: var(--opening-periods-header-button-border-color) !important;
+
+  &:hover {
+    background-color: var(--opening-periods-header-button-hover-background-color) !important;
+    color: var(--opening-periods-header-button-hover-color) !important;
+  }
+
+  &:focus {
+    color: var(--opening-periods-header-button-focus-color);
+    border-color: var(--opening-periods-header-button-focus-border-color) !important;
+    border-width: 3px;
+  }
+}
+
+.opening-periods-header-light {
+  @extend .opening-periods-header;
+
+  background-color: var(--opening-periods-header-light-background-color);
+  color: var(--opening-periods-header-light-color);
+
+  .opening-period-header-button.opening-period-header-button {
+    font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
+    color: var(--opening-periods-header-light-button-color);
+    border-color: var(--opening-periods-header-light-button-border-color) !important;
+
+    &:hover {
+      background-color: var(--opening-periods-header-light-button-hover-background-color) !important;
+      color: var(--opening-periods-header-light-button-hover-color) !important;
+    }
+
+    &:focus {
+      color: var(--opening-periods-header-light-button-focus-color);
+    }
+  }
+}
+
+.opening-periods-header-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.opening-periods-header-title {
+  font-size: $fontsize-heading-m;
+  color: inherit;
+  margin-right: $spacing-s;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.opening-periods-header-info {
+  color: inherit;
+}
+
+.opening-periods-header-actions {
+  > * + * {
+    margin-left: $spacing-xl;
+  }
+}
+
+.period-count {
+  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
+  font-size: $fontsize-body-m;
+  align-self: flex-start;
+  color: inherit;
+}
+
+.opening-periods-header-language-selector {
+  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
+  color: inherit;
+  font-size: $fontsize-body-m;
+  margin-right: $spacing-xl;
+}
+
+.opening-periods-list {
+  list-style: none;
+  margin: 0;
+  padding: $spacing-s 0 $spacing-l;
+
+  > li + li {
+    margin-top: $spacing-xs;
+  }
+}
+
+.opening-periods-not-found {
+  padding-left: $spacing-m;
+  padding-right: $spacing-m;
+}
+
+.loading-opening-hours-text {
+  text-align: center;
+  margin-top: $spacing-2-xl;
+  margin-bottom: $spacing-2-xl;
+}

@@ -16,8 +16,10 @@ module.exports = {
   env: {
     browser: true,
     jest: true,
+    node: true,
   },
   rules: {
+    'react/no-array-index-key': 0,
     'react/prop-types': 0,
     'react/destructuring-assignment': 0,
     'react/static-property-placement': 0,
@@ -52,6 +54,16 @@ module.exports = {
         selector: 'enumMember',
         format: ['camelCase', 'snake_case', 'UPPER_CASE'],
       },
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": [],
+        "labelAttributes": [],
+        "controlComponents": [],
+        "assert": "htmlFor",
+        "depth": 25
+      }
     ],
   },
   globals: {

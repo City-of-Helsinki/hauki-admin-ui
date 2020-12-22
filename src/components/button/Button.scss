@@ -1,0 +1,37 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.button-common.button-common.button-common {
+  font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
+  border-color: var(--color-coat-of-arms);
+}
+
+.primary-button.primary-button.primary-button {
+  color: var(--add-new-opening-period-button-color);
+  background-color: var(--color-coat-of-arms);
+
+  &:hover {
+    background-color: var(--color-coat-of-arms-dark);
+    border-color: var(--color-coat-of-arms-dark);
+  }
+
+  &:focus {
+    background-color: var(--color-coat-of-arms);
+    border-color: var(--color-coat-of-arms) !important;
+    outline-color: var(--color-coat-of-arms);
+  }
+}
+
+.secondary-button.secondary-button.secondary-button {
+  color: var(--color-coat-of-arms);
+
+  &:hover {
+    background-color: var(--color-coat-of-arms-light);
+    border-color: var(--color-coat-of-arms);
+  }
+
+  &:focus {
+    border-color: var(--color-coat-of-arms) !important;
+    outline-color: var(--color-coat-of-arms);
+    color: var(--color-coat-of-arms) !important;
+  }
+}
