@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { render, screen, fireEvent } from '@testing-library/react';
 import {
   DatePeriod,
-  DatePeriodOptions,
+  DatePeriodFormOptions,
   Resource,
   ResourceState,
 } from '../../common/lib/types';
@@ -157,32 +157,22 @@ async function selectTimeAndTypeInTimeSpan(
 
 describe(`<CreateNewOpeningPeriodPage />`, () => {
   jest.setTimeout(30000); // We suspect rendering + react-hooks + act wrapping + async await causes tests to run slow
-  let testDatePeriodOptions: DatePeriodOptions;
+  let testDatePeriodOptions: DatePeriodFormOptions;
   let testResource: Resource;
   let testDatePeriod: DatePeriod;
 
   beforeEach(() => {
     testDatePeriodOptions = {
-      actions: {
-        POST: {
-          resource_state: {
-            choices: [
-              {
-                value: 'open',
-                display_name: 'Open',
-              },
-              {
-                value: 'closed',
-                display_name: {
-                  fi: 'Suljettu',
-                  sv: null,
-                  en: null,
-                },
-              },
-            ],
-          },
+      resourceStateOptions: [
+        {
+          label: 'Open',
+          value: 'open',
         },
-      },
+        {
+          label: 'Open',
+          value: 'open',
+        },
+      ],
     };
 
     testResource = {

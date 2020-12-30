@@ -65,12 +65,12 @@ export type TimeSpanFormFormat = {
   weekdays: FormWeekdays;
 };
 
-export type ResourceStateApiOption = {
+export type ApiChoice = {
   value: string;
   display_name: string | LanguageStrings;
 };
 
-export type ResourceStateOption = {
+export type InputOption = {
   label: string;
   value: string;
 };
@@ -79,10 +79,14 @@ export type DatePeriodOptions = {
   actions: {
     POST: {
       resource_state: {
-        choices: ResourceStateApiOption[];
+        choices: ApiChoice[];
       };
     };
   };
+};
+
+export type DatePeriodFormOptions = {
+  resourceStateOptions: InputOption[];
 };
 
 export type TimeSpanGroup = {

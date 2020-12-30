@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
   DatePeriod,
-  DatePeriodOptions,
+  DatePeriodFormOptions,
   Resource,
   ResourceState,
 } from '../../common/lib/types';
@@ -12,31 +12,21 @@ import EditOpeningPeriodPage from './EditOpeningPeriodPage';
 
 const closedResourceState = {
   value: 'closed',
-  display_name: {
-    fi: 'Suljettu',
-    sv: null,
-    en: null,
-  },
+  label: 'Suljettu',
 };
 
-const testDatePeriodOptions: DatePeriodOptions = {
-  actions: {
-    POST: {
-      resource_state: {
-        choices: [
-          {
-            value: 'open',
-            display_name: 'Auki',
-          },
-          { ...closedResourceState },
-          {
-            value: 'self_service',
-            display_name: 'Itsepalvelu',
-          },
-        ],
-      },
+const testDatePeriodOptions: DatePeriodFormOptions = {
+  resourceStateOptions: [
+    {
+      value: 'open',
+      label: 'Auki',
     },
-  },
+    { ...closedResourceState },
+    {
+      value: 'self_service',
+      label: 'Itsepalvelu',
+    },
+  ],
 };
 
 const testResource: Resource = {

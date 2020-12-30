@@ -4,10 +4,7 @@ import { Button as HDSButton, IconTrash, Select, TextInput } from 'hds-react';
 import Weekdays from './Weekdays';
 import './TimeSpan.scss';
 import TimeInput from './TimeInput';
-import {
-  ResourceStateOption,
-  TimeSpanFormFormat,
-} from '../../../common/lib/types';
+import { InputOption, TimeSpanFormFormat } from '../../../common/lib/types';
 
 export default function TimeSpan({
   item,
@@ -22,7 +19,7 @@ export default function TimeSpan({
   remove: Function;
   register: Function;
   control: Control;
-  resourceStateOptions: ResourceStateOption[];
+  resourceStateOptions: InputOption[];
 }): JSX.Element {
   return (
     <div data-test={`time-span-${index}`} className="time-span-container">
@@ -86,13 +83,12 @@ export default function TimeSpan({
             render={({ onChange, value }): JSX.Element => (
               <Select
                 id={`time-span-state-id-${index}`}
-                onChange={(selected: ResourceStateOption): void => {
+                onChange={(selected: InputOption): void => {
                   onChange(selected.value);
                 }}
                 className="time-span-state"
                 defaultValue={resourceStateOptions.find(
-                  (option: ResourceStateOption): boolean =>
-                    option.value === value
+                  (option: InputOption): boolean => option.value === value
                 )}
                 options={resourceStateOptions}
                 label="Tyyppi"

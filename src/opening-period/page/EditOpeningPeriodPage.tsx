@@ -3,7 +3,7 @@ import { Notification } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
   DatePeriod,
-  DatePeriodOptions,
+  DatePeriodFormOptions,
   Resource,
 } from '../../common/lib/types';
 import {
@@ -25,7 +25,7 @@ export default function EditOpeningPeriodPage({
   const [resource, setResource] = useState<Resource>();
   const [datePeriod, setDatePeriod] = useState<DatePeriod>();
   const [datePeriodOptions, setDatePeriodOptions] = useState<
-    DatePeriodOptions
+    DatePeriodFormOptions
   >();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasDataLoadingError, setHasDataLoadingError] = useState<boolean>(

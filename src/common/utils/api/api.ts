@@ -2,8 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as querystring from 'querystring';
 import { ParsedUrlQueryInput } from 'querystring';
 import {
+  ApiChoice,
   DatePeriod,
+  DatePeriodFormOptions,
   DatePeriodOptions,
+  InputOption,
   LanguageStrings,
   Resource,
   ResourceState,
@@ -62,6 +65,23 @@ enum ApiResponseFormat {
 interface ApiParameters extends RequestParameters {
   format: ApiResponseFormat;
 }
+
+const formatApiChoicesToInputOptions = (
+  apiChoices: ApiChoice[]
+): InputOption[] =>
+  apiChoices.map((apiChoice: ApiChoice): {
+    value: string;
+    label: string;
+  } => {
+    return {
+      value: apiChoice.value,
+      label: `${
+        typeof apiChoice.display_name === 'string'
+          ? apiChoice.display_name
+          : apiChoice.display_name.fi
+      }`,
+    };
+  });
 
 const addTokensToRequestConfig = (
   authTokens: AuthTokens,
@@ -199,10 +219,19 @@ export default {
       path: `${datePeriodBasePath}/${datePeriodId}`,
     }),
 
-  getDatePeriodFormOptions: (): Promise<DatePeriodOptions> =>
-    apiOptions<DatePeriodOptions>({
+  getDatePeriodFormOptions: async (): Promise<DatePeriodFormOptions> => {
+    const response = await apiOptions<DatePeriodOptions>({
       path: `${datePeriodBasePath}`,
-    }),
+    });
+
+    const resourceStateOptions: InputOption[] = formatApiChoicesToInputOptions(
+      response.actions.POST.resource_state.choices
+    );
+
+    return {
+      resourceStateOptions,
+    };
+  },
 
   postDatePeriod: (datePeriod: DatePeriod): Promise<DatePeriod> =>
     apiPost<DatePeriod>({
