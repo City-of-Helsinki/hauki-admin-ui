@@ -1,7 +1,8 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
 .opening-group-rule {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
   flex-wrap: wrap;
   margin: 0 -1rem;
   width: 100%;
@@ -13,19 +14,20 @@
 
 .opening-group-rule-column {
   flex: 1 1 20ch;
-}
-
-.opening-group-rule-select {
-  min-width: 20ch;
+  margin-bottom: $spacing-m;
 }
 
 .opening-group-rule-column-large {
   align-items: flex-end;
   display: flex;
-  flex: 3 0 auto;
+  flex: 1 0 auto;
 
   > * + * {
-    flex: 1;
     margin-left: 1rem;
+  }
+
+  > .opening-group-rule-select {
+    flex: 1;
+    max-width: 30ch;
   }
 }

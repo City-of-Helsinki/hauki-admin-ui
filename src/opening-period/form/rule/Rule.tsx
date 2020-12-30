@@ -210,7 +210,7 @@ export default function Rule({
           />
         )}
       />
-      <div className="opening-group-rule-column-large">
+      <div className="opening-group-rule-column opening-group-rule-column-large">
         <p
           className="opening-period-rule-divider"
           key={`rules-${index}-subject-divider`}>
