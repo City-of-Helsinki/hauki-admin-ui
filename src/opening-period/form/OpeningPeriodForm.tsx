@@ -5,6 +5,7 @@ import {
   DatePeriod,
   DatePeriodFormOptions,
   Language,
+  GroupRule,
   TimeSpanFormFormat,
   TimeSpanGroup,
 } from '../../common/lib/types';
@@ -18,6 +19,7 @@ import {
 } from './form-helpers/form-helpers';
 import OpeningPeriodDescription from './description/OpeningPeriodDescription';
 import TimeSpan from './time-span/TimeSpan';
+import Rule from './rule/Rule';
 import './OpeningPeriodForm.scss';
 
 interface OpeningPeriodFormData {
@@ -26,6 +28,7 @@ interface OpeningPeriodFormData {
   openingPeriodBeginDate: string | undefined;
   openingPeriodEndDate: string | undefined;
   timeSpans: Array<TimeSpanFormFormat> | {}[];
+  rules: GroupRule[] | {}[];
 }
 
 type SubmitStatus = 'init' | 'succeeded' | 'error';
@@ -66,6 +69,10 @@ export default function OpeningPeriodForm({
       ? formatApiTimeSpansToFormFormat(firstTimeSpanGroup.time_spans)
       : [{}];
 
+  const rules: GroupRule[] | {}[] = firstTimeSpanGroup?.rules.length
+    ? firstTimeSpanGroup?.rules
+    : [{}];
+
   const [periodBeginDate, setPeriodBeginDate] = useState<Date | null>(
     datePeriod?.start_date ? new Date(datePeriod?.start_date) : null
   );
@@ -79,26 +86,45 @@ export default function OpeningPeriodForm({
     openingPeriodBeginDate: datePeriod?.start_date,
     openingPeriodEndDate: datePeriod?.end_date,
     timeSpans: spans,
+    rules,
   };
 
-  const { register, handleSubmit, errors, control } = useForm<
+  const { register, handleSubmit, errors, control, setValue } = useForm<
     OpeningPeriodFormData
   >({
     mode: 'all',
     defaultValues: formValues,
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
     keyName: 'timeSpanUiId',
     name: 'timeSpans',
   });
+
+  const { fields: ruleFields } = useFieldArray({
+    control,
+    keyName: 'rulesUiId',
+    name: 'rules',
+  });
+
   const history = useHistory();
+
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('init');
 
   const onSubmit = async (data: OpeningPeriodFormData): Promise<void> => {
     const validTimeSpans: TimeSpanFormFormat[] = data.timeSpans.filter(
       (span: TimeSpanFormFormat | {}) => Object.keys(span).length > 0
     ) as TimeSpanFormFormat[];
+
+    const validRules: GroupRule[] = data.rules.filter(
+      (rule: GroupRule | {}): boolean => {
+        const validValues = Object.values(rule)
+          .filter((value) => value !== '')
+          .filter((val) => val);
+        return validValues.length > 0;
+      }
+    ) as GroupRule[];
 
     try {
       const dataAsDatePeriod: DatePeriod = {
@@ -126,7 +152,7 @@ export default function OpeningPeriodForm({
             id: firstTimeSpanGroup?.id,
             period: firstTimeSpanGroup?.period,
             time_spans: formatTimeSpansToApiFormat(validTimeSpans || []),
-            rules: [],
+            rules: validRules,
           },
         ],
       };
@@ -192,7 +218,7 @@ export default function OpeningPeriodForm({
         <section className="form-section time-span-group">
           <h3 className="opening-period-section-title">Aukioloajat</h3>
           <ul
-            className="opening-period-time-span-list"
+            className="opening-period-time-span-list form-group"
             data-test="time-span-list">
             {fields.map(
               (
@@ -214,12 +240,44 @@ export default function OpeningPeriodForm({
               )
             )}
           </ul>
-          <SecondaryButton
-            dataTest="add-new-time-span-button"
-            onClick={(): void => append({})}
-            className="add-new-time-span-button">
-            + Lisää aukioloaika
-          </SecondaryButton>
+          <div className="form-group">
+            <SecondaryButton
+              dataTest="add-new-time-span-button"
+              onClick={(): void => append({})}
+              className="add-new-time-span-button">
+              + Lisää aukioloaika
+            </SecondaryButton>
+          </div>
+          <div className="form-group">
+            <h3 className="opening-period-section-title">
+              Aukioloaikojen voimassaolo
+            </h3>
+            <ul className="opening-period-rule-list form-group">
+              {ruleFields.map(
+                (
+                  rule: Partial<ArrayField<Record<string, GroupRule>>>,
+                  index
+                ) => (
+                  <li
+                    className="opening-period-rule-list-item"
+                    key={`rule-${index}`}>
+                    <Rule
+                      rule={rule}
+                      index={index}
+                      control={control}
+                      setValue={setValue}
+                      register={register}
+                      ruleContextOptions={ruleContextOptions}
+                      ruleFrequencyModifierOptions={
+                        ruleFrequencyModifierOptions
+                      }
+                      ruleSubjectOptions={ruleSubjectOptions}
+                    />
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
         </section>
         <div className="opening-period-final-action-row-container">
           <PrimaryButton

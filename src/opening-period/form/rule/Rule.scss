@@ -1,0 +1,31 @@
+.opening-group-rule {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 -1rem;
+  width: 100%;
+
+  > * {
+    margin-left: 1rem;
+  }
+}
+
+.opening-group-rule-column {
+  flex: 1 1 20ch;
+}
+
+.opening-group-rule-select {
+  min-width: 20ch;
+}
+
+.opening-group-rule-column-large {
+  align-items: flex-end;
+  display: flex;
+  flex: 3 0 auto;
+
+  > * + * {
+    flex: 1;
+    margin-left: 1rem;
+  }
+}

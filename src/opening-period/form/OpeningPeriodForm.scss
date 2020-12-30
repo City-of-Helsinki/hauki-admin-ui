@@ -36,21 +36,31 @@
 }
 
 .form-section {
-  padding: $spacing-layout-xs;
   background-color: white;
+  padding: $spacing-layout-xs;
   margin-bottom: $spacing-layout-xs;
 }
 
-.opening-period-time-span-list {
-  border-bottom: 1px solid var(--hauki-content-border-color);
+.form-group {
+  padding: $spacing-layout-s 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--hauki-content-border-color);
+  }
+}
+
+.opening-period-time-span-list,
+.opening-period-rule-list {
   margin: 0;
-  padding: 0 0 var(--spacing-layout-xs);
+  padding-left: 0;
+  padding-right: 0;
   position: relative;
 }
 
-.opening-period-time-span-list-item {
-  list-style: none;
+.opening-period-time-span-list-item,
+.opening-period-rule-list-item {
   border-top: var(--spacing-4-xs) solid var(--primary-color);
+  list-style: none;
   margin: $spacing-2-xl 0 0;
   padding: 0;
 
@@ -58,10 +68,6 @@
     border-top: none;
     margin-top: 0;
   }
-}
-
-.add-new-time-span-button {
-  margin-top: $spacing-l;
 }
 
 .time-span-group {
