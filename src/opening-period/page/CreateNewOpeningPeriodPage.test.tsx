@@ -173,6 +173,11 @@ describe(`<CreateNewOpeningPeriodPage />`, () => {
           value: 'open',
         },
       ],
+      timeSpanGroup: {
+        ruleContextOptions: [],
+        ruleSubjectOptions: [],
+        ruleFrequencyModifierOptions: [],
+      },
     };
 
     testResource = {

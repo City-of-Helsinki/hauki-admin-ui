@@ -228,8 +228,28 @@ export default {
       response.actions.POST.resource_state.choices
     );
 
+    const ruleContextOptions: InputOption[] = formatApiChoicesToInputOptions(
+      response.actions.POST.time_span_groups.child.children.rules.child.children
+        .context.choices
+    );
+
+    const ruleSubjectOptions: InputOption[] = formatApiChoicesToInputOptions(
+      response.actions.POST.time_span_groups.child.children.rules.child.children
+        .subject.choices
+    );
+
+    const ruleFrequencyModifierOptions: InputOption[] = formatApiChoicesToInputOptions(
+      response.actions.POST.time_span_groups.child.children.rules.child.children
+        .frequency_modifier.choices
+    );
+
     return {
       resourceStateOptions,
+      timeSpanGroup: {
+        ruleContextOptions,
+        ruleSubjectOptions,
+        ruleFrequencyModifierOptions,
+      },
     };
   },
 

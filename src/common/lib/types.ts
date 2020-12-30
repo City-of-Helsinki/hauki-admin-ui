@@ -81,12 +81,38 @@ export type DatePeriodOptions = {
       resource_state: {
         choices: ApiChoice[];
       };
+      time_span_groups: {
+        child: {
+          children: {
+            rules: {
+              child: {
+                children: {
+                  context: {
+                    choices: ApiChoice[];
+                  };
+                  frequency_modifier: {
+                    choices: ApiChoice[];
+                  };
+                  subject: {
+                    choices: ApiChoice[];
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
     };
   };
 };
 
 export type DatePeriodFormOptions = {
   resourceStateOptions: InputOption[];
+  timeSpanGroup: {
+    ruleContextOptions: InputOption[];
+    ruleSubjectOptions: InputOption[];
+    ruleFrequencyModifierOptions: InputOption[];
+  };
 };
 
 export type TimeSpanGroup = {

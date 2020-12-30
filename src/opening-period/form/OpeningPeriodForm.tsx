@@ -54,6 +54,9 @@ export default function OpeningPeriodForm({
 }): JSX.Element {
   const language = Language.FI;
   const { resourceStateOptions } = datePeriodOptions;
+  const { ruleContextOptions } = datePeriodOptions.timeSpanGroup;
+  const { ruleSubjectOptions } = datePeriodOptions.timeSpanGroup;
+  const { ruleFrequencyModifierOptions } = datePeriodOptions.timeSpanGroup;
 
   const firstTimeSpanGroup: TimeSpanGroup | undefined =
     datePeriod?.time_span_groups[0];

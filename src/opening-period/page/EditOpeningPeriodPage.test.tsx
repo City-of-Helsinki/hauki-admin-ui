@@ -27,6 +27,11 @@ const testDatePeriodOptions: DatePeriodFormOptions = {
       label: 'Itsepalvelu',
     },
   ],
+  timeSpanGroup: {
+    ruleContextOptions: [],
+    ruleSubjectOptions: [],
+    ruleFrequencyModifierOptions: [],
+  },
 };
 
 const testResource: Resource = {
