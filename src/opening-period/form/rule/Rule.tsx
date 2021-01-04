@@ -47,10 +47,12 @@ const frequencyToOption = ({
   value: frequencyToString(value),
 });
 
-const startAtOptions = Array.from({ length: 10 }).map((num, index) => ({
-  label: `${index + 1}.`,
-  value: (index + 1).toString(),
-}));
+const startAtOptions: InputOption[] = Array.from({ length: 10 }).map(
+  (num, index) => ({
+    label: `${index + 1}.`,
+    value: (index + 1).toString(),
+  })
+);
 
 export default function Rule({
   rule,
