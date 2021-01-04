@@ -10,7 +10,7 @@ type FrequencyOption = {
   value: Frequency;
 };
 
-const defaultFrequencyOptions: FrequencyOption[] = [
+const predefinedFrequencyOptions: FrequencyOption[] = [
   {
     label: 'Jokainen',
     value: { frequency_ordinal: 1, frequency_modifier: null },
@@ -87,7 +87,7 @@ export default function Rule({
     : { frequency_modifier: null, frequency_ordinal: null }) as Frequency;
 
   const frequencyOptionValues: FrequencyOption[] = [
-    ...defaultFrequencyOptions,
+    ...predefinedFrequencyOptions,
     ...ruleFrequencyModifierOptions.map(
       (modifierOption: InputOption): FrequencyOption => ({
         label: modifierOption.label,
