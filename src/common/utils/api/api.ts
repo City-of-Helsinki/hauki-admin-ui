@@ -66,22 +66,14 @@ interface ApiParameters extends RequestParameters {
   format: ApiResponseFormat;
 }
 
-const formatApiChoicesToInputOptions = (
-  apiChoices: ApiChoice[]
-): InputOption[] =>
-  apiChoices.map((apiChoice: ApiChoice): {
-    value: string;
-    label: string;
-  } => {
-    return {
-      value: apiChoice.value,
-      label: `${
-        typeof apiChoice.display_name === 'string'
-          ? apiChoice.display_name
-          : apiChoice.display_name.fi
-      }`,
-    };
-  });
+const convertApiChoiceToInputOption = (apiChoice: ApiChoice): InputOption => ({
+  value: apiChoice.value,
+  label: `${
+    typeof apiChoice.display_name === 'string'
+      ? apiChoice.display_name
+      : apiChoice.display_name.fi
+  }`,
+});
 
 const addTokensToRequestConfig = (
   authTokens: AuthTokens,
@@ -224,23 +216,26 @@ export default {
       path: `${datePeriodBasePath}`,
     });
 
-    const resourceStateOptions: InputOption[] = formatApiChoicesToInputOptions(
-      response.actions.POST.resource_state.choices
+    const resourceStateChoices = response.actions.POST.resource_state.choices;
+
+    const resourceStateOptions: InputOption[] = resourceStateChoices.map(
+      convertApiChoiceToInputOption
     );
 
-    const ruleContextOptions: InputOption[] = formatApiChoicesToInputOptions(
-      response.actions.POST.time_span_groups.child.children.rules.child.children
-        .context.choices
+    const timeSpanGroupOptions =
+      response.actions.POST.time_span_groups.child.children.rules.child
+        .children;
+
+    const ruleContextOptions: InputOption[] = timeSpanGroupOptions.context.choices.map(
+      convertApiChoiceToInputOption
     );
 
-    const ruleSubjectOptions: InputOption[] = formatApiChoicesToInputOptions(
-      response.actions.POST.time_span_groups.child.children.rules.child.children
-        .subject.choices
+    const ruleSubjectOptions: InputOption[] = timeSpanGroupOptions.subject.choices.map(
+      convertApiChoiceToInputOption
     );
 
-    const ruleFrequencyModifierOptions: InputOption[] = formatApiChoicesToInputOptions(
-      response.actions.POST.time_span_groups.child.children.rules.child.children
-        .frequency_modifier.choices
+    const ruleFrequencyModifierOptions: InputOption[] = timeSpanGroupOptions.frequency_modifier.choices.map(
+      convertApiChoiceToInputOption
     );
 
     return {

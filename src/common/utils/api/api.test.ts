@@ -139,4 +139,109 @@ describe('apiRequest', () => {
       done();
     });
   });
+
+  describe('getDatePeriodFormOptions', () => {
+    it('should convert choices to input options', async (done) => {
+      const datePeriodOptions = {
+        actions: {
+          POST: {
+            resource_state: {
+              choices: [
+                {
+                  display_name: { fi: 'Auki', sv: 'Auki', en: 'Open' },
+                  value: 'open',
+                },
+                {
+                  display_name: 'Kiinni',
+                  value: 'closed',
+                },
+              ],
+            },
+            time_span_groups: {
+              child: {
+                children: {
+                  rules: {
+                    child: {
+                      children: {
+                        context: {
+                          choices: [
+                            {
+                              display_name: {
+                                fi: 'Jakso',
+                                sv: 'Jakso',
+                                en: 'Period',
+                              },
+                              value: 'period',
+                            },
+                          ],
+                        },
+                        frequency_modifier: {
+                          choices: [
+                            {
+                              display_name: {
+                                fi: 'Parillinen',
+                                sv: 'Parillinen',
+                                en: 'Even',
+                              },
+                              value: 'even',
+                            },
+                            {
+                              display_name: {
+                                fi: 'Pariton',
+                                sv: 'Pariton',
+                                en: 'Odd',
+                              },
+                              value: 'odd',
+                            },
+                          ],
+                        },
+                        subject: {
+                          choices: [],
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      mockedAxios.request.mockResolvedValue({ data: datePeriodOptions });
+      const response = await api.getDatePeriodFormOptions();
+      expect(response).toEqual({
+        resourceStateOptions: [
+          {
+            label: 'Auki',
+            value: 'open',
+          },
+          {
+            label: 'Kiinni',
+            value: 'closed',
+          },
+        ],
+        timeSpanGroup: {
+          ruleContextOptions: [
+            {
+              label: 'Jakso',
+              value: 'period',
+            },
+          ],
+          ruleFrequencyModifierOptions: [
+            {
+              label: 'Parillinen',
+              value: 'even',
+            },
+            {
+              label: 'Pariton',
+              value: 'odd',
+            },
+          ],
+          ruleSubjectOptions: [],
+        },
+      });
+      done();
+    });
+  });
 });
