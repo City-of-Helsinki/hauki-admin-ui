@@ -10,7 +10,7 @@ type FrequencyOption = {
   value: Frequency;
 };
 
-const predefinedFrequencyOptions: FrequencyOption[] = [
+const hardCodedFrequencyOptions: FrequencyOption[] = [
   {
     label: 'Jokainen',
     value: { frequency_ordinal: 1, frequency_modifier: null },
@@ -81,15 +81,8 @@ export default function Rule({
     selectedSubject?.label || ''
   );
 
-  const existingFrequency: Frequency = (rule
-    ? {
-        frequency_ordinal: rule.frequency_ordinal,
-        frequency_modifier: rule.frequency_modifier,
-      }
-    : { frequency_modifier: null, frequency_ordinal: null }) as Frequency;
-
-  const frequencyOptionValues: FrequencyOption[] = [
-    ...predefinedFrequencyOptions,
+  const predefinedFrequencyValues: FrequencyOption[] = [
+    ...hardCodedFrequencyOptions,
     ...ruleFrequencyModifierOptions.map(
       (modifierOption: InputOption): FrequencyOption => ({
         label: modifierOption.label,
@@ -100,27 +93,31 @@ export default function Rule({
       })
     ),
   ];
+  const {
+    frequency_modifier: frequencyModifier,
+    frequency_ordinal: frequencyOrdinal,
+  } = rule;
 
-  const hasFrequencyValue =
-    !!existingFrequency.frequency_modifier &&
-    !!existingFrequency.frequency_ordinal;
+  const currentFrequency: Frequency = {
+    frequency_ordinal: frequencyOrdinal || null,
+    frequency_modifier: frequencyModifier || null,
+  } as Frequency;
 
-  const isExistingFrequencyValue = !!frequencyOptionValues.find(
+  const isPredefinedFrequencySelected = !!predefinedFrequencyValues.find(
     ({ value }) =>
-      value.frequency_modifier === existingFrequency.frequency_modifier &&
-      value.frequency_ordinal === existingFrequency.frequency_ordinal
+      value.frequency_modifier === currentFrequency.frequency_modifier &&
+      value.frequency_ordinal === currentFrequency.frequency_ordinal
   );
 
-  const allFrequencyValues: FrequencyOption[] =
-    !hasFrequencyValue || isExistingFrequencyValue
-      ? frequencyOptionValues
-      : [
-          ...frequencyOptionValues,
-          {
-            label: frequencyToString(existingFrequency),
-            value: existingFrequency,
-          },
-        ];
+  const allFrequencyValues: FrequencyOption[] = isPredefinedFrequencySelected
+    ? predefinedFrequencyValues
+    : [
+        ...predefinedFrequencyValues,
+        {
+          label: frequencyToString(currentFrequency),
+          value: currentFrequency,
+        },
+      ];
 
   const frequencyOptions: InputOption[] = allFrequencyValues.map(
     frequencyToOption
@@ -168,7 +165,7 @@ export default function Rule({
         id={`rules-${index}-frequency`}
         className="opening-group-rule-column opening-group-rule-select"
         defaultValue={frequencyOptions.find(
-          ({ value }) => value === frequencyToString(existingFrequency)
+          ({ value }) => value === frequencyToString(currentFrequency)
         )}
         onChange={(selected: InputOption): void => {
           const selectedFrequency = allFrequencyValues.find(
