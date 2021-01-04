@@ -36,7 +36,7 @@ const hardCodedFrequencyOptions: FrequencyOption[] = [
 const frequencyToString = (frequency: Frequency): string =>
   `${frequency.frequency_ordinal} ${frequency.frequency_modifier} `;
 
-const frequencyToOption = ({
+const convertFrequencyToOption = ({
   value,
   label,
 }: {
@@ -120,7 +120,7 @@ export default function Rule({
       ];
 
   const frequencyOptions: InputOption[] = allFrequencyValues.map(
-    frequencyToOption
+    convertFrequencyToOption
   );
 
   const frequencyModifierField = `rules[${index}].frequency_modifier`;
