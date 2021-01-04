@@ -36,6 +36,16 @@ const hardCodedFrequencyOptions: FrequencyOption[] = [
 const frequencyToString = (frequency: Frequency): string =>
   `${frequency.frequency_ordinal} ${frequency.frequency_modifier} `;
 
+const unknownFrequencyToString = (
+  ordinal: number | null,
+  modifierLabel?: string
+): string => {
+  const optionalOrdinalLabel: string | undefined =
+    ordinal && ordinal > 1 ? `${ordinal}.` : undefined;
+
+  return [optionalOrdinalLabel, modifierLabel].join(' ');
+};
+
 const convertFrequencyToOption = ({
   value,
   label,
@@ -109,12 +119,20 @@ export default function Rule({
       value.frequency_ordinal === currentFrequency.frequency_ordinal
   );
 
+  const selectedModifier = ruleFrequencyModifierOptions.find(
+    (modifierOption) =>
+      modifierOption.value === currentFrequency.frequency_modifier
+  );
+
   const allFrequencyValues: FrequencyOption[] = isPredefinedFrequencySelected
     ? predefinedFrequencyValues
     : [
         ...predefinedFrequencyValues,
         {
-          label: frequencyToString(currentFrequency),
+          label: unknownFrequencyToString(
+            currentFrequency.frequency_ordinal,
+            selectedModifier?.label
+          ),
           value: currentFrequency,
         },
       ];
