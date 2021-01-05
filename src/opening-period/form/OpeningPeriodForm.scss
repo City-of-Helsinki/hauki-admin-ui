@@ -66,6 +66,14 @@
   }
 }
 
+.opening-period-rule-list:not(:empty) {
+  margin-top: -4rem; // A hacky way to inline the first remove button with the section title
+}
+
+.opening-period-rule-list-item {
+  padding-bottom: $spacing-s;
+}
+
 .time-span-group {
   border-top: var(--spacing-3-xs) solid var(--color-coat-of-arms);
 }

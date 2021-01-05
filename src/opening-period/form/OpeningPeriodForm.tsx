@@ -102,7 +102,11 @@ export default function OpeningPeriodForm({
     name: 'timeSpans',
   });
 
-  const { fields: ruleFields } = useFieldArray({
+  const {
+    fields: ruleFields,
+    append: appendRule,
+    remove: removeRule,
+  } = useFieldArray({
     control,
     keyName: 'rulesUiId',
     name: 'rules',
@@ -265,6 +269,7 @@ export default function OpeningPeriodForm({
                       index={index}
                       control={control}
                       setValue={setValue}
+                      remove={removeRule}
                       register={register}
                       ruleContextOptions={ruleContextOptions}
                       ruleFrequencyModifierOptions={
@@ -276,6 +281,13 @@ export default function OpeningPeriodForm({
                 )
               )}
             </ul>
+            <div className="form-group">
+              <SecondaryButton
+                dataTest="add-new-rule-span-button"
+                onClick={(): void => appendRule({})}>
+                + Lisää aukioloaikojen voimassaolosääntö
+              </SecondaryButton>
+            </div>
           </div>
         </section>
         <div className="opening-period-final-action-row-container">

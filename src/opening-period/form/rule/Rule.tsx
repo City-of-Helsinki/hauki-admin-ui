@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Select } from 'hds-react';
+import { Button as HDSButton, IconTrash, Select } from 'hds-react';
 import { ArrayField, Control, Controller } from 'react-hook-form';
-import { InputOption, GroupRule, Frequency } from '../../../common/lib/types';
 
+import { InputOption, GroupRule, Frequency } from '../../../common/lib/types';
 import './Rule.scss';
 
 type FrequencyOption = {
@@ -72,6 +72,7 @@ export default function Rule({
   rule,
   control,
   setValue,
+  remove,
   register,
   index,
   ruleContextOptions,
@@ -81,6 +82,7 @@ export default function Rule({
   rule: Partial<ArrayField<Record<string, GroupRule>>>;
   control: Control;
   setValue: Function;
+  remove: Function;
   register: Function;
   index: number;
   ruleContextOptions: InputOption[];
@@ -183,89 +185,97 @@ export default function Rule({
         defaultValue={id}
         ref={register()}
       />
-      <Controller
-        key={`rules-${index}-context`}
-        name={`rules[${index}].context`}
-        control={control}
-        defaultValue={`${context || ''}`}
-        render={({ onChange, value }): JSX.Element => (
-          <Select
-            id={`rules-${index}-context`}
-            className="opening-group-rule-column opening-group-rule-select"
-            onChange={(selected: InputOption): void => onChange(selected.value)}
-            options={ruleContextOptions}
-            defaultValue={ruleContextOptions.find(
-              (option: InputOption): boolean => option.value === value
-            )}
-            label="Valitse aika"
-            placeholder="Aikaväli"
-          />
-        )}
-      />
-      <Select
-        key={`rules-${index}-frequency`}
-        id={`rules-${index}-frequency`}
-        className="opening-group-rule-column opening-group-rule-select"
-        defaultValue={frequencyOptions.find(
-          ({ value }) => value === frequencyToString(currentFrequency)
-        )}
-        onChange={(selected: InputOption): void => onFrequencyChange(selected)}
-        options={frequencyOptions}
-        label="Valitse monesko"
-        placeholder="Tapahtumatiheys"
-      />
-      <Controller
-        key={`rules-${index}-subject`}
-        name={`rules[${index}].subject`}
-        control={control}
-        defaultValue={`${subject || ''}`}
-        render={({ onChange, value }): JSX.Element => (
-          <Select
-            className="opening-group-rule-column opening-group-rule-select"
-            defaultValue={ruleSubjectOptions.find(
-              (selected: InputOption): boolean => selected.value === value
-            )}
-            onChange={(selected: InputOption): void => {
-              onChange(selected.value);
-              setSubjectLabel(selected.label);
-            }}
-            options={ruleSubjectOptions}
-            label="Valitse ajan yksikkö"
-            placeholder="päivä tai aikaväli"
-          />
-        )}
-      />
-      <div className="opening-group-rule-column opening-group-rule-column-large">
-        <p
-          className="opening-period-rule-divider"
-          key={`rules-${index}-subject-divider`}>
-          Alkaen
-        </p>
+      <div className="opening-group-rule-remove">
+        <HDSButton
+          data-test={`remove-rule-button-${index}`}
+          className="opening-period-remove-list-item-button"
+          variant="supplementary"
+          onClick={(): void => remove(index)}
+          iconLeft={<IconTrash />}>
+          Poista aukioloaikojen voimassaolosääntö
+        </HDSButton>
+      </div>
+      <div className="opening-group-rule-fieldset">
         <Controller
-          key={`rules-${index}-start`}
-          name={`rules[${index}].start`}
+          key={`rules-${index}-context`}
+          name={`rules[${index}].context`}
           control={control}
-          defaultValue={`${startAt || ''}`}
+          defaultValue={`${context || ''}`}
           render={({ onChange, value }): JSX.Element => (
             <Select
-              className="opening-group-rule-select"
-              defaultValue={startAtOptions.find(
-                (selected: InputOption): boolean => selected.value === value
-              )}
+              id={`rules-${index}-context`}
+              className="opening-group-rule-column opening-group-rule-select"
               onChange={(selected: InputOption): void =>
                 onChange(selected.value)
               }
-              options={startAtOptions}
-              label={`Valitse monesko ${subjectLabel.toLowerCase() || ''}`}
-              placeholder="Alkaen voimassa"
+              options={ruleContextOptions}
+              defaultValue={ruleContextOptions.find(
+                (option: InputOption): boolean => option.value === value
+              )}
+              label="Valitse aika"
+              placeholder="Aikaväli"
             />
           )}
         />
-        <p
-          className="opening-period-rule-divider"
-          key={`rules-${index}-start-postfix`}>
-          {subjectLabel || ''}
-        </p>
+        <Select
+          key={`rules-${index}-frequency`}
+          id={`rules-${index}-frequency`}
+          className="opening-group-rule-column opening-group-rule-select"
+          defaultValue={frequencyOptions.find(
+            ({ value }) => value === frequencyToString(currentFrequency)
+          )}
+          onChange={(selected: InputOption): void =>
+            onFrequencyChange(selected)
+          }
+          options={frequencyOptions}
+          label="Valitse monesko"
+          placeholder="Tapahtumatiheys"
+        />
+        <Controller
+          key={`rules-${index}-subject`}
+          name={`rules[${index}].subject`}
+          control={control}
+          defaultValue={`${subject || ''}`}
+          render={({ onChange, value }): JSX.Element => (
+            <Select
+              className="opening-group-rule-column opening-group-rule-select"
+              defaultValue={ruleSubjectOptions.find(
+                (selected: InputOption): boolean => selected.value === value
+              )}
+              onChange={(selected: InputOption): void => {
+                onChange(selected.value);
+                setSubjectLabel(selected.label);
+              }}
+              options={ruleSubjectOptions}
+              label="Valitse ajan yksikkö"
+              placeholder="päivä tai aikaväli"
+            />
+          )}
+        />
+        <div className="opening-group-rule-column opening-group-rule-column-large">
+          <p key={`rules-${index}-subject-divider`}>Alkaen</p>
+          <Controller
+            key={`rules-${index}-start`}
+            name={`rules[${index}].start`}
+            control={control}
+            defaultValue={`${startAt || ''}`}
+            render={({ onChange, value }): JSX.Element => (
+              <Select
+                className="opening-group-rule-select"
+                defaultValue={startAtOptions.find(
+                  (selected: InputOption): boolean => selected.value === value
+                )}
+                onChange={(selected: InputOption): void =>
+                  onChange(selected.value)
+                }
+                options={startAtOptions}
+                label={`Valitse monesko ${subjectLabel.toLowerCase() || ''}`}
+                placeholder="Alkaen voimassa"
+              />
+            )}
+          />
+          <p key={`rules-${index}-start-postfix`}>{subjectLabel || ''}</p>
+        </div>
       </div>
     </div>
   );

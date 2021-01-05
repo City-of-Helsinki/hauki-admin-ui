@@ -1,10 +1,15 @@
 @import 'node_modules/hds-design-tokens/lib/all.scss';
 
-.opening-group-rule {
+.opening-group-rule-remove {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.opening-group-rule-fieldset {
   display: flex;
   align-items: flex-end;
   flex-wrap: wrap;
-  margin: 0 -1rem;
+  margin: $spacing-xs -1rem 0;
   width: 100%;
 
   > * {
