@@ -52,8 +52,7 @@
 .opening-period-time-span-list,
 .opening-period-rule-list {
   margin: 0;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0;
   position: relative;
 }
 
@@ -61,12 +60,11 @@
 .opening-period-rule-list-item {
   border-top: var(--spacing-4-xs) solid var(--primary-color);
   list-style: none;
-  margin: $spacing-2-xl 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 0 $spacing-xl;
 
   &:first-child {
     border-top: none;
-    margin-top: 0;
   }
 }
 

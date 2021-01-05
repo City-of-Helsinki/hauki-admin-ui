@@ -176,7 +176,7 @@ export default function Rule({
   }, [frequencyModifierField, frequencyOrdinalField, register]);
 
   return (
-    <div className="opening-group-rule" key={`rules-${index}`}>
+    <div className="opening-group-rule form-control" key={`rules-${index}`}>
       <input
         type="hidden"
         name={`rules[${index}].id`}
