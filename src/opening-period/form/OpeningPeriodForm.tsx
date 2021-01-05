@@ -218,7 +218,7 @@ export default function OpeningPeriodForm({
         <section className="form-section time-span-group">
           <h3 className="opening-period-section-title">Aukioloajat</h3>
           <ul
-            className="opening-period-time-span-list form-group"
+            className="opening-period-field-list form-group"
             data-test="time-span-list">
             {fields.map(
               (
@@ -226,7 +226,7 @@ export default function OpeningPeriodForm({
                 index
               ) => (
                 <li
-                  className="opening-period-time-span-list-item"
+                  className="opening-period-field-list-item"
                   key={`time-span-${item.id || index}`}>
                   <TimeSpan
                     item={item}
@@ -243,8 +243,7 @@ export default function OpeningPeriodForm({
           <div className="form-group">
             <SecondaryButton
               dataTest="add-new-time-span-button"
-              onClick={(): void => append({})}
-              className="add-new-time-span-button">
+              onClick={(): void => append({})}>
               + Lisää aukioloaika
             </SecondaryButton>
           </div>
@@ -252,14 +251,14 @@ export default function OpeningPeriodForm({
             <h3 className="opening-period-section-title">
               Aukioloaikojen voimassaolo
             </h3>
-            <ul className="opening-period-rule-list form-group">
+            <ul className="opening-period-field-list opening-period-rule-list form-group">
               {ruleFields.map(
                 (
                   rule: Partial<ArrayField<Record<string, GroupRule>>>,
                   index
                 ) => (
                   <li
-                    className="opening-period-rule-list-item"
+                    className="opening-period-field-list-item opening-period-rule-list-item"
                     key={`rule-${index}`}>
                     <Rule
                       rule={rule}

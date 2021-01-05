@@ -33,7 +33,7 @@ export default function TimeSpan({
         <Weekdays index={index} item={item} register={register} />
         <HDSButton
           data-test={`remove-time-span-button-${index}`}
-          className="remove-time-span-button"
+          className="opening-period-remove-list-item-button"
           variant="supplementary"
           onClick={(): void => remove(index)}
           iconLeft={<IconTrash />}>

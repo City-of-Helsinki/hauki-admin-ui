@@ -44,20 +44,18 @@
 .form-group {
   padding: $spacing-layout-s 0;
 
-  &:not(:last-child) {
+  &:not(:last-child):not(:empty) {
     border-bottom: 1px solid var(--hauki-content-border-color);
   }
 }
 
-.opening-period-time-span-list,
-.opening-period-rule-list {
+.opening-period-field-list {
   margin: 0;
   padding: 0;
   position: relative;
 }
 
-.opening-period-time-span-list-item,
-.opening-period-rule-list-item {
+.opening-period-field-list-item {
   border-top: var(--spacing-4-xs) solid var(--primary-color);
   list-style: none;
   margin: 0;
@@ -70,4 +68,8 @@
 
 .time-span-group {
   border-top: var(--spacing-3-xs) solid var(--color-coat-of-arms);
+}
+
+.opening-period-remove-list-item-button.opening-period-remove-list-item-button {
+  color: var(--color-coat-of-arms);
 }
