@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { render, screen, fireEvent } from '@testing-library/react';
 import {
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
   Resource,
   ResourceState,
 } from '../../common/lib/types';
@@ -157,26 +157,32 @@ async function selectTimeAndTypeInTimeSpan(
 
 describe(`<CreateNewOpeningPeriodPage />`, () => {
   jest.setTimeout(30000); // We suspect rendering + react-hooks + act wrapping + async await causes tests to run slow
-  let testDatePeriodOptions: DatePeriodFormOptions;
+  let testDatePeriodConfig: UiDatePeriodConfig;
   let testResource: Resource;
   let testDatePeriod: DatePeriod;
 
   beforeEach(() => {
-    testDatePeriodOptions = {
-      resourceStateOptions: [
-        {
-          label: 'Open',
-          value: 'open',
-        },
-        {
-          label: 'Open',
-          value: 'open',
-        },
-      ],
+    testDatePeriodConfig = {
+      resourceState: {
+        options: [
+          {
+            label: 'Open',
+            value: 'open',
+          },
+        ],
+      },
       timeSpanGroup: {
-        ruleContextOptions: [],
-        ruleSubjectOptions: [],
-        ruleFrequencyModifierOptions: [],
+        rule: {
+          context: {
+            options: [],
+          },
+          subject: {
+            options: [],
+          },
+          frequencyModifier: {
+            options: [],
+          },
+        },
       },
     };
 
@@ -224,7 +230,7 @@ describe(`<CreateNewOpeningPeriodPage />`, () => {
 
     jest
       .spyOn(api, 'getDatePeriodFormOptions')
-      .mockImplementation(() => Promise.resolve(testDatePeriodOptions));
+      .mockImplementation(() => Promise.resolve(testDatePeriodConfig));
 
     jest
       .spyOn(api, 'postDatePeriod')

@@ -4,7 +4,7 @@ import { ParsedUrlQueryInput } from 'querystring';
 import {
   ApiChoice,
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
   DatePeriodOptions,
   InputOption,
   LanguageStrings,
@@ -211,7 +211,7 @@ export default {
       path: `${datePeriodBasePath}/${datePeriodId}`,
     }),
 
-  getDatePeriodFormOptions: async (): Promise<DatePeriodFormOptions> => {
+  getDatePeriodFormOptions: async (): Promise<UiDatePeriodConfig> => {
     const response = await apiOptions<DatePeriodOptions>({
       path: `${datePeriodBasePath}`,
     });
@@ -239,11 +239,21 @@ export default {
     );
 
     return {
-      resourceStateOptions,
+      resourceState: {
+        options: resourceStateOptions,
+      },
       timeSpanGroup: {
-        ruleContextOptions,
-        ruleSubjectOptions,
-        ruleFrequencyModifierOptions,
+        rule: {
+          context: {
+            options: ruleContextOptions,
+          },
+          subject: {
+            options: ruleSubjectOptions,
+          },
+          frequencyModifier: {
+            options: ruleFrequencyModifierOptions,
+          },
+        },
       },
     };
   },

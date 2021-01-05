@@ -4,7 +4,11 @@ import { Button as HDSButton, IconTrash, Select, TextInput } from 'hds-react';
 import Weekdays from './Weekdays';
 import './TimeSpan.scss';
 import TimeInput from './TimeInput';
-import { InputOption, TimeSpanFormFormat } from '../../../common/lib/types';
+import {
+  UiFieldConfig,
+  TimeSpanFormFormat,
+  InputOption,
+} from '../../../common/lib/types';
 
 export default function TimeSpan({
   item,
@@ -12,15 +16,17 @@ export default function TimeSpan({
   remove,
   register,
   control,
-  resourceStateOptions,
+  resourceStateConfig,
 }: {
   item: Partial<ArrayField<Record<string, TimeSpanFormFormat>>>;
   index: number;
   remove: Function;
   register: Function;
   control: Control;
-  resourceStateOptions: InputOption[];
+  resourceStateConfig: UiFieldConfig;
 }): JSX.Element {
+  const { options: resourceStateOptions } = resourceStateConfig;
+
   return (
     <div data-test={`time-span-${index}`} className="time-span-container">
       <input

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Button as HDSButton, IconTrash, Select } from 'hds-react';
 import { ArrayField, Control, Controller } from 'react-hook-form';
 
-import { InputOption, GroupRule, Frequency } from '../../../common/lib/types';
+import {
+  InputOption,
+  GroupRule,
+  Frequency,
+  UiRuleConfig,
+} from '../../../common/lib/types';
 import './Rule.scss';
 
 type FrequencyOption = {
@@ -75,9 +80,7 @@ export default function Rule({
   remove,
   register,
   index,
-  ruleContextOptions,
-  ruleFrequencyModifierOptions,
-  ruleSubjectOptions,
+  ruleOptions,
 }: {
   rule: Partial<ArrayField<Record<string, GroupRule>>>;
   control: Control;
@@ -85,9 +88,7 @@ export default function Rule({
   remove: Function;
   register: Function;
   index: number;
-  ruleContextOptions: InputOption[];
-  ruleFrequencyModifierOptions: InputOption[];
-  ruleSubjectOptions: InputOption[];
+  ruleOptions: UiRuleConfig;
 }): JSX.Element {
   const {
     id,
@@ -98,8 +99,14 @@ export default function Rule({
     frequency_ordinal: frequencyOrdinal,
   } = rule;
 
-  const selectedSubject = ruleSubjectOptions.find(
-    ({ value }) => value === `${subject}`
+  const {
+    context: { options: contextOptions },
+    subject: { options: subjectOptions },
+    frequencyModifier: { options: frequencyModifierOptions },
+  } = ruleOptions;
+
+  const selectedSubject = subjectOptions.find(
+    ({ value }: InputOption) => value === `${subject}`
   );
   const [subjectLabel, setSubjectLabel] = useState<string>(
     selectedSubject?.label ?? ''
@@ -115,7 +122,7 @@ export default function Rule({
 
   const knownFrequencyValues: FrequencyOption[] = [
     ...hardCodedFrequencyOptions,
-    ...ruleFrequencyModifierOptions.map(
+    ...frequencyModifierOptions.map(
       (modifierOption: InputOption): FrequencyOption => ({
         label: modifierOption.label,
         value: {
@@ -132,8 +139,8 @@ export default function Rule({
       value.frequency_ordinal === currentFrequency.frequency_ordinal
   );
 
-  const selectedModifier = ruleFrequencyModifierOptions.find(
-    (modifierOption) =>
+  const selectedModifier = frequencyModifierOptions.find(
+    (modifierOption: InputOption) =>
       modifierOption.value === currentFrequency.frequency_modifier
   );
 
@@ -208,8 +215,8 @@ export default function Rule({
               onChange={(selected: InputOption): void =>
                 onChange(selected.value)
               }
-              options={ruleContextOptions}
-              defaultValue={ruleContextOptions.find(
+              options={contextOptions}
+              defaultValue={contextOptions.find(
                 (option: InputOption): boolean => option.value === value
               )}
               label="Valitse aika"
@@ -239,14 +246,14 @@ export default function Rule({
           render={({ onChange, value }): JSX.Element => (
             <Select
               className="opening-group-rule-column opening-group-rule-select"
-              defaultValue={ruleSubjectOptions.find(
+              defaultValue={subjectOptions.find(
                 (selected: InputOption): boolean => selected.value === value
               )}
               onChange={(selected: InputOption): void => {
                 onChange(selected.value);
                 setSubjectLabel(selected.label);
               }}
-              options={ruleSubjectOptions}
+              options={subjectOptions}
               label="Valitse ajan yksikkö"
               placeholder="päivä tai aikaväli"
             />

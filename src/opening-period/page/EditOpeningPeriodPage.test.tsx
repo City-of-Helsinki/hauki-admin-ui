@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
   Resource,
   ResourceState,
 } from '../../common/lib/types';
@@ -15,22 +15,32 @@ const closedResourceState = {
   label: 'Suljettu',
 };
 
-const testDatePeriodOptions: DatePeriodFormOptions = {
-  resourceStateOptions: [
-    {
-      value: 'open',
-      label: 'Auki',
-    },
-    { ...closedResourceState },
-    {
-      value: 'self_service',
-      label: 'Itsepalvelu',
-    },
-  ],
+const testDatePeriodOptions: UiDatePeriodConfig = {
+  resourceState: {
+    options: [
+      {
+        value: 'open',
+        label: 'Auki',
+      },
+      { ...closedResourceState },
+      {
+        value: 'self_service',
+        label: 'Itsepalvelu',
+      },
+    ],
+  },
   timeSpanGroup: {
-    ruleContextOptions: [],
-    ruleSubjectOptions: [],
-    ruleFrequencyModifierOptions: [],
+    rule: {
+      context: {
+        options: [],
+      },
+      subject: {
+        options: [],
+      },
+      frequencyModifier: {
+        options: [],
+      },
+    },
   },
 };
 
@@ -57,7 +67,7 @@ const testResource: Resource = {
   },
 };
 
-const weedayTimeSpanId = 2636;
+const weekdayTimeSpanId = 2636;
 const weekendTimeSpanId = 2637;
 
 const testDatePeriod: DatePeriod = {
@@ -94,7 +104,7 @@ const testDatePeriod: DatePeriod = {
             en: null,
           },
           end_time: '18:00:00',
-          id: weedayTimeSpanId,
+          id: weekdayTimeSpanId,
           resource_state: ResourceState.OPEN,
           start_time: '10:00:00',
           weekdays: [1, 2, 3, 4, 5],

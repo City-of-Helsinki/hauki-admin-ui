@@ -3,7 +3,7 @@ import { ArrayField, useFieldArray, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import {
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
   Language,
   GroupRule,
   TimeSpanFormFormat,
@@ -28,7 +28,7 @@ interface OpeningPeriodFormData {
   openingPeriodBeginDate: string | undefined;
   openingPeriodEndDate: string | undefined;
   timeSpans: Array<TimeSpanFormFormat> | {}[];
-  rules: GroupRule[] | {}[];
+  rules: GroupRule[];
 }
 
 type SubmitStatus = 'init' | 'succeeded' | 'error';
@@ -42,7 +42,7 @@ export default function OpeningPeriodForm({
   formId,
   datePeriod,
   resourceId,
-  datePeriodOptions,
+  datePeriodConfig,
   submitFn,
   successTextAndLabel,
   errorTextAndLabel,
@@ -50,16 +50,16 @@ export default function OpeningPeriodForm({
   formId: string;
   datePeriod?: DatePeriod;
   resourceId: number;
-  datePeriodOptions: DatePeriodFormOptions;
+  datePeriodConfig: UiDatePeriodConfig;
   submitFn: (datePeriod: DatePeriod) => Promise<DatePeriod>;
   successTextAndLabel: NotificationTexts;
   errorTextAndLabel: NotificationTexts;
 }): JSX.Element {
   const language = Language.FI;
-  const { resourceStateOptions } = datePeriodOptions;
-  const { ruleContextOptions } = datePeriodOptions.timeSpanGroup;
-  const { ruleSubjectOptions } = datePeriodOptions.timeSpanGroup;
-  const { ruleFrequencyModifierOptions } = datePeriodOptions.timeSpanGroup;
+  const {
+    timeSpanGroup: { rule: ruleOptions },
+    resourceState: resourceStateOptions,
+  } = datePeriodConfig;
 
   const firstTimeSpanGroup: TimeSpanGroup | undefined =
     datePeriod?.time_span_groups[0];
@@ -69,9 +69,9 @@ export default function OpeningPeriodForm({
       ? formatApiTimeSpansToFormFormat(firstTimeSpanGroup.time_spans)
       : [{}];
 
-  const rules: GroupRule[] | {}[] = firstTimeSpanGroup?.rules.length
+  const rules: GroupRule[] | [] = firstTimeSpanGroup?.rules.length
     ? firstTimeSpanGroup?.rules
-    : [{}];
+    : [];
 
   const [periodBeginDate, setPeriodBeginDate] = useState<Date | null>(
     datePeriod?.start_date ? new Date(datePeriod?.start_date) : null
@@ -117,18 +117,20 @@ export default function OpeningPeriodForm({
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('init');
 
   const onSubmit = async (data: OpeningPeriodFormData): Promise<void> => {
-    const validTimeSpans: TimeSpanFormFormat[] = data.timeSpans.filter(
-      (span: TimeSpanFormFormat | {}) => Object.keys(span).length > 0
-    ) as TimeSpanFormFormat[];
+    const validTimeSpans: TimeSpanFormFormat[] = data.timeSpans
+      ? (data.timeSpans.filter(
+          (span: TimeSpanFormFormat | {}) => Object.keys(span).length > 0
+        ) as TimeSpanFormFormat[])
+      : [];
 
-    const validRules: GroupRule[] = data.rules.filter(
-      (rule: GroupRule | {}): boolean => {
-        const validValues = Object.values(rule)
-          .filter((value) => value !== '')
-          .filter((val) => val);
-        return validValues.length > 0;
-      }
-    ) as GroupRule[];
+    const validRules: GroupRule[] = data.rules
+      ? (data.rules.filter((rule: GroupRule | {}): boolean => {
+          const validValues = Object.values(rule)
+            .filter((value) => value !== '')
+            .filter((val) => val);
+          return validValues.length > 0;
+        }) as GroupRule[])
+      : [];
 
     try {
       const dataAsDatePeriod: DatePeriod = {
@@ -234,7 +236,7 @@ export default function OpeningPeriodForm({
                   key={`time-span-${item.id || index}`}>
                   <TimeSpan
                     item={item}
-                    resourceStateOptions={resourceStateOptions}
+                    resourceStateConfig={resourceStateOptions}
                     control={control}
                     register={register}
                     index={index}
@@ -271,11 +273,7 @@ export default function OpeningPeriodForm({
                       setValue={setValue}
                       remove={removeRule}
                       register={register}
-                      ruleContextOptions={ruleContextOptions}
-                      ruleFrequencyModifierOptions={
-                        ruleFrequencyModifierOptions
-                      }
-                      ruleSubjectOptions={ruleSubjectOptions}
+                      ruleOptions={ruleOptions}
                     />
                   </li>
                 )

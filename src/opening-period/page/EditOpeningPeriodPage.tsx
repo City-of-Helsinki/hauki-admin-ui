@@ -3,7 +3,7 @@ import { Notification } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
   Resource,
 } from '../../common/lib/types';
 import {
@@ -24,8 +24,8 @@ export default function EditOpeningPeriodPage({
   const id = parseInt(datePeriodId, 10);
   const [resource, setResource] = useState<Resource>();
   const [datePeriod, setDatePeriod] = useState<DatePeriod>();
-  const [datePeriodOptions, setDatePeriodOptions] = useState<
-    DatePeriodFormOptions
+  const [datePeriodConfig, setDatePeriodConfig] = useState<
+    UiDatePeriodConfig
   >();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasDataLoadingError, setHasDataLoadingError] = useState<boolean>(
@@ -41,7 +41,7 @@ export default function EditOpeningPeriodPage({
         const [
           apiResource,
           apiDatePeriod,
-          apiDatePeriodOptions,
+          uiDatePeriodOptions,
         ] = await Promise.all([
           api.getResource(resourceId),
           api.getDatePeriod(id),
@@ -49,7 +49,7 @@ export default function EditOpeningPeriodPage({
         ]);
         setResource(apiResource);
         setDatePeriod(apiDatePeriod);
-        setDatePeriodOptions(apiDatePeriodOptions);
+        setDatePeriodConfig(uiDatePeriodOptions);
         setIsLoading(false);
       } catch (e) {
         setHasDataLoadingError(true);
@@ -93,12 +93,12 @@ export default function EditOpeningPeriodPage({
         </ResourceTitle>
         <ResourceAddress resource={resource} />
       </ResourceInfo>
-      {resource && datePeriod && datePeriodOptions && (
+      {resource && datePeriod && datePeriodConfig && (
         <OpeningPeriodForm
           formId="edit-opening-period-form"
           datePeriod={datePeriod}
           resourceId={resource.id}
-          datePeriodOptions={datePeriodOptions}
+          datePeriodConfig={datePeriodConfig}
           submitFn={submitFn}
           successTextAndLabel={{
             label: 'Aukiolojakson muutokset tallennettu onnistuneesti.',

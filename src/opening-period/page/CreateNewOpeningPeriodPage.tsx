@@ -3,7 +3,7 @@ import { Notification } from 'hds-react';
 import {
   Resource,
   DatePeriod,
-  DatePeriodFormOptions,
+  UiDatePeriodConfig,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
 import {
@@ -20,8 +20,8 @@ export default function CreateNewOpeningPeriodPage({
   resourceId: string;
 }): JSX.Element {
   const [resource, setResource] = useState<Resource>();
-  const [datePeriodOptions, setDatePeriodOptions] = useState<
-    DatePeriodFormOptions
+  const [datePeriodConfig, setDatePeriodConfig] = useState<
+    UiDatePeriodConfig
   >();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasDataLoadingError, setHasDataLoadingError] = useState<boolean>(
@@ -34,12 +34,12 @@ export default function CreateNewOpeningPeriodPage({
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
       try {
-        const [apiResource, apiDatePeriodOptions] = await Promise.all([
+        const [apiResource, uiDatePeriodOptions] = await Promise.all([
           api.getResource(resourceId),
           api.getDatePeriodFormOptions(),
         ]);
         setResource(apiResource);
-        setDatePeriodOptions(apiDatePeriodOptions);
+        setDatePeriodConfig(uiDatePeriodOptions);
         setIsLoading(false);
       } catch (e) {
         setHasDataLoadingError(true);
@@ -84,11 +84,11 @@ export default function CreateNewOpeningPeriodPage({
         </ResourceTitle>
         <ResourceAddress resource={resource} />
       </ResourceInfo>
-      {resource && datePeriodOptions && (
+      {resource && datePeriodConfig && (
         <OpeningPeriodForm
           formId="add-new-opening-period-form"
           resourceId={resource.id}
-          datePeriodOptions={datePeriodOptions}
+          datePeriodConfig={datePeriodConfig}
           submitFn={submitFn}
           successTextAndLabel={{
             label: 'Aukiolojakso tallennettu onnistuneesti.',

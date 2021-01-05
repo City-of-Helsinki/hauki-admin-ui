@@ -141,7 +141,7 @@ describe('apiRequest', () => {
   });
 
   describe('getDatePeriodFormOptions', () => {
-    it('should convert choices to input options', async (done) => {
+    it('should convert options to uiConfig', async (done) => {
       const datePeriodOptions = {
         actions: {
           POST: {
@@ -211,34 +211,44 @@ describe('apiRequest', () => {
       mockedAxios.request.mockResolvedValue({ data: datePeriodOptions });
       const response = await api.getDatePeriodFormOptions();
       expect(response).toEqual({
-        resourceStateOptions: [
-          {
-            label: 'Auki',
-            value: 'open',
-          },
-          {
-            label: 'Kiinni',
-            value: 'closed',
-          },
-        ],
+        resourceState: {
+          options: [
+            {
+              label: 'Auki',
+              value: 'open',
+            },
+            {
+              label: 'Kiinni',
+              value: 'closed',
+            },
+          ],
+        },
         timeSpanGroup: {
-          ruleContextOptions: [
-            {
-              label: 'Jakso',
-              value: 'period',
+          rule: {
+            context: {
+              options: [
+                {
+                  label: 'Jakso',
+                  value: 'period',
+                },
+              ],
             },
-          ],
-          ruleFrequencyModifierOptions: [
-            {
-              label: 'Parillinen',
-              value: 'even',
+            subject: {
+              options: [],
             },
-            {
-              label: 'Pariton',
-              value: 'odd',
+            frequencyModifier: {
+              options: [
+                {
+                  label: 'Parillinen',
+                  value: 'even',
+                },
+                {
+                  label: 'Pariton',
+                  value: 'odd',
+                },
+              ],
             },
-          ],
-          ruleSubjectOptions: [],
+          },
         },
       });
       done();
