@@ -83,15 +83,31 @@ export default function Rule({
   ruleFrequencyModifierOptions: InputOption[];
   ruleSubjectOptions: InputOption[];
 }): JSX.Element {
+  const {
+    id,
+    context,
+    subject,
+    start_at: startAt,
+    frequency_modifier: frequencyModifier,
+    frequency_ordinal: frequencyOrdinal,
+  } = rule;
+
   const selectedSubject = ruleSubjectOptions.find(
-    ({ value }) => value === `${rule.subject}`
+    ({ value }) => value === `${subject}`
   );
-
   const [subjectLabel, setSubjectLabel] = useState<string>(
-    selectedSubject?.label || ''
+    selectedSubject?.label ?? ''
   );
 
-  const predefinedFrequencyValues: FrequencyOption[] = [
+  const frequencyModifierField = `rules[${index}].frequency_modifier`;
+  const frequencyOrdinalField = `rules[${index}].frequency_ordinal`;
+
+  const currentFrequency: Frequency = {
+    frequency_ordinal: frequencyOrdinal || null,
+    frequency_modifier: frequencyModifier || null,
+  } as Frequency;
+
+  const knownFrequencyValues: FrequencyOption[] = [
     ...hardCodedFrequencyOptions,
     ...ruleFrequencyModifierOptions.map(
       (modifierOption: InputOption): FrequencyOption => ({
@@ -103,17 +119,8 @@ export default function Rule({
       })
     ),
   ];
-  const {
-    frequency_modifier: frequencyModifier,
-    frequency_ordinal: frequencyOrdinal,
-  } = rule;
 
-  const currentFrequency: Frequency = {
-    frequency_ordinal: frequencyOrdinal || null,
-    frequency_modifier: frequencyModifier || null,
-  } as Frequency;
-
-  const isPredefinedFrequencySelected = !!predefinedFrequencyValues.find(
+  const isKnownFrequencySelected = !!knownFrequencyValues.find(
     ({ value }) =>
       value.frequency_modifier === currentFrequency.frequency_modifier &&
       value.frequency_ordinal === currentFrequency.frequency_ordinal
@@ -124,10 +131,10 @@ export default function Rule({
       modifierOption.value === currentFrequency.frequency_modifier
   );
 
-  const allFrequencyValues: FrequencyOption[] = isPredefinedFrequencySelected
-    ? predefinedFrequencyValues
+  const allFrequencyValues: FrequencyOption[] = isKnownFrequencySelected
+    ? knownFrequencyValues
     : [
-        ...predefinedFrequencyValues,
+        ...knownFrequencyValues,
         {
           label: unknownFrequencyToString(
             currentFrequency.frequency_ordinal,
@@ -141,8 +148,23 @@ export default function Rule({
     convertFrequencyToOption
   );
 
-  const frequencyModifierField = `rules[${index}].frequency_modifier`;
-  const frequencyOrdinalField = `rules[${index}].frequency_ordinal`;
+  const onFrequencyChange = (selected: InputOption): void => {
+    const selectedFrequency = allFrequencyValues.find(
+      ({ label }) => label === selected.label
+    );
+
+    if (selectedFrequency) {
+      setValue(
+        frequencyModifierField,
+        selectedFrequency.value.frequency_modifier
+      );
+
+      setValue(
+        frequencyOrdinalField,
+        selectedFrequency.value.frequency_ordinal
+      );
+    }
+  };
 
   useEffect(() => {
     register(frequencyModifierField);
@@ -154,21 +176,19 @@ export default function Rule({
       <input
         type="hidden"
         name={`rules[${index}].id`}
-        defaultValue={rule.id}
+        defaultValue={id}
         ref={register()}
       />
       <Controller
         key={`rules-${index}-context`}
         name={`rules[${index}].context`}
         control={control}
-        defaultValue={`${rule.context || ''}`}
+        defaultValue={`${context || ''}`}
         render={({ onChange, value }): JSX.Element => (
           <Select
             id={`rules-${index}-context`}
             className="opening-group-rule-column opening-group-rule-select"
-            onChange={(selected: InputOption): void => {
-              onChange(selected.value);
-            }}
+            onChange={(selected: InputOption): void => onChange(selected.value)}
             options={ruleContextOptions}
             defaultValue={ruleContextOptions.find(
               (option: InputOption): boolean => option.value === value
@@ -185,23 +205,7 @@ export default function Rule({
         defaultValue={frequencyOptions.find(
           ({ value }) => value === frequencyToString(currentFrequency)
         )}
-        onChange={(selected: InputOption): void => {
-          const selectedFrequency = allFrequencyValues.find(
-            ({ label }) => label === selected.label
-          );
-
-          if (selectedFrequency) {
-            setValue(
-              frequencyModifierField,
-              selectedFrequency.value.frequency_modifier
-            );
-
-            setValue(
-              frequencyOrdinalField,
-              selectedFrequency.value.frequency_ordinal
-            );
-          }
-        }}
+        onChange={(selected: InputOption): void => onFrequencyChange(selected)}
         options={frequencyOptions}
         label="Valitse monesko"
         placeholder="Tapahtumatiheys"
@@ -210,7 +214,7 @@ export default function Rule({
         key={`rules-${index}-subject`}
         name={`rules[${index}].subject`}
         control={control}
-        defaultValue={`${rule.subject || ''}`}
+        defaultValue={`${subject || ''}`}
         render={({ onChange, value }): JSX.Element => (
           <Select
             className="opening-group-rule-column opening-group-rule-select"
@@ -218,8 +222,8 @@ export default function Rule({
               (selected: InputOption): boolean => selected.value === value
             )}
             onChange={(selected: InputOption): void => {
-              setSubjectLabel(selected.label);
               onChange(selected.value);
+              setSubjectLabel(selected.label);
             }}
             options={ruleSubjectOptions}
             label="Valitse ajan yksikkö"
@@ -237,16 +241,16 @@ export default function Rule({
           key={`rules-${index}-start`}
           name={`rules[${index}].start`}
           control={control}
-          defaultValue={`${rule.start || ''}`}
+          defaultValue={`${startAt || ''}`}
           render={({ onChange, value }): JSX.Element => (
             <Select
               className="opening-group-rule-select"
               defaultValue={startAtOptions.find(
                 (selected: InputOption): boolean => selected.value === value
               )}
-              onChange={(selected: InputOption): void => {
-                onChange(selected.value);
-              }}
+              onChange={(selected: InputOption): void =>
+                onChange(selected.value)
+              }
               options={startAtOptions}
               label={`Valitse monesko ${subjectLabel.toLowerCase() || ''}`}
               placeholder="Alkaen voimassa"
