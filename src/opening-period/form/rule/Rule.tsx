@@ -91,7 +91,7 @@ export default function Rule({
     id,
     context,
     subject,
-    start_at: startAt,
+    start: startAt,
     frequency_modifier: frequencyModifier,
     frequency_ordinal: frequencyOrdinal,
   } = rule;
