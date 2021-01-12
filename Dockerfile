@@ -53,7 +53,7 @@ COPY .env .
 # Make script executable
 RUN chmod +x env.sh
 
-USER nginx
+USER 1001
 
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
 
