@@ -40,7 +40,7 @@ RUN chgrp -R 0 /usr/share/nginx/html && \
     chmod -R g=u /usr/share/nginx/html
 
 # Copy static build
-COPY --from=staticbuilder --chown=nginx:nginx /app/build /usr/share/nginx/html
+COPY --from=staticbuilder /app/build /usr/share/nginx/html
 
 # Copy nginx config
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
