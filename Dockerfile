@@ -34,6 +34,9 @@ RUN yarn build
 FROM registry.access.redhat.com/ubi8/nginx-118 as production
 # =============================
 
+RUN chgrp -R 0 /usr/share/nginx/html && \
+    chmod -R g=u /usr/share/nginx/html
+
 # Copy static build
 COPY --from=staticbuilder --chown=nginx:nginx /app/build /usr/share/nginx/html
 
