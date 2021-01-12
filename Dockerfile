@@ -34,6 +34,8 @@ RUN yarn build
 FROM registry.access.redhat.com/ubi8/nginx-118 as production
 # =============================
 
+USER root
+
 RUN chgrp -R 0 /usr/share/nginx/html && \
     chmod -R g=u /usr/share/nginx/html
 
