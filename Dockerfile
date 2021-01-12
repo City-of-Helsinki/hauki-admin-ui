@@ -31,7 +31,7 @@ COPY --chown=appuser:appuser . .
 RUN yarn build
 
 # =============================
-FROM nginx:1.19 as production
+FROM registry.access.redhat.com/ubi8/nginx-118 as production
 # =============================
 
 # Copy static build
