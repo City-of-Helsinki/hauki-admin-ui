@@ -32,7 +32,11 @@ const descriptionPlaceholderTexts: LanguageStrings = {
   en: 'Esim. for women only',
 };
 
-const isEmptyTime = (timeString: string): boolean => {
+const isEmptyTime = (timeString: string | undefined): boolean => {
+  if (!timeString) {
+    return true;
+  }
+
   const [hours, minutes] = timeString.split(':');
   return !hours && !minutes;
 };
@@ -139,7 +143,7 @@ export default function TimeSpan({
                     validateTime(startTime) ||
                     'Alkuaika on virheellisessä muodossa',
                   timeRange: (startTime: string): boolean | string => {
-                    if (fullDay) {
+                    if (getValues(fullDayFieldKey)) {
                       return true;
                     }
 
@@ -176,7 +180,7 @@ export default function TimeSpan({
                   validateTime(endTime) ||
                   'Loppuaika on virheellisessä muodossa',
                 timeRange: (endTime: string): boolean | string => {
-                  if (fullDay) {
+                  if (getValues(fullDayFieldKey)) {
                     return true;
                   }
 
