@@ -4,8 +4,10 @@ import api from '../common/utils/api/api';
 import OpeningHoursForm from '../components/opening-hours-form/OpeningHoursForm';
 
 export default function CreateNewOpeningPeriodPage({
+  parentId,
   resourceId,
 }: {
+  parentId?: string;
   resourceId: string;
 }): JSX.Element {
   const [resource, setResource] = useState<Resource>();
