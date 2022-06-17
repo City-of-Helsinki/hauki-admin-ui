@@ -62,7 +62,7 @@ const OpeningPeriodsList = ({
           onClick={(): void => {
             if (parentId) {
               history.push(
-                `/resource/${parentId}/period/new/child/${resourceId}`
+                `/resource/${parentId}/child/${resourceId}/period/new`
               );
             } else {
               history.push(`/resource/${resourceId}/period/new`);

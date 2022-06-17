@@ -106,14 +106,10 @@ const OpeningHoursForm = ({
   });
   const isMobile = useMobile();
 
+  console.log(parentId);
+
   const returnToResourcePage = (): void =>
-    history.push(
-      `/resource/${
-        parentId
-          ? `${parentId}?childResourceEdited=${resource.id}`
-          : resource.id
-      }`
-    );
+    history.push(`/resource/${parentId ? `${parentId}` : resource.id}`);
 
   const onSubmit = (values: OpeningHoursFormValues): void => {
     if (!resource) {

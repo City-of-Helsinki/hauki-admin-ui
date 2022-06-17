@@ -89,7 +89,7 @@ export default function OpeningPeriod({
             data-test={`openingPeriodEditLink-${datePeriod.id}`}
             to={
               parentId
-                ? `/resource/${parentId}/period/${datePeriod.id}/child/${resourceId}`
+                ? `/resource/${parentId}/child/${resourceId}/period/${datePeriod.id}`
                 : `/resource/${resourceId}/period/${datePeriod.id}`
             }>
             <IconPenLine aria-hidden="true" />

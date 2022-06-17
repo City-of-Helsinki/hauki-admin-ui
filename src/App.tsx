@@ -133,7 +133,7 @@ export default function App(): JSX.Element {
                 id="create-new-opening-period-route"
                 exact
                 path={[
-                  '/resource/:parentId/period/new/child/:id',
+                  '/resource/:parentId/child/:id/period/new/',
                   '/resource/:id/period/new',
                 ]}
                 render={({
@@ -156,7 +156,7 @@ export default function App(): JSX.Element {
               <PrivateResourceRoute
                 id="edit-opening-period-route"
                 path={[
-                  '/resource/:parentId/period/:datePeriodId/child/:id',
+                  '/resource/:parentId/child/:id/period/:datePeriodId',
                   '/resource/:id/period/:datePeriodId',
                 ]}
                 render={({

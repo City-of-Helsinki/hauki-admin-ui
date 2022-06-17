@@ -44,6 +44,7 @@ export default function CreateNewOpeningPeriodPage({
     <OpeningHoursForm
       datePeriodConfig={datePeriodConfig}
       submitFn={submitFn}
+      parentId={parentId}
       resource={resource}
     />
   );
