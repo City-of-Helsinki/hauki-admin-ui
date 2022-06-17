@@ -218,15 +218,10 @@ export default function ResourcePage({
                     label: 'alakohteen nimi',
                   })
                 }>
-                <p
-                  data-test={`child-resource-description-${index}`}
-                  className="resource-description-text related-resource-description-text">
-                  {childResource?.description[language] ||
-                    displayLangVersionNotFound({
-                      language,
-                      label: 'alakohteen kuvaus',
-                    })}
-                </p>
+                <ResourceOpeningHours
+                  language={language}
+                  resource={childResource}
+                />
               </Accordion>
             ))}
           </section>
