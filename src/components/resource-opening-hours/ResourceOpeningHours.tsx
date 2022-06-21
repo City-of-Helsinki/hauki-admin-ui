@@ -79,25 +79,23 @@ const OpeningPeriodsList = ({
       {datePeriodConfig && (
         <ul className="opening-periods-list" data-test={id}>
           {datePeriods.length > 0 ? (
-            sortByValidity(datePeriods).map(
-              (datePeriod: DatePeriod, index) => (
-                <li key={datePeriod.id}>
-                  <OpeningPeriod
-                    current={
-                      index === 0 &&
-                      isWithinRange(new Date().toISOString(), datePeriod)
-                    }
-                    datePeriodConfig={datePeriodConfig}
-                    datePeriod={datePeriod}
-                    resourceId={resourceId}
-                    language={language}
-                    deletePeriod={deletePeriod}
-                    initiallyOpen={index <= 10}
-                    parentId={parentId}
-                  />
-                </li>
-              )
-            )
+            sortByValidity(datePeriods).map((datePeriod: DatePeriod, index) => (
+              <li key={datePeriod.id}>
+                <OpeningPeriod
+                  current={
+                    index === 0 &&
+                    isWithinRange(new Date().toISOString(), datePeriod)
+                  }
+                  datePeriodConfig={datePeriodConfig}
+                  datePeriod={datePeriod}
+                  resourceId={resourceId}
+                  language={language}
+                  deletePeriod={deletePeriod}
+                  initiallyOpen={index <= 10}
+                  parentId={parentId}
+                />
+              </li>
+            ))
           ) : (
             <li>
               <OpeningPeriodsNotFound text={notFoundLabel} />
