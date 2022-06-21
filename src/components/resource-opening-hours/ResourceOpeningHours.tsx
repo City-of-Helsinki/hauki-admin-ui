@@ -9,6 +9,7 @@ import {
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
 import { SecondaryButton } from '../button/Button';
+
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
 
@@ -16,6 +17,63 @@ enum PeriodsListTheme {
   DEFAULT = 'DEFAULT',
   LIGHT = 'LIGHT',
 }
+
+const sortByUpcoming = (dates: DatePeriod[], now: string): DatePeriod[] => {
+  if (dates.length === 0) {
+    return [];
+  }
+
+  let found: DatePeriod & {
+    start_date: string;
+    end_date: string;
+  } = {
+    ...dates[0],
+    start_date: dates[0].start_date ?? '1975-01-01',
+    end_date: dates[0].end_date ?? '2045-01-01',
+  };
+
+  for (let i = 1; i < dates.length; i += 1) {
+    const date: DatePeriod & {
+      start_date: string;
+      end_date: string;
+    } = {
+      ...dates[i],
+      start_date: dates[i].start_date ?? '1975-01-01',
+      end_date: dates[i].end_date ?? '2045-01-01',
+    };
+    if (
+      date.start_date <= now &&
+      date.end_date >= now &&
+      date.start_date > found.start_date &&
+      new Date(date.end_date).getTime() - new Date(date.start_date).getTime() <
+        new Date(found.end_date).getTime() -
+          new Date(found.start_date).getTime()
+    ) {
+      found = date;
+    }
+  }
+
+  const result = [found];
+  const newDates = dates.filter((d) => d.id !== found.id);
+
+  if (dates.length === 0) {
+    return result;
+  }
+
+  const newStartDate = newDates
+    .sort((a, b) =>
+      (a.start_date ?? '1975-01-01').localeCompare(b.start_date ?? '1975-01-01')
+    )
+    .filter((d) => (d.start_date ?? '1975-01-01') >= now)[0]?.start_date;
+
+  return [
+    ...result,
+    ...sortByUpcoming(
+      newDates,
+      found.start_date <= now ? newStartDate ?? now : found.start_date
+    ),
+  ];
+};
 
 const OpeningPeriodsList = ({
   id,
@@ -74,19 +132,22 @@ const OpeningPeriodsList = ({
       {datePeriodConfig && (
         <ul className="opening-periods-list" data-test={id}>
           {datePeriods.length > 0 ? (
-            datePeriods.map((datePeriod: DatePeriod, index) => (
-              <li key={datePeriod.id}>
-                <OpeningPeriod
-                  datePeriodConfig={datePeriodConfig}
-                  datePeriod={datePeriod}
-                  resourceId={resourceId}
-                  language={language}
-                  deletePeriod={deletePeriod}
-                  initiallyOpen={index <= 10}
-                  parentId={parentId}
-                />
-              </li>
-            ))
+            sortByUpcoming(datePeriods, new Date().toISOString()).map(
+              (datePeriod: DatePeriod, index) => (
+                <li key={datePeriod.id}>
+                  <OpeningPeriod
+                    current={false}
+                    datePeriodConfig={datePeriodConfig}
+                    datePeriod={datePeriod}
+                    resourceId={resourceId}
+                    language={language}
+                    deletePeriod={deletePeriod}
+                    initiallyOpen={index <= 10}
+                    parentId={parentId}
+                  />
+                </li>
+              )
+            )
           ) : (
             <li>
               <OpeningPeriodsNotFound text={notFoundLabel} />
