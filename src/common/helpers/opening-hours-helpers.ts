@@ -1,3 +1,4 @@
+import { addDays } from 'date-fns';
 import {
   DatePeriod,
   GroupRule,
@@ -218,3 +219,95 @@ export const apiDatePeriodToFormValues = (
   startDate: datePeriod.start_date ? formatDate(datePeriod.start_date) : null,
   openingHours: apiDatePeriodToOpeningHours(datePeriod),
 });
+
+type DatePeriodWithDefaultDates = DatePeriod & {
+  start_date: string;
+  end_date: string;
+};
+
+const withDefaultRange = (
+  datePeriod: DatePeriod
+): DatePeriodWithDefaultDates => ({
+  ...datePeriod,
+  start_date: datePeriod.start_date ?? '1975-01-01',
+  end_date: datePeriod.end_date ?? '2045-01-01',
+});
+
+const findNextPeriodStartDate = (
+  dateCursor: string,
+  datePeriods: DatePeriod[]
+): string =>
+  datePeriods.map(withDefaultRange).filter((d) => d.start_date >= dateCursor)[0]
+    ?.start_date;
+
+const addOneDay = (str: string): string =>
+  addDays(new Date(str), 1).toISOString().split('T')[0];
+
+export const isWithinRange = (
+  date: string,
+  datePeriod: DatePeriod
+): boolean => {
+  const datePeriodWithDefaults = withDefaultRange(datePeriod);
+  return (
+    datePeriodWithDefaults.start_date <= date &&
+    datePeriodWithDefaults.end_date >= date
+  );
+};
+
+const dateRangeIsShorter = (
+  other: DatePeriod,
+  datePeriod: DatePeriod
+): boolean => {
+  const otherWithDefaults = withDefaultRange(other);
+  const datePeriodWithDefaults = withDefaultRange(datePeriod);
+
+  return (
+    new Date(datePeriodWithDefaults.end_date).getTime() -
+      new Date(datePeriodWithDefaults.start_date).getTime() <
+    new Date(otherWithDefaults.end_date).getTime() -
+      new Date(otherWithDefaults.start_date).getTime()
+  );
+};
+
+const sortByStartDate = (datePeriods: DatePeriod[]): DatePeriod[] =>
+  [...datePeriods].sort((a, b) => {
+    const aWithDefaults = withDefaultRange(a);
+    const bWithDefaults = withDefaultRange(b);
+
+    return (
+      aWithDefaults.start_date.localeCompare(bWithDefaults.start_date) ||
+      aWithDefaults.end_date.localeCompare(bWithDefaults.end_date)
+    );
+  });
+
+export const sortByCurrentAndUpcoming = (
+  datesUnsorted: DatePeriod[],
+  dateCursor: string | undefined = new Date().toISOString().split('T')[0]
+): DatePeriod[] => {
+  const dates = sortByStartDate(datesUnsorted);
+  const foundPeriod =
+    dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
+      if (
+        isWithinRange(dateCursor, current) &&
+        (!acc || dateRangeIsShorter(acc, current))
+      ) {
+        return current;
+      }
+
+      return acc;
+    }, undefined) || dates[0];
+
+  const result = [foundPeriod];
+  const leftovers = dates.filter((d) => d !== foundPeriod);
+
+  if (leftovers.length === 0) {
+    return result;
+  }
+
+  const currentPeriodEndDate = withDefaultRange(foundPeriod).end_date;
+  const next = findNextPeriodStartDate(dateCursor, leftovers) ?? dateCursor;
+  const newDateCursor =
+    currentPeriodEndDate >= next ? next : addOneDay(currentPeriodEndDate);
+
+  return [...result, ...sortByCurrentAndUpcoming(leftovers, newDateCursor)];
+};
