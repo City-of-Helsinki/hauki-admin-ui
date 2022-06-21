@@ -280,11 +280,11 @@ const sortByStartDate = (datePeriods: DatePeriod[]): DatePeriod[] =>
     );
   });
 
-export const sortByCurrentAndUpcoming = (
-  datesUnsorted: DatePeriod[],
+export const sortByValidity = (
+  unsortedDates: DatePeriod[],
   dateCursor: string | undefined = new Date().toISOString().split('T')[0]
 ): DatePeriod[] => {
-  const dates = sortByStartDate(datesUnsorted);
+  const dates = sortByStartDate(unsortedDates);
   const foundPeriod =
     dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
       if (
@@ -309,5 +309,5 @@ export const sortByCurrentAndUpcoming = (
   const newDateCursor =
     currentPeriodEndDate >= next ? next : addOneDay(currentPeriodEndDate);
 
-  return [...result, ...sortByCurrentAndUpcoming(leftovers, newDateCursor)];
+  return [...result, ...sortByValidity(leftovers, newDateCursor)];
 };

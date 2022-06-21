@@ -4,7 +4,7 @@ import { ResourceState } from '../lib/types';
 import {
   apiDatePeriodToFormValues,
   formValuesToApiDatePeriod,
-  sortByCurrentAndUpcoming,
+  sortByValidity,
 } from './opening-hours-helpers';
 
 const openingHours = [
@@ -203,9 +203,9 @@ describe('opening-hours-helpers', () => {
     });
   });
 
-  describe('sortByCurrentAndUpcoming', () => {
+  describe('sortByValidity', () => {
     expect(
-      sortByCurrentAndUpcoming([
+      sortByValidity([
         {
           id: 1041529,
           resource: 8414,

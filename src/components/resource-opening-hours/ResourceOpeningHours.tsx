@@ -14,7 +14,7 @@ import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
 import {
   isWithinRange,
-  sortByCurrentAndUpcoming,
+  sortByValidity,
 } from '../../common/helpers/opening-hours-helpers';
 
 enum PeriodsListTheme {
@@ -79,7 +79,7 @@ const OpeningPeriodsList = ({
       {datePeriodConfig && (
         <ul className="opening-periods-list" data-test={id}>
           {datePeriods.length > 0 ? (
-            sortByCurrentAndUpcoming(datePeriods).map(
+            sortByValidity(datePeriods).map(
               (datePeriod: DatePeriod, index) => (
                 <li key={datePeriod.id}>
                   <OpeningPeriod
