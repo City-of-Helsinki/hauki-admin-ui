@@ -63,6 +63,7 @@ const OpeningHoursValidity = (): JSX.Element => {
                     fixed ? '' : 'opening-hours-validity__date--hidden'
                   }`}
                   initialMonth={new Date()}
+                  aria-hidden={!fixed}
                   label="Päättyy"
                   language="fi"
                   name="endDate"
