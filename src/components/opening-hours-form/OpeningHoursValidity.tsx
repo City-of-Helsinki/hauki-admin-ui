@@ -50,25 +50,23 @@ const OpeningHoursValidity = (): JSX.Element => {
                   name="startDate"
                   value={startDate ?? ''}
                 />
-                <span
-                  className={`opening-hours-validity__range-divider ${
-                    fixed ? '' : 'opening-hours-validity__range-divider--hidden'
-                  }`}>
-                  -
-                </span>
-                <DateInput
-                  ref={register()}
-                  id="opening-hours-end-date"
-                  className={`opening-hours-validity__date ${
-                    fixed ? '' : 'opening-hours-validity__date--hidden'
-                  }`}
-                  initialMonth={new Date()}
-                  aria-hidden={!fixed}
-                  label="Päättyy"
-                  language="fi"
-                  name="endDate"
-                  value={endDate ?? ''}
-                />
+                {fixed && (
+                  <>
+                    <span className="opening-hours-validity__range-divider">
+                      -
+                    </span>
+                    <DateInput
+                      ref={register()}
+                      id="opening-hours-end-date"
+                      className="opening-hours-validity__date"
+                      initialMonth={new Date()}
+                      label="Päättyy"
+                      language="fi"
+                      name="endDate"
+                      value={endDate ?? ''}
+                    />
+                  </>
+                )}
               </div>
             </>
           )}
