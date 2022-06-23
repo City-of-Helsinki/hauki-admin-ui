@@ -128,18 +128,21 @@ const TimeSpan = ({
             label="Kuvaus suomeksi"
             name={`${namePrefix}.description.fi`}
             ref={register()}
+            value={item?.description.fi || ''}
           />
           <TextInput
             id={`${namePrefix}-description-sv`}
             label="Kuvaus ruotsiksi"
             name={`${namePrefix}.description.sv`}
             ref={register()}
+            value={item?.description.sv || ''}
           />
           <TextInput
             id={`${namePrefix}-description-en`}
             label="Kuvaus englanniksi"
             name={`${namePrefix}.description.en`}
             ref={register()}
+            value={item?.description.en || ''}
           />
         </div>
       )}
