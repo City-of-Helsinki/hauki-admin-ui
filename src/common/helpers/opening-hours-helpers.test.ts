@@ -48,7 +48,7 @@ const openingHours = [
           {
             description: { en: null, fi: null, sv: null },
             end_time: null,
-            full_day: true,
+            full_day: false,
             resource_state: ResourceState.CLOSED,
             start_time: null,
           },
