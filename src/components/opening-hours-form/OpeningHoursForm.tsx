@@ -17,7 +17,7 @@ import {
   SecondaryButton,
   SupplementaryButton,
 } from '../button/Button';
-import Preview from '../opening-hours-form-preview/OpeningHoursFormPreview';
+import OpeningHoursFormPreview from '../opening-hours-form-preview/OpeningHoursFormPreview';
 import './OpeningHoursForm.scss';
 import {
   apiDatePeriodToFormValues,
@@ -245,9 +245,10 @@ const OpeningHoursForm = ({
                   ))}
                 </section>
                 <aside className="opening-hours-form__aside">
-                  <Preview
+                  <OpeningHoursFormPreview
                     openingHours={openingHours}
                     resourceStates={resourceStates}
+                    tabIndex={isMobile ? -1 : 0}
                   />
                   <div className="sort-weekdays-container">
                     <SupplementaryButton
