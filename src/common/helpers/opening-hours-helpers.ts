@@ -232,13 +232,13 @@ const dateRangeIsShorter = (
   new Date(other.end_date ?? '2045-01-01').getTime() -
     new Date(other.start_date ?? '1975-01-01').getTime();
 
-export const getCurrentActiveDatePeriod = (
+export const getActiveDatePeriod = (
   dates: DatePeriod[],
-  dateCursor: string
+  date: string
 ): DatePeriod | undefined => {
   return dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
     if (
-      isWithinRange(dateCursor, current) &&
+      isWithinRange(date, current) &&
       (!acc || dateRangeIsShorter(acc, current))
     ) {
       return current;

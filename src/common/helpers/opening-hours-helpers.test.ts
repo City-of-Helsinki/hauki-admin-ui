@@ -4,7 +4,7 @@ import { ResourceState } from '../lib/types';
 import {
   apiDatePeriodToFormValues,
   formValuesToApiDatePeriod,
-  getCurrentActiveDatePeriod,
+  getActiveDatePeriod,
 } from './opening-hours-helpers';
 
 const openingHours = [
@@ -203,9 +203,9 @@ describe('opening-hours-helpers', () => {
     });
   });
 
-  describe('getCurrentActiveDatePeriod', () => {
+  describe('getActiveDatePeriod', () => {
     expect(
-      getCurrentActiveDatePeriod(
+      getActiveDatePeriod(
         [
           {
             id: 1041529,

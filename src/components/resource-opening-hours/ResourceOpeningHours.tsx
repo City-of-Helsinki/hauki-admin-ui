@@ -12,7 +12,7 @@ import { SecondaryButton } from '../button/Button';
 
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
-import { getCurrentActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
+import { getActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
 
 enum PeriodsListTheme {
   DEFAULT = 'DEFAULT',
@@ -50,7 +50,7 @@ const OpeningPeriodsList = ({
       : 'opening-periods-header';
 
   const history = useHistory();
-  const currentDatePeriod = getCurrentActiveDatePeriod(
+  const currentDatePeriod = getActiveDatePeriod(
     datePeriods,
     new Date().toISOString()
   );
