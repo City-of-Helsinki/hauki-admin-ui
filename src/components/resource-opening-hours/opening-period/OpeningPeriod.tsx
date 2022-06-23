@@ -31,7 +31,7 @@ export default function OpeningPeriod({
   initiallyOpen = false,
   parentId,
 }: {
-  current: boolean;
+  current?: boolean;
   resourceId: number;
   datePeriod: DatePeriod;
   datePeriodConfig: UiDatePeriodConfig;

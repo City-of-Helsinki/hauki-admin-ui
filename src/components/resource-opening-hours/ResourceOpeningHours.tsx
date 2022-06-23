@@ -12,10 +12,7 @@ import { SecondaryButton } from '../button/Button';
 
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
-import {
-  isWithinRange,
-  sortByValidity,
-} from '../../common/helpers/opening-hours-helpers';
+import { getCurrentActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
 
 enum PeriodsListTheme {
   DEFAULT = 'DEFAULT',
@@ -53,6 +50,10 @@ const OpeningPeriodsList = ({
       : 'opening-periods-header';
 
   const history = useHistory();
+  const currentDatePeriod = getCurrentActiveDatePeriod(
+    datePeriods,
+    new Date().toISOString()
+  );
 
   return (
     <section className="opening-periods-section">
@@ -79,13 +80,10 @@ const OpeningPeriodsList = ({
       {datePeriodConfig && (
         <ul className="opening-periods-list" data-test={id}>
           {datePeriods.length > 0 ? (
-            sortByValidity(datePeriods).map((datePeriod: DatePeriod, index) => (
+            datePeriods.map((datePeriod: DatePeriod, index) => (
               <li key={datePeriod.id}>
                 <OpeningPeriod
-                  current={
-                    index === 0 &&
-                    isWithinRange(new Date().toISOString(), datePeriod)
-                  }
+                  current={currentDatePeriod === datePeriod}
                   datePeriodConfig={datePeriodConfig}
                   datePeriod={datePeriod}
                   resourceId={resourceId}
