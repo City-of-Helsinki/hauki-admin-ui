@@ -115,9 +115,10 @@ export const formValuesToApiDatePeriod = (
   id?: number
 ): DatePeriod => ({
   name: formValues.name,
-  end_date: formValues.endDate
-    ? transformDateToApiFormat(formValues.endDate)
-    : null,
+  end_date:
+    formValues.fixed && formValues.endDate
+      ? transformDateToApiFormat(formValues.endDate)
+      : null,
   id,
   description: {
     en: null,
@@ -231,7 +232,8 @@ export const apiDatePeriodToFormValues = (
 ): OpeningHoursFormValues => ({
   name: datePeriod.name,
   endDate: datePeriod.end_date ? formatDate(datePeriod.end_date) : null,
-  fixed: !!datePeriod.start_date && !!datePeriod.end_date,
+  fixed:
+    (!!datePeriod.start_date && !!datePeriod.end_date) || !!datePeriod.end_date,
   startDate: datePeriod.start_date ? formatDate(datePeriod.start_date) : null,
   openingHours: apiDatePeriodToOpeningHours(datePeriod),
 });
