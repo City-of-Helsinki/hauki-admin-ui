@@ -203,7 +203,7 @@ describe('opening-hours-helpers', () => {
     });
   });
 
-  describe('sortByValidity', () => {
+  describe('getCurrentActiveDatePeriod', () => {
     expect(
       getCurrentActiveDatePeriod(
         [
