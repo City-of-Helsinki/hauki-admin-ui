@@ -38,7 +38,7 @@ const isOnlySelectedDay = (day: number, weekdays: number[]): boolean =>
 
 const OpeningHoursWeekdays = ({
   dropIn,
-  idx,
+  i: idx,
   item,
   offsetTop = 0,
   resourceStates,
@@ -46,7 +46,7 @@ const OpeningHoursWeekdays = ({
   onDayChange,
 }: {
   dropIn: boolean;
-  idx: number;
+  i: number;
   item: TOpeningHours;
   namePrefix: string;
   offsetTop?: number;
