@@ -123,26 +123,42 @@ const TimeSpan = ({
       </div>
       {resourceState === ResourceState.OTHER && (
         <div className="time-span__descriptions">
-          <TextInput
-            id={`${namePrefix}-description-fi`}
-            label="Kuvaus suomeksi"
+          <Controller
+            defaultValue={item?.description.fi ?? ''}
             name={`${namePrefix}.description.fi`}
-            ref={register()}
-            value={item?.description.fi || ''}
+            render={({ onChange, value }): JSX.Element => (
+              <TextInput
+                id={`${namePrefix}-description-fi`}
+                label="Kuvaus suomeksi"
+                onChange={onChange}
+                value={value}
+              />
+            )}
           />
-          <TextInput
-            id={`${namePrefix}-description-sv`}
-            label="Kuvaus ruotsiksi"
+          <Controller
+            defaultValue={item?.description.sv ?? ''}
             name={`${namePrefix}.description.sv`}
-            ref={register()}
-            value={item?.description.sv || ''}
+            render={({ onChange, value }): JSX.Element => (
+              <TextInput
+                id={`${namePrefix}-description-sv`}
+                label="Kuvaus ruotsiksi"
+                onChange={onChange}
+                value={value}
+              />
+            )}
           />
-          <TextInput
-            id={`${namePrefix}-description-en`}
-            label="Kuvaus englanniksi"
+          <Controller
+            defaultValue={item?.description.en ?? ''}
             name={`${namePrefix}.description.en`}
-            ref={register()}
-            value={item?.description.en || ''}
+            render={({ onChange, value }): JSX.Element => (
+              <TextInput
+                id={`${namePrefix}-description-en`}
+                label="Kuvaus englanniksi"
+                name={`${namePrefix}.description.en`}
+                onChange={onChange}
+                value={value}
+              />
+            )}
           />
         </div>
       )}
