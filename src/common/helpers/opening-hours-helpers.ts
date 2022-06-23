@@ -30,6 +30,10 @@ export const byWeekdays = (
 const toTimeSpan = (days: number[]) => (
   timeSpan: OpeningHoursTimeSpan
 ): TimeSpan => ({
+  description:
+    timeSpan.resource_state === ResourceState.OTHER
+      ? timeSpan.description
+      : { fi: null, sv: null, en: null },
   end_time:
     (timeSpan.resource_state !== ResourceState.CLOSED &&
       timeSpan.start_time &&
@@ -37,7 +41,10 @@ const toTimeSpan = (days: number[]) => (
     null,
   full_day:
     timeSpan.resource_state === ResourceState.CLOSED ? true : timeSpan.full_day,
-  resource_state: timeSpan.resource_state,
+  resource_state:
+    timeSpan.resource_state === ResourceState.OTHER
+      ? ResourceState.OPEN
+      : timeSpan.resource_state,
   start_time:
     (timeSpan.resource_state !== ResourceState.CLOSED && timeSpan.start_time) ||
     null,
@@ -128,11 +135,18 @@ export const formValuesToApiDatePeriod = (
 const weekDaysMatch = (weekdays1: Weekdays, weekdays2: Weekdays): boolean =>
   weekdays1.every((weekday) => weekdays2.includes(weekday));
 
+const resourceStateIsOther = (timeSpan: TimeSpan): boolean =>
+  !!timeSpan.description.fi ||
+  !!timeSpan.description.sv ||
+  !!timeSpan.description.en;
+
 const apiTimeSpanToTimeSpan = (timeSpan: TimeSpan): OpeningHoursTimeSpan => ({
   description: timeSpan.description,
   end_time: timeSpan.end_time ? timeSpan.end_time.substring(0, 5) : null,
   full_day: timeSpan.full_day,
-  resource_state: timeSpan.resource_state,
+  resource_state: resourceStateIsOther(timeSpan)
+    ? ResourceState.OTHER
+    : timeSpan.resource_state,
   start_time: timeSpan.start_time ? timeSpan.start_time.substring(0, 5) : null,
 });
 
