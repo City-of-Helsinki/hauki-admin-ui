@@ -51,8 +51,8 @@ const OpeningPeriodsList = ({
 
   const history = useHistory();
   const currentDatePeriod = getActiveDatePeriod(
-    datePeriods,
-    new Date().toISOString()
+    new Date().toISOString().split('T')[0],
+    datePeriods
   );
 
   return (

@@ -233,8 +233,8 @@ const dateRangeIsShorter = (
     new Date(other.start_date ?? '1975-01-01').getTime();
 
 export const getActiveDatePeriod = (
-  dates: DatePeriod[],
-  date: string
+  date: string,
+  dates: DatePeriod[]
 ): DatePeriod | undefined => {
   return dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
     if (
