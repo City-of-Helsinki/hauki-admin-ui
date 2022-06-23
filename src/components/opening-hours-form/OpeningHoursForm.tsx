@@ -212,6 +212,7 @@ const OpeningHoursForm = ({
                       key={field.id}
                       dropIn={dropInRow === i}
                       offsetTop={offsetTop.current}
+                      idx={i + 1}
                       item={field as TOpeningHours}
                       resourceStates={resourceStates}
                       namePrefix={`openingHours[${i}]`}
