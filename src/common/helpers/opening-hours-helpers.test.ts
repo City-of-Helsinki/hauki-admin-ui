@@ -261,8 +261,8 @@ describe('opening-hours-helpers', () => {
             resource: 8414,
             name: { fi: 'Kesäkuun aukiolot', sv: '', en: '' },
             description: { fi: null, sv: null, en: null },
-            start_date: '2022-06-22',
-            end_date: '2022-07-23',
+            start_date: '2022-06-01',
+            end_date: '2022-06-30',
             resource_state: ResourceState.UNDEFINED,
             override: false,
             created: '2022-06-20T13:05:25.148379+03:00',
@@ -355,55 +355,6 @@ describe('opening-hours-helpers', () => {
             ],
           },
           {
-            id: 1039186,
-            resource: 8414,
-            name: { fi: 'Provinssi', sv: '', en: '' },
-            description: { fi: null, sv: null, en: null },
-            start_date: '2022-07-01',
-            end_date: '2022-07-03',
-            resource_state: ResourceState.UNDEFINED,
-            override: false,
-            created: '2022-06-20T14:17:55.858804+03:00',
-            modified: '2022-06-21T13:31:51.677848+03:00',
-            time_span_groups: [
-              {
-                id: 567430,
-                period: 1039186,
-                time_spans: [
-                  {
-                    id: 889996,
-                    group: 567430,
-                    name: { fi: null, sv: null, en: null },
-                    description: { fi: null, sv: null, en: null },
-                    start_time: null,
-                    end_time: null,
-                    end_time_on_next_day: false,
-                    full_day: false,
-                    weekdays: [1, 2, 3, 4, 5],
-                    resource_state: ResourceState.OPEN,
-                    created: '2022-06-21T13:31:51.952458+03:00',
-                    modified: '2022-06-21T13:31:51.952458+03:00',
-                  },
-                  {
-                    id: 889997,
-                    group: 567430,
-                    name: { fi: null, sv: null, en: null },
-                    description: { fi: null, sv: null, en: null },
-                    start_time: null,
-                    end_time: null,
-                    end_time_on_next_day: false,
-                    full_day: true,
-                    weekdays: [6, 7],
-                    resource_state: ResourceState.CLOSED,
-                    created: '2022-06-21T13:31:52.078913+03:00',
-                    modified: '2022-06-21T13:31:52.078913+03:00',
-                  },
-                ],
-                rules: [],
-              },
-            ],
-          },
-          {
             id: 1041197,
             resource: 8414,
             name: { fi: 'Heinäkuun aukiolot', sv: '', en: '' },
@@ -453,8 +404,8 @@ describe('opening-hours-helpers', () => {
             ],
           },
         ],
-        '2022-01-21'
+        '2022-06-23'
       )?.id
-    ).toEqual(1041529);
+    ).toEqual(1039083);
   });
 });
