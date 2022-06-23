@@ -143,7 +143,10 @@ const resourceStateIsOther = (timeSpan: TimeSpan): boolean =>
 const apiTimeSpanToTimeSpan = (timeSpan: TimeSpan): OpeningHoursTimeSpan => ({
   description: timeSpan.description,
   end_time: timeSpan.end_time ? timeSpan.end_time.substring(0, 5) : null,
-  full_day: timeSpan.full_day,
+  full_day:
+    timeSpan.resource_state === ResourceState.CLOSED
+      ? false
+      : timeSpan.full_day,
   resource_state: resourceStateIsOther(timeSpan)
     ? ResourceState.OTHER
     : timeSpan.resource_state,
