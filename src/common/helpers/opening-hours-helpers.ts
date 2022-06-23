@@ -219,41 +219,18 @@ export const apiDatePeriodToFormValues = (
   openingHours: apiDatePeriodToOpeningHours(datePeriod),
 });
 
-type DatePeriodWithDefaultDates = DatePeriod & {
-  start_date: string;
-  end_date: string;
-};
-
-const withDefaultRange = (
-  datePeriod: DatePeriod
-): DatePeriodWithDefaultDates => ({
-  ...datePeriod,
-  start_date: datePeriod.start_date ?? '1975-01-01',
-  end_date: datePeriod.end_date ?? '2045-01-01',
-});
-
-const isWithinRange = (date: string, datePeriod: DatePeriod): boolean => {
-  const datePeriodWithDefaults = withDefaultRange(datePeriod);
-  return (
-    datePeriodWithDefaults.start_date <= date &&
-    datePeriodWithDefaults.end_date >= date
-  );
-};
+const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
+  (datePeriod.start_date == null || datePeriod.start_date) <= date &&
+  (datePeriod.end_date === null || datePeriod.end_date >= date);
 
 const dateRangeIsShorter = (
   other: DatePeriod,
   datePeriod: DatePeriod
-): boolean => {
-  const otherWithDefaults = withDefaultRange(other);
-  const datePeriodWithDefaults = withDefaultRange(datePeriod);
-
-  return (
-    new Date(datePeriodWithDefaults.end_date).getTime() -
-      new Date(datePeriodWithDefaults.start_date).getTime() <
-    new Date(otherWithDefaults.end_date).getTime() -
-      new Date(otherWithDefaults.start_date).getTime()
-  );
-};
+): boolean =>
+  new Date(datePeriod.end_date ?? '2045-01-01').getTime() -
+    new Date(datePeriod.start_date ?? '1975-01-01').getTime() <
+  new Date(other.end_date ?? '2045-01-01').getTime() -
+    new Date(other.start_date ?? '1975-01-01').getTime();
 
 export const getCurrentActiveDatePeriod = (
   dates: DatePeriod[],
