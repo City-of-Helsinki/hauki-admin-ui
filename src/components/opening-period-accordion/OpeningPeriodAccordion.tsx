@@ -28,7 +28,7 @@ type Props = {
 const OpeningPeriodAccordion = ({
   children,
   dateRange,
-  editUrl: editLink,
+  editUrl,
   id,
   initiallyOpen = false,
   isActive = false,
@@ -81,11 +81,11 @@ const OpeningPeriodAccordion = ({
         </div>
         <div className="opening-period-actions opening-period-header-column">
           <div>
-            {editLink && (
+            {editUrl && (
               <Link
                 className="opening-period-edit-link button-icon"
                 data-test={`openingPeriodEditLink-${id}`}
-                to={editLink}
+                to={editUrl}
                 type="button">
                 <IconPenLine aria-hidden="true" />
                 <span className="hiddenFromScreen">{`Muokkaa ${
