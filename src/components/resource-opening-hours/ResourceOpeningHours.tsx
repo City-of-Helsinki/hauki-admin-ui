@@ -36,7 +36,7 @@ const ExceptionPeriodsList = (): JSX.Element => {
                 poikkeavia aukioloaikoja
               </>
             }
-            onEdit={(): void => undefined}>
+            editUrl="">
             <div className="exception-holidays-container">
               <h4 className="exception-periods-holidays-title">
                 Seuraavat juhlapyhät
