@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Notification } from 'hds-react';
+import { Notification, Table } from 'hds-react';
 import { useHistory } from 'react-router-dom';
 import {
   DatePeriod,
@@ -16,9 +16,11 @@ import { getActiveDatePeriod } from '../../common/helpers/opening-hours-helpers'
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import { getHolidays } from '../../services/holidays';
+import { formatDate } from '../../common/utils/date-time/format';
 
-const ExceptionPeriodsList = () => {
-  console.log(getHolidays());
+const ExceptionPeriodsList = (): JSX.Element => {
+  const holidays = getHolidays();
+
   return (
     <section className="opening-periods-section">
       <header className="exception-periods-header">
@@ -35,7 +37,35 @@ const ExceptionPeriodsList = () => {
               </>
             }
             onEdit={(): void => undefined}>
-            WIP
+            <div className="exception-holidays-container">
+              <h4 className="exception-periods-holidays-title">
+                Seuraavat juhlapyhät
+              </h4>
+              <p className="exception-periods-holidays-info-text">
+                Muista tarkistaa juhlapyhien aikataulut vuosittain – esimerkiksi
+                pääsiäisen juhlapyhien ajankohta vaihtelee.
+              </p>
+              <Table
+                cols={[
+                  { key: 'name', headerName: 'Juhlapyhä' },
+                  {
+                    key: 'start_date',
+                    headerName: 'Päivämäärä',
+                    transform: ({ start_date }): string =>
+                      formatDate(start_date).substring(0, 6),
+                  },
+                  { key: '', headerName: 'Poikkeus' },
+                  { key: '', headerName: 'Kellonaika' },
+                  { key: '', headerName: 'Aukiolon tyyppi' },
+                ]}
+                indexKey="name"
+                rows={holidays}
+                theme={{
+                  '--header-background-color': 'var(--color-coat-of-arms)',
+                }}
+                zebra
+              />
+            </div>
           </OpeningPeriodAccordion>
         </li>
       </ul>
