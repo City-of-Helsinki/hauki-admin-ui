@@ -15,10 +15,10 @@ import toast from '../notification/Toast';
 
 type Props = {
   children: ReactNode;
-  dateRange: string;
+  dateRange: ReactNode;
   id?: number;
-  initiallyOpen: boolean;
-  isActive: boolean;
+  initiallyOpen?: boolean;
+  isActive?: boolean;
   onEdit?: () => void;
   onDelete?: () => void | Promise<void>;
   periodName?: string | null;
@@ -28,8 +28,8 @@ const OpeningPeriodAccordion = ({
   children,
   dateRange,
   id,
-  initiallyOpen,
-  isActive,
+  initiallyOpen = false,
+  isActive = false,
   onDelete,
   onEdit,
   periodName,
@@ -79,30 +79,32 @@ const OpeningPeriodAccordion = ({
           )}
         </div>
         <div className="opening-period-actions opening-period-header-column">
-          {onEdit && (
-            <button
-              className="opening-period-edit-link button-icon"
-              data-test={`openingPeriodEditLink-${id}`}
-              onClick={onEdit}
-              type="button">
-              <IconPenLine aria-hidden="true" />
-              <span className="hiddenFromScreen">{`Muokkaa ${
-                periodName || 'nimettömän'
-              } aukiolojakson tietoja`}</span>
-            </button>
-          )}
-          {onDelete && (
-            <button
-              className="opening-period-delete-link button-icon"
-              data-test={`openingPeriodDeleteLink-${id}`}
-              type="button"
-              onClick={openModal}>
-              <IconTrash aria-hidden="true" />
-              <span className="hiddenFromScreen">{`Poista ${
-                periodName || 'nimetön'
-              } aukiolojakso`}</span>
-            </button>
-          )}
+          <div>
+            {onEdit && (
+              <button
+                className="opening-period-edit-link button-icon"
+                data-test={`openingPeriodEditLink-${id}`}
+                onClick={onEdit}
+                type="button">
+                <IconPenLine aria-hidden="true" />
+                <span className="hiddenFromScreen">{`Muokkaa ${
+                  periodName || 'nimettömän'
+                } aukiolojakson tietoja`}</span>
+              </button>
+            )}
+            {onDelete && (
+              <button
+                className="opening-period-delete-link button-icon"
+                data-test={`openingPeriodDeleteLink-${id}`}
+                type="button"
+                onClick={openModal}>
+                <IconTrash aria-hidden="true" />
+                <span className="hiddenFromScreen">{`Poista ${
+                  periodName || 'nimetön'
+                } aukiolojakso`}</span>
+              </button>
+            )}
+          </div>
           <button
             className="button-icon"
             data-test={`openingPeriodAccordionButton-${id}`}

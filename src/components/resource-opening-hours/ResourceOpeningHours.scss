@@ -34,10 +34,14 @@
   .opening-period-header-button {
     font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
     color: var(--opening-periods-header-light-button-color);
-    border-color: var(--opening-periods-header-light-button-border-color) !important;
+    border-color: var(
+      --opening-periods-header-light-button-border-color
+    ) !important;
 
     &:hover {
-      background-color: var(--opening-periods-header-light-button-hover-background-color) !important;
+      background-color: var(
+        --opening-periods-header-light-button-hover-background-color
+      ) !important;
       color: var(--opening-periods-header-light-button-hover-color) !important;
     }
 
@@ -49,7 +53,7 @@
 
 .opening-periods-header-title {
   flex: 1;
-  font-size: $fontsize-heading-m;
+  font-size: $fontsize-heading-s;
   color: inherit;
   margin: 0;
 }
@@ -91,4 +95,16 @@
   text-align: center;
   margin-top: $spacing-2-xl;
   margin-bottom: $spacing-2-xl;
+}
+
+.exception-periods-header {
+  @extend .opening-periods-header;
+
+  background: $color-coat-of-arms-light;
+}
+
+.exception-periods-title {
+  @extend .opening-periods-header-title;
+
+  color: $color-coat-of-arms;
 }
