@@ -1,8 +1,5 @@
 import Holidays from 'date-holidays';
 
-const hd = new Holidays();
-hd.init('FI');
-
 type Holiday = {
   start_date: string;
   end_date: string;
@@ -20,6 +17,9 @@ export const getHolidays = (): Holiday[] => {
   const nextYear = currentYear + 1;
   later.setFullYear(nextYear);
   const end = formatDate(later);
+
+  const hd = new Holidays();
+  hd.init('FI');
 
   return [currentYear, currentYear + 1]
     .map((year) => hd.getHolidays(year))
