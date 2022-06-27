@@ -32,8 +32,8 @@ const ExceptionPeriodsList = (): JSX.Element => {
             periodName="Juhlapyhien aukioloajat"
             dateRange={
               <>
-                Seuraava juhlapyhä <strong>pyhäinpäivä</strong> - Ei poikkeavia
-                aukioloaikoja
+                Seuraava juhlapyhä <strong>{holidays[0].name}</strong> - Ei
+                poikkeavia aukioloaikoja
               </>
             }
             onEdit={(): void => undefined}>
