@@ -15,29 +15,33 @@ import './ResourceOpeningHours.scss';
 import { getActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
+import { getHolidays } from '../../services/holidays';
 
-const ExceptionPeriodsList = () => (
-  <section className="opening-periods-section">
-    <header className="exception-periods-header">
-      <h3 className="exception-periods-title">Poikkeavat päivät</h3>
-    </header>
-    <ul className="opening-periods-list">
-      <li>
-        <OpeningPeriodAccordion
-          periodName="Juhlapyhien aukioloajat"
-          dateRange={
-            <>
-              Seuraava juhlapyhä <strong>pyhäinpäivä</strong> - Ei poikkeavia
-              aukioloaikoja
-            </>
-          }
-          onEdit={(): void => undefined}>
-          WIP
-        </OpeningPeriodAccordion>
-      </li>
-    </ul>
-  </section>
-);
+const ExceptionPeriodsList = () => {
+  console.log(getHolidays());
+  return (
+    <section className="opening-periods-section">
+      <header className="exception-periods-header">
+        <h3 className="exception-periods-title">Poikkeavat päivät</h3>
+      </header>
+      <ul className="opening-periods-list">
+        <li>
+          <OpeningPeriodAccordion
+            periodName="Juhlapyhien aukioloajat"
+            dateRange={
+              <>
+                Seuraava juhlapyhä <strong>pyhäinpäivä</strong> - Ei poikkeavia
+                aukioloaikoja
+              </>
+            }
+            onEdit={(): void => undefined}>
+            WIP
+          </OpeningPeriodAccordion>
+        </li>
+      </ul>
+    </section>
+  );
+};
 
 enum PeriodsListTheme {
   DEFAULT = 'DEFAULT',
