@@ -13,6 +13,7 @@ import {
 import api from '../common/utils/api/api';
 import * as datePeriodConfigService from '../services/datePeriodFormConfig';
 import ResourcePage from './ResourcePage';
+import * as holidays from '../services/holidays.ts';
 
 const testResource: Resource = {
   id: 1186,
@@ -130,6 +131,12 @@ describe(`<ResourcePage />`, () => {
     jest
       .spyOn(api, 'getParentResourcesByChildId')
       .mockImplementation(() => Promise.resolve([testParentResource]));
+
+    jest
+      .spyOn(holidays, 'getHolidays')
+      .mockImplementation(() => [
+        { name: 'Juhannus', start: '2022-06-24', end: '2022-06-24' },
+      ]);
   });
   afterEach(() => {
     jest.clearAllMocks();
