@@ -13,7 +13,7 @@ import {
 import api from '../common/utils/api/api';
 import * as datePeriodConfigService from '../services/datePeriodFormConfig';
 import ResourcePage from './ResourcePage';
-import * as holidays from '../services/holidays.ts';
+import * as holidays from '../services/holidays';
 
 const testResource: Resource = {
   id: 1186,
