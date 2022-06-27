@@ -32,7 +32,7 @@ const ExceptionPeriodsList = (): JSX.Element => {
             periodName="Juhlapyhien aukioloajat"
             dateRange={
               <>
-                Seuraava juhlapyhä <strong>{holidays[0].name}</strong> - Ei
+                Seuraava juhlapyhä: <strong>{holidays[0].name}</strong> — Ei
                 poikkeavia aukioloaikoja
               </>
             }
