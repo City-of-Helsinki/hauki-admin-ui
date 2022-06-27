@@ -56,7 +56,7 @@ const OpeningPeriodAccordion = ({
     isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
 
   return (
-    <div className="opening-period">
+    <div className="opening-period" data-test={`openingPeriod-${id}`}>
       <div className="opening-period-header">
         <div className="opening-period-title opening-period-header-column">
           {periodName ? (
