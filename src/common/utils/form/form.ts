@@ -9,12 +9,13 @@ export const choiceToOption = (language: Language) => <T = string>(
 });
 
 /**
- * Sanitizes the id to a meaningful id by replacing []. with dash (-)
- *
- * @example
- * // returns openingHours-0-timeSpanGroups-0-timeSpans-0-start-time
- * sanitizeId(openingHours[0].timeSpanGroups[0].timeSpans[0]-start-time);
- *
+ * Replaces brackets and dot to a dash.
  */
-export const sanitizeId = (id: string): string =>
+const stringifyBrackets = (id: string): string =>
   id.replace(/\]/g, '').replace(/\[|\./g, '-');
+
+export const getUiId = (parts: Array<string | number>): string =>
+  parts
+    .map((s) => `${s}`)
+    .map(stringifyBrackets)
+    .join('-');

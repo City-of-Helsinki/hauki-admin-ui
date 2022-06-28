@@ -57,7 +57,7 @@ describe('User adds a new opening period', () => {
 
     // Fill in hours for Saturday
     cy.selectHdsDropdown({
-      id: 'openingHours-1-timeSpanGroups-0-timeSpans-0-resource-state',
+      id: 'openingHours-1-timeSpanGroups-0-timeSpans-0-resource_state',
       value: 'Auki',
     });
 
@@ -79,7 +79,7 @@ describe('User adds a new opening period', () => {
     ).click();
 
     cy.selectHdsDropdown({
-      id: 'openingHours-1-timeSpanGroups-0-timeSpans-1-resource-state',
+      id: 'openingHours-1-timeSpanGroups-0-timeSpans-1-resource_state',
       value: 'Itsepalvelu',
     });
 
@@ -98,7 +98,7 @@ describe('User adds a new opening period', () => {
     // Separate Sunday as it's own day
     cy.get('[data-test=openingHours-1-weekdays-7').click();
     cy.selectHdsDropdown({
-      id: 'openingHours-2-timeSpanGroups-0-timeSpans-0-resource-state',
+      id: 'openingHours-2-timeSpanGroups-0-timeSpans-0-resource_state',
       value: 'Suljettu',
     });
 
