@@ -7,3 +7,6 @@ export const choiceToOption = (language: Language) => <T = string>(
   value: choice.value,
   label: choice.label[language] ?? '',
 });
+
+export const nameToId = (id: string): string =>
+  id.replace(/\[/g, '-').replace(/\]\./g, '-').replace(/\]/g, '');

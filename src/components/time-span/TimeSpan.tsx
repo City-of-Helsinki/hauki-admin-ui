@@ -11,7 +11,7 @@ import {
 import { SupplementaryButton } from '../button/Button';
 import './TimeSpan.scss';
 import { useAppContext } from '../../App-context';
-import { choiceToOption } from '../../common/utils/form/form';
+import { choiceToOption, nameToId } from '../../common/utils/form/form';
 
 const TimeSpan = ({
   disabled = false,
@@ -53,7 +53,7 @@ const TimeSpan = ({
         render={({ onChange, value }): JSX.Element => (
           <Select<InputOption>
             disabled={disabled}
-            id={`${namePrefix}-resource-state`}
+            id={nameToId(`${namePrefix}-resource-state`)}
             label="Aukiolon tyyppi"
             options={sanitizedResourceStateOptions}
             className="time-span__resource-state-select"
@@ -78,7 +78,7 @@ const TimeSpan = ({
             <Checkbox
               className="time-span__full-day-checkbox"
               disabled={disabled}
-              id={`${namePrefix}-full-day`}
+              id={nameToId(`${namePrefix}-full-day`)}
               name={`${namePrefix}.full_day`}
               label="24 h"
               onChange={(e): void => {
@@ -100,7 +100,7 @@ const TimeSpan = ({
         <TimeInput
           ref={register()}
           disabled={disabled || fullDay}
-          id={`${namePrefix}-start-time`}
+          id={nameToId(`${namePrefix}-start-time`)}
           hoursLabel="tunnit"
           minutesLabel="minuutit"
           label="Alkaen"
@@ -112,7 +112,7 @@ const TimeSpan = ({
         <TimeInput
           ref={register()}
           disabled={disabled || fullDay}
-          id={`${namePrefix}-end-time`}
+          id={nameToId(`${namePrefix}-end-time`)}
           hoursLabel="tunnit"
           minutesLabel="minuutit"
           label="Päättyen"
@@ -128,7 +128,7 @@ const TimeSpan = ({
             name={`${namePrefix}.description.fi`}
             render={({ onChange, value }): JSX.Element => (
               <TextInput
-                id={`${namePrefix}-description-fi`}
+                id={nameToId(`${namePrefix}-description-fi`)}
                 label="Kuvaus suomeksi"
                 onChange={onChange}
                 value={value}
@@ -140,7 +140,7 @@ const TimeSpan = ({
             name={`${namePrefix}.description.sv`}
             render={({ onChange, value }): JSX.Element => (
               <TextInput
-                id={`${namePrefix}-description-sv`}
+                id={nameToId(`${namePrefix}-description-sv`)}
                 label="Kuvaus ruotsiksi"
                 onChange={onChange}
                 value={value}
@@ -152,7 +152,7 @@ const TimeSpan = ({
             name={`${namePrefix}.description.en`}
             render={({ onChange, value }): JSX.Element => (
               <TextInput
-                id={`${namePrefix}-description-en`}
+                id={nameToId(`${namePrefix}-description-en`)}
                 label="Kuvaus englanniksi"
                 name={`${namePrefix}.description.en`}
                 onChange={onChange}
