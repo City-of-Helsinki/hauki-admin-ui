@@ -17,7 +17,7 @@ import DayCheckbox from './DayCheckbox';
 import './OpeningHoursWeekdays.scss';
 import { defaultTimeSpan, uiFrequencyRules } from '../../constants';
 import { useAppContext } from '../../App-context';
-import { choiceToOption, nameToId } from '../../common/utils/form/form';
+import { choiceToOption, sanitizeId } from '../../common/utils/form/form';
 
 type InflectLabels = {
   [language in Language]: {
@@ -145,14 +145,14 @@ const OpeningHoursWeekdays = ({
       <div ref={ref} className="card opening-hours-container">
         <div>
           <div
-            id={nameToId(`${namePrefix}-weekdays`)}
+            id={sanitizeId(`${namePrefix}-weekdays`)}
             className="weekdays-label">
             Päivä tai päiväryhmä
           </div>
           <div
             className="weekdays"
             role="group"
-            aria-labelledby={nameToId(`${namePrefix}-weekdays`)}>
+            aria-labelledby={sanitizeId(`${namePrefix}-weekdays`)}>
             {removedDay && (
               <Notification
                 key={removedDay}

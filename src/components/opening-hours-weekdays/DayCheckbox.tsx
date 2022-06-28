@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language } from '../../common/lib/types';
 import { getWeekdayShortNameByIndexAndLang } from '../../common/utils/date-time/format';
-import { nameToId } from '../../common/utils/form/form';
+import { sanitizeId } from '../../common/utils/form/form';
 import './DayCheckbox.scss';
 
 const DayCheckbox = ({
@@ -15,7 +15,7 @@ const DayCheckbox = ({
   onChange: (checked: boolean) => void;
   checked?: boolean;
 }): JSX.Element => {
-  const id = nameToId(`${namePrefix}-weekdays-${currentDay}`);
+  const id = sanitizeId(`${namePrefix}-weekdays-${currentDay}`);
 
   return (
     <label htmlFor={id} className="day-label">

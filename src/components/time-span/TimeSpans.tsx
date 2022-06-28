@@ -7,7 +7,7 @@ import {
   ResourceState,
   TranslatedApiChoice,
 } from '../../common/lib/types';
-import { nameToId } from '../../common/utils/form/form';
+import { sanitizeId } from '../../common/utils/form/form';
 import { SupplementaryButton } from '../button/Button';
 import TimeSpan from './TimeSpan';
 import './TimeSpans.scss';
@@ -65,7 +65,7 @@ const TimeSpans = ({
       {firstTimeSpanResourceState !== ResourceState.CLOSED && (
         <div>
           <SupplementaryButton
-            dataTest={`${nameToId(namePrefix)}-add-time-span-button`}
+            dataTest={`${sanitizeId(namePrefix)}-add-time-span-button`}
             ref={ref}
             className="add-time-span-button"
             iconLeft={<IconPlusCircle />}

@@ -8,5 +8,5 @@ export const choiceToOption = (language: Language) => <T = string>(
   label: choice.label[language] ?? '',
 });
 
-export const nameToId = (id: string): string =>
-  id.replace(/\[/g, '-').replace(/\]\./g, '-').replace(/\]/g, '');
+export const sanitizeId = (id: string): string =>
+  id.replaceAll('[', '-').replaceAll(']', '').replaceAll('.', '-');
