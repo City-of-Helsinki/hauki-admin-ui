@@ -9,7 +9,7 @@ export const choiceToOption = (language: Language) => <T = string>(
 });
 
 /**
- * Replaces brackets and dot to a dash.
+ * Replaces brackets and dots with dashes
  */
 const stringifyBrackets = (id: string): string =>
   id.replace(/\]/g, '').replace(/\[|\./g, '-');
