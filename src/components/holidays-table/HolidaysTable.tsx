@@ -2,6 +2,7 @@ import React from 'react';
 import { formatDate } from '../../common/utils/date-time/format';
 import { getHolidays } from '../../services/holidays';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
+import './HolidaysTable.scss';
 
 const HolidaysTable = (): JSX.Element => {
   const holidays = getHolidays();
@@ -15,13 +16,11 @@ const HolidaysTable = (): JSX.Element => {
         </>
       }
       editUrl="">
-      <div className="exception-holidays-container">
-        <h4 id="upcoming-holidays" className="exception-periods-holidays-title">
+      <div className="holidays-container">
+        <h4 id="holidays-title" className="holidays-title">
           Seuraavat juhlapyhät
         </h4>
-        <p
-          id="upcoming-holidays-description"
-          className="exception-periods-holidays-info-text">
+        <p id="holidays-description" className="holidays-description">
           Muista tarkistaa juhlapyhien aikataulut vuosittain – esimerkiksi
           pääsiäisen juhlapyhien ajankohta vaihtelee.
         </p>
@@ -29,20 +28,22 @@ const HolidaysTable = (): JSX.Element => {
       <div
         className="holidays-table"
         role="table"
-        aria-labelledby="upcoming-holidays"
-        aria-describedby="upcoming-holidays-description">
+        aria-labelledby="holidays-title"
+        aria-describedby="holidays-description">
         <div role="rowgroup">
-          <div className="holidays-table-header holidays-table-row" role="row">
-            <div className="holidays-table-header-cell" role="columnheader">
+          <div
+            className="holidays-table__header holidays-table__row"
+            role="row">
+            <div className="holidays-table__header-cell" role="columnheader">
               Juhlapyhä
             </div>
             <div
-              className="holidays-table-header-cell holidays-table-cell__date"
+              className="holidays-table__header-cell holidays-table-cell--date"
               role="columnheader">
               Päivämäärä
             </div>
             <div
-              className="holidays-table-header-cell holidays-table-header-cell__opening-hours"
+              className="holidays-table__header-cell holidays-table-header-cell--opening-hours"
               role="columnheader">
               Aukiolo
             </div>
@@ -50,17 +51,19 @@ const HolidaysTable = (): JSX.Element => {
         </div>
         <div role="rowgroup">
           {holidays.map((holiday) => (
-            <div className="holidays-table-row" role="row">
-              <div className="holiday-cell holiday-cell__name" role="cell">
+            <div className="holidays-table__row" role="row">
+              <div
+                className="holiday-table__cell holiday-table__cell--name"
+                role="cell">
                 {holiday.name}
               </div>
               <div
-                className="holiday-cell holidays-table-cell__date"
+                className="holiday-table__cell holiday-table__cell--date"
                 role="cell">
                 {formatDate(holiday.start_date).substring(0, 6)}
               </div>
               <div
-                className="holiday-cell holidays-table-cell__opening-hours"
+                className="holiday-table__cell holiday-table__cell--opening-hours"
                 role="cell">
                 Ei poikkeavia aukioloja
               </div>
