@@ -38,12 +38,12 @@ const HolidaysTable = (): JSX.Element => {
               Juhlapyhä
             </div>
             <div
-              className="holidays-table__header-cell holidays-table-cell--date"
+              className="holidays-table__header-cell holidays-table__cell--date"
               role="columnheader">
               Päivämäärä
             </div>
             <div
-              className="holidays-table__header-cell holidays-table-header-cell--opening-hours"
+              className="holidays-table__header-cell holidays-table__header-cell--opening-hours"
               role="columnheader">
               Aukiolo
             </div>
@@ -53,17 +53,17 @@ const HolidaysTable = (): JSX.Element => {
           {holidays.map((holiday) => (
             <div className="holidays-table__row" role="row">
               <div
-                className="holiday-table__cell holiday-table__cell--name"
+                className="holidays-table__cell holidays-table__cell--name"
                 role="cell">
                 {holiday.name}
               </div>
               <div
-                className="holiday-table__cell holiday-table__cell--date"
+                className="holidays-table__cell holidays-table__cell--date"
                 role="cell">
                 {formatDate(holiday.start_date).substring(0, 6)}
               </div>
               <div
-                className="holiday-table__cell holiday-table__cell--opening-hours"
+                className="holidays-table__cell holidays-table__cell--opening-hours"
                 role="cell">
                 Ei poikkeavia aukioloja
               </div>
