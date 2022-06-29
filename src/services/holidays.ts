@@ -1,6 +1,6 @@
 import Holidays from 'date-holidays';
 
-type Holiday = {
+export type Holiday = {
   start_date: string;
   end_date: string;
   name: string;
