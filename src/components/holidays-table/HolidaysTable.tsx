@@ -1,20 +1,27 @@
 import React from 'react';
+import { Holiday } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
 import { getHolidays } from '../../services/holidays';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import './HolidaysTable.scss';
+
+export const UpcomingHolidayNotification = ({
+  holiday,
+}: {
+  holiday: Holiday;
+}): JSX.Element => (
+  <>
+    Seuraava juhlapyhä: <strong>{holiday.name}</strong> — Ei poikkeavia
+    aukioloaikoja
+  </>
+);
 
 const HolidaysTable = (): JSX.Element => {
   const holidays = getHolidays();
   return (
     <OpeningPeriodAccordion
       periodName="Juhlapyhien aukioloajat"
-      dateRange={
-        <>
-          Seuraava juhlapyhä: <strong>{holidays[0].name}</strong> — Ei
-          poikkeavia aukioloaikoja
-        </>
-      }
+      dateRange={<UpcomingHolidayNotification holiday={holidays[0]} />}
       editUrl="">
       <div className="holidays-container">
         <h4 id="holidays-title" className="holidays-title">
