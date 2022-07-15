@@ -302,5 +302,6 @@ export type Choice<T> = {
 export type Holiday = {
   start_date: string;
   end_date: string;
+  date: string;
   name: string;
 };
