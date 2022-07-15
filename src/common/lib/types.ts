@@ -275,11 +275,14 @@ export type OpeningHours = {
 };
 
 export type OpeningHoursFormValues = {
+  id?: number;
   endDate: string | null;
   fixed: boolean;
   name: LanguageStrings;
   openingHours: OpeningHours[];
   startDate: string | null;
+  override?: boolean;
+  resourceState?: ResourceState;
 };
 
 export type PreviewOpeningHours = {

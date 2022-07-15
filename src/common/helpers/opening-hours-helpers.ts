@@ -1,15 +1,15 @@
 import {
   DatePeriod,
   GroupRule,
-  ResourceState,
-  TimeSpan,
-  TimeSpanGroup,
-  Weekdays,
   OpeningHours,
   OpeningHoursFormValues,
   OpeningHoursTimeSpan,
   OpeningHoursTimeSpanGroup,
+  ResourceState,
   Rule,
+  TimeSpan,
+  TimeSpanGroup,
+  Weekdays,
 } from '../lib/types';
 import {
   formatDate,
@@ -131,6 +131,9 @@ export const formValuesToApiDatePeriod = (
     ? transformDateToApiFormat(formValues.startDate)
     : null,
   time_span_groups: toTimeSpanGroups(formValues.openingHours),
+  ...(formValues.resourceState
+    ? { resource_state: formValues.resourceState }
+    : {}),
 });
 
 const weekDaysMatch = (weekdays1: Weekdays, weekdays2: Weekdays): boolean =>
@@ -235,6 +238,8 @@ export const apiDatePeriodToFormValues = (
     (!!datePeriod.start_date && !!datePeriod.end_date) || !!datePeriod.end_date,
   startDate: datePeriod.start_date ? formatDate(datePeriod.start_date) : null,
   openingHours: apiDatePeriodToOpeningHours(datePeriod),
+  id: datePeriod.id,
+  resourceState: datePeriod.resource_state,
 });
 
 const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
