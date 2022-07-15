@@ -58,7 +58,7 @@ const HolidaysTable = (): JSX.Element => {
         </div>
         <div role="rowgroup">
           {holidays.map((holiday) => (
-            <div className="holidays-table__row" role="row">
+            <div className="holidays-table__row" role="row" key={holiday.date}>
               <div
                 className="holidays-table__cell holidays-table__cell--name"
                 role="cell">
