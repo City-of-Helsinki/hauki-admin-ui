@@ -81,8 +81,6 @@ const HolidayForm = ({
       : false
   );
 
-  console.log(formValue);
-
   const form = useForm<OpeningHoursFormValues>({
     defaultValues: formValue,
     shouldUnregister: false,
@@ -127,10 +125,6 @@ const HolidayForm = ({
     }
     setIsSaving(true);
     const apiMethod = values.id ? api.putDatePeriod : api.postDatePeriod;
-    console.log({
-      ...formValuesToApiDatePeriod(resourceId, values, values.id),
-      override: true,
-    });
 
     apiMethod({
       ...formValuesToApiDatePeriod(resourceId, values, values.id),
