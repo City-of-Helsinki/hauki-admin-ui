@@ -66,6 +66,10 @@ const getNumberOfTheWeekday = (date: string): number => {
   return dateFnsWeekdayIndex === 0 ? 7 : dateFnsWeekdayIndex;
 };
 
+type FormValues = {
+  [date: string]: OpeningHoursFormValues;
+};
+
 const HolidayForm = ({
   holiday,
   value,
@@ -79,16 +83,19 @@ const HolidayForm = ({
 }): JSX.Element => {
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const openingHoursPrefix = 'openingHours';
+  const openingHoursPrefix = `${holidayDate}.openingHours`;
   const fieldNamePrefix = `${openingHoursPrefix}`;
-  const formValue = value || getDefaultFormValues({ name, holidayDate });
+  const valueToUse = value || getDefaultFormValues({ name, holidayDate });
   const [isOpen, setIsOpen] = useState<boolean>(
-    formValue && formValue.resourceState
-      ? formValue.resourceState !== ResourceState.CLOSED
+    valueToUse && valueToUse.resourceState
+      ? valueToUse.resourceState !== ResourceState.CLOSED
       : false
   );
+  const formValue = {
+    [holidayDate]: valueToUse,
+  };
 
-  const form = useForm<OpeningHoursFormValues>({
+  const form = useForm<FormValues>({
     defaultValues: formValue,
     shouldUnregister: false,
   });
@@ -100,13 +107,15 @@ const HolidayForm = ({
 
   const onClosedSelect = (): void => {
     setIsOpen(false);
-    setValue('resourceState', ResourceState.CLOSED);
+    // @ts-ignore
+    setValue(`[${holidayDate}].resourceState`, ResourceState.CLOSED);
     remove();
   };
 
   const onOpenSelect = (): void => {
     setIsOpen(true);
-    setValue('resourceState', undefined);
+    // @ts-ignore
+    setValue(`[${holidayDate}].resourceState`, ResourceState.UNDEFINED);
     remove();
     append({
       timeSpanGroups: [
@@ -126,14 +135,14 @@ const HolidayForm = ({
     resourceState: { options: resourceStates = [] },
   } = datePeriodConfig;
 
-  const createNew = (values: OpeningHoursFormValues): void => {
+  const createNew = (values: FormValues): void => {
     setIsSaving(true);
-    actions.create(values).then(() => setIsSaving(false));
+    actions.create(values[holidayDate]);
   };
 
-  const saveExisting = (values: OpeningHoursFormValues): void => {
+  const saveExisting = (values: FormValues): void => {
     setIsSaving(true);
-    actions.update(values).then(() => setIsSaving(false));
+    actions.update(values[holidayDate]).then(() => setIsSaving(false));
   };
 
   return (
