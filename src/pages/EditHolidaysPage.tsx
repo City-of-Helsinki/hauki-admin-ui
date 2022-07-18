@@ -146,7 +146,7 @@ const HolidayForm = ({
   };
 
   return (
-    <div className="holiday-form">
+    <>
       <SelectionGroup label="">
         <RadioButton
           id={`${holidayDate}-closed-state-checkbox`}
@@ -189,7 +189,7 @@ const HolidayForm = ({
           </div>
         </form>
       </FormProvider>
-    </div>
+    </>
   );
 };
 
@@ -263,7 +263,7 @@ const HolidayListItem = ({
           Poistetaan aukiolojaksoa..
         </>
       ) : (
-        <>
+        <div className="holiday-form-container" key={holiday.date}>
           {checked && (
             <HolidayForm
               holiday={holiday}
@@ -272,7 +272,7 @@ const HolidayListItem = ({
               actions={actions}
             />
           )}
-        </>
+        </div>
       )}
     </li>
   );
