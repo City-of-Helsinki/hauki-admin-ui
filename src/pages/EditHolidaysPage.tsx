@@ -272,7 +272,7 @@ export default function EditHolidaysPage({
     const fetchHolidayValues = async (): Promise<void> => {
       try {
         if (resource) {
-          fetchValues(resource.id);
+          await fetchValues(resource.id);
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -321,7 +321,7 @@ export default function EditHolidaysPage({
                     )
                   : undefined
               }
-              onSubmit={() => fetchValues(resource.id)}
+              onSubmit={(): Promise<void> => fetchValues(resource.id)}
             />
           ))}
         </ul>
