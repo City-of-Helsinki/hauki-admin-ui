@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Checkbox,
-  RadioButton,
   LoadingSpinner,
+  RadioButton,
   SelectionGroup,
 } from 'hds-react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
@@ -107,15 +107,19 @@ const HolidayForm = ({
 
   const onClosedSelect = (): void => {
     setIsOpen(false);
-    // @ts-ignore
-    setValue(`[${holidayDate}].resourceState`, ResourceState.CLOSED);
+    setValue(holidayDate, {
+      ...valueToUse,
+      resourceState: ResourceState.CLOSED,
+    });
     remove();
   };
 
   const onOpenSelect = (): void => {
     setIsOpen(true);
-    // @ts-ignore
-    setValue(`[${holidayDate}].resourceState`, ResourceState.UNDEFINED);
+    setValue(holidayDate, {
+      ...valueToUse,
+      resourceState: ResourceState.UNDEFINED,
+    });
     remove();
     append({
       timeSpanGroups: [
