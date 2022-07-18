@@ -29,6 +29,11 @@ import TimeSpans from '../components/time-span/TimeSpans';
 import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
 
+type FormActions = {
+  create: (values: OpeningHoursFormValues) => Promise<void>;
+  update: (values: OpeningHoursFormValues) => Promise<void>;
+};
+
 const getDefaultFormValues = ({
   name,
   holidayDate,
@@ -55,14 +60,12 @@ const HolidayForm = ({
   holiday,
   value,
   datePeriodConfig,
-  resourceId,
-  onSubmit,
+  actions,
 }: {
   holiday: Holiday;
   value?: OpeningHoursFormValues;
-  resourceId: number;
   datePeriodConfig: UiDatePeriodConfig;
-  onSubmit: () => void;
+  actions: FormActions;
 }): JSX.Element => {
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -113,34 +116,14 @@ const HolidayForm = ({
     resourceState: { options: resourceStates = [] },
   } = datePeriodConfig;
 
-  const save = (values: OpeningHoursFormValues): void => {
-    if (!resourceId) {
-      throw new Error('Resource not found');
-    }
+  const createNew = (values: OpeningHoursFormValues): void => {
     setIsSaving(true);
-    const apiMethod = values.id ? api.putDatePeriod : api.postDatePeriod;
+    actions.create(values).then(() => setIsSaving(false));
+  };
 
-    apiMethod({
-      ...formValuesToApiDatePeriod(resourceId, values, values.id),
-      override: true,
-    })
-      .then(() => {
-        toast.success({
-          dataTestId: 'holiday-form-success',
-          label: 'Tallennus onnistui',
-          text: `${name} aukiolon tallennus onnistui`,
-        });
-
-        onSubmit();
-      })
-      .catch(() => {
-        toast.error({
-          dataTestId: 'holiday-form-success-error',
-          label: 'Tallennus epäonnistui',
-          text: `${name} aukiolon tallennus epäonnistui`,
-        });
-      })
-      .finally(() => setIsSaving(false));
+  const saveExisting = (values: OpeningHoursFormValues): void => {
+    setIsSaving(true);
+    actions.update(values).then(() => setIsSaving(false));
   };
 
   return (
@@ -162,7 +145,12 @@ const HolidayForm = ({
         />
       </SelectionGroup>
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(save)}>
+        <form
+          onSubmit={
+            value?.id
+              ? form.handleSubmit(saveExisting)
+              : form.handleSubmit(createNew)
+          }>
           {isOpen && (
             <div className="holiday-form-fields">
               <TimeSpans
@@ -189,15 +177,13 @@ const HolidayForm = ({
 const HolidayListItem = ({
   holiday,
   value,
-  resourceId,
   datePeriodConfig,
-  onSubmit,
+  actions,
 }: {
   holiday: Holiday;
   value?: OpeningHoursFormValues;
-  resourceId: number;
   datePeriodConfig: UiDatePeriodConfig;
-  onSubmit: () => void;
+  actions: FormActions;
 }): JSX.Element => {
   const [checked, setChecked] = useState<boolean>(!!value);
   const { name, date } = holiday;
@@ -215,9 +201,8 @@ const HolidayListItem = ({
         <HolidayForm
           holiday={holiday}
           value={value}
-          resourceId={resourceId}
           datePeriodConfig={datePeriodConfig}
-          onSubmit={onSubmit}
+          actions={actions}
         />
       )}
     </li>
@@ -274,6 +259,64 @@ export default function EditHolidaysPage({
     [holidays]
   );
 
+  const formValuesToHolidayPeriod = (
+    resourceIdToSave: number,
+    values: OpeningHoursFormValues
+  ): DatePeriod => ({
+    ...formValuesToApiDatePeriod(resourceIdToSave, values, values.id),
+    override: true,
+  });
+
+  const create = async (values: OpeningHoursFormValues): Promise<void> => {
+    if (!resource) {
+      throw new Error('Resource not found');
+    }
+
+    return api
+      .postDatePeriod(formValuesToHolidayPeriod(resource.id, values))
+      .then(() => {
+        toast.success({
+          dataTestId: 'holiday-form-success',
+          label: 'Aukiolon lisääminen onnistui',
+          text: `${values.name.fi} aukiolon lisääminen onnistui`,
+        });
+
+        return fetchValues(resource.id);
+      })
+      .catch(() => {
+        toast.error({
+          dataTestId: 'holiday-form-success-error',
+          label: 'Aukiolon lisääminen epäonnistui',
+          text: `${values.name.fi} aukiolon lisääminen epäonnistui`,
+        });
+      });
+  };
+
+  const update = async (values: OpeningHoursFormValues): Promise<void> => {
+    if (!resource) {
+      throw new Error('Resource not found');
+    }
+
+    return api
+      .putDatePeriod(formValuesToHolidayPeriod(resource.id, values))
+      .then(() => {
+        toast.success({
+          dataTestId: 'holiday-form-success',
+          label: 'Tallennus onnistui',
+          text: `${values.name.fi} aukiolon tallennus onnistui`,
+        });
+
+        return fetchValues(resource.id);
+      })
+      .catch(() => {
+        toast.error({
+          dataTestId: 'holiday-form-success-error',
+          label: 'Tallennus epäonnistui',
+          text: `${values.name.fi} aukiolon tallennus epäonnistui`,
+        });
+      });
+  };
+
   useEffect((): void => {
     const fetchHolidayValues = async (): Promise<void> => {
       try {
@@ -319,7 +362,6 @@ export default function EditHolidaysPage({
               key={holiday.date}
               holiday={holiday}
               datePeriodConfig={datePeriodConfig}
-              resourceId={resource.id}
               value={
                 holidayValues
                   ? holidayValues.find(
@@ -327,7 +369,7 @@ export default function EditHolidaysPage({
                     )
                   : undefined
               }
-              onSubmit={(): Promise<void> => fetchValues(resource.id)}
+              actions={{ create, update }}
             />
           ))}
         </ul>
