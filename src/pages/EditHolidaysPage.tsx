@@ -14,6 +14,7 @@ import {
 import {
   apiDatePeriodToFormValues,
   formValuesToApiDatePeriod,
+  isHoliday,
 } from '../common/helpers/opening-hours-helpers';
 import api from '../common/utils/api/api';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
@@ -27,19 +28,6 @@ import TimeSpans from '../components/time-span/TimeSpans';
 
 import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
-
-const filterHolidayPeriods = (
-  periodValues: DatePeriod[],
-  holidays: Holiday[]
-): DatePeriod[] =>
-  periodValues.filter(
-    (datePeriod) =>
-      !!holidays.find(
-        (holiday) =>
-          holiday.date === datePeriod.end_date &&
-          holiday.name === datePeriod.name.fi
-      )
-  );
 
 const getDefaultFormValues = ({
   name,
@@ -266,11 +254,12 @@ export default function EditHolidaysPage({
 
   const fetchValues = useCallback(
     async (resourceIdentifier: number): Promise<void> => {
-      const apiDatePeriods = await api.getDatePeriods(resourceIdentifier);
-      const exceptionPeriods: DatePeriod[] = apiDatePeriods.filter(
-        (period) => period.override
+      const apiDatePeriods: DatePeriod[] = await api.getDatePeriods(
+        resourceIdentifier
       );
-      const holidayPeriods = filterHolidayPeriods(exceptionPeriods, holidays);
+      const holidayPeriods: DatePeriod[] = apiDatePeriods.filter(
+        (apiDatePeriod) => isHoliday(apiDatePeriod, holidays)
+      );
       const holidayValuesList: OpeningHoursFormValues[] = holidayPeriods.map(
         apiDatePeriodToFormValues
       );

@@ -1,6 +1,8 @@
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import {
   DatePeriod,
   GroupRule,
+  Holiday,
   OpeningHours,
   OpeningHoursFormValues,
   OpeningHoursTimeSpan,
@@ -270,3 +272,22 @@ export const getActiveDatePeriod = (
     return acc;
   }, undefined);
 };
+
+const dayInMilliseconds = 24 * 60 * 60 * 1000;
+
+export const isHoliday = (
+  datePeriod: DatePeriod,
+  holidays: Holiday[]
+): boolean =>
+  !!datePeriod.end_date &&
+  !!datePeriod.start_date &&
+  datePeriod.override &&
+  !!holidays.find(
+    (holiday) =>
+      holiday.date === datePeriod.end_date &&
+      holiday.name === datePeriod.name.fi
+  ) &&
+  differenceInMilliseconds(
+    new Date(datePeriod.end_date),
+    new Date(datePeriod.start_date)
+  ) <= dayInMilliseconds;
