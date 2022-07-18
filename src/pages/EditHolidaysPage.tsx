@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Checkbox, RadioButton, SelectionGroup } from 'hds-react';
+import {
+  Checkbox,
+  RadioButton,
+  LoadingSpinner,
+  SelectionGroup,
+} from 'hds-react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import getDay from 'date-fns/getDay';
 import {
@@ -22,6 +27,10 @@ import { getHolidays } from '../services/holidays';
 import { formatDate } from '../common/utils/date-time/format';
 import { PrimaryButton } from '../components/button/Button';
 import { UpcomingHolidayNotification } from '../components/holidays-table/HolidaysTable';
+import {
+  ConfirmationModal,
+  useModal,
+} from '../components/modal/ConfirmationModal';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
 import toast from '../components/notification/Toast';
 import TimeSpans from '../components/time-span/TimeSpans';
@@ -32,6 +41,7 @@ import './EditHolidaysPage.scss';
 type FormActions = {
   create: (values: OpeningHoursFormValues) => Promise<void>;
   update: (values: OpeningHoursFormValues) => Promise<void>;
+  delete: (values: OpeningHoursFormValues) => Promise<void>;
 };
 
 const getDefaultFormValues = ({
@@ -186,24 +196,74 @@ const HolidayListItem = ({
   actions: FormActions;
 }): JSX.Element => {
   const [checked, setChecked] = useState<boolean>(!!value);
+  const [willBeRemoved, setWillBeRemoved] = useState<boolean>(false);
   const { name, date } = holiday;
+  const commonCheckBoxProps = {
+    id: date,
+    className: 'holiday-list-checkbox',
+    label: `${name}   ${formatDate(date)}`,
+    checked,
+  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <li className="holidays-list-item" key={date}>
-      <Checkbox
-        id={date}
-        label={`${name}   ${formatDate(date)}`}
-        className="holiday-list-checkbox"
-        checked={checked}
-        onChange={(): void => setChecked(!checked)}
-      />
-      {checked && (
-        <HolidayForm
-          holiday={holiday}
-          value={value}
-          datePeriodConfig={datePeriodConfig}
-          actions={actions}
+      {value && value.id ? (
+        <>
+          <Checkbox
+            {...commonCheckBoxProps}
+            disabled={willBeRemoved}
+            onChange={(): void => {
+              openModal();
+            }}
+          />
+          <ConfirmationModal
+            onConfirm={async (): Promise<void> => {
+              setWillBeRemoved(true);
+              await actions.delete(value);
+            }}
+            title="Oletko varma että haluat poistaa aukiolojakson?"
+            text={
+              <>
+                <p>Olet poistamassa aukiolojakson</p>
+                <p>
+                  <b>
+                    {value.name.fi}
+                    <br />
+                    {value.startDate}
+                  </b>
+                </p>
+              </>
+            }
+            isOpen={isModalOpen}
+            close={closeModal}
+            confirmText="Poista"
+          />
+        </>
+      ) : (
+        <Checkbox
+          {...commonCheckBoxProps}
+          onChange={(): void => {
+            setChecked(!checked);
+          }}
         />
+      )}
+      {willBeRemoved ? (
+        <>
+          <LoadingSpinner small />
+          Poistetaan aukiolojaksoa..
+        </>
+      ) : (
+        <>
+          {checked && (
+            <HolidayForm
+              holiday={holiday}
+              value={value}
+              datePeriodConfig={datePeriodConfig}
+              actions={actions}
+            />
+          )}
+        </>
       )}
     </li>
   );
@@ -317,6 +377,37 @@ export default function EditHolidaysPage({
       });
   };
 
+  const deletePeriod = async (
+    values: OpeningHoursFormValues
+  ): Promise<void> => {
+    if (!resource) {
+      throw new Error('Resource not found');
+    }
+
+    if (!values.id) {
+      throw new Error('Period not found');
+    }
+
+    return api
+      .deleteDatePeriod(values.id)
+      .then(() => {
+        toast.success({
+          dataTestId: 'holiday-form-success',
+          label: 'Poistaminen onnistui',
+          text: `${values.name.fi} aukiolon poisto onnistui`,
+        });
+
+        return fetchValues(resource.id);
+      })
+      .catch(() => {
+        toast.error({
+          dataTestId: 'holiday-form-success-error',
+          label: 'Poistaminen epäonnistui',
+          text: `${values.name.fi} aukiolon poisto epäonnistui`,
+        });
+      });
+  };
+
   useEffect((): void => {
     const fetchHolidayValues = async (): Promise<void> => {
       try {
@@ -357,21 +448,23 @@ export default function EditHolidaysPage({
           pitää yhä paikkansa.
         </p>
         <ul className="holidays-list">
-          {holidays.map((holiday) => (
-            <HolidayListItem
-              key={holiday.date}
-              holiday={holiday}
-              datePeriodConfig={datePeriodConfig}
-              value={
-                holidayValues
-                  ? holidayValues.find(
-                      (value) => value.name.fi === holiday.name
-                    )
-                  : undefined
-              }
-              actions={{ create, update }}
-            />
-          ))}
+          {holidays.map((holiday) => {
+            const value: OpeningHoursFormValues | undefined = holidayValues
+              ? holidayValues.find(
+                  (holidayValue) => holidayValue.name.fi === holiday.name
+                )
+              : undefined;
+
+            return (
+              <HolidayListItem
+                key={`${holiday.date}-${value ? value.id : 'new'}`}
+                holiday={holiday}
+                datePeriodConfig={datePeriodConfig}
+                value={value}
+                actions={{ create, update, delete: deletePeriod }}
+              />
+            );
+          })}
         </ul>
       </div>
     </>
