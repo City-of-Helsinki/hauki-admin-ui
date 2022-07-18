@@ -362,8 +362,8 @@ export default function EditHolidaysPage({
   };
 
   const update = async (values: OpeningHoursFormValues): Promise<void> => {
-    if (!resource) {
-      throw new Error('Resource not found');
+    if (!resource || !values || !values.id) {
+      throw new Error('Resource or period not found');
     }
 
     return api
