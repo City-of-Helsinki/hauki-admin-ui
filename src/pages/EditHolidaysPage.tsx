@@ -45,6 +45,12 @@ const getDefaultFormValues = ({
   openingHours: [],
 });
 
+const getNumberOfTheWeekday = (date: string): number => {
+  // Date-fns returns index and it starts from Sunday.
+  const dateFnsWeekdayIndex: number = getDay(new Date(date));
+  return dateFnsWeekdayIndex === 0 ? 7 : dateFnsWeekdayIndex;
+};
+
 const HolidayForm = ({
   holiday,
   value,
@@ -99,7 +105,7 @@ const HolidayForm = ({
           ],
         },
       ],
-      weekdays: [getDay(new Date(holidayDate))],
+      weekdays: [getNumberOfTheWeekday(holidayDate)],
     });
   };
 
