@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Notification } from 'hds-react';
 import { useHistory } from 'react-router-dom';
 import {
   DatePeriod,
+  Holiday,
   Language,
   Resource,
   UiDatePeriodConfig,
@@ -12,13 +13,23 @@ import { SecondaryButton } from '../button/Button';
 
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
-import { getActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
+import {
+  getActiveDatePeriod,
+  isHoliday,
+} from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
 import HolidaysTable from '../holidays-table/HolidaysTable';
+import { getHolidays } from '../../services/holidays';
 
 const ExceptionPeriodsList = ({
+  datePeriodConfig,
+  datePeriods,
+  holidays,
   resourceId,
 }: {
+  datePeriodConfig?: UiDatePeriodConfig;
+  datePeriods: DatePeriod[];
+  holidays: Holiday[];
   resourceId: number;
 }): JSX.Element => (
   <section className="opening-periods-section">
@@ -27,7 +38,12 @@ const ExceptionPeriodsList = ({
     </header>
     <ul className="opening-periods-list">
       <li>
-        <HolidaysTable resourceId={resourceId} />
+        <HolidaysTable
+          datePeriodConfig={datePeriodConfig}
+          datePeriods={datePeriods}
+          holidays={holidays}
+          resourceId={resourceId}
+        />
       </li>
     </ul>
   </section>
@@ -128,14 +144,32 @@ const OpeningPeriodsNotFound = ({ text }: { text: string }): JSX.Element => (
   <p className="opening-periods-not-found">{text}</p>
 );
 
-const partitionByOverride = (datePeriods: DatePeriod[]): DatePeriod[][] =>
+type ResourceOpeningHours = [DatePeriod[], DatePeriod[], DatePeriod[]];
+
+/**
+ *  Groups date periods by normal opening hours, holidays and exceptions
+ *
+ * @param datePeriods Date periods to group
+ * @param holidays Holidays to group with
+ * @returns Tuple of normal opening hours, holidays and exceptions
+ */
+const groupWithType = (
+  datePeriods: DatePeriod[],
+  holidays: Holiday[]
+): ResourceOpeningHours =>
   datePeriods.reduce(
-    ([defaults = [], exceptions = []]: DatePeriod[][], current: DatePeriod) => {
-      return current.override
-        ? [defaults, [...exceptions, current]]
-        : [[...defaults, current], exceptions];
+    (
+      [openingHours, storedHolidays, exceptions]: ResourceOpeningHours,
+      current
+    ): ResourceOpeningHours => {
+      if (current.override) {
+        return isHoliday(current, holidays)
+          ? [openingHours, [...storedHolidays, current], exceptions]
+          : [openingHours, storedHolidays, [...exceptions, current]];
+      }
+      return [[...openingHours, current], storedHolidays, exceptions];
     },
-    [[], []]
+    [[], [], []]
   );
 
 export default function ResourceOpeningHours({
@@ -152,27 +186,31 @@ export default function ResourceOpeningHours({
   const [datePeriodConfig, setDatePeriodConfig] = useState<
     UiDatePeriodConfig
   >();
-  const [[defaultPeriods], setDividedDatePeriods] = useState<DatePeriod[][]>([
-    [],
-    [],
-  ]);
-  const fetchDatePeriods = async (id: number): Promise<void> => {
-    try {
-      const [apiDatePeriods, uiDatePeriodOptions] = await Promise.all([
-        api.getDatePeriods(id),
-        getDatePeriodFormConfig(),
-      ]);
-      const datePeriodLists = partitionByOverride(apiDatePeriods);
-      setDividedDatePeriods(datePeriodLists);
-      setDatePeriodConfig(uiDatePeriodOptions);
-    } catch (e) {
-      setError(e as Error);
-    }
-  };
+  const [
+    [defaultPeriods, holidayDatePeriods],
+    setDividedDatePeriods,
+  ] = useState<ResourceOpeningHours>([[], [], []]);
+  const holidays = useMemo(() => getHolidays(), []);
+  const fetchDatePeriods = useCallback(
+    async (id: number): Promise<void> => {
+      try {
+        const [apiDatePeriods, uiDatePeriodOptions] = await Promise.all([
+          api.getDatePeriods(id),
+          getDatePeriodFormConfig(),
+        ]);
+        const datePeriodLists = groupWithType(apiDatePeriods, holidays);
+        setDividedDatePeriods(datePeriodLists);
+        setDatePeriodConfig(uiDatePeriodOptions);
+      } catch (e) {
+        setError(e as Error);
+      }
+    },
+    [holidays]
+  );
 
   useEffect(() => {
     fetchDatePeriods(resourceId);
-  }, [resourceId]);
+  }, [resourceId, fetchDatePeriods]);
 
   const deletePeriod = async (datePeriodId: number): Promise<void> => {
     await api.deleteDatePeriod(datePeriodId);
@@ -207,7 +245,12 @@ export default function ResourceOpeningHours({
         deletePeriod={deletePeriod}
         language={language}
       />
-      <ExceptionPeriodsList resourceId={resourceId} />
+      <ExceptionPeriodsList
+        datePeriodConfig={datePeriodConfig}
+        datePeriods={holidayDatePeriods}
+        holidays={holidays}
+        resourceId={resourceId}
+      />
     </>
   );
 }
