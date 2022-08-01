@@ -296,6 +296,7 @@ export default function EditHolidaysPage({
   >();
   const { language = Language.FI } = useAppContext();
   const [holidays, setHolidays] = useState<Holiday[]>([]);
+  const [holidayPeriods, setHolidayPeriods] = useState<DatePeriod[]>([]);
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
@@ -321,10 +322,11 @@ export default function EditHolidaysPage({
       const apiDatePeriods: DatePeriod[] = await api.getDatePeriods(
         resourceIdentifier
       );
-      const holidayPeriods: DatePeriod[] = apiDatePeriods.filter(
+      const holidayPeriodsResult: DatePeriod[] = apiDatePeriods.filter(
         (apiDatePeriod) => isHoliday(apiDatePeriod, holidays)
       );
-      const holidayValuesList: OpeningHoursFormValues[] = holidayPeriods.map(
+      setHolidayPeriods(holidayPeriodsResult);
+      const holidayValuesList: OpeningHoursFormValues[] = holidayPeriodsResult.map(
         apiDatePeriodToFormValues
       );
       setHolidayValues(holidayValuesList);
@@ -451,7 +453,11 @@ export default function EditHolidaysPage({
           <h3>Juhlapyhien aukioloajat</h3>
           <span className="holidays-page-title-addon">
             {holidays.length && (
-              <UpcomingHolidayNotification holiday={holidays[0]} />
+              <UpcomingHolidayNotification
+                datePeriodConfig={datePeriodConfig}
+                datePeriods={holidayPeriods}
+                holiday={holidays[0]}
+              />
             )}
           </span>
         </div>

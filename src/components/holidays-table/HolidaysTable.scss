@@ -78,3 +78,9 @@
     grid-column: auto;
   }
 }
+
+.upcoming-holidays {
+  align-items: center;
+  display: flex;
+  gap: $spacing-s;
+}

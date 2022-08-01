@@ -3,6 +3,7 @@ import { isHoliday } from '../../common/helpers/opening-hours-helpers';
 import {
   DatePeriod,
   Holiday,
+  ResourceState,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
@@ -11,14 +12,25 @@ import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAcc
 import './HolidaysTable.scss';
 
 export const UpcomingHolidayNotification = ({
+  datePeriodConfig,
+  datePeriods,
   holiday,
 }: {
+  datePeriodConfig?: UiDatePeriodConfig;
+  datePeriods: DatePeriod[];
   holiday: Holiday;
 }): JSX.Element => (
-  <>
-    Seuraava juhlapyhä: <strong>{holiday.name}</strong> — Ei poikkeavia
-    aukioloaikoja
-  </>
+  <div className="upcoming-holidays">
+    <span>
+      Seuraava juhlapyhä: <strong>{holiday.name}</strong>
+    </span>
+    <span>—</span>
+    <HolidayOpeningHours
+      datePeriodConfig={datePeriodConfig}
+      datePeriods={datePeriods}
+      holiday={holiday}
+    />
+  </div>
 );
 
 const HolidayOpeningHours = ({
@@ -34,17 +46,19 @@ const HolidayOpeningHours = ({
 
   if (datePeriod) {
     return (
-      <>
-        {datePeriod.time_span_groups.map((timeSpanGroup) =>
-          timeSpanGroup.time_spans.map((timeSpan) => (
-            <TimeSpan
-              key={timeSpan.id}
-              resourceStates={datePeriodConfig?.resourceState.options || []}
-              timeSpan={timeSpan}
-            />
-          ))
-        )}
-      </>
+      <div>
+        {datePeriod.resource_state === ResourceState.CLOSED
+          ? 'Suljettu'
+          : datePeriod.time_span_groups.map((timeSpanGroup) =>
+              timeSpanGroup.time_spans.map((timeSpan) => (
+                <TimeSpan
+                  key={timeSpan.id}
+                  resourceStates={datePeriodConfig?.resourceState.options || []}
+                  timeSpan={timeSpan}
+                />
+              ))
+            )}
+      </div>
     );
   }
 
@@ -64,7 +78,13 @@ const HolidaysTable = ({
 }): JSX.Element => (
   <OpeningPeriodAccordion
     periodName="Juhlapyhien aukioloajat"
-    dateRange={<UpcomingHolidayNotification holiday={holidays[0]} />}
+    dateRange={
+      <UpcomingHolidayNotification
+        datePeriodConfig={datePeriodConfig}
+        datePeriods={datePeriods}
+        holiday={holidays[0]}
+      />
+    }
     editUrl={`/resource/${resourceId}/holidays`}>
     <div className="holidays-container">
       <h4 id="holidays-title" className="holidays-title">
