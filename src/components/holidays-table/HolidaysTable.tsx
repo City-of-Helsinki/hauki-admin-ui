@@ -67,7 +67,7 @@ const HolidaysTable = (): JSX.Element => {
               <div
                 className="holidays-table__cell holidays-table__cell--date"
                 role="cell">
-                {formatDate(holiday.start_date).substring(0, 6)}
+                {formatDate(holiday.date)}
               </div>
               <div
                 className="holidays-table__cell holidays-table__cell--opening-hours"
