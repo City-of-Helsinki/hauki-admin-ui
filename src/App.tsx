@@ -181,7 +181,10 @@ export default function App(): JSX.Element {
               />
               <PrivateResourceRoute
                 id="edit-holidays-route"
-                path={['/resource/:id/holidays']}
+                path={[
+                  '/resource/:parentId/child/:id/holidays',
+                  '/resource/:id/holidays',
+                ]}
                 render={({
                   match,
                 }: RouteComponentProps<{
