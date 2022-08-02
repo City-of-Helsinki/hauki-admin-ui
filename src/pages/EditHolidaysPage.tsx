@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Checkbox, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
-import getDay from 'date-fns/getDay';
 import {
   DatePeriod,
   Holiday,
@@ -19,7 +18,10 @@ import {
 import api from '../common/utils/api/api';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
 import { getHolidays } from '../services/holidays';
-import { formatDate } from '../common/utils/date-time/format';
+import {
+  formatDate,
+  getNumberOfTheWeekday,
+} from '../common/utils/date-time/format';
 import { PrimaryButton, SecondaryButton } from '../components/button/Button';
 import { UpcomingHolidayNotification } from '../components/holidays-table/HolidaysTable';
 import {
@@ -56,12 +58,6 @@ const getDefaultFormValues = ({
   resourceState: ResourceState.CLOSED,
   openingHours: [],
 });
-
-const getNumberOfTheWeekday = (date: string): number => {
-  // Date-fns returns index and it starts from Sunday.
-  const dateFnsWeekdayIndex: number = getDay(new Date(date));
-  return dateFnsWeekdayIndex === 0 ? 7 : dateFnsWeekdayIndex;
-};
 
 const HolidayForm = ({
   holiday,

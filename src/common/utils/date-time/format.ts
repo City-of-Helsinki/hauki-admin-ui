@@ -1,6 +1,7 @@
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import { Language, Weekdays, WeekdayTypes } from '../../lib/types';
+import { getDay } from 'date-fns';
 
 export const dateApiFormat = 'yyyy-MM-dd';
 export const dateFormFormat = 'dd.MM.yyyy';
@@ -160,3 +161,9 @@ export function createWeekdaysStringFromIndices(
 
   return weekdaysString;
 }
+
+export const getNumberOfTheWeekday = (date: string): number => {
+  // Date-fns returns index and it starts from Sunday.
+  const dateFnsWeekdayIndex: number = getDay(new Date(date));
+  return dateFnsWeekdayIndex === 0 ? 7 : dateFnsWeekdayIndex;
+};
