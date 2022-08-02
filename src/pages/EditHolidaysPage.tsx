@@ -77,11 +77,7 @@ const HolidayForm = ({
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const valueToUse = value || getDefaultFormValues({ name, holidayDate });
-  const [isOpen, setIsOpen] = useState<boolean>(
-    valueToUse && valueToUse.resourceState
-      ? valueToUse.resourceState !== ResourceState.CLOSED
-      : false
-  );
+
   const form = useForm<OpeningHoursFormValues>({
     defaultValues: valueToUse,
     shouldUnregister: false,
@@ -90,7 +86,6 @@ const HolidayForm = ({
   const { reset } = form;
 
   const onClosedSelect = (): void => {
-    setIsOpen(false);
     reset({
       ...valueToUse,
       resourceState: ResourceState.CLOSED,
@@ -98,7 +93,6 @@ const HolidayForm = ({
   };
 
   const onOpenSelect = (): void => {
-    setIsOpen(true);
     reset({
       ...valueToUse,
       resourceState: ResourceState.UNDEFINED,
@@ -143,7 +137,11 @@ const HolidayForm = ({
         }>
         <ExceptionForm
           id={holidayDate}
-          isOpen={isOpen}
+          isOpen={
+            valueToUse && valueToUse.resourceState
+              ? valueToUse.resourceState !== ResourceState.CLOSED
+              : false
+          }
           onClose={onClosedSelect}
           onOpen={onOpenSelect}
           resourceStates={resourceStates}
