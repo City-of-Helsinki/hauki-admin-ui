@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-const useReturnToResourcePage = () => {
+const useReturnToResourcePage = (): (() => void) => {
   const history = useHistory();
   const {
     params: { parentId, id: resourceId },
@@ -12,9 +12,7 @@ const useReturnToResourcePage = () => {
 
   return useCallback(() => {
     if (!parentId && !resourceId) {
-      throw new Error(
-        'Invalid route. No parentId or resourceId found in the path'
-      );
+      throw new Error('Invalid route. No resource id found from the path.');
     }
 
     history.push(
