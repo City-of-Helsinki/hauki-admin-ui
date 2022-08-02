@@ -78,13 +78,3 @@
     grid-column: auto;
   }
 }
-
-.upcoming-holidays-divider {
-  display: none;
-}
-
-@media screen and (min-width: $breakpoint-l) {
-  .upcoming-holidays-divider {
-    display: revert;
-  }
-}
