@@ -5,7 +5,7 @@ import {
   RadioButton,
   SelectionGroup,
 } from 'hds-react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import getDay from 'date-fns/getDay';
 import {
   DatePeriod,
@@ -66,10 +66,6 @@ const getNumberOfTheWeekday = (date: string): number => {
   return dateFnsWeekdayIndex === 0 ? 7 : dateFnsWeekdayIndex;
 };
 
-type FormValues = {
-  [date: string]: OpeningHoursFormValues;
-};
-
 const HolidayForm = ({
   holiday,
   value,
@@ -83,55 +79,46 @@ const HolidayForm = ({
 }): JSX.Element => {
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const openingHoursPrefix = `${holidayDate}.openingHours`;
-  const fieldNamePrefix = `${openingHoursPrefix}`;
   const valueToUse = value || getDefaultFormValues({ name, holidayDate });
   const [isOpen, setIsOpen] = useState<boolean>(
     valueToUse && valueToUse.resourceState
       ? valueToUse.resourceState !== ResourceState.CLOSED
       : false
   );
-  const formValue = {
-    [holidayDate]: valueToUse,
-  };
-
-  const form = useForm<FormValues>({
-    defaultValues: formValue,
+  const form = useForm<OpeningHoursFormValues>({
+    defaultValues: valueToUse,
     shouldUnregister: false,
   });
-  const { control, setValue } = form;
-  const { remove, append } = useFieldArray({
-    name: fieldNamePrefix,
-    control,
-  });
+
+  const { reset } = form;
 
   const onClosedSelect = (): void => {
     setIsOpen(false);
-    setValue(holidayDate, {
+    reset({
       ...valueToUse,
       resourceState: ResourceState.CLOSED,
     });
-    remove();
   };
 
   const onOpenSelect = (): void => {
     setIsOpen(true);
-    setValue(holidayDate, {
+    reset({
       ...valueToUse,
       resourceState: ResourceState.UNDEFINED,
-    });
-    remove();
-    append({
-      timeSpanGroups: [
+      openingHours: [
         {
-          timeSpans: [
+          timeSpanGroups: [
             {
-              resource_state: ResourceState.OPEN,
+              timeSpans: [
+                {
+                  resource_state: ResourceState.OPEN,
+                },
+              ],
             },
           ],
+          weekdays: [getNumberOfTheWeekday(holidayDate)],
         },
       ],
-      weekdays: [getNumberOfTheWeekday(holidayDate)],
     });
   };
 
@@ -139,14 +126,14 @@ const HolidayForm = ({
     resourceState: { options: resourceStates = [] },
   } = datePeriodConfig;
 
-  const createNew = (values: FormValues): void => {
+  const createNew = (values: OpeningHoursFormValues): void => {
     setIsSaving(true);
-    actions.create(values[holidayDate]);
+    actions.create(values);
   };
 
-  const saveExisting = (values: FormValues): void => {
+  const saveExisting = (values: OpeningHoursFormValues): void => {
     setIsSaving(true);
-    actions.update(values[holidayDate]).then(() => setIsSaving(false));
+    actions.update(values).then(() => setIsSaving(false));
   };
 
   return (
@@ -178,7 +165,7 @@ const HolidayForm = ({
             <div className="holiday-form-fields">
               <TimeSpans
                 resourceStates={resourceStates}
-                namePrefix={`${fieldNamePrefix}[0].timeSpanGroups[0].timeSpans`}
+                namePrefix="openingHours[0].timeSpanGroups[0].timeSpans"
               />
             </div>
           )}
