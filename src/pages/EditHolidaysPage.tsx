@@ -443,7 +443,7 @@ export default function EditHolidaysPage({
         <SecondaryButton
           onClick={returnToResourcePage}
           size={isMobile ? 'small' : 'default'}>
-          Takaisin etusivulle
+          Palaa etusivulle
         </SecondaryButton>
       </ResourceTitle>
       <div className="holidays-page card">
