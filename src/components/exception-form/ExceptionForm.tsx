@@ -2,6 +2,7 @@ import React from 'react';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { TranslatedApiChoice } from '../../common/lib/types';
 import TimeSpans from '../time-span/TimeSpans';
+import './ExceptionForm.scss';
 
 const ExceptionForm = ({
   id,
@@ -17,7 +18,7 @@ const ExceptionForm = ({
   resourceStates: TranslatedApiChoice[];
 }): JSX.Element => (
   <>
-    <SelectionGroup label="">
+    <SelectionGroup className="exception-form-resource-state-toggle" label="">
       <RadioButton
         id={`${id}-closed-state-checkbox`}
         name={`${id}-closed-state-checkbox`}
