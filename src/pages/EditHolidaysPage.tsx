@@ -438,7 +438,7 @@ export default function EditHolidaysPage({
       <div className="holidays-page card">
         <div className="holidays-page-title">
           <h3>Juhlapyhien aukioloajat</h3>
-          {holidays.length && (
+          {holidays.length > 0 && (
             <UpcomingHolidayNotification
               datePeriodConfig={datePeriodConfig}
               datePeriods={holidayPeriods}
