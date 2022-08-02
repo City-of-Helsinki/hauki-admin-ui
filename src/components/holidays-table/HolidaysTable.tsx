@@ -20,17 +20,17 @@ export const UpcomingHolidayNotification = ({
   datePeriods: DatePeriod[];
   holiday: Holiday;
 }): JSX.Element => (
-  <div className="upcoming-holidays">
+  <>
     <span>
       Seuraava juhlapyhä: <strong>{holiday.name}</strong>
     </span>
-    <span>—</span>
+    <span className="upcoming-holidays-divider">—</span>
     <HolidayOpeningHours
       datePeriodConfig={datePeriodConfig}
       datePeriods={datePeriods}
       holiday={holiday}
     />
-  </div>
+  </>
 );
 
 const HolidayOpeningHours = ({

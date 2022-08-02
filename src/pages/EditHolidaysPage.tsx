@@ -438,15 +438,13 @@ export default function EditHolidaysPage({
       <div className="holidays-page card">
         <div className="holidays-page-title">
           <h3>Juhlapyhien aukioloajat</h3>
-          <span className="holidays-page-title-addon">
-            {holidays.length && (
-              <UpcomingHolidayNotification
-                datePeriodConfig={datePeriodConfig}
-                datePeriods={holidayPeriods}
-                holiday={holidays[0]}
-              />
-            )}
-          </span>
+          {holidays.length && (
+            <UpcomingHolidayNotification
+              datePeriodConfig={datePeriodConfig}
+              datePeriods={holidayPeriods}
+              holiday={holidays[0]}
+            />
+          )}
         </div>
         <p>
           Jos lisäät listassa olevalle juhlapyhälle poikkeavan aukioloajan, se

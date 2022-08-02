@@ -4,11 +4,8 @@
   display: flex;
   align-items: center;
   font-size: $fontsize-body-m;
-}
-
-.holidays-page-title-addon {
-  margin-left: $spacing-2-xl;
-  font-weight: normal;
+  flex-wrap: wrap;
+  gap: $spacing-s $spacing-l;
 }
 
 .holidays-list {
