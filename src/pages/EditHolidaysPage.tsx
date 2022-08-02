@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Checkbox,
-  LoadingSpinner,
-  RadioButton,
-  SelectionGroup,
-} from 'hds-react';
+import { Checkbox, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import getDay from 'date-fns/getDay';
 import {
@@ -33,12 +28,12 @@ import {
 } from '../components/modal/ConfirmationModal';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
 import toast from '../components/notification/Toast';
-import TimeSpans from '../components/time-span/TimeSpans';
 
 import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import useMobile from '../hooks/useMobile';
+import ExceptionForm from '../components/exception-form/ExceptionForm';
 
 type FormActions = {
   create: (values: OpeningHoursFormValues) => Promise<void>;
@@ -139,50 +134,31 @@ const HolidayForm = ({
   };
 
   return (
-    <>
-      <SelectionGroup label="">
-        <RadioButton
-          id={`${holidayDate}-closed-state-checkbox`}
-          name={`${holidayDate}-closed-state-checkbox`}
-          checked={!isOpen}
-          label="Suljettu koko päivän"
-          onChange={(): void => onClosedSelect()}
+    <FormProvider {...form}>
+      <form
+        onSubmit={
+          value?.id
+            ? form.handleSubmit(saveExisting)
+            : form.handleSubmit(createNew)
+        }>
+        <ExceptionForm
+          id={holidayDate}
+          isOpen={isOpen}
+          onClose={onClosedSelect}
+          onOpen={onOpenSelect}
+          resourceStates={resourceStates}
         />
-        <RadioButton
-          id={`${holidayDate}-open-state-checkbox`}
-          name={`${holidayDate}-open-state-checkbox`}
-          checked={isOpen}
-          label="Voimassa tietyn ajan"
-          onChange={(): void => onOpenSelect()}
-        />
-      </SelectionGroup>
-      <FormProvider {...form}>
-        <form
-          onSubmit={
-            value?.id
-              ? form.handleSubmit(saveExisting)
-              : form.handleSubmit(createNew)
-          }>
-          {isOpen && (
-            <div className="holiday-form-fields">
-              <TimeSpans
-                resourceStates={resourceStates}
-                namePrefix="openingHours[0].timeSpanGroups[0].timeSpans"
-              />
-            </div>
-          )}
-          <div className="holiday-form-actions">
-            <PrimaryButton
-              dataTest="submit-opening-hours-button"
-              isLoading={isSaving}
-              loadingText="Tallentaa poikkeusaukioloa"
-              type="submit">
-              Tallenna
-            </PrimaryButton>
-          </div>
-        </form>
-      </FormProvider>
-    </>
+        <div className="holiday-form-actions">
+          <PrimaryButton
+            dataTest="submit-opening-hours-button"
+            isLoading={isSaving}
+            loadingText="Tallentaa poikkeusaukioloa"
+            type="submit">
+            Tallenna
+          </PrimaryButton>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 
