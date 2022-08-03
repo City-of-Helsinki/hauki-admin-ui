@@ -72,7 +72,7 @@ const ExceptionPeriodsList = ({
             resourceId={resourceId}
           />
         </li>
-        {exceptions.map((exception) => (
+        {exceptions.map((exception, i) => (
           <li>
             <OpeningPeriodAccordion
               editUrl={
@@ -80,6 +80,7 @@ const ExceptionPeriodsList = ({
                   ? `/resource/${parentId}/child/${resourceId}/exception/${exception.id}`
                   : `/resource/${resourceId}/exception/${exception.id}`
               }
+              initiallyOpen={i <= 10}
               onDelete={() => deletePeriod(exception.id!)}
               periodName={exception.name[language]}
               dateRange={`${
