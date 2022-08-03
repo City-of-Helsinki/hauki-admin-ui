@@ -11,7 +11,10 @@ import {
   ResourceState,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
-import { formatDate } from '../../common/utils/date-time/format';
+import {
+  formatDate,
+  getNumberOfTheWeekday,
+} from '../../common/utils/date-time/format';
 import { defaultTimeSpan } from '../../constants';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import ExceptionOpeningHours from '../exception-opening-hours-form-inputs/ExceptionOpeningHoursFormInputs';
@@ -21,11 +24,38 @@ import OpeningHoursTitles from '../opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../resource-title/ResourceTitle';
 import './ExceptionOpeningHoursForm.scss';
 
+function resolveWeekday(
+  values: OpeningHoursFormValues
+): OpeningHoursFormValues {
+  if (values.resourceState === ResourceState.CLOSED) {
+    return values;
+  }
+
+  if (!values.startDate) {
+    throw new Error('No start date set by default');
+  }
+
+  return {
+    ...values,
+    openingHours: [
+      {
+        ...values.openingHours[0],
+        weekdays: [getNumberOfTheWeekday(values.startDate)],
+      },
+    ],
+  };
+}
+
 const formValuesToException = (
   resourceIdToSave: number,
   values: OpeningHoursFormValues
 ): DatePeriod => {
-  const data = formValuesToApiDatePeriod(resourceIdToSave, values, values.id);
+  const data = formValuesToApiDatePeriod(
+    resourceIdToSave,
+    resolveWeekday(values),
+    values.id
+  );
+
   return {
     ...data,
     end_date: data.start_date,
