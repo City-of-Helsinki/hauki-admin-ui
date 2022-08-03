@@ -1,5 +1,4 @@
 import { DateInput } from 'hds-react';
-import { values } from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
@@ -73,6 +72,7 @@ const getDefaultFormValues = (
   if (datePeriod) {
     return apiDatePeriodToFormValues(datePeriod);
   }
+
   const now = new Date().toISOString();
   return {
     startDate: formatDate(now),
@@ -162,6 +162,7 @@ const ExceptionOpeningHoursForm = ({
                     {
                       timeSpanGroups: [
                         {
+                          rule: 'week_every' as const,
                           timeSpans: [defaultTimeSpan],
                         },
                       ],

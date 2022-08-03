@@ -92,6 +92,7 @@ const HolidayForm = ({
       {
         timeSpanGroups: [
           {
+            rule: 'week_every' as const,
             timeSpans: [
               {
                 resource_state: ResourceState.OPEN,
