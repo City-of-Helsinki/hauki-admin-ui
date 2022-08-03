@@ -35,7 +35,7 @@ import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import useMobile from '../hooks/useMobile';
-import ExceptionForm from '../components/exception-form/ExceptionForm';
+import ExceptionOpeningHours from '../components/exception-opening-hours/ExceptionOpeningHours';
 
 type FormActions = {
   create: (values: OpeningHoursFormValues) => Promise<void>;
@@ -131,7 +131,7 @@ const HolidayForm = ({
             ? form.handleSubmit(saveExisting)
             : form.handleSubmit(createNew)
         }>
-        <ExceptionForm
+        <ExceptionOpeningHours
           id={holidayDate}
           isOpen={
             valueToUse && valueToUse.resourceState

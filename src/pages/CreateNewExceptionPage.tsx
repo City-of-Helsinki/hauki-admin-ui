@@ -14,7 +14,7 @@ import {
 import api from '../common/utils/api/api';
 import { formatDate } from '../common/utils/date-time/format';
 import { PrimaryButton, SecondaryButton } from '../components/button/Button';
-import ExceptionForm from '../components/exception-form/ExceptionForm';
+import ExceptionOpeningHours from '../components/exception-opening-hours/ExceptionOpeningHours';
 import toast from '../components/notification/Toast';
 import OpeningHoursTitles from '../components/opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
@@ -139,7 +139,7 @@ export default function CreateNewExceptionPage({
                 openButtonAriaLabel="Valitse päivämäärä"
                 value={startDate ?? ''}
               />
-              <ExceptionForm
+              <ExceptionOpeningHours
                 onClose={(): void =>
                   reset({
                     openingHours: [],

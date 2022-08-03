@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { TranslatedApiChoice } from '../../common/lib/types';
 import TimeSpans from '../time-span/TimeSpans';
-import './ExceptionForm.scss';
+import './ExceptionOpeningHours.scss';
 
-const ExceptionForm = ({
+const ExceptionOpeningHours = ({
   id,
   isOpen: isOpenInitially,
   onClose,
@@ -21,7 +21,9 @@ const ExceptionForm = ({
 
   return (
     <>
-      <SelectionGroup className="exception-form-resource-state-toggle" label="">
+      <SelectionGroup
+        className="exception-opening-hours-resource-state-toggle"
+        label="">
         <RadioButton
           id={`${id}-closed-state-checkbox`}
           name={`${id}-closed-state-checkbox`}
@@ -44,7 +46,7 @@ const ExceptionForm = ({
         />
       </SelectionGroup>
       {isOpen && (
-        <div className="holiday-form-fields">
+        <div className="exception-opening-hours-time-spans">
           <TimeSpans
             resourceStates={resourceStates}
             namePrefix="openingHours[0].timeSpanGroups[0].timeSpans"
@@ -55,4 +57,4 @@ const ExceptionForm = ({
   );
 };
 
-export default ExceptionForm;
+export default ExceptionOpeningHours;
