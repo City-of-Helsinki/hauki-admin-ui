@@ -1,7 +1,7 @@
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
-import { Language, Weekdays, WeekdayTypes } from '../../lib/types';
 import { getDay } from 'date-fns';
+import { Language, Weekdays, WeekdayTypes } from '../../lib/types';
 
 export const dateApiFormat = 'yyyy-MM-dd';
 export const dateFormFormat = 'dd.MM.yyyy';
