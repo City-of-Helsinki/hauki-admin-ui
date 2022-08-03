@@ -13,11 +13,10 @@ import {
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
 import { defaultTimeSpan } from '../../constants';
-import useMobile from '../../hooks/useMobile';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
-import { PrimaryButton, SecondaryButton } from '../button/Button';
 import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
 import toast from '../notification/Toast';
+import OpeningHoursFormActions from '../opening-hours-form/OpeningHoursFormActions';
 import OpeningHoursTitles from '../opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../resource-title/ResourceTitle';
 import './ExceptionForm.scss';
@@ -66,7 +65,6 @@ const ExceptionForm = ({
   });
   const { register, reset, watch } = form;
   const startDate = watch('startDate');
-  const isMobile = useMobile();
   const returnToResourcePage = useReturnToResourcePage();
   const [isSaving, setSaving] = useState<boolean>(false);
 
@@ -138,23 +136,7 @@ const ExceptionForm = ({
               />
             </div>
           </div>
-          <div className="opening-hours-form__actions-container">
-            <div className="card opening-hours-form__actions">
-              <PrimaryButton
-                dataTest="submit-opening-hours-button"
-                isLoading={isSaving}
-                loadingText="Tallentaa aukioloaikoja"
-                type="submit"
-                size={isMobile ? 'small' : 'default'}>
-                Tallenna
-              </PrimaryButton>
-              <SecondaryButton
-                onClick={returnToResourcePage}
-                size={isMobile ? 'small' : 'default'}>
-                Peruuta
-              </SecondaryButton>
-            </div>
-          </div>
+          <OpeningHoursFormActions isSaving={isSaving} />
         </div>
       </form>
     </FormProvider>
