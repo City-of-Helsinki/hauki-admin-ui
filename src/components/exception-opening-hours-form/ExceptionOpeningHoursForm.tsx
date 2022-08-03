@@ -18,7 +18,7 @@ import {
   formatDate,
   getNumberOfTheWeekday,
 } from '../../common/utils/date-time/format';
-import { defaultTimeSpan } from '../../constants';
+import { defaultTimeSpanGroup } from '../../constants';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import ExceptionOpeningHours from '../exception-opening-hours-form-inputs/ExceptionOpeningHoursFormInputs';
 import toast from '../notification/Toast';
@@ -160,12 +160,7 @@ const ExceptionOpeningHoursForm = ({
                   setValue('resourceState', ResourceState.UNDEFINED);
                   setValue('openingHours', [
                     {
-                      timeSpanGroups: [
-                        {
-                          rule: 'week_every' as const,
-                          timeSpans: [defaultTimeSpan],
-                        },
-                      ],
+                      timeSpanGroups: [defaultTimeSpanGroup],
                     },
                   ]);
                 }}
