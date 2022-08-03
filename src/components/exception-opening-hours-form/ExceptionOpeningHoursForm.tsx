@@ -2,7 +2,10 @@ import { DateInput } from 'hds-react';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
-import { formValuesToApiDatePeriod } from '../../common/helpers/opening-hours-helpers';
+import {
+  apiDatePeriodToFormValues,
+  formValuesToApiDatePeriod,
+} from '../../common/helpers/opening-hours-helpers';
 import {
   DatePeriod,
   Language,
@@ -63,34 +66,38 @@ const formValuesToException = (
   };
 };
 
-const getDefaultFormValues = ({
-  date,
-  name,
-}: {
-  date?: string;
-  name?: string;
-}): OpeningHoursFormValues => ({
-  startDate: date ?? formatDate(new Date().toISOString()),
-  endDate: date ?? formatDate(new Date().toISOString()),
-  fixed: true,
-  name: { fi: name ?? '', sv: '', en: '' },
-  override: true,
-  resourceState: ResourceState.CLOSED,
-  openingHours: [],
-});
+const getDefaultFormValues = (
+  datePeriod: DatePeriod | undefined
+): OpeningHoursFormValues => {
+  if (datePeriod) {
+    return apiDatePeriodToFormValues(datePeriod);
+  }
+  const now = new Date().toISOString();
+  return {
+    startDate: formatDate(now),
+    endDate: formatDate(now),
+    fixed: true,
+    name: { fi: '', sv: '', en: '' },
+    override: true,
+    resourceState: ResourceState.CLOSED,
+    openingHours: [],
+  };
+};
 
 const ExceptionOpeningHoursForm = ({
+  datePeriod,
   datePeriodConfig,
   resource,
   submitFn,
 }: {
+  datePeriod?: DatePeriod;
   datePeriodConfig: UiDatePeriodConfig;
   resource: Resource;
   submitFn: (datePeriod: DatePeriod) => Promise<DatePeriod>;
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
   const form = useForm<OpeningHoursFormValues>({
-    defaultValues: getDefaultFormValues({}),
+    defaultValues: getDefaultFormValues(datePeriod),
     shouldUnregister: false,
   });
   const { register, setValue, watch } = form;
