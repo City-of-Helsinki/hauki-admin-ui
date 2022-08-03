@@ -319,7 +319,7 @@ export default function EditHolidaysPage({
       })
       .catch(() => {
         toast.error({
-          dataTestId: 'holiday-form-success-error',
+          dataTestId: 'holiday-form-error',
           label: 'Aukiolon lisääminen epäonnistui',
           text: `${values.name.fi} aukiolon lisääminen epäonnistui`,
         });
