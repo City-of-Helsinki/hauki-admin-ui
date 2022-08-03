@@ -15,12 +15,14 @@ import api from '../common/utils/api/api';
 import { formatDate } from '../common/utils/date-time/format';
 import { PrimaryButton, SecondaryButton } from '../components/button/Button';
 import ExceptionForm from '../components/exception-form/ExceptionForm';
+import toast from '../components/notification/Toast';
 import OpeningHoursTitles from '../components/opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
 import { defaultTimeSpan } from '../constants';
 import useMobile from '../hooks/useMobile';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
+import './ExceptionForm.scss';
 
 const formValuesToException = (
   resourceIdToSave: number,
@@ -100,8 +102,20 @@ export default function CreateNewExceptionPage({
       .then(() => {
         setSaving(false);
         returnToResourcePage();
+        toast.success({
+          dataTestId: 'exception-form-success',
+          label: 'Aukiolon lisääminen onnistui',
+          text: `Poikkeavan päivän aukiolon lisääminen onnistui`,
+        });
       })
-      .catch(() => setSaving(false));
+      .catch(() => {
+        setSaving(false);
+        toast.error({
+          dataTestId: 'exception-form-error',
+          label: 'Aukiolon lisääminen epäonnistui',
+          text: `Poikkeavan päivän lisääminen epäonnistui`,
+        });
+      });
   };
 
   return (
@@ -109,60 +123,63 @@ export default function CreateNewExceptionPage({
       <form onSubmit={form.handleSubmit(submitFn)}>
         <div>
           <ResourceTitle language={language} resource={resource} />
-          <OpeningHoursTitles />
-          <div className="card">
-            <DateInput
-              id="exception-date"
-              data-test="exception-date"
-              ref={register()}
-              disableConfirmation
-              initialMonth={new Date()}
-              label="Poikkeavan päivän päivämäärä"
-              language={language}
-              name="startDate"
-              openButtonAriaLabel="Valitse päivämäärä"
-              value={startDate ?? ''}
-            />
-            <ExceptionForm
-              onClose={(): void =>
-                reset({
-                  openingHours: [],
-                })
-              }
-              onOpen={(): void =>
-                reset({
-                  openingHours: [
-                    {
-                      timeSpanGroups: [
-                        {
-                          timeSpans: [defaultTimeSpan],
-                        },
-                      ],
-                    },
-                  ],
-                })
-              }
-              resourceStates={datePeriodConfig.resourceState.options}
-              isOpen={false}
-              id="exception-form"
-            />
+          <div className="exception-form">
+            <OpeningHoursTitles />
+            <div className="card">
+              <DateInput
+                id="exception-date"
+                className="exception-date"
+                data-test="exception-date"
+                ref={register()}
+                disableConfirmation
+                initialMonth={new Date()}
+                label="Poikkeavan päivän päivämäärä"
+                language={language}
+                name="startDate"
+                openButtonAriaLabel="Valitse päivämäärä"
+                value={startDate ?? ''}
+              />
+              <ExceptionForm
+                onClose={(): void =>
+                  reset({
+                    openingHours: [],
+                  })
+                }
+                onOpen={(): void =>
+                  reset({
+                    openingHours: [
+                      {
+                        timeSpanGroups: [
+                          {
+                            timeSpans: [defaultTimeSpan],
+                          },
+                        ],
+                      },
+                    ],
+                  })
+                }
+                resourceStates={datePeriodConfig.resourceState.options}
+                isOpen={false}
+                id="exception-form"
+              />
+            </div>
           </div>
-        </div>
-        <div className="opening-hours-form__actions-container">
-          <div className="card opening-hours-form__actions">
-            <PrimaryButton
-              dataTest="submit-opening-hours-button"
-              isLoading={isSaving}
-              loadingText="Tallentaa aukioloaikoja"
-              type="submit"
-              size={isMobile ? 'small' : 'default'}>
-              Tallenna
-            </PrimaryButton>
-            <SecondaryButton
-              onClick={returnToResourcePage}
-              size={isMobile ? 'small' : 'default'}>
-              Peruuta
-            </SecondaryButton>
+          <div className="opening-hours-form__actions-container">
+            <div className="card opening-hours-form__actions">
+              <PrimaryButton
+                dataTest="submit-opening-hours-button"
+                isLoading={isSaving}
+                loadingText="Tallentaa aukioloaikoja"
+                type="submit"
+                size={isMobile ? 'small' : 'default'}>
+                Tallenna
+              </PrimaryButton>
+              <SecondaryButton
+                onClick={returnToResourcePage}
+                size={isMobile ? 'small' : 'default'}>
+                Peruuta
+              </SecondaryButton>
+            </div>
           </div>
         </div>
       </form>
