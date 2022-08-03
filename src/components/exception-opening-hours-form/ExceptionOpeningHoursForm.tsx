@@ -1,4 +1,5 @@
 import { DateInput } from 'hds-react';
+import { values } from 'lodash';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
@@ -96,8 +97,9 @@ const ExceptionOpeningHoursForm = ({
   submitFn: (datePeriod: DatePeriod) => Promise<DatePeriod>;
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
+  const defaultValues = getDefaultFormValues(datePeriod);
   const form = useForm<OpeningHoursFormValues>({
-    defaultValues: getDefaultFormValues(datePeriod),
+    defaultValues,
     shouldUnregister: false,
   });
   const { register, setValue, watch } = form;
@@ -167,7 +169,11 @@ const ExceptionOpeningHoursForm = ({
                   ]);
                 }}
                 resourceStates={datePeriodConfig.resourceState.options}
-                isOpen={false}
+                isOpen={
+                  defaultValues.resourceState
+                    ? defaultValues.resourceState !== ResourceState.CLOSED
+                    : false
+                }
               />
             </div>
           </div>
