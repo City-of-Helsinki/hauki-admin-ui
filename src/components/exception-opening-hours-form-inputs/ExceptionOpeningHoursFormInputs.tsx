@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { TranslatedApiChoice } from '../../common/lib/types';
 import TimeSpans from '../time-span/TimeSpans';
-import './ExceptionOpeningHours.scss';
+import './ExceptionOpeningHoursFormInputs.scss';
 
 const ExceptionOpeningHours = ({
   id,

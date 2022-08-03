@@ -14,12 +14,12 @@ import {
 import { formatDate } from '../../common/utils/date-time/format';
 import { defaultTimeSpan } from '../../constants';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
-import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
+import ExceptionOpeningHours from '../exception-opening-hours-form-inputs/ExceptionOpeningHoursFormInputs';
 import toast from '../notification/Toast';
 import OpeningHoursFormActions from '../opening-hours-form/OpeningHoursFormActions';
 import OpeningHoursTitles from '../opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../resource-title/ResourceTitle';
-import './ExceptionForm.scss';
+import './ExceptionOpeningHoursForm.scss';
 
 const formValuesToException = (
   resourceIdToSave: number,
@@ -49,7 +49,7 @@ const getDefaultFormValues = ({
   openingHours: [],
 });
 
-const ExceptionForm = ({
+const ExceptionOpeningHoursForm = ({
   datePeriodConfig,
   resource,
   submitFn,
@@ -75,7 +75,7 @@ const ExceptionForm = ({
         setSaving(false);
         returnToResourcePage();
         toast.success({
-          dataTestId: 'exception-form-success',
+          dataTestId: 'exception-opening-hours-form-success',
           label: 'Aukiolon lisääminen onnistui',
           text: `Poikkeavan päivän aukiolon lisääminen onnistui`,
         });
@@ -83,7 +83,7 @@ const ExceptionForm = ({
       .catch(() => {
         setSaving(false);
         toast.error({
-          dataTestId: 'exception-form-error',
+          dataTestId: 'exception-opening-hours-form-error',
           label: 'Aukiolon lisääminen epäonnistui',
           text: `Poikkeavan päivän lisääminen epäonnistui`,
         });
@@ -95,7 +95,7 @@ const ExceptionForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>
           <ResourceTitle language={language} resource={resource} />
-          <div className="exception-form">
+          <div className="exception-opening-hours-form">
             <OpeningHoursTitles />
             <div className="card">
               <DateInput
@@ -112,6 +112,7 @@ const ExceptionForm = ({
                 value={startDate ?? ''}
               />
               <ExceptionOpeningHours
+                id="exception-opening-hours-form"
                 onClose={(): void =>
                   reset({
                     openingHours: [],
@@ -132,7 +133,6 @@ const ExceptionForm = ({
                 }
                 resourceStates={datePeriodConfig.resourceState.options}
                 isOpen={false}
-                id="exception-form"
               />
             </div>
           </div>
@@ -143,4 +143,4 @@ const ExceptionForm = ({
   );
 };
 
-export default ExceptionForm;
+export default ExceptionOpeningHoursForm;

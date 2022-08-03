@@ -35,7 +35,7 @@ import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import useMobile from '../hooks/useMobile';
-import ExceptionOpeningHours from '../components/exception-opening-hours/ExceptionOpeningHours';
+import ExceptionOpeningHours from '../components/exception-opening-hours-form-inputs/ExceptionOpeningHoursFormInputs';
 
 type FormActions = {
   create: (values: OpeningHoursFormValues) => Promise<void>;

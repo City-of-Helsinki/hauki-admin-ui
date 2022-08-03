@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Resource, UiDatePeriodConfig } from '../common/lib/types';
 import api from '../common/utils/api/api';
-import ExceptionForm from '../components/exception-form/ExceptionForm';
+import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
 
 export default function CreateNewExceptionPage({
@@ -37,7 +37,7 @@ export default function CreateNewExceptionPage({
   }
 
   return (
-    <ExceptionForm
+    <ExceptionOpeningHoursForm
       datePeriodConfig={datePeriodConfig}
       resource={resource}
       submitFn={api.postDatePeriod}
