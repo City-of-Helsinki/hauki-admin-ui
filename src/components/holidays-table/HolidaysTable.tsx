@@ -3,11 +3,10 @@ import { isHoliday } from '../../common/helpers/opening-hours-helpers';
 import {
   DatePeriod,
   Holiday,
-  ResourceState,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
-import { TimeSpan } from '../opening-hours-preview/OpeningHoursPreview';
+import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import './HolidaysTable.scss';
 
@@ -46,19 +45,10 @@ const HolidayOpeningHours = ({
 
   if (datePeriod) {
     return (
-      <div>
-        {datePeriod.resource_state === ResourceState.CLOSED
-          ? 'Suljettu'
-          : datePeriod.time_span_groups.map((timeSpanGroup) =>
-              timeSpanGroup.time_spans.map((timeSpan) => (
-                <TimeSpan
-                  key={timeSpan.id}
-                  resourceStates={datePeriodConfig?.resourceState.options || []}
-                  timeSpan={timeSpan}
-                />
-              ))
-            )}
-      </div>
+      <ExceptionOpeningHours
+        datePeriod={datePeriod}
+        datePeriodConfig={datePeriodConfig}
+      />
     );
   }
 
