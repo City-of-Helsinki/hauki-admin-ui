@@ -9,7 +9,7 @@ import {
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
-import { SecondaryButton } from '../button/Button';
+import { PrimaryButton, SecondaryButton } from '../button/Button';
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
 import {
@@ -49,7 +49,7 @@ const ExceptionPeriodsList = ({
     <section className="opening-periods-section">
       <header className="exception-periods-header">
         <h3 className="exception-periods-title">Poikkeavat päivät</h3>
-        <SecondaryButton
+        <PrimaryButton
           onClick={() => {
             if (parentId) {
               history.push(
@@ -60,7 +60,7 @@ const ExceptionPeriodsList = ({
             }
           }}>
           + Lisää poikkeava päivä
-        </SecondaryButton>
+        </PrimaryButton>
       </header>
       <ul className="opening-periods-list">
         <li>
@@ -150,7 +150,7 @@ const OpeningPeriodsList = ({
   return (
     <section className="opening-periods-section">
       <header className={openingPeriodsHeaderClassName}>
-        <h3 className="opening-periods-header-title">{title}</h3>
+        <h2 className="opening-periods-header-title">{title}</h2>
         <p className="period-count">{datePeriods.length} aukioloaikaa</p>
         <SecondaryButton
           dataTest={addNewOpeningPeriodButtonDataTest}
