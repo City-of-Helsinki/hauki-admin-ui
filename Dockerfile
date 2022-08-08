@@ -1,5 +1,5 @@
 # ===============================================
-FROM helsinkitest/node:12-slim as staticbuilder
+FROM helsinkitest/node:14-slim as staticbuilder
 # ===============================================
 
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
@@ -11,7 +11,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 # Yarn
-ENV YARN_VERSION 1.19.1
+ENV YARN_VERSION 1.22.18
 RUN yarn policies set-version $YARN_VERSION
 
 USER root
