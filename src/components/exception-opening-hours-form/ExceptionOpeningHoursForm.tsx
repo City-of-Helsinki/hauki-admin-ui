@@ -17,6 +17,7 @@ import {
 import {
   formatDate,
   getNumberOfTheWeekday,
+  transformDateToApiFormat,
 } from '../../common/utils/date-time/format';
 import { defaultTimeSpanGroup } from '../../constants';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
@@ -43,7 +44,9 @@ function resolveWeekday(
     openingHours: [
       {
         ...values.openingHours[0],
-        weekdays: [getNumberOfTheWeekday(values.startDate)],
+        weekdays: [
+          getNumberOfTheWeekday(transformDateToApiFormat(values.startDate)),
+        ],
       },
     ],
   };
