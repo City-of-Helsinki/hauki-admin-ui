@@ -3,7 +3,8 @@
   "version": "0.1.1",
   "license": "MIT",
   "engines": {
-    "node": ">=12 <15"
+    "node": ">=12 <15",
+    "npm": ">=8.6.0"
   },
   "dependencies": {
     "@sentry/react": "^6.11.0",
@@ -104,6 +105,7 @@
     "stylelint-value-no-unknown-custom-properties": "^3.0.0"
   },
   "resolutions": {
-    "jsdom": "16.3.0"
+    "jsdom": "16.3.0",
+    "react-error-overlay": "6.0.9"
   }
 }

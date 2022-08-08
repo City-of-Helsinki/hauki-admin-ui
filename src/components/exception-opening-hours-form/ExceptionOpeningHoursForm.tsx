@@ -44,6 +44,7 @@ function resolveWeekday(
     openingHours: [
       {
         ...values.openingHours[0],
+
         weekdays: [
           getNumberOfTheWeekday(transformDateToApiFormat(values.startDate)),
         ],
