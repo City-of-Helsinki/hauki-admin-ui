@@ -21,11 +21,11 @@ const TimeSpans = ({
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
 }): JSX.Element => {
-  const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans`;
+  const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans` as const;
   const { control, watch } = useFormContext<OpeningHoursFormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans`,
+    name: namePrefix,
   });
   const ref = useRef<HTMLButtonElement>(null);
   const firstTimeSpanResourceState = watch(
