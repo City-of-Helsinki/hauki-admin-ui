@@ -234,7 +234,9 @@ const OpeningHoursForm = ({
                       iconLeft={<IconSort />}
                       onClick={(): void => {
                         setDropInRow(undefined);
-                        reset({ openingHours: openingHours.sort(byWeekdays) });
+                        reset({
+                          openingHours: [...openingHours].sort(byWeekdays),
+                        });
                       }}>
                       Järjestä päiväryhmät viikonpäivien mukaan
                     </SupplementaryButton>

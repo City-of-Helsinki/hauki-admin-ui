@@ -97,7 +97,7 @@ const OpeningHoursWeekdays = ({
     : '';
 
   const groupWeekdays = (weekdaysToIterate: number[]): number[][] =>
-    weekdaysToIterate
+    [...weekdaysToIterate]
       .sort((a, b) => a - b)
       .reduce((acc: number[][], day): number[][] => {
         const lastSet = acc.length > 0 ? acc[acc.length - 1] : [];
