@@ -123,14 +123,6 @@ export default function ResourcePage({
       });
   }, [id]);
 
-  if (isLoading || !resource) {
-    return (
-      <>
-        <h1 className="resource-info-title">Toimipisteen tietojen haku</h1>
-      </>
-    );
-  }
-
   if (error) {
     return (
       <>
@@ -138,6 +130,14 @@ export default function ResourcePage({
         <Notification label="Toimipistettä ei saatu ladattua." type="error">
           Tarkista toimipiste-id.
         </Notification>
+      </>
+    );
+  }
+
+  if (isLoading || !resource) {
+    return (
+      <>
+        <h1 className="resource-info-title">Toimipisteen tietojen haku</h1>
       </>
     );
   }
