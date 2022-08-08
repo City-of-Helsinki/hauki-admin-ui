@@ -98,6 +98,10 @@ const ExceptionPeriodsList = ({
   );
 };
 
+const OpeningPeriodsNotFound = ({ text }: { text: string }): JSX.Element => (
+  <p className="opening-periods-not-found">{text}</p>
+);
+
 enum PeriodsListTheme {
   DEFAULT = 'DEFAULT',
   LIGHT = 'LIGHT',
@@ -188,10 +192,6 @@ const OpeningPeriodsList = ({
     </section>
   );
 };
-
-const OpeningPeriodsNotFound = ({ text }: { text: string }): JSX.Element => (
-  <p className="opening-periods-not-found">{text}</p>
-);
 
 export default function ResourceOpeningHours({
   language,

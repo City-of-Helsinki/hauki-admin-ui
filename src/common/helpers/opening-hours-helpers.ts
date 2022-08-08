@@ -188,8 +188,11 @@ export const apiDatePeriodToOpeningHours = (
 ): OpeningHours[] =>
   datePeriod.time_span_groups
     .reduce(
-      (allOpeningHours: OpeningHours[], { rules, time_spans }: TimeSpanGroup) =>
-        time_spans.reduce(
+      (
+        allOpeningHours: OpeningHours[],
+        { rules, time_spans: timeSpans }: TimeSpanGroup
+      ) =>
+        timeSpans.reduce(
           (timeSpanOpeningHours, timeSpan) =>
             updateByWithDefault(
               (openingHour) =>
