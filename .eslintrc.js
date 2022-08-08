@@ -75,13 +75,13 @@ module.exports = {
       },
     ],
     camelcase: 0,
-    // Explore these
-    '@typescript-eslint/ban-types': 1,
-    'react/jsx-no-constructed-context-values': 1,
-    'react-hooks/exhaustive-deps': 1,
-    'react/no-unstable-nested-components': 1,
-    'react/jsx-no-useless-fragment': 1,
-    'react/no-unused-prop-types': 1,
+    // TODO: These were disabled during migration to new React
+    '@typescript-eslint/ban-types': 0,
+    'react/jsx-no-constructed-context-values': 0,
+    'no-console': 0,
+    'func-names': 0,
+    'react/no-unstable-nested-components': 0,
+    'react/jsx-no-useless-fragment': 0,
   },
   globals: {
     cy: true,

@@ -54,7 +54,7 @@ const TimeSpans = ({
           timeSpanGroupIdx={timeSpanGroupIdx}
           i={i}
           groupLabel={`Aukioloaika ${i + 1}`}
-          item={field as any}
+          item={field}
           resourceStates={resourceStates.filter((resourceState) =>
             i === 0 ? true : resourceState.value !== ResourceState.CLOSED
           )}

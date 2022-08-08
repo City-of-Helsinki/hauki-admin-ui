@@ -81,7 +81,11 @@ const ExceptionPeriodsList = ({
                   : `/resource/${resourceId}/exception/${exception.id}`
               }
               initiallyOpen={i <= 10}
-              onDelete={() => deletePeriod(exception.id!)}
+              onDelete={() => {
+                if (exception.id) {
+                  deletePeriod(exception.id);
+                }
+              }}
               periodName={exception.name[language]}
               dateRange={`${
                 exception.start_date ? formatDate(exception.start_date) : ''
