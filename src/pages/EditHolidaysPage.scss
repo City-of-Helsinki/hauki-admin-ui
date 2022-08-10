@@ -34,9 +34,16 @@
 }
 
 .holiday-form-actions {
+  display: flex;
+  gap: $spacing-s;
   margin: $spacing-s 0 $spacing-3-xl;
 }
 
 .exception-opening-hours-time-spans + .holiday-form-actions {
   margin-top: $spacing-l;
+}
+
+.edit-holiday-button {
+  color: $color-coat-of-arms;
+  margin-top: -$spacing-xs;
 }
