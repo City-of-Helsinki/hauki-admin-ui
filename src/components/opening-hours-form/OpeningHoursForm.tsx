@@ -8,7 +8,6 @@ import {
   Resource,
   ResourceState,
   UiDatePeriodConfig,
-  OpeningHours as TOpeningHours,
   OpeningHoursFormValues,
 } from '../../common/lib/types';
 import { SupplementaryButton } from '../button/Button';
