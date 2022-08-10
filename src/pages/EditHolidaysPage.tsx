@@ -173,7 +173,6 @@ const HolidayListItem = ({
   const { name, date } = holiday;
   const commonCheckBoxProps = {
     id: date,
-    className: 'holiday-list-checkbox',
     label: `${name}   ${formatDate(date)}`,
     checked,
     style: {
@@ -189,47 +188,49 @@ const HolidayListItem = ({
 
   return (
     <li className="holidays-list-item" key={date}>
-      {value && value.id ? (
-        <>
+      <div className="holiday-checkbox-container">
+        {value && value.id ? (
+          <>
+            <Checkbox
+              {...commonCheckBoxProps}
+              disabled={willBeRemoved}
+              onChange={(): void => {
+                openModal();
+              }}
+            />
+            <ConfirmationModal
+              onConfirm={async (): Promise<void> => {
+                setWillBeRemoved(true);
+                await actions.delete(value);
+              }}
+              title="Oletko varma että haluat poistaa aukiolojakson?"
+              text={
+                <>
+                  <p>Olet poistamassa aukiolojakson</p>
+                  <p>
+                    <b>
+                      {value.name.fi}
+                      <br />
+                      {value.startDate}
+                    </b>
+                  </p>
+                </>
+              }
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              confirmText="Poista"
+            />
+          </>
+        ) : (
           <Checkbox
             {...commonCheckBoxProps}
-            disabled={willBeRemoved}
             onChange={(): void => {
-              openModal();
+              setChecked(!checked);
+              setIsEditing(!checked);
             }}
           />
-          <ConfirmationModal
-            onConfirm={async (): Promise<void> => {
-              setWillBeRemoved(true);
-              await actions.delete(value);
-            }}
-            title="Oletko varma että haluat poistaa aukiolojakson?"
-            text={
-              <>
-                <p>Olet poistamassa aukiolojakson</p>
-                <p>
-                  <b>
-                    {value.name.fi}
-                    <br />
-                    {value.startDate}
-                  </b>
-                </p>
-              </>
-            }
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            confirmText="Poista"
-          />
-        </>
-      ) : (
-        <Checkbox
-          {...commonCheckBoxProps}
-          onChange={(): void => {
-            setChecked(!checked);
-            setIsEditing(!checked);
-          }}
-        />
-      )}
+        )}
+      </div>
       {willBeRemoved ? (
         <>
           <LoadingSpinner small />
@@ -255,10 +256,12 @@ const HolidayListItem = ({
               </div>
             ) : (
               <>
-                <ExceptionOpeningHours
-                  datePeriod={datePeriod!}
-                  datePeriodConfig={datePeriodConfig}
-                />
+                <div className="holiday-exception-opening-hours-container">
+                  <ExceptionOpeningHours
+                    datePeriod={datePeriod!}
+                    datePeriodConfig={datePeriodConfig}
+                  />
+                </div>
                 {value && (
                   <button
                     className="edit-holiday-button button-icon"
@@ -467,6 +470,9 @@ export default function EditHolidaysPage({
           on voimassa toistaiseksi. Muista tarkistaa vuosittain, että tieto
           pitää yhä paikkansa.
         </p>
+        <div className="holiday-list-header">
+          <h3>Juhlapyhä</h3>
+        </div>
         <ul className="holidays-list">
           {holidays.map((holiday) => {
             const value: OpeningHoursFormValues | undefined = holidayValues
