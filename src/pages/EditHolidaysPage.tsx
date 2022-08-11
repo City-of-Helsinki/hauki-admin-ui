@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { Checkbox, IconPenLine, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -181,7 +181,7 @@ const HolidayListItem = ({
       '--border-color-selected': 'var(--color-coat-of-arms)',
       '--border-color-selected-hover': 'var(--color-coat-of-arms-dark)',
       '--border-color-selected-focus': 'var(--color-coat-of-arms)',
-    } as any,
+    } as CSSProperties,
   };
   const { isModalOpen, openModal, closeModal } = useModal();
   const [isEditing, setIsEditing] = useState(!value);
@@ -258,6 +258,7 @@ const HolidayListItem = ({
               <>
                 <div className="holiday-exception-opening-hours-container">
                   <ExceptionOpeningHours
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     datePeriod={datePeriod!}
                     datePeriodConfig={datePeriodConfig}
                   />
@@ -471,7 +472,7 @@ export default function EditHolidaysPage({
           pitää yhä paikkansa.
         </p>
         <div className="holiday-list-header">
-          <h3>Juhlapyhä</h3>
+          <h3 className="holiday-checkbox-container">Juhlapyhä</h3>
         </div>
         <ul className="holidays-list">
           {holidays.map((holiday) => {
