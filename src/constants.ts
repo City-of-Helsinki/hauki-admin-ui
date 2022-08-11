@@ -29,9 +29,9 @@ export const uiFrequencyRules: { label: LanguageStrings; value: Rule }[] = [
 ];
 
 export const defaultTimeSpan: OpeningHoursTimeSpan = {
-  description: { fi: '', sv: '', en: '' },
-  start_time: '',
-  end_time: '',
+  description: { fi: null, sv: null, en: null },
+  start_time: null,
+  end_time: null,
   full_day: false,
   resource_state: ResourceState.OPEN,
 };
