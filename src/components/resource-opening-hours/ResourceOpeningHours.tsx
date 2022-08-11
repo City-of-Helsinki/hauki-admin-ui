@@ -3,9 +3,9 @@ import { LoadingSpinner, Notification } from 'hds-react';
 import { useHistory } from 'react-router-dom';
 import { partition } from 'lodash';
 import {
-  DatePeriod,
+  ApiDatePeriod,
   Language,
-  OpeningHoursFormValues,
+  DatePeriod,
   Resource,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
@@ -34,7 +34,7 @@ const ExceptionPeriodsList = ({
   isLoading,
 }: {
   datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: OpeningHoursFormValues[];
+  datePeriods: DatePeriod[];
   deletePeriod: (id: number) => Promise<void>;
   language: Language;
   parentId?: number;
@@ -141,7 +141,7 @@ const OpeningPeriodsList = ({
   addNewOpeningPeriodButtonDataTest?: string;
   resourceId: number;
   title: string;
-  datePeriods: OpeningHoursFormValues[];
+  datePeriods: DatePeriod[];
   datePeriodConfig?: UiDatePeriodConfig;
   theme: PeriodsListTheme;
   notFoundLabel: string;
@@ -190,7 +190,7 @@ const OpeningPeriodsList = ({
       {datePeriodConfig && (
         <ul className="opening-periods-list" data-test={id}>
           {datePeriods.length > 0 ? (
-            datePeriods.map((datePeriod: OpeningHoursFormValues, index) => (
+            datePeriods.map((datePeriod: DatePeriod, index) => (
               <li key={datePeriod.id}>
                 <OpeningPeriod
                   current={currentDatePeriod === datePeriod}
@@ -230,7 +230,7 @@ export default function ResourceOpeningHours({
     UiDatePeriodConfig
   >();
   const [[defaultPeriods, exceptions], setDividedDatePeriods] = useState<
-    [DatePeriod[], DatePeriod[]]
+    [ApiDatePeriod[], ApiDatePeriod[]]
   >([[], []]);
   const [isLoading, setLoading] = useState(false);
   const fetchDatePeriods = async (id: number): Promise<void> => {

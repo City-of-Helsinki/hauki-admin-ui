@@ -2,14 +2,14 @@ import { IconPlusCircle } from 'hds-react';
 import React, { useEffect, useRef } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import {
-  OpeningHoursFormValues,
+  DatePeriod,
   ResourceState,
   TranslatedApiChoice,
 } from '../../common/lib/types';
 import { getUiId } from '../../common/utils/form/form';
 import { defaultTimeSpan } from '../../constants';
 import { SupplementaryButton } from '../button/Button';
-import TimeSpan from './TimeSpan';
+import TTimeSpan from './TimeSpan';
 import './TimeSpans.scss';
 
 const TimeSpans = ({
@@ -22,7 +22,7 @@ const TimeSpans = ({
   timeSpanGroupIdx: number;
 }): JSX.Element => {
   const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans` as const;
-  const { control, watch } = useFormContext<OpeningHoursFormValues>();
+  const { control, watch } = useFormContext<DatePeriod>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: namePrefix,
@@ -48,7 +48,7 @@ const TimeSpans = ({
   return (
     <div className="time-spans">
       {fields.map((field, i) => (
-        <TimeSpan
+        <TTimeSpan
           key={field.id}
           openingHoursIdx={openingHoursIdx}
           timeSpanGroupIdx={timeSpanGroupIdx}

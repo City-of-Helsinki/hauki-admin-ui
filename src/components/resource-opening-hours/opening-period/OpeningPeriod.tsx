@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Language,
-  OpeningHoursFormValues,
+  DatePeriod,
   UiDatePeriodConfig,
 } from '../../../common/lib/types';
 import { formatDateRange } from '../../../common/utils/date-time/format';
@@ -21,7 +21,7 @@ export default function OpeningPeriod({
 }: {
   current?: boolean;
   resourceId: number;
-  datePeriod: OpeningHoursFormValues;
+  datePeriod: DatePeriod;
   datePeriodConfig: UiDatePeriodConfig;
   language: Language;
   deletePeriod: (id: number) => Promise<void>;

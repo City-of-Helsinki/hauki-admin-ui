@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  OpeningHoursFormValues,
+  DatePeriod,
   ResourceState,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import { TimeSpan } from '../opening-hours-preview/OpeningHoursPreview';
 
 type Props = {
-  datePeriod: OpeningHoursFormValues;
+  datePeriod: DatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
 };
 

@@ -7,9 +7,9 @@ import {
   formValuesToApiDatePeriod,
 } from '../../common/helpers/opening-hours-helpers';
 import {
-  DatePeriod,
+  ApiDatePeriod,
   Language,
-  OpeningHoursFormValues,
+  DatePeriod,
   Resource,
   ResourceState,
   UiDatePeriodConfig,
@@ -28,9 +28,7 @@ import OpeningHoursTitles from '../opening-hours-form/OpeningHoursTitles';
 import ResourceTitle from '../resource-title/ResourceTitle';
 import './ExceptionOpeningHoursForm.scss';
 
-function resolveWeekday(
-  values: OpeningHoursFormValues
-): OpeningHoursFormValues {
+function resolveWeekday(values: DatePeriod): DatePeriod {
   if (values.resourceState === ResourceState.CLOSED) {
     return values;
   }
@@ -55,8 +53,8 @@ function resolveWeekday(
 
 const formValuesToException = (
   resourceIdToSave: number,
-  values: OpeningHoursFormValues
-): DatePeriod => {
+  values: DatePeriod
+): ApiDatePeriod => {
   const data = formValuesToApiDatePeriod(
     resourceIdToSave,
     resolveWeekday(values),
@@ -71,8 +69,8 @@ const formValuesToException = (
 };
 
 const getDefaultFormValues = (
-  datePeriod: DatePeriod | undefined
-): OpeningHoursFormValues => {
+  datePeriod: ApiDatePeriod | undefined
+): DatePeriod => {
   if (datePeriod) {
     return apiDatePeriodToFormValues(datePeriod);
   }
@@ -95,14 +93,14 @@ const ExceptionOpeningHoursForm = ({
   resource,
   submitFn,
 }: {
-  datePeriod?: DatePeriod;
+  datePeriod?: ApiDatePeriod;
   datePeriodConfig: UiDatePeriodConfig;
   resource: Resource;
-  submitFn: (datePeriod: DatePeriod) => Promise<DatePeriod>;
+  submitFn: (datePeriod: ApiDatePeriod) => Promise<ApiDatePeriod>;
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
   const defaultValues = getDefaultFormValues(datePeriod);
-  const form = useForm<OpeningHoursFormValues>({
+  const form = useForm<DatePeriod>({
     defaultValues,
   });
   const { setValue, watch } = form;
@@ -110,7 +108,7 @@ const ExceptionOpeningHoursForm = ({
   const returnToResourcePage = useReturnToResourcePage();
   const [isSaving, setSaving] = useState<boolean>(false);
 
-  const onSubmit = (data: OpeningHoursFormValues): void => {
+  const onSubmit = (data: DatePeriod): void => {
     setSaving(true);
     submitFn(formValuesToException(resource.id, data))
       .then(() => {

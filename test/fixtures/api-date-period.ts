@@ -1,7 +1,7 @@
-import { DatePeriod, ResourceState } from '../../src/common/lib/types';
+import { ApiDatePeriod, ResourceState } from '../../src/common/lib/types';
 
 // eslint-disable-next-line import/prefer-default-export
-export const datePeriod: DatePeriod = {
+export const datePeriod: ApiDatePeriod = {
   id: 1,
   created: '2020-11-20',
   modified: '2020-11-20',

@@ -1,16 +1,16 @@
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import {
-  DatePeriod,
+  ApiDatePeriod,
   GroupRule,
   Holiday,
   OpeningHours,
-  OpeningHoursFormValues,
-  OpeningHoursTimeSpan,
-  OpeningHoursTimeSpanGroup,
-  ResourceState,
-  Rule,
+  DatePeriod,
   TimeSpan,
   TimeSpanGroup,
+  ResourceState,
+  Rule,
+  ApiTimeSpan,
+  ApiTimeSpanGroup,
   Weekdays,
 } from '../lib/types';
 import {
@@ -29,9 +29,7 @@ export const byWeekdays = (
   return day1 - day2;
 };
 
-const toTimeSpan = (days: number[]) => (
-  timeSpan: OpeningHoursTimeSpan
-): TimeSpan => ({
+const toTimeSpan = (days: number[]) => (timeSpan: TimeSpan): ApiTimeSpan => ({
   id: timeSpan.id,
   description:
     timeSpan.resource_state === ResourceState.OTHER
@@ -72,13 +70,13 @@ const ruleToApiRule = (rule: Rule): GroupRule => ({
   frequency_modifier: frequencyModifierMap[rule],
 });
 
-const toTimeSpanGroups = (openingHours: OpeningHours[]): TimeSpanGroup[] =>
+const toTimeSpanGroups = (openingHours: OpeningHours[]): ApiTimeSpanGroup[] =>
   openingHours.reduce(
-    (result: TimeSpanGroup[], openingHour: OpeningHours) =>
+    (result: ApiTimeSpanGroup[], openingHour: OpeningHours) =>
       openingHour.timeSpanGroups.reduce(
         (
-          apiTimeSpanGroups: TimeSpanGroup[],
-          uiTimeSpanGroup: OpeningHoursTimeSpanGroup
+          apiTimeSpanGroups: ApiTimeSpanGroup[],
+          uiTimeSpanGroup: TimeSpanGroup
         ) =>
           updateByWithDefault(
             (apiTimeSpanGroup) =>
@@ -114,9 +112,9 @@ const toTimeSpanGroups = (openingHours: OpeningHours[]): TimeSpanGroup[] =>
 // eslint-disable-next-line import/prefer-default-export
 export const formValuesToApiDatePeriod = (
   resource: number,
-  formValues: OpeningHoursFormValues,
+  formValues: DatePeriod,
   id?: number
-): DatePeriod => ({
+): ApiDatePeriod => ({
   name: formValues.name,
   end_date:
     formValues.fixed && formValues.endDate
@@ -142,14 +140,12 @@ export const formValuesToApiDatePeriod = (
 const weekDaysMatch = (weekdays1: Weekdays, weekdays2: Weekdays): boolean =>
   weekdays1.every((weekday) => weekdays2.includes(weekday));
 
-const resourceStateIsOther = (timeSpan: TimeSpan): boolean =>
+const resourceStateIsOther = (timeSpan: ApiTimeSpan): boolean =>
   !!timeSpan.description.fi ||
   !!timeSpan.description.sv ||
   !!timeSpan.description.en;
 
-export const apiTimeSpanToTimeSpan = (
-  timeSpan: TimeSpan
-): OpeningHoursTimeSpan => ({
+export const apiTimeSpanToTimeSpan = (timeSpan: ApiTimeSpan): TimeSpan => ({
   id: timeSpan.id,
   description: timeSpan.description,
   end_time: timeSpan.end_time ? timeSpan.end_time.substring(0, 5) : null,
@@ -188,13 +184,13 @@ const apiRulesToRule = (apiRules: GroupRule[]): Rule => {
 };
 
 export const apiDatePeriodToOpeningHours = (
-  datePeriod: DatePeriod
+  datePeriod: ApiDatePeriod
 ): OpeningHours[] =>
   datePeriod.time_span_groups
     .reduce(
       (
         allOpeningHours: OpeningHours[],
-        { rules, time_spans: timeSpans }: TimeSpanGroup
+        { rules, time_spans: timeSpans }: ApiTimeSpanGroup
       ) =>
         timeSpans.reduce(
           (timeSpanOpeningHours, timeSpan) =>
@@ -239,8 +235,8 @@ export const apiDatePeriodToOpeningHours = (
     .sort(byWeekdays);
 
 export const apiDatePeriodToFormValues = (
-  datePeriod: DatePeriod
-): OpeningHoursFormValues => ({
+  datePeriod: ApiDatePeriod
+): DatePeriod => ({
   name: datePeriod.name,
   endDate: datePeriod.end_date ? formatDate(datePeriod.end_date) : null,
   fixed:
@@ -251,16 +247,13 @@ export const apiDatePeriodToFormValues = (
   resourceState: datePeriod.resource_state,
 });
 
-const isWithinRange = (
-  date: string,
-  datePeriod: OpeningHoursFormValues
-): boolean =>
+const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
   (datePeriod.startDate == null || datePeriod.startDate) <= date &&
   (datePeriod.endDate === null || datePeriod.endDate >= date);
 
 const dateRangeIsShorter = (
-  other: OpeningHoursFormValues,
-  datePeriod: OpeningHoursFormValues
+  other: DatePeriod,
+  datePeriod: DatePeriod
 ): boolean =>
   new Date(datePeriod.endDate ?? '2045-01-01').getTime() -
     new Date(datePeriod.startDate ?? '1975-01-01').getTime() <
@@ -269,30 +262,24 @@ const dateRangeIsShorter = (
 
 export const getActiveDatePeriod = (
   date: string,
-  dates: OpeningHoursFormValues[]
-): OpeningHoursFormValues | undefined => {
-  return dates.reduce(
-    (
-      acc: OpeningHoursFormValues | undefined,
-      current: OpeningHoursFormValues
-    ) => {
-      if (
-        isWithinRange(date, current) &&
-        (!acc || dateRangeIsShorter(acc, current))
-      ) {
-        return current;
-      }
+  dates: DatePeriod[]
+): DatePeriod | undefined => {
+  return dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
+    if (
+      isWithinRange(date, current) &&
+      (!acc || dateRangeIsShorter(acc, current))
+    ) {
+      return current;
+    }
 
-      return acc;
-    },
-    undefined
-  );
+    return acc;
+  }, undefined);
 };
 
 const dayInMilliseconds = 24 * 60 * 60 * 1000;
 
 export const isHoliday = (
-  datePeriod: OpeningHoursFormValues,
+  datePeriod: DatePeriod,
   holidays: Holiday[]
 ): boolean =>
   !!datePeriod.endDate &&

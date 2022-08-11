@@ -2,7 +2,7 @@ import React from 'react';
 import { isHoliday } from '../../common/helpers/opening-hours-helpers';
 import {
   Holiday,
-  OpeningHoursFormValues,
+  DatePeriod,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
@@ -16,7 +16,7 @@ const HolidayOpeningHours = ({
   datePeriodConfig,
 }: {
   datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: OpeningHoursFormValues[];
+  datePeriods: DatePeriod[];
   holiday: Holiday;
 }): JSX.Element => {
   const datePeriod = datePeriods.find((dp) => isHoliday(dp, [holiday]));
@@ -39,7 +39,7 @@ export const UpcomingHolidayNotification = ({
   holiday,
 }: {
   datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: OpeningHoursFormValues[];
+  datePeriods: DatePeriod[];
   holiday: Holiday;
 }): JSX.Element => (
   <div className="upcoming-holidays">
@@ -63,7 +63,7 @@ const HolidaysTable = ({
   resourceId,
 }: {
   datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: OpeningHoursFormValues[];
+  datePeriods: DatePeriod[];
   holidays: Holiday[];
   parentId?: number;
   resourceId: number;

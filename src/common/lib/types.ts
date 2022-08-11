@@ -33,7 +33,7 @@ export enum WeekdayTypes {
 
 export type Weekdays = Array<WeekdayTypes>;
 
-export type TimeSpan = {
+export type ApiTimeSpan = {
   start_time: string | null;
   end_time: string | null;
   weekdays: Weekdays | null;
@@ -179,27 +179,14 @@ export interface GroupRule extends BaseGroupRule {
   start?: number;
 }
 
-export interface GroupRuleFormFormat extends BaseGroupRule {
-  id?: string;
-  group?: string;
-  start: string;
-}
-
-export interface TimeSpanGroup {
+export interface ApiTimeSpanGroup {
   id?: number;
   period?: number;
-  time_spans: TimeSpan[];
+  time_spans: ApiTimeSpan[];
   rules: GroupRule[];
 }
 
-export interface TimeSpanGroupFormFormat {
-  id?: string;
-  period?: string;
-  timeSpans: TimeSpanFormFormat[] | {}[];
-  rules: GroupRuleFormFormat[];
-}
-
-export type DatePeriod = {
+export type ApiDatePeriod = {
   id?: number;
   created?: string;
   modified?: string;
@@ -211,7 +198,7 @@ export type DatePeriod = {
   resource_state?: ResourceState;
   override: boolean;
   resource: number;
-  time_span_groups: TimeSpanGroup[];
+  time_span_groups: ApiTimeSpanGroup[];
 };
 
 export enum ResourceType {
@@ -256,7 +243,7 @@ export interface Resource {
   resource_type: ResourceType;
 }
 
-export type OpeningHoursTimeSpan = {
+export type TimeSpan = {
   id?: number;
   description: LanguageStrings;
   end_time: string | null;
@@ -265,17 +252,17 @@ export type OpeningHoursTimeSpan = {
   start_time: string | null;
 };
 
-export type OpeningHoursTimeSpanGroup = {
+export type TimeSpanGroup = {
   rule: Rule;
-  timeSpans: OpeningHoursTimeSpan[];
+  timeSpans: TimeSpan[];
 };
 
 export type OpeningHours = {
   weekdays: number[];
-  timeSpanGroups: OpeningHoursTimeSpanGroup[];
+  timeSpanGroups: TimeSpanGroup[];
 };
 
-export type OpeningHoursFormValues = {
+export type DatePeriod = {
   id?: number;
   endDate: string | null;
   fixed: boolean;
@@ -287,7 +274,7 @@ export type OpeningHoursFormValues = {
 };
 
 export type PreviewOpeningHours = {
-  timeSpans: OpeningHoursTimeSpan[];
+  timeSpans: TimeSpan[];
   weekdays: number[];
 };
 
