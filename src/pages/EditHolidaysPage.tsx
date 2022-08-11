@@ -188,7 +188,7 @@ const HolidayListItem = ({
 
   return (
     <li className="holidays-list-item" key={date}>
-      <div className="holiday-checkbox-container">
+      <div className="holiday-column">
         {value && value.id ? (
           <>
             <Checkbox
@@ -256,7 +256,7 @@ const HolidayListItem = ({
               </div>
             ) : (
               <>
-                <div className="holiday-exception-opening-hours-container">
+                <div className="holiday-exception-opening-hours-column">
                   <ExceptionOpeningHours
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     datePeriod={datePeriod!}
@@ -472,7 +472,7 @@ export default function EditHolidaysPage({
           pitää yhä paikkansa.
         </p>
         <div className="holiday-list-header">
-          <h3 className="holiday-checkbox-container">Juhlapyhä</h3>
+          <h3 className="holiday-column">Juhlapyhä</h3>
         </div>
         <ul className="holidays-list">
           {holidays.map((holiday) => {

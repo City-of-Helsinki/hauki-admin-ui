@@ -45,13 +45,13 @@
   color: $color-coat-of-arms;
 }
 
-.holiday-checkbox-container {
+.holiday-column {
   flex: 0 0 25ch;
   white-space: nowrap;
 }
 
-.holiday-checkbox-container,
-.holiday-exception-opening-hours-container {
+.holiday-column,
+.holiday-exception-opening-hours-column {
   padding: $spacing-s $spacing-s;
 }
 
