@@ -251,50 +251,58 @@ export const apiDatePeriodToFormValues = (
   resourceState: datePeriod.resource_state,
 });
 
-const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
-  (datePeriod.start_date == null || datePeriod.start_date) <= date &&
-  (datePeriod.end_date === null || datePeriod.end_date >= date);
+const isWithinRange = (
+  date: string,
+  datePeriod: OpeningHoursFormValues
+): boolean =>
+  (datePeriod.startDate == null || datePeriod.startDate) <= date &&
+  (datePeriod.endDate === null || datePeriod.endDate >= date);
 
 const dateRangeIsShorter = (
-  other: DatePeriod,
-  datePeriod: DatePeriod
+  other: OpeningHoursFormValues,
+  datePeriod: OpeningHoursFormValues
 ): boolean =>
-  new Date(datePeriod.end_date ?? '2045-01-01').getTime() -
-    new Date(datePeriod.start_date ?? '1975-01-01').getTime() <
-  new Date(other.end_date ?? '2045-01-01').getTime() -
-    new Date(other.start_date ?? '1975-01-01').getTime();
+  new Date(datePeriod.endDate ?? '2045-01-01').getTime() -
+    new Date(datePeriod.startDate ?? '1975-01-01').getTime() <
+  new Date(other.endDate ?? '2045-01-01').getTime() -
+    new Date(other.startDate ?? '1975-01-01').getTime();
 
 export const getActiveDatePeriod = (
   date: string,
-  dates: DatePeriod[]
-): DatePeriod | undefined => {
-  return dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
-    if (
-      isWithinRange(date, current) &&
-      (!acc || dateRangeIsShorter(acc, current))
-    ) {
-      return current;
-    }
+  dates: OpeningHoursFormValues[]
+): OpeningHoursFormValues | undefined => {
+  return dates.reduce(
+    (
+      acc: OpeningHoursFormValues | undefined,
+      current: OpeningHoursFormValues
+    ) => {
+      if (
+        isWithinRange(date, current) &&
+        (!acc || dateRangeIsShorter(acc, current))
+      ) {
+        return current;
+      }
 
-    return acc;
-  }, undefined);
+      return acc;
+    },
+    undefined
+  );
 };
 
 const dayInMilliseconds = 24 * 60 * 60 * 1000;
 
 export const isHoliday = (
-  datePeriod: DatePeriod,
+  datePeriod: OpeningHoursFormValues,
   holidays: Holiday[]
 ): boolean =>
-  !!datePeriod.end_date &&
-  !!datePeriod.start_date &&
-  datePeriod.override &&
+  !!datePeriod.endDate &&
+  !!datePeriod.startDate &&
+  !!datePeriod.override &&
   !!holidays.find(
     (holiday) =>
-      holiday.date === datePeriod.end_date &&
-      holiday.name === datePeriod.name.fi
+      holiday.date === datePeriod.endDate && holiday.name === datePeriod.name.fi
   ) &&
   differenceInMilliseconds(
-    new Date(datePeriod.end_date),
-    new Date(datePeriod.start_date)
+    new Date(datePeriod.endDate),
+    new Date(datePeriod.startDate)
   ) <= dayInMilliseconds;

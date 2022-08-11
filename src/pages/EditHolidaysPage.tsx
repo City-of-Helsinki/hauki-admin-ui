@@ -159,14 +159,12 @@ const HolidayForm = ({
 
 const HolidayListItem = ({
   id,
-  datePeriod,
   holiday,
   value,
   datePeriodConfig,
   actions,
 }: {
   id: string;
-  datePeriod?: DatePeriod;
   holiday: Holiday;
   value?: OpeningHoursFormValues;
   datePeriodConfig: UiDatePeriodConfig;
@@ -255,7 +253,7 @@ const HolidayListItem = ({
                   actions={actions}
                   onClose={() => {
                     setIsEditing(false);
-                    if (!datePeriod) {
+                    if (!value) {
                       setChecked(false);
                     }
                   }}
@@ -266,7 +264,7 @@ const HolidayListItem = ({
                 <div className="holiday-exception-opening-hours-column">
                   <ExceptionOpeningHours
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    datePeriod={datePeriod!}
+                    datePeriod={value!}
                     datePeriodConfig={datePeriodConfig}
                   />
                 </div>
@@ -301,7 +299,6 @@ export default function EditHolidaysPage({
   >();
   const { language = Language.FI } = useAppContext();
   const [holidays, setHolidays] = useState<Holiday[]>([]);
-  const [holidayPeriods, setHolidayPeriods] = useState<DatePeriod[]>([]);
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
@@ -327,14 +324,11 @@ export default function EditHolidaysPage({
       const apiDatePeriods: DatePeriod[] = await api.getDatePeriods(
         resourceIdentifier
       );
-      const holidayPeriodsResult: DatePeriod[] = apiDatePeriods.filter(
-        (apiDatePeriod) => isHoliday(apiDatePeriod, holidays)
-      );
-      setHolidayPeriods(holidayPeriodsResult);
-      const holidayValuesList: OpeningHoursFormValues[] = holidayPeriodsResult.map(
-        apiDatePeriodToFormValues
-      );
-      setHolidayValues(holidayValuesList);
+      const holidayPeriodsResult: OpeningHoursFormValues[] = apiDatePeriods
+        .map(apiDatePeriodToFormValues)
+        .filter((apiDatePeriod) => isHoliday(apiDatePeriod, holidays));
+
+      setHolidayValues(holidayPeriodsResult);
     },
     [holidays]
   );
@@ -468,7 +462,7 @@ export default function EditHolidaysPage({
           {holidays.length > 0 && (
             <UpcomingHolidayNotification
               datePeriodConfig={datePeriodConfig}
-              datePeriods={holidayPeriods}
+              datePeriods={holidayValues}
               holiday={holidays[0]}
             />
           )}
@@ -494,9 +488,6 @@ export default function EditHolidaysPage({
                 key={`${holiday.date}-${value ? value.id : 'new'}`}
                 id={`holiday-${idx}`}
                 holiday={holiday}
-                datePeriod={holidayPeriods.find((dp) =>
-                  isHoliday(dp, [holiday])
-                )}
                 datePeriodConfig={datePeriodConfig}
                 value={value}
                 actions={{
