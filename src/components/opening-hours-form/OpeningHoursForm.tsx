@@ -31,9 +31,7 @@ import { useAppContext } from '../../App-context';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import OpeningHoursFormActions from './OpeningHoursFormActions';
 
-const getDefaultsValues = (
-  datePeriod: ApiDatePeriod | undefined
-): DatePeriod =>
+const getDefaultsValues = (datePeriod: ApiDatePeriod | undefined): DatePeriod =>
   datePeriod
     ? apiDatePeriodToDatePeriod(datePeriod)
     : {
