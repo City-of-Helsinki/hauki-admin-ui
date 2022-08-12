@@ -284,7 +284,7 @@ export default function ResourceOpeningHours({
         datePeriods={defaultPeriods}
         datePeriodConfig={datePeriodConfig}
         theme={PeriodsListTheme.DEFAULT}
-        notFoundLabel="Ei aukiolojaksoja."
+        notFoundLabel="Ei määriteltyjä aukioloaikoja. Aloita painamalla “Lisää aukioloaika” -painiketta."
         deletePeriod={deletePeriod}
         language={language}
         isLoading={isLoading}
