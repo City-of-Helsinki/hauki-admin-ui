@@ -49,27 +49,6 @@ export type ApiTimeSpan = {
   end_time_on_next_day?: boolean;
 };
 
-export type FormWeekdays = [
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean
-];
-
-export type TimeSpanFormFormat = {
-  id?: string;
-  group?: string;
-  description?: LanguageStrings;
-  endTime: string;
-  startTime: string;
-  fullDay: boolean;
-  resourceState?: ResourceState;
-  weekdays: FormWeekdays;
-};
-
 export type ApiChoice = {
   value: string;
   display_name: string | LanguageStrings;
