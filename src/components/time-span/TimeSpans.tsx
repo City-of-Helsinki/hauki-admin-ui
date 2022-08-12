@@ -9,7 +9,7 @@ import {
 import { getUiId } from '../../common/utils/form/form';
 import { defaultTimeSpan } from '../../constants';
 import { SupplementaryButton } from '../button/Button';
-import TTimeSpan from './TimeSpan';
+import TimeSpan from './TimeSpan';
 import './TimeSpans.scss';
 
 const TimeSpans = ({
@@ -48,7 +48,7 @@ const TimeSpans = ({
   return (
     <div className="time-spans">
       {fields.map((field, i) => (
-        <TTimeSpan
+        <TimeSpan
           key={field.id}
           openingHoursIdx={openingHoursIdx}
           timeSpanGroupIdx={timeSpanGroupIdx}
