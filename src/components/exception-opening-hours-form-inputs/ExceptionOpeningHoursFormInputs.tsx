@@ -38,7 +38,7 @@ const ExceptionOpeningHoursFormInputs = ({
           id={`${id}-open-state-checkbox`}
           name={`${id}-open-state-checkbox`}
           checked={isOpen}
-          label="Poikkeava aukiolo"
+          label="Poikkeava aukioloaika"
           onChange={(): void => {
             setOpen(true);
             onOpen();
