@@ -14,7 +14,7 @@ import { PrimaryButton, SecondaryButton } from '../button/Button';
 import OpeningPeriod from './opening-period/OpeningPeriod';
 import './ResourceOpeningHours.scss';
 import {
-  apiDatePeriodToFormValues,
+  apiDatePeriodToDatePeriod,
   getActiveDatePeriod,
   isHoliday,
 } from '../../common/helpers/opening-hours-helpers';
@@ -282,7 +282,7 @@ export default function ResourceOpeningHours({
         addNewOpeningPeriodButtonDataTest="add-new-opening-period-button"
         resourceId={resourceId}
         title="Aukioloajat"
-        datePeriods={defaultPeriods.map(apiDatePeriodToFormValues)}
+        datePeriods={defaultPeriods.map(apiDatePeriodToDatePeriod)}
         datePeriodConfig={datePeriodConfig}
         theme={PeriodsListTheme.DEFAULT}
         notFoundLabel="Ei määriteltyjä aukioloaikoja. Aloita painamalla “Lisää aukioloaika” -painiketta."
@@ -292,7 +292,7 @@ export default function ResourceOpeningHours({
       />
       <ExceptionPeriodsList
         datePeriodConfig={datePeriodConfig}
-        datePeriods={exceptions.map(apiDatePeriodToFormValues)}
+        datePeriods={exceptions.map(apiDatePeriodToDatePeriod)}
         deletePeriod={deletePeriod}
         language={language}
         parentId={parentId}

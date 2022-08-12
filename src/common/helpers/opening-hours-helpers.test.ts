@@ -2,8 +2,8 @@
 
 import { ResourceState } from '../lib/types';
 import {
-  apiDatePeriodToFormValues,
-  formValuesToApiDatePeriod,
+  apiDatePeriodToDatePeriod,
+  datePeriodToApiDatePeriod,
   getActiveDatePeriod,
   isHoliday,
 } from './opening-hours-helpers';
@@ -187,7 +187,7 @@ describe('opening-hours-helpers', () => {
   describe('openingHoursToApiDatePeriod', () => {
     it('should map to correct data', () => {
       expect(
-        formValuesToApiDatePeriod(8414, {
+        datePeriodToApiDatePeriod(8414, {
           endDate: '31.12.2022',
           fixed: true,
           name: { fi: 'Normaali aukiolo', sv: null, en: null },
@@ -200,7 +200,7 @@ describe('opening-hours-helpers', () => {
 
   describe('apiDatePeriodToOpeningHours', () => {
     it('should map to correct data', () => {
-      expect(apiDatePeriodToFormValues(datePeriod)).toEqual({
+      expect(apiDatePeriodToDatePeriod(datePeriod)).toEqual({
         endDate: '31.12.2022',
         fixed: true,
         name: { fi: 'Normaali aukiolo', sv: null, en: null },

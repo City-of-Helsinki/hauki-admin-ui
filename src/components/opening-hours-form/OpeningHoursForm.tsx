@@ -14,9 +14,9 @@ import { SupplementaryButton } from '../button/Button';
 import OpeningHoursFormPreview from '../opening-hours-form-preview/OpeningHoursFormPreview';
 import './OpeningHoursForm.scss';
 import {
-  apiDatePeriodToFormValues,
+  apiDatePeriodToDatePeriod,
   byWeekdays,
-  formValuesToApiDatePeriod,
+  datePeriodToApiDatePeriod,
 } from '../../common/helpers/opening-hours-helpers';
 import toast from '../notification/Toast';
 import OpeningHoursWeekdays from '../opening-hours-weekdays/OpeningHoursWeekdays';
@@ -35,7 +35,7 @@ const getDefaultsValues = (
   datePeriod: ApiDatePeriod | undefined
 ): DatePeriod =>
   datePeriod
-    ? apiDatePeriodToFormValues(datePeriod)
+    ? apiDatePeriodToDatePeriod(datePeriod)
     : {
         fixed: false,
         endDate: null,
@@ -102,7 +102,7 @@ const OpeningHoursForm = ({
       throw new Error('Resource not found');
     }
     setSaving(true);
-    submitFn(formValuesToApiDatePeriod(resource?.id, values, datePeriod?.id))
+    submitFn(datePeriodToApiDatePeriod(resource?.id, values, datePeriod?.id))
       .then(() => {
         toast.success({
           dataTestId: 'opening-period-form-success',

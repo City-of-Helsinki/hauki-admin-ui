@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../common/utils/api/api';
-import { ApiDatePeriod, UiDatePeriodConfig, Resource } from '../common/lib/types';
+import {
+  ApiDatePeriod,
+  UiDatePeriodConfig,
+  Resource,
+} from '../common/lib/types';
 import OpeningHoursForm from '../components/opening-hours-form/OpeningHoursForm';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
 

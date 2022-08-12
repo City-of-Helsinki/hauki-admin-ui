@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
 import {
-  apiDatePeriodToFormValues,
-  formValuesToApiDatePeriod,
+  apiDatePeriodToDatePeriod,
+  datePeriodToApiDatePeriod,
 } from '../../common/helpers/opening-hours-helpers';
 import {
   ApiDatePeriod,
@@ -55,7 +55,7 @@ const formValuesToException = (
   resourceIdToSave: number,
   values: DatePeriod
 ): ApiDatePeriod => {
-  const data = formValuesToApiDatePeriod(
+  const data = datePeriodToApiDatePeriod(
     resourceIdToSave,
     resolveWeekday(values),
     values.id
@@ -72,7 +72,7 @@ const getDefaultFormValues = (
   datePeriod: ApiDatePeriod | undefined
 ): DatePeriod => {
   if (datePeriod) {
-    return apiDatePeriodToFormValues(datePeriod);
+    return apiDatePeriodToDatePeriod(datePeriod);
   }
 
   const now = new Date().toISOString();

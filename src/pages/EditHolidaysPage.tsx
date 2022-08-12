@@ -11,8 +11,8 @@ import {
   UiDatePeriodConfig,
 } from '../common/lib/types';
 import {
-  apiDatePeriodToFormValues,
-  formValuesToApiDatePeriod,
+  apiDatePeriodToDatePeriod,
+  datePeriodToApiDatePeriod,
   isHoliday,
 } from '../common/helpers/opening-hours-helpers';
 import api from '../common/utils/api/api';
@@ -325,7 +325,7 @@ export default function EditHolidaysPage({
         resourceIdentifier
       );
       const holidayPeriodsResult: DatePeriod[] = apiDatePeriods
-        .map(apiDatePeriodToFormValues)
+        .map(apiDatePeriodToDatePeriod)
         .filter((apiDatePeriod) => isHoliday(apiDatePeriod, holidays));
 
       setHolidayValues(holidayPeriodsResult);
@@ -337,7 +337,7 @@ export default function EditHolidaysPage({
     resourceIdToSave: number,
     values: DatePeriod
   ): ApiDatePeriod => ({
-    ...formValuesToApiDatePeriod(resourceIdToSave, values, values.id),
+    ...datePeriodToApiDatePeriod(resourceIdToSave, values, values.id),
     override: true,
   });
 

@@ -70,7 +70,9 @@ const ruleToApiRule = (rule: Rule): GroupRule => ({
   frequency_modifier: frequencyModifierMap[rule],
 });
 
-const toTimeSpanGroups = (openingHours: OpeningHours[]): ApiTimeSpanGroup[] =>
+const toApiTimeSpanGroups = (
+  openingHours: OpeningHours[]
+): ApiTimeSpanGroup[] =>
   openingHours.reduce(
     (result: ApiTimeSpanGroup[], openingHour: OpeningHours) =>
       openingHour.timeSpanGroups.reduce(
@@ -110,7 +112,7 @@ const toTimeSpanGroups = (openingHours: OpeningHours[]): ApiTimeSpanGroup[] =>
   );
 
 // eslint-disable-next-line import/prefer-default-export
-export const formValuesToApiDatePeriod = (
+export const datePeriodToApiDatePeriod = (
   resource: number,
   formValues: DatePeriod,
   id?: number
@@ -131,7 +133,7 @@ export const formValuesToApiDatePeriod = (
   start_date: formValues.startDate
     ? transformDateToApiFormat(formValues.startDate)
     : null,
-  time_span_groups: toTimeSpanGroups(formValues.openingHours),
+  time_span_groups: toApiTimeSpanGroups(formValues.openingHours),
   ...(formValues.resourceState
     ? { resource_state: formValues.resourceState }
     : {}),
@@ -234,7 +236,7 @@ export const apiDatePeriodToOpeningHours = (
     )
     .sort(byWeekdays);
 
-export const apiDatePeriodToFormValues = (
+export const apiDatePeriodToDatePeriod = (
   datePeriod: ApiDatePeriod
 ): DatePeriod => ({
   name: datePeriod.name,
