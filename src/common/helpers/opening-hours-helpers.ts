@@ -185,7 +185,7 @@ const apiRulesToRule = (apiRules: GroupRule[]): Rule => {
   return 'week_every';
 };
 
-export const apiDatePeriodToOpeningHours = (
+const apiDatePeriodToOpeningHours = (
   datePeriod: ApiDatePeriod
 ): OpeningHours[] =>
   datePeriod.time_span_groups
@@ -247,6 +247,7 @@ export const apiDatePeriodToDatePeriod = (
   openingHours: apiDatePeriodToOpeningHours(datePeriod),
   id: datePeriod.id,
   resourceState: datePeriod.resource_state,
+  override: datePeriod.override,
 });
 
 const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
@@ -257,10 +258,16 @@ const dateRangeIsShorter = (
   other: DatePeriod,
   datePeriod: DatePeriod
 ): boolean =>
-  new Date(datePeriod.endDate ?? '2045-01-01').getTime() -
-    new Date(datePeriod.startDate ?? '1975-01-01').getTime() <
-  new Date(other.endDate ?? '2045-01-01').getTime() -
-    new Date(other.startDate ?? '1975-01-01').getTime();
+  new Date(
+    transformDateToApiFormat(datePeriod.endDate ?? '2045-01-01')
+  ).getTime() -
+    new Date(
+      transformDateToApiFormat(datePeriod.startDate ?? '1975-01-01')
+    ).getTime() <
+  new Date(transformDateToApiFormat(other.endDate ?? '2045-01-01')).getTime() -
+    new Date(
+      transformDateToApiFormat(other.startDate ?? '1975-01-01')
+    ).getTime();
 
 export const getActiveDatePeriod = (
   date: string,
@@ -289,9 +296,11 @@ export const isHoliday = (
   !!datePeriod.override &&
   !!holidays.find(
     (holiday) =>
-      holiday.date === datePeriod.endDate && holiday.name === datePeriod.name.fi
+      !!datePeriod.endDate &&
+      holiday.date === transformDateToApiFormat(datePeriod.endDate) &&
+      holiday.name === datePeriod.name.fi
   ) &&
   differenceInMilliseconds(
-    new Date(datePeriod.endDate),
-    new Date(datePeriod.startDate)
+    new Date(transformDateToApiFormat(datePeriod.endDate)),
+    new Date(transformDateToApiFormat(datePeriod.startDate))
   ) <= dayInMilliseconds;
