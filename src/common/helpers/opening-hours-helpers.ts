@@ -251,8 +251,10 @@ export const apiDatePeriodToDatePeriod = (
 });
 
 const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
-  (datePeriod.startDate == null || datePeriod.startDate) <= date &&
-  (datePeriod.endDate === null || datePeriod.endDate >= date);
+  (datePeriod.startDate == null ||
+    transformDateToApiFormat(datePeriod.startDate) <= date) &&
+  (datePeriod.endDate == null ||
+    transformDateToApiFormat(datePeriod.endDate) >= date);
 
 const dateRangeIsShorter = (
   other: DatePeriod,
