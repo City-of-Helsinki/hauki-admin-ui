@@ -474,7 +474,7 @@ export default function EditHolidaysPage({
           <h3 className="holiday-column">Juhlapyhä</h3>
         </div>
         <ul className="holidays-list">
-          {holidays.map((holiday) => {
+          {holidays.map((holiday, idx) => {
             const value: DatePeriod | undefined = holidayValues
               ? holidayValues.find(
                   (holidayValue) => holidayValue.name.fi === holiday.name
