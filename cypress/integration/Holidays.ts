@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 /// <reference path="../index.d.ts" />
-describe('User adds a new opening period', () => {
+describe('User adds a new holiday opening period', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
   });
