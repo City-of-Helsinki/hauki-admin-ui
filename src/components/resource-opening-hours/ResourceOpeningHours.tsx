@@ -232,7 +232,7 @@ export default function ResourceOpeningHours({
   >([[], []]);
   const [isLoading, setLoading] = useState(false);
   const fetchDatePeriods = async (id: number): Promise<void> => {
-    const loadingTimeout = setTimeout(() => setLoading(true), 500);
+    setLoading(true);
     try {
       const [apiDatePeriods, uiDatePeriodOptions] = await Promise.all([
         api.getDatePeriods(id),
@@ -247,7 +247,6 @@ export default function ResourceOpeningHours({
     } catch (e) {
       setError(e as Error);
     }
-    clearTimeout(loadingTimeout);
     setLoading(false);
   };
 
