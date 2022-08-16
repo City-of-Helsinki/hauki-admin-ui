@@ -30,8 +30,8 @@ export default function OpeningPeriod({
 }): JSX.Element {
   const datePeriodName = datePeriod.name[language];
   const formattedDateRange = formatDateRange({
-    startDate: datePeriod.startDate ?? null,
-    endDate: datePeriod.endDate ?? null,
+    startDate: datePeriod.startDate,
+    endDate: datePeriod.endDate,
   });
 
   return (

@@ -98,9 +98,7 @@ const ExceptionPeriodsList = ({
                 }
               }}
               periodName={exception.name[language]}
-              dateRange={`${
-                exception.startDate ? exception.startDate : ''
-              } — poikkeavat aukiolot`}>
+              dateRange={`${exception.startDate ?? ''} — poikkeavat aukiolot`}>
               <ExceptionOpeningHours
                 datePeriod={exception}
                 datePeriodConfig={datePeriodConfig}
