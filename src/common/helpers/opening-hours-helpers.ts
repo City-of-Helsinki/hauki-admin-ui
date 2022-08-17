@@ -29,7 +29,9 @@ export const byWeekdays = (
   return day1 - day2;
 };
 
-const toTimeSpan = (days: number[]) => (timeSpan: TimeSpan): ApiTimeSpan => ({
+const toApiTimeSpan = (days: number[]) => (
+  timeSpan: TimeSpan
+): ApiTimeSpan => ({
   id: timeSpan.id,
   description:
     timeSpan.resource_state === ResourceState.OTHER
@@ -91,7 +93,7 @@ const toApiTimeSpanGroups = (
               time_spans: [
                 ...apiTimeSpanGroup.time_spans,
                 ...uiTimeSpanGroup.timeSpans.map(
-                  toTimeSpan(openingHour.weekdays)
+                  toApiTimeSpan(openingHour.weekdays)
                 ),
               ],
             }),
@@ -101,7 +103,7 @@ const toApiTimeSpanGroups = (
                   ? []
                   : [ruleToApiRule(uiTimeSpanGroup.rule)],
               time_spans: uiTimeSpanGroup.timeSpans.map(
-                toTimeSpan(openingHour.weekdays)
+                toApiTimeSpan(openingHour.weekdays)
               ),
             },
             apiTimeSpanGroups
@@ -113,13 +115,13 @@ const toApiTimeSpanGroups = (
 
 export const datePeriodToApiDatePeriod = (
   resource: number,
-  formValues: DatePeriod,
+  datePeriod: DatePeriod,
   id?: number
 ): ApiDatePeriod => ({
-  name: formValues.name,
+  name: datePeriod.name,
   end_date:
-    formValues.fixed && formValues.endDate
-      ? transformDateToApiFormat(formValues.endDate)
+    datePeriod.fixed && datePeriod.endDate
+      ? transformDateToApiFormat(datePeriod.endDate)
       : null,
   id,
   description: {
@@ -129,12 +131,12 @@ export const datePeriodToApiDatePeriod = (
   },
   override: false,
   resource,
-  start_date: formValues.startDate
-    ? transformDateToApiFormat(formValues.startDate)
+  start_date: datePeriod.startDate
+    ? transformDateToApiFormat(datePeriod.startDate)
     : null,
-  time_span_groups: toApiTimeSpanGroups(formValues.openingHours),
-  ...(formValues.resourceState
-    ? { resource_state: formValues.resourceState }
+  time_span_groups: toApiTimeSpanGroups(datePeriod.openingHours),
+  ...(datePeriod.resourceState
+    ? { resource_state: datePeriod.resourceState }
     : {}),
 });
 
@@ -184,10 +186,10 @@ const apiRulesToRule = (apiRules: GroupRule[]): Rule => {
   return 'week_every';
 };
 
-const apiDatePeriodToOpeningHours = (
-  datePeriod: ApiDatePeriod
+const apiTimeSpanGroupsToOpeningHours = (
+  timeSpanGroups: ApiTimeSpanGroup[]
 ): OpeningHours[] =>
-  datePeriod.time_span_groups
+  timeSpanGroups
     .reduce(
       (
         allOpeningHours: OpeningHours[],
@@ -243,7 +245,7 @@ export const apiDatePeriodToDatePeriod = (
   fixed:
     (!!datePeriod.start_date && !!datePeriod.end_date) || !!datePeriod.end_date,
   startDate: datePeriod.start_date ? formatDate(datePeriod.start_date) : null,
-  openingHours: apiDatePeriodToOpeningHours(datePeriod),
+  openingHours: apiTimeSpanGroupsToOpeningHours(datePeriod.time_span_groups),
   id: datePeriod.id,
   resourceState: datePeriod.resource_state,
   override: datePeriod.override,
