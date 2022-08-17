@@ -67,19 +67,20 @@ const ExceptionPeriodsList = ({
         </PrimaryButton>
       </header>
       <ul className="opening-periods-list">
-        <li>
-          <HolidaysTable
-            datePeriodConfig={datePeriodConfig}
-            datePeriods={holidayDatePeriods}
-            holidays={holidays}
-            parentId={parentId}
-            resourceId={resourceId}
-          />
-        </li>
-        {isLoading && (
+        {isLoading && exceptions.length === 0 ? (
           <div className="loading-spinner-container">
             <LoadingSpinner loadingText="Haetaan aukiolojoja" small />
           </div>
+        ) : (
+          <li>
+            <HolidaysTable
+              datePeriodConfig={datePeriodConfig}
+              datePeriods={holidayDatePeriods}
+              holidays={holidays}
+              parentId={parentId}
+              resourceId={resourceId}
+            />
+          </li>
         )}
         {exceptions.map((exception, i) => (
           <li key={exception.id}>
@@ -180,7 +181,7 @@ const OpeningPeriodsList = ({
           Lisää aukioloaika +
         </SecondaryButton>
       </header>
-      {isLoading && (
+      {isLoading && datePeriods.length === 0 && (
         <div className="loading-spinner-container">
           <LoadingSpinner loadingText="Haetaan aukiolojoja" small />
         </div>
