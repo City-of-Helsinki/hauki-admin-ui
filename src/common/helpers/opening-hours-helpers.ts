@@ -255,20 +255,20 @@ const isWithinRange = (date: string, datePeriod: DatePeriod): boolean =>
   (datePeriod.endDate == null ||
     transformDateToApiFormat(datePeriod.endDate) >= date);
 
+const toTimeWithDefault = (
+  uiDate: string | null,
+  defaultUiDate: string
+): number =>
+  new Date(transformDateToApiFormat(uiDate ?? defaultUiDate)).getTime();
+
+const getTimeRange = (datePeriod: DatePeriod) =>
+  toTimeWithDefault(datePeriod.endDate, '31.12.2045') -
+  toTimeWithDefault(datePeriod.startDate, '01.01.1975');
+
 const dateRangeIsShorter = (
   other: DatePeriod,
   datePeriod: DatePeriod
-): boolean =>
-  new Date(
-    transformDateToApiFormat(datePeriod.endDate ?? '2045-01-01')
-  ).getTime() -
-    new Date(
-      transformDateToApiFormat(datePeriod.startDate ?? '1975-01-01')
-    ).getTime() <
-  new Date(transformDateToApiFormat(other.endDate ?? '2045-01-01')).getTime() -
-    new Date(
-      transformDateToApiFormat(other.startDate ?? '1975-01-01')
-    ).getTime();
+): boolean => getTimeRange(datePeriod) < getTimeRange(other);
 
 export const getActiveDatePeriod = (
   date: string,
