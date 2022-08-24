@@ -14,7 +14,7 @@ export function updateBy<T>(
   });
 }
 
-export function updateByWithDefault<T>(
+export function updateOrAdd<T>(
   predicate: (data: T) => boolean,
   fn: (data: T) => T,
   defaultValue: T,
