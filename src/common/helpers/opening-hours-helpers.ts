@@ -98,6 +98,7 @@ const toApiTimeSpanGroups = (
               ],
             }),
             {
+              id: uiTimeSpanGroup.id,
               rules:
                 uiTimeSpanGroup.rule === 'week_every'
                   ? []
@@ -193,10 +194,10 @@ const apiTimeSpanGroupsToOpeningHours = (
     .reduce(
       (
         allOpeningHours: OpeningHours[],
-        { rules, time_spans: timeSpans }: ApiTimeSpanGroup
+        { id, rules, time_spans: timeSpans }: ApiTimeSpanGroup
       ) =>
         timeSpans.reduce(
-          (timeSpanOpeningHours, timeSpan) =>
+          (openingHours, timeSpan) =>
             updateByWithDefault(
               (openingHour) =>
                 weekDaysMatch(openingHour.weekdays, timeSpan.weekdays ?? []),
@@ -214,6 +215,7 @@ const apiTimeSpanGroupsToOpeningHours = (
                     ],
                   }),
                   {
+                    id,
                     rule: apiRulesToRule(rules),
                     timeSpans: [apiTimeSpanToTimeSpan(timeSpan)],
                   },
@@ -224,12 +226,13 @@ const apiTimeSpanGroupsToOpeningHours = (
                 weekdays: timeSpan.weekdays ?? [],
                 timeSpanGroups: [
                   {
+                    id,
                     rule: apiRulesToRule(rules),
                     timeSpans: [apiTimeSpanToTimeSpan(timeSpan)],
                   },
                 ],
               },
-              timeSpanOpeningHours
+              openingHours
             ),
           allOpeningHours
         ),
