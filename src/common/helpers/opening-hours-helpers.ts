@@ -109,15 +109,14 @@ const toApiTimeSpanGroups = (
 
 export const datePeriodToApiDatePeriod = (
   resource: number,
-  datePeriod: DatePeriod,
-  id?: number
+  datePeriod: DatePeriod
 ): ApiDatePeriod => ({
   name: datePeriod.name,
   end_date:
     datePeriod.fixed && datePeriod.endDate
       ? transformDateToApiFormat(datePeriod.endDate)
       : null,
-  id,
+  id: datePeriod.id,
   description: {
     en: null,
     fi: null,
