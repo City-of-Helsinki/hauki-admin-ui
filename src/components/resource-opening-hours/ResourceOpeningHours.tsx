@@ -220,12 +220,12 @@ export default function ResourceOpeningHours({
   language,
   parentId,
   resource,
-  holidaysTableInitiallyOpen,
+  holidaysTableInitiallyOpen = false,
 }: {
   language: Language;
   parentId?: number;
   resource: Resource;
-  holidaysTableInitiallyOpen: boolean;
+  holidaysTableInitiallyOpen?: boolean;
 }): JSX.Element | null {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);

@@ -220,7 +220,6 @@ export default function ResourcePage({
                   language={language}
                   parentId={resource.id}
                   resource={childResource}
-                  holidaysTableInitiallyOpen
                 />
               </Accordion>
             ))}
