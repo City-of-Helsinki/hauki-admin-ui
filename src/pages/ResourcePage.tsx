@@ -179,15 +179,6 @@ export default function ResourcePage({
                   })
                 }
               />
-              <p
-                data-test={`parent-resource-description-${index}`}
-                className="resource-description-text related-resource-description-text">
-                {parentResource?.description[language] ||
-                  displayLangVersionNotFound({
-                    language,
-                    label: 'toimipisteen kuvaus',
-                  })}
-              </p>
             </div>
           ))}
         </ResourceDetailsSection>
