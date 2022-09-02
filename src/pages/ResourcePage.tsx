@@ -194,7 +194,11 @@ export default function ResourcePage({
       )}
       <ResourceSection id="resource-opening-hours">
         {resource && (
-          <ResourceOpeningHours language={language} resource={resource} />
+          <ResourceOpeningHours
+            language={language}
+            resource={resource}
+            holidaysTableInitiallyOpen={childResources.length === 0}
+          />
         )}
       </ResourceSection>
       {!hasTargetResources && childResources?.length > 0 && (
@@ -225,6 +229,7 @@ export default function ResourcePage({
                   language={language}
                   parentId={resource.id}
                   resource={childResource}
+                  holidaysTableInitiallyOpen
                 />
               </Accordion>
             ))}
