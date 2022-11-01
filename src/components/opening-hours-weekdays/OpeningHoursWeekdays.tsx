@@ -220,6 +220,9 @@ const OpeningHoursWeekdays = ({
                 defaultValue={field.rule || defaultRule}
                 name={`${namePrefix}.timeSpanGroups.${i}.rule`}
                 control={control}
+                rules={{
+                  required: 'Pakollinen kenttä',
+                }}
                 render={({ field: { onChange, value } }): JSX.Element => (
                   <>
                     <Select<InputOption<RuleType>>

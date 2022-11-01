@@ -46,6 +46,9 @@ const OpeningHoursValidity = (): JSX.Element => {
                 <Controller
                   defaultValue={startDate ?? ''}
                   name="startDate"
+                  rules={{
+                    required: 'Pakollinen kenttä',
+                  }}
                   render={({ field: startDateField }): JSX.Element => (
                     <DateInput
                       className="opening-hours-validity__date"
@@ -72,6 +75,9 @@ const OpeningHoursValidity = (): JSX.Element => {
                     <Controller
                       defaultValue={endDate ?? ''}
                       name="endDate"
+                      rules={{
+                        required: 'Pakollinen kenttä',
+                      }}
                       render={({ field: endDateField }): JSX.Element => (
                         <DateInput
                           className="opening-hours-validity__date"

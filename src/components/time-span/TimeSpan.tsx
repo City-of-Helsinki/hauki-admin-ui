@@ -66,7 +66,9 @@ const TimeSpan = ({
         <>
           <div className="time-span__range">
             <TimeInput
-              {...register(`${namePrefix}.start_time`)}
+              {...register(`${namePrefix}.start_time`, {
+                required: 'Pakollinen kenttä',
+              })}
               disabled={disabled || fullDay}
               id={getUiId([namePrefix, 'start-time'])}
               hoursLabel="tunnit"
@@ -77,7 +79,9 @@ const TimeSpan = ({
             />
             <div className="time-span__range-divider">-</div>
             <TimeInput
-              {...register(`${namePrefix}.end_time`)}
+              {...register(`${namePrefix}.end_time`, {
+                required: 'Pakollinen kenttä',
+              })}
               disabled={disabled || fullDay}
               id={getUiId([namePrefix, 'end-time'])}
               hoursLabel="tunnit"
@@ -113,6 +117,9 @@ const TimeSpan = ({
         defaultValue={item?.resource_state ?? ResourceState.OPEN}
         name={`${namePrefix}.resource_state`}
         control={control}
+        rules={{
+          required: 'Pakollinen kenttä',
+        }}
         render={({ field: { name, onChange, value } }): JSX.Element => (
           <Select<InputOption>
             disabled={disabled}
