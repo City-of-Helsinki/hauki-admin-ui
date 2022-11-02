@@ -26,7 +26,12 @@ const TimeSpanDescription = ({
     return <>Tuntematon</>;
   }
 
-  if (timeSpan.resource_state === ResourceState.OPEN) {
+  if (
+    timeSpan.resource_state &&
+    [ResourceState.OPEN, ResourceState.UNDEFINED].includes(
+      timeSpan.resource_state
+    )
+  ) {
     return null;
   }
 
