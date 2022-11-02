@@ -20,6 +20,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           data-test="opening-period-title-fi"
           id="title-fi"
           label="Aukioloajan otsikko suomeksi"
+          maxLength={100}
           placeholder={placeholders.fi ?? ''}
         />
         <TextInput
@@ -27,6 +28,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           data-test="opening-period-title-sv"
           id="title-sv"
           label="Aukioloajan otsikko ruotsiksi"
+          maxLength={100}
           placeholder={placeholders.sv ?? ''}
         />
         <TextInput
@@ -35,6 +37,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           id="title-en"
           name="name.en"
           label="Aukioloajan otsikko englanniksi"
+          maxLength={100}
           placeholder={placeholders.en ?? ''}
         />
       </div>

@@ -127,6 +127,7 @@ const TimeSpan = ({
               label="Kuvaus suomeksi"
               onChange={onChange}
               placeholder="Esim. seniorit"
+              maxLength={100}
               value={value || ''}
             />
           )}
@@ -140,6 +141,7 @@ const TimeSpan = ({
               label="Kuvaus ruotsiksi"
               onChange={onChange}
               placeholder="T.ex. seniorer"
+              maxLength={100}
               value={value || ''}
             />
           )}
@@ -154,6 +156,7 @@ const TimeSpan = ({
               name={`${namePrefix}.description.en`}
               onChange={onChange}
               placeholder="E.g. seniors"
+              maxLength={100}
               value={value || ''}
             />
           )}
