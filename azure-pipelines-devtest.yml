@@ -24,4 +24,4 @@ resources:
     name: hauki/hauki-pipelines
 
 extends:
-  template: azure-pipelines-build-hauki-admin-ui.yml@hauki-pipelines
+  template: azure-pipelines-build-hauki-admin-ui-devtest.yml@hauki-pipelines
