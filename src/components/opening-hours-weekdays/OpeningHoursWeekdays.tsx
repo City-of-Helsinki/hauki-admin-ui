@@ -248,10 +248,13 @@ const OpeningHoursWeekdays = ({
                         };
 
                         if (fields.length === 1) {
-                          append({
-                            ...defaultTimeSpanGroup,
-                            rule: toValue(pair.newValue),
-                          });
+                          append(
+                            {
+                              ...defaultTimeSpanGroup,
+                              rule: toValue(pair.newValue),
+                            },
+                            { shouldFocus: false }
+                          );
                         } else if (rule.value === 'week_every') {
                           remove(pair.idx);
                         } else {
