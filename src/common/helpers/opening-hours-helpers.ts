@@ -320,13 +320,6 @@ export const isHoliday = (
     new Date(transformDateToApiFormat(datePeriod.startDate))
   ) <= dayInMilliseconds;
 
-export const isClosed = (resourceState: ResourceState): boolean =>
-  [
-    ResourceState.CLOSED,
-    ResourceState.MAINTENANCE,
-    ResourceState.NOT_IN_USE,
-  ].includes(resourceState);
-
 export const isDescriptionAllowed = (resourceState: ResourceState): boolean =>
   resourceState !== ResourceState.NO_OPENING_HOURS;
 

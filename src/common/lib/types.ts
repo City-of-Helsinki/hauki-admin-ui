@@ -22,6 +22,15 @@ export enum ResourceState {
   MAINTENANCE = 'maintenance',
   NOT_IN_USE = 'not_in_use',
   NO_OPENING_HOURS = 'no_opening_hours',
+  WITH_KEY = 'with_key',
+  WITH_RESERVATION = 'with_reservation',
+  OPEN_AND_RESERVABLE = 'open_and_reservable',
+  WITH_KEY_AND_RESERVATION = 'with_key_and_reservation',
+  ENTER_ONLY = 'enter_only',
+  EXIT_ONLY = 'exit_only',
+  WEATHER_PERMITTING = 'weather_permitting',
+  RESERVED = 'reserved',
+  BY_APPOINTMENT = 'by_appointment',
 }
 
 export enum WeekdayTypes {
