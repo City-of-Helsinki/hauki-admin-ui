@@ -82,7 +82,7 @@ const OpeningHoursValidity = (): JSX.Element => {
                       defaultValue={endDate ?? ''}
                       name="endDate"
                       rules={{
-                        required: 'Pakollinen kenttä',
+                        required: 'Pakollinen',
                       }}
                       render={({
                         field: endDateField,

@@ -221,7 +221,7 @@ const OpeningHoursWeekdays = ({
                 name={`${namePrefix}.timeSpanGroups.${i}.rule`}
                 control={control}
                 rules={{
-                  required: 'Pakollinen kenttä',
+                  required: 'Pakollinen',
                 }}
                 render={({ field: { onChange, value } }): JSX.Element => (
                   <>

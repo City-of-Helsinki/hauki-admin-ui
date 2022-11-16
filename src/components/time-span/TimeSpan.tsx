@@ -152,7 +152,7 @@ const TimeSpan = ({
         name={`${namePrefix}.resource_state`}
         control={control}
         rules={{
-          required: 'Pakollinen kenttä',
+          required: 'Pakollinen',
         }}
         render={({ field: { name, onChange, value } }): JSX.Element => (
           <Select<InputOption>
