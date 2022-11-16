@@ -20,9 +20,10 @@ const ExceptionOpeningHours = ({
       ? 'Suljettu'
       : datePeriod.openingHours.map((openingHours) =>
           openingHours.timeSpanGroups.map((timeSpanGroup) =>
-            timeSpanGroup.timeSpans.map((timeSpan) => (
+            timeSpanGroup.timeSpans.map((timeSpan, timeSpanIdx) => (
               <TimeSpan
                 key={timeSpan.id}
+                idx={timeSpanIdx}
                 resourceStates={datePeriodConfig?.resourceState.options || []}
                 timeSpan={timeSpan}
               />

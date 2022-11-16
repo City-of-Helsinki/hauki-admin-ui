@@ -220,6 +220,9 @@ const OpeningHoursWeekdays = ({
                 defaultValue={field.rule || defaultRule}
                 name={`${namePrefix}.timeSpanGroups.${i}.rule`}
                 control={control}
+                rules={{
+                  required: 'Pakollinen',
+                }}
                 render={({ field: { onChange, value } }): JSX.Element => (
                   <>
                     <Select<InputOption<RuleType>>
@@ -245,10 +248,13 @@ const OpeningHoursWeekdays = ({
                         };
 
                         if (fields.length === 1) {
-                          append({
-                            ...defaultTimeSpanGroup,
-                            rule: toValue(pair.newValue),
-                          });
+                          append(
+                            {
+                              ...defaultTimeSpanGroup,
+                              rule: toValue(pair.newValue),
+                            },
+                            { shouldFocus: false }
+                          );
                         } else if (rule.value === 'week_every') {
                           remove(pair.idx);
                         } else {

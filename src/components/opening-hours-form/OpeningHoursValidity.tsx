@@ -46,13 +46,22 @@ const OpeningHoursValidity = (): JSX.Element => {
                 <Controller
                   defaultValue={startDate ?? ''}
                   name="startDate"
-                  render={({ field: startDateField }): JSX.Element => (
+                  rules={{
+                    required: 'Pakollinen',
+                  }}
+                  render={({
+                    field: startDateField,
+                    fieldState,
+                  }): JSX.Element => (
                     <DateInput
+                      ref={startDateField.ref}
                       className="opening-hours-validity__date"
                       data-test="opening-period-begin-date"
                       disableConfirmation
                       id="opening-hours-start-date"
                       initialMonth={new Date()}
+                      errorText={fieldState.error?.message}
+                      invalid={!!fieldState.error}
                       label="Astuu voimaan"
                       language={language}
                       name={startDateField.name}
@@ -72,13 +81,22 @@ const OpeningHoursValidity = (): JSX.Element => {
                     <Controller
                       defaultValue={endDate ?? ''}
                       name="endDate"
-                      render={({ field: endDateField }): JSX.Element => (
+                      rules={{
+                        required: 'Pakollinen',
+                      }}
+                      render={({
+                        field: endDateField,
+                        fieldState,
+                      }): JSX.Element => (
                         <DateInput
+                          ref={endDateField.ref}
                           className="opening-hours-validity__date"
                           data-test="opening-period-end-date"
                           disableConfirmation
                           id="opening-hours-end-date"
                           initialMonth={new Date()}
+                          errorText={fieldState.error?.message}
+                          invalid={!!fieldState.error}
                           label="Päättyy"
                           language={language}
                           name={endDateField.name}

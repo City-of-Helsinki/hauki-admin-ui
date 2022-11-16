@@ -15,6 +15,12 @@ import { useAppContext } from '../../App-context';
 import { choiceToOption, getUiId } from '../../common/utils/form/form';
 import { isDescriptionAllowed } from '../../common/helpers/opening-hours-helpers';
 
+const validateTime = (value: string | null) => {
+  const re = /\d{2}:\d{2}/;
+
+  return value && re.test(value) ? undefined : 'Tarkista';
+};
+
 const TimeSpan = ({
   disabled = false,
   groupLabel,
@@ -36,7 +42,7 @@ const TimeSpan = ({
 }): JSX.Element => {
   const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
   const { language = Language.FI } = useAppContext();
-  const { control, register, watch } = useFormContext<DatePeriod>();
+  const { control, watch } = useFormContext<DatePeriod>();
   const fullDay = watch(`${namePrefix}.full_day`);
   const resourceState = watch(`${namePrefix}.resource_state`);
   const sanitizedResourceStateOptions = resourceStates
@@ -65,26 +71,58 @@ const TimeSpan = ({
       {showTimeSpans && (
         <>
           <div className="time-span__range">
-            <TimeInput
-              {...register(`${namePrefix}.start_time`)}
-              disabled={disabled || fullDay}
-              id={getUiId([namePrefix, 'start-time'])}
-              hoursLabel="tunnit"
-              minutesLabel="minuutit"
-              label="Alkaen klo"
-              required
-              value={item?.start_time || ''}
+            <Controller
+              control={control}
+              name={`${namePrefix}.start_time`}
+              defaultValue={item?.start_time ?? ''}
+              render={({ field, fieldState }): JSX.Element => (
+                <TimeInput
+                  disabled={disabled || fullDay}
+                  errorText={fieldState.error?.message}
+                  hoursLabel="tunnit"
+                  id={getUiId([namePrefix, 'start-time'])}
+                  invalid={!!fieldState.error?.message}
+                  label="Alkaen klo"
+                  minutesLabel="minuutit"
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
+                  ref={field.ref}
+                  required
+                  value={field.value ?? ''}
+                />
+              )}
+              rules={{
+                required: 'Pakollinen',
+                validate: validateTime,
+              }}
             />
             <div className="time-span__range-divider">-</div>
-            <TimeInput
-              {...register(`${namePrefix}.end_time`)}
-              disabled={disabled || fullDay}
-              id={getUiId([namePrefix, 'end-time'])}
-              hoursLabel="tunnit"
-              minutesLabel="minuutit"
-              label="Päättyen klo"
-              required
-              value={item?.end_time || ''}
+            <Controller
+              control={control}
+              name={`${namePrefix}.end_time`}
+              defaultValue={item?.end_time ?? ''}
+              render={({ field, fieldState }): JSX.Element => (
+                <TimeInput
+                  disabled={disabled || fullDay}
+                  errorText={fieldState.error?.message}
+                  hoursLabel="tunnit"
+                  id={getUiId([namePrefix, 'end-time'])}
+                  invalid={!!fieldState.error?.message}
+                  label="Päättyen klo"
+                  minutesLabel="minuutit"
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
+                  ref={field.ref}
+                  required
+                  value={field.value ?? ''}
+                />
+              )}
+              rules={{
+                required: 'Pakollinen',
+                validate: validateTime,
+              }}
             />
           </div>
           <Controller
@@ -113,6 +151,9 @@ const TimeSpan = ({
         defaultValue={item?.resource_state ?? ResourceState.OPEN}
         name={`${namePrefix}.resource_state`}
         control={control}
+        rules={{
+          required: 'Pakollinen',
+        }}
         render={({ field: { name, onChange, value } }): JSX.Element => (
           <Select<InputOption>
             disabled={disabled}

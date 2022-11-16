@@ -1,37 +1,49 @@
 import React, { Fragment } from 'react';
 import { useAppContext } from '../../App-context';
-import { isClosed } from '../../common/helpers/opening-hours-helpers';
 import { openingHoursToPreviewRows } from '../../common/helpers/preview-helpers';
 import {
   Language,
-  ResourceState,
   TranslatedApiChoice,
   OpeningHours,
-  TimeSpan as TTimespan,
+  TimeSpan as TTimeSpan,
+  ResourceState,
 } from '../../common/lib/types';
 import { createWeekdaysStringFromIndices } from '../../common/utils/date-time/format';
 import { uiRuleLabels } from '../../constants';
 import './OpeningHoursPreview.scss';
 
-const TimeSpanDescription = ({
+const shouldHideOpeningHours = (timeSpan: TTimeSpan, idx: number): boolean =>
+  !timeSpan.start_time &&
+  !timeSpan.end_time &&
+  !!timeSpan.resource_state &&
+  [
+    ResourceState.CLOSED,
+    ResourceState.MAINTENANCE,
+    ResourceState.NOT_IN_USE,
+    ResourceState.UNDEFINED,
+  ].includes(timeSpan.resource_state) &&
+  idx === 0;
+
+const shouldHideState = (timeSpan: TTimeSpan): boolean =>
+  !!timeSpan.resource_state &&
+  [ResourceState.OPEN, ResourceState.NO_OPENING_HOURS].includes(
+    timeSpan.resource_state
+  );
+
+const TimeSpanState = ({
   language,
   resourceStates,
   timeSpan,
 }: {
   language: Language;
   resourceStates: TranslatedApiChoice[];
-  timeSpan?: TTimespan;
+  timeSpan?: TTimeSpan;
 }): JSX.Element | null => {
   if (!timeSpan) {
     return <>Tuntematon</>;
   }
 
-  if (
-    timeSpan.resource_state &&
-    [ResourceState.OPEN, ResourceState.NO_OPENING_HOURS].includes(
-      timeSpan.resource_state
-    )
-  ) {
+  if (shouldHideState(timeSpan)) {
     return null;
   }
 
@@ -46,29 +58,29 @@ const TimeSpanDescription = ({
 const emptyHours = '-- : --';
 
 export const TimeSpan = ({
+  idx,
   resourceStates,
   timeSpan,
 }: {
+  idx: number;
   resourceStates: TranslatedApiChoice[];
-  timeSpan?: TTimespan;
+  timeSpan?: TTimeSpan;
 }): JSX.Element | null => {
   const { language = Language.FI } = useAppContext();
   if (!timeSpan) {
     return null;
   }
 
-  const closed =
-    !timeSpan.start_time &&
-    !timeSpan.end_time &&
-    timeSpan.resource_state &&
-    isClosed(timeSpan.resource_state);
+  const hideOpeningHours = shouldHideOpeningHours(timeSpan, idx);
 
   return (
     <span
       className={`opening-hours-preview-time-span-container ${
-        closed ? 'opening-hours-preview-time-span-container--no-time-spans' : ''
+        hideOpeningHours
+          ? 'opening-hours-preview-time-span-container--no-time-spans'
+          : ''
       }`}>
-      {!closed && (
+      {!hideOpeningHours && (
         <span className="opening-hours-preview-time-span">
           {timeSpan?.full_day ? (
             '24h'
@@ -85,7 +97,7 @@ export const TimeSpan = ({
           )}
         </span>
       )}
-      <TimeSpanDescription
+      <TimeSpanState
         language={language}
         resourceStates={resourceStates}
         timeSpan={timeSpan}
@@ -97,14 +109,16 @@ export const TimeSpan = ({
 
 const TimeSpanRow = ({
   className,
+  idx,
   label,
   resourceStates,
   timeSpan,
 }: {
   className: string;
+  idx: number;
   label?: string;
   resourceStates: TranslatedApiChoice[];
-  timeSpan?: TTimespan;
+  timeSpan?: TTimeSpan;
 }): JSX.Element => (
   <tr className={className}>
     <td className="opening-hours-preview-table__day-column">{label}</td>
@@ -112,7 +126,7 @@ const TimeSpanRow = ({
       className={`opening-hours-preview-table__time-span-column ${
         className ?? ''
       }`}>
-      <TimeSpan resourceStates={resourceStates} timeSpan={timeSpan} />
+      <TimeSpan idx={idx} resourceStates={resourceStates} timeSpan={timeSpan} />
     </td>
   </tr>
 );
@@ -166,6 +180,7 @@ const OpeningHoursPreview = ({
                         <TimeSpanRow
                           key={`time-span-row-${timeSpanIdx}`}
                           className={rowClass}
+                          idx={timeSpanIdx}
                           label={
                             timeSpanIdx === 0
                               ? createWeekdaysStringFromIndices(
