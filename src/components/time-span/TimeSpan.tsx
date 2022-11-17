@@ -21,6 +21,8 @@ const validateTime = (value: string | null) => {
   return value && re.test(value) ? undefined : 'Tarkista';
 };
 
+const descriptionMaxLength = 100;
+
 const TimeSpan = ({
   disabled = false,
   groupLabel,
@@ -177,11 +179,24 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.fi ?? ''}
                 name={`${namePrefix}.description.fi`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={{
+                  maxLength: {
+                    value: descriptionMaxLength,
+                    message: 'Tarkista',
+                  },
+                }}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    invalid={!!error}
+                    errorText={error?.message}
                     id={getUiId([name])}
                     label="Kuvaus suomeksi"
                     onChange={onChange}
+                    onBlur={onBlur}
                     placeholder="Esim. seniorit"
                     value={value || ''}
                   />
@@ -190,10 +205,23 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.sv ?? ''}
                 name={`${namePrefix}.description.sv`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={{
+                  maxLength: {
+                    value: descriptionMaxLength,
+                    message: 'Tarkista',
+                  },
+                }}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    invalid={!!error}
+                    errorText={error?.message}
                     id={getUiId([name])}
                     label="Kuvaus ruotsiksi"
+                    onBlur={onBlur}
                     onChange={onChange}
                     placeholder="T.ex. seniorer"
                     value={value || ''}
@@ -203,11 +231,24 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.en ?? ''}
                 name={`${namePrefix}.description.en`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={{
+                  maxLength: {
+                    value: descriptionMaxLength,
+                    message: 'Tarkista',
+                  },
+                }}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    invalid={!!error}
+                    errorText={error?.message}
                     id={getUiId([name])}
                     label="Kuvaus englanniksi"
                     name={`${namePrefix}.description.en`}
+                    onBlur={onBlur}
                     onChange={onChange}
                     placeholder="E.g. seniors"
                     value={value || ''}
