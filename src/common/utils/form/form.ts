@@ -13,3 +13,6 @@ export const getUiId = (parts: Array<string | number>): string =>
     .map((s) => `${s}`)
     .map((s) => s.replace(/\./g, '-'))
     .join('-');
+
+export const toCharCount = (maxLength: number, value?: string): string =>
+  `${value?.length ?? 0}/${maxLength}`;

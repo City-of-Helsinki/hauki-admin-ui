@@ -23,6 +23,18 @@ const validateTime = (value: string | null) => {
 
 const descriptionMaxLength = 100;
 
+const descriptionRules = {
+  maxLength: {
+    value: descriptionMaxLength,
+    message: 'Tarkista',
+  },
+};
+
+const timeInputRules = {
+  required: 'Pakollinen',
+  validate: validateTime,
+};
+
 const TimeSpan = ({
   disabled = false,
   groupLabel,
@@ -94,10 +106,7 @@ const TimeSpan = ({
                   value={field.value ?? ''}
                 />
               )}
-              rules={{
-                required: 'Pakollinen',
-                validate: validateTime,
-              }}
+              rules={timeInputRules}
             />
             <div className="time-span__range-divider">-</div>
             <Controller
@@ -121,10 +130,7 @@ const TimeSpan = ({
                   value={field.value ?? ''}
                 />
               )}
-              rules={{
-                required: 'Pakollinen',
-                validate: validateTime,
-              }}
+              rules={timeInputRules}
             />
           </div>
           <Controller
@@ -179,12 +185,7 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.fi ?? ''}
                 name={`${namePrefix}.description.fi`}
-                rules={{
-                  maxLength: {
-                    value: descriptionMaxLength,
-                    message: 'Tarkista',
-                  },
-                }}
+                rules={descriptionRules}
                 render={({
                   field: { name, onChange, onBlur, value },
                   fieldState: { error },
@@ -205,12 +206,7 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.sv ?? ''}
                 name={`${namePrefix}.description.sv`}
-                rules={{
-                  maxLength: {
-                    value: descriptionMaxLength,
-                    message: 'Tarkista',
-                  },
-                }}
+                rules={descriptionRules}
                 render={({
                   field: { name, onChange, onBlur, value },
                   fieldState: { error },
@@ -231,12 +227,7 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.en ?? ''}
                 name={`${namePrefix}.description.en`}
-                rules={{
-                  maxLength: {
-                    value: descriptionMaxLength,
-                    message: 'Tarkista',
-                  },
-                }}
+                rules={descriptionRules}
                 render={({
                   field: { name, onChange, onBlur, value },
                   fieldState: { error },

@@ -3,6 +3,7 @@ import { TextInput } from 'hds-react';
 import { Controller } from 'react-hook-form';
 import './OpeningHoursTitles.scss';
 import { LanguageStrings } from '../../common/lib/types';
+import { toCharCount } from '../../common/utils/form/form';
 
 type Props = {
   placeholders: LanguageStrings;
@@ -10,13 +11,15 @@ type Props = {
 
 const nameMaxLength = 100;
 
+const titleRules = { maxLength: { value: nameMaxLength, message: 'Tarkista' } };
+
 const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
   <div className="card opening-hours-titles">
     <div className="opening-hours-titles-inputs">
       <Controller
         defaultValue=""
         name="name.fi"
-        rules={{ maxLength: { value: nameMaxLength, message: 'Tarkista' } }}
+        rules={titleRules}
         render={({
           field: { ref, name, onChange, onBlur, value },
           fieldState: { error },
@@ -27,7 +30,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             data-test="opening-period-title-fi"
             invalid={!!error}
             errorText={error?.message}
-            helperText={`${value?.length ?? 0}/${nameMaxLength}`}
+            helperText={toCharCount(nameMaxLength, value)}
             id="title-fi"
             label="Aukioloajan otsikko suomeksi"
             name={name}
@@ -41,7 +44,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
       <Controller
         defaultValue=""
         name="name.sv"
-        rules={{ maxLength: { value: nameMaxLength, message: 'Tarkista' } }}
+        rules={titleRules}
         render={({
           field: { ref, name, onChange, onBlur, value },
           fieldState: { error },
@@ -51,7 +54,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             data-test="opening-period-title-sv"
             invalid={!!error}
             errorText={error?.message}
-            helperText={`${value?.length ?? 0}/${nameMaxLength}`}
+            helperText={toCharCount(nameMaxLength, value)}
             id="title-sv"
             label="Aukioloajan otsikko ruotsiksi"
             name={name}
@@ -65,7 +68,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
       <Controller
         defaultValue=""
         name="name.en"
-        rules={{ maxLength: { value: nameMaxLength, message: 'Tarkista' } }}
+        rules={titleRules}
         render={({
           field: { ref, name, onChange, onBlur, value },
           fieldState: { error },
@@ -75,7 +78,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             data-test="opening-period-title-en"
             invalid={!!error}
             errorText={error?.message}
-            helperText={`${value?.length ?? 0}/${nameMaxLength}`}
+            helperText={toCharCount(nameMaxLength, value)}
             id="title-en"
             label="Aukioloajan otsikko englanniksi"
             name={name}
