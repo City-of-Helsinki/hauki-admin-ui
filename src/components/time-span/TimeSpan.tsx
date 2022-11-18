@@ -12,7 +12,11 @@ import {
 import { SupplementaryButton } from '../button/Button';
 import './TimeSpan.scss';
 import { useAppContext } from '../../App-context';
-import { choiceToOption, getUiId } from '../../common/utils/form/form';
+import {
+  choiceToOption,
+  getUiId,
+  toCharCount,
+} from '../../common/utils/form/form';
 import { isDescriptionAllowed } from '../../common/helpers/opening-hours-helpers';
 
 const validateTime = (value: string | null) => {
@@ -191,7 +195,7 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     invalid={!!error}
                     errorText={error?.message}
                     id={getUiId([name])}
@@ -212,7 +216,7 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     invalid={!!error}
                     errorText={error?.message}
                     id={getUiId([name])}
@@ -233,7 +237,7 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={`${value?.length ?? 0}/${descriptionMaxLength}`}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     invalid={!!error}
                     errorText={error?.message}
                     id={getUiId([name])}
