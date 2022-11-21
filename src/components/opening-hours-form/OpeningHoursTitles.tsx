@@ -24,18 +24,18 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
           fieldState: { error },
         }): JSX.Element => (
           <TextInput
-            ref={ref}
             aria-describedby="title-fi-helper-text"
             data-test="opening-period-title-fi"
-            invalid={!!error}
             errorText={error?.message}
             helperText={toCharCount(nameMaxLength, value)}
             id="title-fi"
+            invalid={!!error}
             label="Aukioloajan otsikko suomeksi"
             name={name}
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.fi ?? ''}
+            ref={ref}
             value={value ?? ''}
           />
         )}
@@ -48,17 +48,17 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
           fieldState: { error },
         }): JSX.Element => (
           <TextInput
-            ref={ref}
             data-test="opening-period-title-sv"
-            invalid={!!error}
             errorText={error?.message}
             helperText={toCharCount(nameMaxLength, value)}
             id="title-sv"
+            invalid={!!error}
             label="Aukioloajan otsikko ruotsiksi"
             name={name}
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.sv ?? ''}
+            ref={ref}
             value={value ?? ''}
           />
         )}
@@ -71,17 +71,17 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
           fieldState: { error },
         }): JSX.Element => (
           <TextInput
-            ref={ref}
             data-test="opening-period-title-en"
-            invalid={!!error}
             errorText={error?.message}
             helperText={toCharCount(nameMaxLength, value)}
             id="title-en"
+            invalid={!!error}
             label="Aukioloajan otsikko englanniksi"
             name={name}
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.en ?? ''}
+            ref={ref}
             value={value ?? ''}
           />
         )}

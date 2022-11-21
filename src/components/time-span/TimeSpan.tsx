@@ -195,13 +195,14 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    invalid={!!error}
                     errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus suomeksi"
-                    onChange={onChange}
+                    name={name}
                     onBlur={onBlur}
+                    onChange={onChange}
                     placeholder="Esim. seniorit"
                     value={value || ''}
                   />
@@ -216,11 +217,12 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    invalid={!!error}
                     errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus ruotsiksi"
+                    name={name}
                     onBlur={onBlur}
                     onChange={onChange}
                     placeholder="T.ex. seniorer"
@@ -237,12 +239,12 @@ const TimeSpan = ({
                   fieldState: { error },
                 }): JSX.Element => (
                   <TextInput
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    invalid={!!error}
                     errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus englanniksi"
-                    name={`${namePrefix}.description.en`}
+                    name={name}
                     onBlur={onBlur}
                     onChange={onChange}
                     placeholder="E.g. seniors"
