@@ -17,7 +17,6 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
   <div className="card opening-hours-titles">
     <div className="opening-hours-titles-inputs">
       <Controller
-        defaultValue=""
         name="name.fi"
         rules={titleRules}
         render={({
@@ -37,12 +36,11 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.fi ?? ''}
-            value={value}
+            value={value ?? ''}
           />
         )}
       />
       <Controller
-        defaultValue=""
         name="name.sv"
         rules={titleRules}
         render={({
@@ -61,12 +59,11 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.sv ?? ''}
-            value={value}
+            value={value ?? ''}
           />
         )}
       />
       <Controller
-        defaultValue=""
         name="name.en"
         rules={titleRules}
         render={({
@@ -85,7 +82,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => (
             onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholders.en ?? ''}
-            value={value}
+            value={value ?? ''}
           />
         )}
       />
