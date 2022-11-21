@@ -12,13 +12,31 @@ import {
 import { SupplementaryButton } from '../button/Button';
 import './TimeSpan.scss';
 import { useAppContext } from '../../App-context';
-import { choiceToOption, getUiId } from '../../common/utils/form/form';
+import {
+  choiceToOption,
+  getUiId,
+  toCharCount,
+} from '../../common/utils/form/form';
 import { isDescriptionAllowed } from '../../common/helpers/opening-hours-helpers';
 
 const validateTime = (value: string | null) => {
   const re = /\d{2}:\d{2}/;
 
   return value && re.test(value) ? undefined : 'Tarkista';
+};
+
+const descriptionMaxLength = 100;
+
+const descriptionRules = {
+  maxLength: {
+    value: descriptionMaxLength,
+    message: 'Tarkista',
+  },
+};
+
+const timeInputRules = {
+  required: 'Pakollinen',
+  validate: validateTime,
 };
 
 const TimeSpan = ({
@@ -92,10 +110,7 @@ const TimeSpan = ({
                   value={field.value ?? ''}
                 />
               )}
-              rules={{
-                required: 'Pakollinen',
-                validate: validateTime,
-              }}
+              rules={timeInputRules}
             />
             <div className="time-span__range-divider">-</div>
             <Controller
@@ -119,10 +134,7 @@ const TimeSpan = ({
                   value={field.value ?? ''}
                 />
               )}
-              rules={{
-                required: 'Pakollinen',
-                validate: validateTime,
-              }}
+              rules={timeInputRules}
             />
           </div>
           <Controller
@@ -177,10 +189,19 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.fi ?? ''}
                 name={`${namePrefix}.description.fi`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={descriptionRules}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus suomeksi"
+                    name={name}
+                    onBlur={onBlur}
                     onChange={onChange}
                     placeholder="Esim. seniorit"
                     value={value || ''}
@@ -190,10 +211,19 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.sv ?? ''}
                 name={`${namePrefix}.description.sv`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={descriptionRules}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus ruotsiksi"
+                    name={name}
+                    onBlur={onBlur}
                     onChange={onChange}
                     placeholder="T.ex. seniorer"
                     value={value || ''}
@@ -203,11 +233,19 @@ const TimeSpan = ({
               <Controller
                 defaultValue={item?.description.en ?? ''}
                 name={`${namePrefix}.description.en`}
-                render={({ field: { name, onChange, value } }): JSX.Element => (
+                rules={descriptionRules}
+                render={({
+                  field: { name, onChange, onBlur, value },
+                  fieldState: { error },
+                }): JSX.Element => (
                   <TextInput
+                    errorText={error?.message}
+                    helperText={toCharCount(descriptionMaxLength, value)}
                     id={getUiId([name])}
+                    invalid={!!error}
                     label="Kuvaus englanniksi"
-                    name={`${namePrefix}.description.en`}
+                    name={name}
+                    onBlur={onBlur}
                     onChange={onChange}
                     placeholder="E.g. seniors"
                     value={value || ''}
