@@ -44,7 +44,7 @@ const TimeSpans = ({
     control,
     name: namePrefix,
   });
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   // Without this for some reason the key inference breaks :(
   const first = 0 as number;
@@ -86,6 +86,7 @@ const TimeSpans = ({
       {fields.map((field, i) => (
         <TimeSpan
           key={field.id}
+          innerRef={i === fields.length - 2 ? ref : undefined}
           openingHoursIdx={openingHoursIdx}
           timeSpanGroupIdx={timeSpanGroupIdx}
           i={i}
@@ -107,7 +108,6 @@ const TimeSpans = ({
         <div>
           <SupplementaryButton
             dataTest={getUiId([namePrefix, 'add-time-span-button'])}
-            ref={ref}
             className="add-time-span-button"
             iconLeft={<IconPlusCircle />}
             onClick={(): void => append(defaultTimeSpan)}

@@ -1,6 +1,6 @@
 import { Checkbox, IconTrash, Select, TextInput, TimeInput } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import {
   InputOption,
   Language,
@@ -39,16 +39,7 @@ const timeInputRules = {
   validate: validateTime,
 };
 
-const TimeSpan = ({
-  disabled = false,
-  groupLabel,
-  i,
-  item,
-  onDelete,
-  openingHoursIdx,
-  resourceStates,
-  timeSpanGroupIdx,
-}: {
+type Props = {
   disabled?: boolean;
   groupLabel: string;
   i: number;
@@ -57,7 +48,20 @@ const TimeSpan = ({
   openingHoursIdx: number;
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
-}): JSX.Element => {
+  innerRef?: MutableRefObject<HTMLInputElement | null>;
+};
+
+const TimeSpan = ({
+  disabled = false,
+  groupLabel,
+  i,
+  innerRef,
+  item,
+  onDelete,
+  openingHoursIdx,
+  resourceStates,
+  timeSpanGroupIdx,
+}: Props): JSX.Element => {
   const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
   const { language = Language.FI } = useAppContext();
   const { control, watch } = useFormContext<DatePeriod>();
@@ -105,7 +109,13 @@ const TimeSpan = ({
                   name={field.name}
                   onBlur={field.onBlur}
                   onChange={field.onChange}
-                  ref={field.ref}
+                  ref={(e) => {
+                    field.ref(e);
+                    if (innerRef) {
+                      // eslint-disable-next-line no-param-reassign
+                      innerRef.current = e;
+                    }
+                  }}
                   required
                   value={field.value ?? ''}
                 />
