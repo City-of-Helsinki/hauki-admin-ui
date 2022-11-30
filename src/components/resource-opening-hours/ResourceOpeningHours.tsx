@@ -59,7 +59,7 @@ const ExceptionPeriodsList = ({
     <>
       <section className="opening-periods-section">
         <header className="exception-periods-header">
-          <h3 className="exception-periods-title">Poikkeavat päivät</h3>
+          <h2 className="exception-periods-title">Poikkeavat päivät</h2>
           <PrimaryButton
             ref={ref}
             dataTest="add-new-exception-period-button"
@@ -119,7 +119,7 @@ const ExceptionPeriodsList = ({
       </section>
       <section>
         <header className="exception-periods-header">
-          <h3 className="exception-periods-title">Juhlapyhät</h3>
+          <h2 className="exception-periods-title">Juhlapyhät</h2>
           <PrimaryButton
             dataTest="edit-holidays-button"
             onClick={() =>
