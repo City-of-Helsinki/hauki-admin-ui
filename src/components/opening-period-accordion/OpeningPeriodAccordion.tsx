@@ -6,7 +6,7 @@ import {
   StatusLabel,
   useAccordion,
 } from 'hds-react';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../App-context';
 import { Language } from '../../common/lib/types';
@@ -63,6 +63,8 @@ const OpeningPeriodAccordion = ({
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
   });
+  const [isDeleting, setDeleting] = useState(false);
+  const deleteRef = useRef<HTMLButtonElement>(null);
   const AccordionIcon = (): JSX.Element =>
     isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
 
@@ -97,6 +99,7 @@ const OpeningPeriodAccordion = ({
             )}
             {onDelete && (
               <button
+                ref={deleteRef}
                 className="button-icon"
                 data-test={`openingPeriodDeleteLink${id ? `-${id}` : ''}`}
                 type="button"
@@ -122,8 +125,10 @@ const OpeningPeriodAccordion = ({
         <ConfirmationModal
           onConfirm={async (): Promise<void> => {
             if (onDelete) {
+              setDeleting(true);
               try {
                 await onDelete();
+                setDeleting(false);
                 toast.success({
                   text: `Aukiolo "${periodName}" poistettu onnistuneesti.`,
                   dataTestId: 'date-period-delete-success',
@@ -136,10 +141,15 @@ const OpeningPeriodAccordion = ({
               }
             }
           }}
+          isLoading={isDeleting}
+          loadingText="Poistetaan aukiolojaksoa"
           title={deleteModalTitle}
           text={<DeleteModalText />}
           isOpen={isModalOpen}
-          onClose={closeModal}
+          onClose={() => {
+            closeModal();
+            deleteRef.current?.focus();
+          }}
           confirmText="Poista"
         />
       </div>
