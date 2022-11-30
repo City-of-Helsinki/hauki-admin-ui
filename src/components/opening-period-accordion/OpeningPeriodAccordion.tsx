@@ -114,9 +114,9 @@ const OpeningPeriodAccordion = ({
             type="button"
             {...buttonProps}>
             <AccordionIcon aria-hidden="true" />
-            <span className="hiddenFromScreen">{`Näytä aukioloajat jaksosta ${
+            <span className="hiddenFromScreen">{`Näytä ${
               periodName || 'nimetön'
-            } aukiolojakso`}</span>
+            }`}</span>
           </button>
         </div>
         <ConfirmationModal
