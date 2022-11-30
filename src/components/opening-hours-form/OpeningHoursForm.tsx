@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Accordion, IconSort } from 'hds-react';
+import { IconSort } from 'hds-react';
 import React, { useRef, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import {
@@ -202,6 +202,12 @@ const OpeningHoursForm = ({
     reset({
       ...getValues(),
       openingHours: [...formValues.openingHours].sort(byWeekdays),
+    });
+    toast.info({
+      label: 'Päiväryhmät järjestetty viikonpäivien mukaan',
+      text: 'Päiväryhmät järjestetty viikonpäivien mukaan',
+      dataTestId: 'rearrange-weekdays',
+      position: 'bottom-right',
     });
   };
 
