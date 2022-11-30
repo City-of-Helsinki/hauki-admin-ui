@@ -29,7 +29,6 @@ export default function HaukiNavigation(): JSX.Element {
 
   const showSignOutErrorNotification = (text: string): void =>
     toast.error({
-      label: 'Uloskirjautuminen epäonnistui',
       text,
     });
 
