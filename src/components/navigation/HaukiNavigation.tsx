@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   IconCrossCircleFill,
   IconQuestionCircle,
@@ -25,6 +25,7 @@ export default function HaukiNavigation(): JSX.Element {
   const { authTokens, clearAuth } = authProps;
   const history = useHistory();
   const isAuthenticated = !!authTokens;
+  const { id } = useParams<{ id: string }>();
 
   const showSignOutErrorNotification = (text: string): void =>
     toast.error({
@@ -72,6 +73,7 @@ export default function HaukiNavigation(): JSX.Element {
         '--mobile-menu-background-color':
           'var(--hauki-header-background-color)',
       }}
+      titleUrl={`/resource/${id}`}
       title="Aukiolot"
       menuToggleAriaLabel="Menu"
       skipTo="#main"
