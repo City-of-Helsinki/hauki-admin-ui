@@ -13,6 +13,7 @@ import {
   ApiTimeSpanGroup,
   Weekdays,
   RuleType,
+  Language,
 } from '../lib/types';
 import {
   formatDate,
@@ -358,4 +359,33 @@ export const datePeriodToRules = (datePeriod: DatePeriod): Rule[] => {
         type: ruleType,
       }
   );
+};
+
+export const getDatePeriodName = (
+  language: Language,
+  datePeriod: DatePeriod
+): string => {
+  const name = datePeriod.name[language];
+  if (name) {
+    return name;
+  }
+
+  if (datePeriod.override) {
+    switch (language) {
+      case Language.FI:
+        return 'Poikkeava aukiolo';
+      case Language.SV:
+        return 'Ovanliga öppettider';
+      default:
+        return 'Exceptional opening hours';
+    }
+  }
+  switch (language) {
+    case Language.FI:
+      return 'Normaali aukiolo';
+    case Language.SV:
+      return 'Normala öppettider';
+    default:
+      return 'Normal opening hours';
+  }
 };

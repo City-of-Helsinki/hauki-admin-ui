@@ -16,6 +16,7 @@ import './ResourceOpeningHours.scss';
 import {
   apiDatePeriodToDatePeriod,
   getActiveDatePeriod,
+  getDatePeriodName,
   isHoliday,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
@@ -102,7 +103,7 @@ const ExceptionPeriodsList = ({
                         ref.current?.focus();
                       }
                     }}
-                    periodName={exception.name[language]}
+                    periodName={getDatePeriodName(language, exception)}
                     dateRange={`${
                       exception.startDate ?? ''
                     } — poikkeavat aukiolot`}>

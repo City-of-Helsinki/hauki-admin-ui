@@ -8,21 +8,8 @@ import {
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../App-context';
-import { Language } from '../../common/lib/types';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
-
-const getDefaultOpeningHoursTitle = (language: Language): string => {
-  switch (language) {
-    case Language.FI:
-      return 'Normaali aukiolo';
-    case Language.SV:
-      return 'Normala öppettider';
-    default:
-      return 'Normal opening hours';
-  }
-};
 
 type Props = {
   children: ReactNode;
@@ -58,7 +45,6 @@ const OpeningPeriodAccordion = ({
       </p>
     </>
   );
-  const { language = Language.FI } = useAppContext();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
@@ -74,7 +60,7 @@ const OpeningPeriodAccordion = ({
       data-test={`openingPeriod${id ? `-${id}` : ''}`}>
       <div className="opening-period-header">
         <div className="opening-period-title opening-period-header-column">
-          <h3>{periodName || getDefaultOpeningHoursTitle(language)}</h3>
+          <h3>{periodName}</h3>
         </div>
         <div className="opening-period-dates opening-period-header-column">
           {dateRange}
