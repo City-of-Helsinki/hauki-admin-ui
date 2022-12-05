@@ -116,12 +116,12 @@ const OpeningPeriodAccordion = ({
                 await onDelete();
                 setDeleting(false);
                 toast.success({
-                  text: `Aukiolo "${periodName}" poistettu onnistuneesti.`,
+                  label: `Aukiolo "${periodName}" poistettu onnistuneesti.`,
                   dataTestId: 'date-period-delete-success',
                 });
               } catch (_) {
                 toast.error({
-                  text:
+                  label:
                     'Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen.',
                 });
               }

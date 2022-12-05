@@ -353,7 +353,7 @@ export default function EditHolidaysPage({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          text: `${values.name.fi} aukiolon lisääminen onnistui`,
+          label: `${values.name.fi} aukiolon lisääminen onnistui`,
         });
 
         return fetchValues(resource.id);
@@ -361,7 +361,7 @@ export default function EditHolidaysPage({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-error',
-          text: `${values.name.fi} aukiolon lisääminen epäonnistui`,
+          label: `${values.name.fi} aukiolon lisääminen epäonnistui`,
         });
       });
   };
@@ -376,7 +376,7 @@ export default function EditHolidaysPage({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          text: `${values.name.fi} aukiolon tallennus onnistui`,
+          label: `${values.name.fi} aukiolon tallennus onnistui`,
         });
 
         return fetchValues(resource.id);
@@ -384,7 +384,7 @@ export default function EditHolidaysPage({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-success-error',
-          text: `${values.name.fi} aukiolon tallennus epäonnistui`,
+          label: `${values.name.fi} aukiolon tallennus epäonnistui`,
         });
       });
   };
@@ -403,7 +403,7 @@ export default function EditHolidaysPage({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          text: `${values.name.fi} aukiolon poisto onnistui`,
+          label: `${values.name.fi} aukiolon poisto onnistui`,
         });
 
         return fetchValues(resource.id);
@@ -411,7 +411,7 @@ export default function EditHolidaysPage({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-success-error',
-          text: `${values.name.fi} aukiolon poisto epäonnistui`,
+          label: `${values.name.fi} aukiolon poisto epäonnistui`,
         });
       });
   };

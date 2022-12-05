@@ -19,6 +19,7 @@ describe(`toast`, () => {
       `[data-testId="${props.dataTestId}"]`
     );
 
+    expect(successToast).toHaveTextContent(props.label);
     expect(successToast).toHaveTextContent(props.text);
   });
 

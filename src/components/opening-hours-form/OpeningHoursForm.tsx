@@ -106,14 +106,14 @@ const OpeningHoursForm = ({
       .then(() => {
         toast.success({
           dataTestId: 'opening-period-form-success',
-          text: 'Aukiolon tallennus onnistui',
+          label: 'Aukiolon tallennus onnistui',
         });
         returnToResourcePage();
       })
       .catch(() => {
         toast.error({
           dataTestId: 'opening-period-form-error',
-          text: 'Aukiolon tallennus epäonnistui',
+          label: 'Aukiolon tallennus epäonnistui',
         });
       })
       .finally(() => setSaving(false));
@@ -202,7 +202,7 @@ const OpeningHoursForm = ({
       openingHours: [...formValues.openingHours].sort(byWeekdays),
     });
     toast.info({
-      text: 'Päiväryhmät järjestetty viikonpäivien mukaan',
+      label: 'Päiväryhmät järjestetty viikonpäivien mukaan',
       position: 'bottom-right',
     });
   };

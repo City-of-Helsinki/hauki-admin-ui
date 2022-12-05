@@ -7,7 +7,8 @@ import {
 import ReactDOM from 'react-dom';
 
 type ToastProps = {
-  text: string;
+  label: string;
+  text?: string;
   onClose?: () => void;
   dataTestId?: string;
 };
@@ -22,6 +23,7 @@ const removeContainer = (container: HTMLDivElement): void => {
 
 const renderToast = ({
   type,
+  label,
   text,
   onClose,
   dataTestId,
@@ -38,7 +40,7 @@ const renderToast = ({
       position={position}
       displayAutoCloseProgress={false}
       autoClose
-      size="small"
+      label={label}
       type={type}
       onClose={(): void => {
         if (onClose) {
@@ -54,41 +56,49 @@ const renderToast = ({
 };
 
 const successToast = ({
+  label,
   text,
   dataTestId,
   onClose,
   position,
 }: {
-  text: string;
+  label: string;
+  text?: string;
   dataTestId?: string;
   onClose?: () => void;
   position?: NotificationPosition;
 }): void =>
-  renderToast({ type: 'success', text, onClose, dataTestId, position });
+  renderToast({ type: 'success', label, text, onClose, dataTestId, position });
 
 const errorToast = ({
+  label,
   text,
   dataTestId,
   onClose,
   position,
 }: {
-  text: string;
+  label: string;
   dataTestId?: string;
   onClose?: () => void;
   position?: NotificationPosition;
-}): void => renderToast({ type: 'error', text, onClose, dataTestId, position });
+  text?: string;
+}): void =>
+  renderToast({ type: 'error', label, text, onClose, dataTestId, position });
 
 const infoToast = ({
+  label,
   text,
   dataTestId,
   onClose,
   position,
 }: {
-  text: string;
+  label: string;
+  text?: string;
   dataTestId?: string;
   onClose?: () => void;
   position?: NotificationPosition;
-}): void => renderToast({ type: 'info', text, onClose, dataTestId, position });
+}): void =>
+  renderToast({ type: 'info', label, text, onClose, dataTestId, position });
 
 export default {
   success: successToast,

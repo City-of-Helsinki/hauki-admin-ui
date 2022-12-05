@@ -29,7 +29,7 @@ export default function HaukiNavigation(): JSX.Element {
 
   const showSignOutErrorNotification = (text: string): void =>
     toast.error({
-      text,
+      label: text,
     });
 
   const signOut = async (): Promise<void> => {
