@@ -39,8 +39,8 @@ export default function ResourcePeriodsCopyFieldset({
       await api.copyDatePeriods(mainResourceId, targetResources);
       toast.success({
         dataTestId: 'period-copy-success',
-        label: 'Aukiolotietojen kopiointi onnistui',
-        text: 'Voit tarvittaessa kopioida aukiolotiedot uudelleen',
+        label:
+          'Aukiolotietojen kopiointi onnistui. Voit tarvittaessa kopioida aukiolotiedot uudelleen.',
       });
       onChange({
         mainResourceName,
@@ -55,8 +55,8 @@ export default function ResourcePeriodsCopyFieldset({
     } catch (err) {
       toast.error({
         dataTestId: 'period-copy-error',
-        label: 'Aukiolotietojen kopointi epäonnistui',
-        text: 'Yritä myöhemmin uudelleen',
+        label:
+          'Aukiolotietojen kopointi epäonnistui. Yritä myöhemmin uudelleen.',
       });
       setIsCopyLoading(false);
 

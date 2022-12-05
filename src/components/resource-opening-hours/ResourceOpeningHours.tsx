@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LoadingSpinner, Notification } from 'hds-react';
 import { useHistory } from 'react-router-dom';
 import { partition } from 'lodash';
@@ -16,6 +16,7 @@ import './ResourceOpeningHours.scss';
 import {
   apiDatePeriodToDatePeriod,
   getActiveDatePeriod,
+  getDatePeriodName,
   isHoliday,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
@@ -53,13 +54,15 @@ const ExceptionPeriodsList = ({
     datePeriods,
     (datePeriod) => isHoliday(datePeriod, holidays)
   );
+  const ref = useRef<HTMLButtonElement>(null);
 
   return (
     <>
       <section className="opening-periods-section">
         <header className="exception-periods-header">
-          <h3 className="exception-periods-title">Poikkeavat päivät</h3>
+          <h2 className="exception-periods-title">Poikkeavat päivät</h2>
           <PrimaryButton
+            ref={ref}
             dataTest="add-new-exception-period-button"
             onClick={() => {
               if (parentId) {
@@ -94,12 +97,13 @@ const ExceptionPeriodsList = ({
                         : `/resource/${resourceId}/exception/${exception.id}`
                     }
                     initiallyOpen={i <= 10}
-                    onDelete={() => {
+                    onDelete={async () => {
                       if (exception.id) {
-                        deletePeriod(exception.id);
+                        await deletePeriod(exception.id);
+                        ref.current?.focus();
                       }
                     }}
-                    periodName={exception.name[language]}
+                    periodName={getDatePeriodName(language, exception)}
                     dateRange={`${
                       exception.startDate ?? ''
                     } — poikkeavat aukiolot`}>
@@ -116,7 +120,7 @@ const ExceptionPeriodsList = ({
       </section>
       <section>
         <header className="exception-periods-header">
-          <h3 className="exception-periods-title">Juhlapyhät</h3>
+          <h2 className="exception-periods-title">Juhlapyhät</h2>
           <PrimaryButton
             dataTest="edit-holidays-button"
             onClick={() =>
@@ -183,6 +187,7 @@ const OpeningPeriodsList = ({
   language: Language;
   isLoading: boolean;
 }): JSX.Element => {
+  const ref = useRef<HTMLButtonElement>(null);
   const openingPeriodsHeaderClassName =
     theme === PeriodsListTheme.LIGHT
       ? 'opening-periods-header-light'
@@ -200,6 +205,7 @@ const OpeningPeriodsList = ({
         <h2 className="opening-periods-header-title">{title}</h2>
         <p className="period-count">{datePeriods.length} aukioloaikaa</p>
         <SecondaryButton
+          ref={ref}
           dataTest={addNewOpeningPeriodButtonDataTest}
           size="small"
           className="opening-period-header-button"
@@ -232,7 +238,10 @@ const OpeningPeriodsList = ({
                   datePeriod={datePeriod}
                   resourceId={resourceId}
                   language={language}
-                  deletePeriod={deletePeriod}
+                  deletePeriod={async (datePeriodId) => {
+                    await deletePeriod(datePeriodId);
+                    ref.current?.focus();
+                  }}
                   initiallyOpen={index <= 10}
                   parentId={parentId}
                 />

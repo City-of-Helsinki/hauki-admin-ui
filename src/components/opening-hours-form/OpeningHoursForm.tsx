@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Accordion, IconSort } from 'hds-react';
+import { IconSort } from 'hds-react';
 import React, { useRef, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import {
@@ -106,16 +106,14 @@ const OpeningHoursForm = ({
       .then(() => {
         toast.success({
           dataTestId: 'opening-period-form-success',
-          label: 'Tallennus onnistui',
-          text: 'Aukiolon tallennus onnistui',
+          label: 'Aukiolon tallennus onnistui',
         });
         returnToResourcePage();
       })
       .catch(() => {
         toast.error({
           dataTestId: 'opening-period-form-error',
-          label: 'Tallennus epäonnistui',
-          text: 'Aukiolon tallennus epäonnistui',
+          label: 'Aukiolon tallennus epäonnistui',
         });
       })
       .finally(() => setSaving(false));
@@ -202,6 +200,10 @@ const OpeningHoursForm = ({
     reset({
       ...getValues(),
       openingHours: [...formValues.openingHours].sort(byWeekdays),
+    });
+    toast.info({
+      label: 'Päiväryhmät järjestetty viikonpäivien mukaan',
+      position: 'bottom-right',
     });
   };
 

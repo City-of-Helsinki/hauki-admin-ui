@@ -8,6 +8,7 @@ import { formatDateRange } from '../../../common/utils/date-time/format';
 import './OpeningPeriod.scss';
 import OpeningHoursPreview from '../../opening-hours-preview/OpeningHoursPreview';
 import OpeningPeriodAccordion from '../../opening-period-accordion/OpeningPeriodAccordion';
+import { getDatePeriodName } from '../../../common/helpers/opening-hours-helpers';
 
 export default function OpeningPeriod({
   current = false,
@@ -28,7 +29,6 @@ export default function OpeningPeriod({
   initiallyOpen: boolean;
   parentId?: number;
 }): JSX.Element {
-  const datePeriodName = datePeriod.name[language];
   const formattedDateRange = formatDateRange({
     startDate: datePeriod.startDate,
     endDate: datePeriod.endDate,
@@ -37,7 +37,7 @@ export default function OpeningPeriod({
   return (
     <OpeningPeriodAccordion
       id={`${datePeriod.id}`}
-      periodName={datePeriodName}
+      periodName={getDatePeriodName(language, datePeriod)}
       dateRange={formattedDateRange}
       onDelete={(): Promise<void> => {
         if (datePeriod.id) {

@@ -1,10 +1,14 @@
 import React from 'react';
-import { Notification, NotificationType } from 'hds-react';
+import {
+  Notification,
+  NotificationPosition,
+  NotificationType,
+} from 'hds-react';
 import ReactDOM from 'react-dom';
 
 type ToastProps = {
   label: string;
-  text: string;
+  text?: string;
   onClose?: () => void;
   dataTestId?: string;
 };
@@ -23,20 +27,21 @@ const renderToast = ({
   text,
   onClose,
   dataTestId,
-}: ToastProps & { type: NotificationType }): void => {
+  position = 'top-right',
+}: ToastProps & {
+  position?: NotificationPosition;
+  type: NotificationType;
+}): void => {
   const containerDomNode = document.createElement('div');
   document.body.appendChild(containerDomNode);
 
   ReactDOM.render(
     <Notification
-      position="top-right"
+      position={position}
       displayAutoCloseProgress={false}
       autoClose
-      dismissible
-      size="small"
       label={label}
       type={type}
-      closeButtonLabelText="Piilota ilmoitus"
       onClose={(): void => {
         if (onClose) {
           onClose();
@@ -55,26 +60,48 @@ const successToast = ({
   text,
   dataTestId,
   onClose,
+  position,
 }: {
   label: string;
-  text: string;
-  dataTestId: string;
+  text?: string;
+  dataTestId?: string;
   onClose?: () => void;
-}): void => renderToast({ type: 'success', label, text, onClose, dataTestId });
+  position?: NotificationPosition;
+}): void =>
+  renderToast({ type: 'success', label, text, onClose, dataTestId, position });
 
 const errorToast = ({
   label,
   text,
   dataTestId,
   onClose,
+  position,
 }: {
   label: string;
-  text: string;
   dataTestId?: string;
   onClose?: () => void;
-}): void => renderToast({ type: 'error', label, text, onClose, dataTestId });
+  position?: NotificationPosition;
+  text?: string;
+}): void =>
+  renderToast({ type: 'error', label, text, onClose, dataTestId, position });
+
+const infoToast = ({
+  label,
+  text,
+  dataTestId,
+  onClose,
+  position,
+}: {
+  label: string;
+  text?: string;
+  dataTestId?: string;
+  onClose?: () => void;
+  position?: NotificationPosition;
+}): void =>
+  renderToast({ type: 'info', label, text, onClose, dataTestId, position });
 
 export default {
   success: successToast,
   error: errorToast,
+  info: infoToast,
 };

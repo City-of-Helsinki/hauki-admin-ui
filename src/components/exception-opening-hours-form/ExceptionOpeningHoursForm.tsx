@@ -115,16 +115,14 @@ const ExceptionOpeningHoursForm = ({
         returnToResourcePage();
         toast.success({
           dataTestId: 'exception-opening-hours-form-success',
-          label: 'Aukiolon lisääminen onnistui',
-          text: `Poikkeavan päivän aukiolon lisääminen onnistui`,
+          label: `Poikkeavan päivän aukiolon lisääminen onnistui`,
         });
       })
       .catch(() => {
         setSaving(false);
         toast.error({
           dataTestId: 'exception-opening-hours-form-error',
-          label: 'Aukiolon lisääminen epäonnistui',
-          text: `Poikkeavan päivän aukiolon lisääminen epäonnistui`,
+          label: `Poikkeavan päivän aukiolon lisääminen epäonnistui`,
         });
       });
   };

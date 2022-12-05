@@ -21,6 +21,8 @@ export const useModal = (): UseModalProps => {
 
 export function ConfirmationModal({
   confirmText,
+  isLoading,
+  loadingText,
   isOpen,
   onClose,
   onConfirm,
@@ -28,6 +30,8 @@ export function ConfirmationModal({
   title,
 }: {
   confirmText: string;
+  isLoading?: boolean;
+  loadingText?: string;
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -45,7 +49,12 @@ export function ConfirmationModal({
       />
       <Dialog.Content>{text}</Dialog.Content>
       <Dialog.ActionButtons>
-        <PrimaryButton onClick={onConfirm}>{confirmText}</PrimaryButton>
+        <PrimaryButton
+          isLoading={isLoading}
+          loadingText={loadingText}
+          onClick={onConfirm}>
+          {confirmText}
+        </PrimaryButton>
         <SecondaryButton onClick={onClose}>Peruuta</SecondaryButton>
       </Dialog.ActionButtons>
     </Dialog>
