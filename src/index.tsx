@@ -13,6 +13,9 @@ Sentry.init({
   integrations: [new Integrations.BrowserTracing()],
   environment: window.ENV.SENTRY_ENV,
   sampleRate: window.ENV.SENTRY_ENV === 'local' ? 0.0 : 1.0, // We do not wish to trace in local env by default
+  ignoreErrors: [
+    'ResizeObserver loop completed with undelivered notifications',
+  ],
 });
 
 if (window.ENV?.USE_AXE === 'true') {
