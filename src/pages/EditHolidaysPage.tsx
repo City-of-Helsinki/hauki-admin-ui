@@ -3,7 +3,6 @@ import { Checkbox, IconPenLine, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   ApiDatePeriod,
-  Holiday,
   Language,
   DatePeriod,
   Resource,
@@ -14,11 +13,11 @@ import {
 import {
   apiDatePeriodToDatePeriod,
   datePeriodToApiDatePeriod,
-  isHoliday,
+  isHolidayOrEve,
 } from '../common/helpers/opening-hours-helpers';
 import api from '../common/utils/api/api';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
-import { getHolidays } from '../services/holidays';
+import { getHolidaysAndEves, Holiday } from '../services/holidays';
 import {
   formatDate,
   getNumberOfTheWeekday,
@@ -309,7 +308,7 @@ export default function EditHolidaysPage({
           api.getResource(resourceId),
           getDatePeriodFormConfig(),
         ]);
-        setHolidays(getHolidays());
+        setHolidays(getHolidaysAndEves());
         setResource(apiResource);
         setDatePeriodConfig(uiDatePeriodOptions);
       } catch (e) {
@@ -328,7 +327,7 @@ export default function EditHolidaysPage({
       );
       const holidayPeriodsResult: DatePeriod[] = apiDatePeriods
         .map(apiDatePeriodToDatePeriod)
-        .filter((apiDatePeriod) => isHoliday(apiDatePeriod, holidays));
+        .filter((apiDatePeriod) => isHolidayOrEve(apiDatePeriod, holidays));
 
       setHolidayValues(holidayPeriodsResult);
     },
@@ -457,7 +456,7 @@ export default function EditHolidaysPage({
             <UpcomingHolidayNotification
               datePeriodConfig={datePeriodConfig}
               datePeriods={holidayValues}
-              holiday={holidays[0]}
+              holidays={holidays}
             />
           )}
         </div>

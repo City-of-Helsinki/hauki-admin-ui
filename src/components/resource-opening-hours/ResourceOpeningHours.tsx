@@ -17,11 +17,11 @@ import {
   apiDatePeriodToDatePeriod,
   getActiveDatePeriod,
   getDatePeriodName,
-  isHoliday,
+  isHolidayOrEve,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
 import HolidaysTable from '../holidays-table/HolidaysTable';
-import { getHolidays } from '../../services/holidays';
+import { getHolidaysAndEves } from '../../services/holidays';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
 
@@ -49,10 +49,10 @@ const ExceptionPeriodsList = ({
   holidaysTableInitiallyOpen: boolean;
 }): JSX.Element => {
   const history = useHistory();
-  const holidays = getHolidays();
+  const holidays = getHolidaysAndEves();
   const [holidayDatePeriods, exceptions] = partition(
     datePeriods,
-    (datePeriod) => isHoliday(datePeriod, holidays)
+    (datePeriod) => isHolidayOrEve(datePeriod, holidays)
   );
   const ref = useRef<HTMLButtonElement>(null);
 

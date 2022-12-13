@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAppContext } from '../../App-context';
-import { isHoliday } from '../../common/helpers/opening-hours-helpers';
+import { isHolidayOrEve } from '../../common/helpers/opening-hours-helpers';
 import {
-  Holiday,
   DatePeriod,
   UiDatePeriodConfig,
   Language,
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
+import { Holiday, isHoliday } from '../../services/holidays';
 import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import './HolidaysTable.scss';
@@ -21,7 +21,7 @@ const HolidayOpeningHours = ({
   datePeriods: DatePeriod[];
   holiday: Holiday;
 }): JSX.Element => {
-  const datePeriod = datePeriods.find((dp) => isHoliday(dp, [holiday]));
+  const datePeriod = datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
 
   if (datePeriod) {
     return (
@@ -38,13 +38,19 @@ const HolidayOpeningHours = ({
 export const UpcomingHolidayNotification = ({
   datePeriodConfig,
   datePeriods,
-  holiday,
+  holidays,
 }: {
   datePeriodConfig?: UiDatePeriodConfig;
   datePeriods: DatePeriod[];
-  holiday: Holiday;
+  holidays: Holiday[];
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
+  const holiday = holidays.find(isHoliday);
+
+  if (!holiday) {
+    throw new Error('Holiday not found');
+  }
+
   return (
     <div className="upcoming-holidays">
       <span>
@@ -81,7 +87,7 @@ const HolidaysTable = ({
         <UpcomingHolidayNotification
           datePeriodConfig={datePeriodConfig}
           datePeriods={datePeriods}
-          holiday={holidays[0]}
+          holidays={holidays}
         />
       }>
       <div className="holidays-container">

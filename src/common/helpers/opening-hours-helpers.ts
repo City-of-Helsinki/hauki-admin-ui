@@ -1,8 +1,8 @@
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
+import { Holiday } from '../../services/holidays';
 import {
   ApiDatePeriod,
   GroupRule,
-  Holiday,
   OpeningHours,
   DatePeriod,
   TimeSpan,
@@ -303,7 +303,7 @@ export const getActiveDatePeriod = (
 
 const dayInMilliseconds = 24 * 60 * 60 * 1000;
 
-export const isHoliday = (
+export const isHolidayOrEve = (
   datePeriod: DatePeriod,
   holidays: Holiday[]
 ): boolean =>

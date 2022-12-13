@@ -132,7 +132,7 @@ describe(`<ResourcePage />`, () => {
       .spyOn(api, 'getParentResourcesByChildId')
       .mockImplementation(() => Promise.resolve([testParentResource]));
 
-    jest.spyOn(holidays, 'getHolidays').mockImplementation(() => [
+    jest.spyOn(holidays, 'getHolidaysAndEves').mockImplementation(() => [
       {
         name: {
           fi: 'Juhannusaatto',
@@ -140,6 +140,7 @@ describe(`<ResourcePage />`, () => {
           en: 'Midsummer Eve',
         },
         date: '2022-06-24',
+        eve: false,
       },
     ]);
   });

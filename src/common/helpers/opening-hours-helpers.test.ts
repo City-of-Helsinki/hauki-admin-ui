@@ -6,7 +6,7 @@ import {
   datePeriodToApiDatePeriod,
   datePeriodToRules,
   getActiveDatePeriod,
-  isHoliday,
+  isHolidayOrEve,
 } from './opening-hours-helpers';
 
 const openingHours: OpeningHours[] = [
@@ -541,6 +541,7 @@ describe('opening-hours-helpers', () => {
           en: "New Year's Eve",
         },
         start_date: '2022-12-31',
+        eve: false,
       },
       {
         date: '2023-01-01',
@@ -551,12 +552,13 @@ describe('opening-hours-helpers', () => {
           en: "New Year's Day",
         },
         start_date: '2022-12-31',
+        eve: false,
       },
     ];
 
     it('should return true when datePeriod is override and matches with holiday', () => {
       expect(
-        isHoliday(
+        isHolidayOrEve(
           {
             ...datePeriod,
             startDate: '31.12.2022',
@@ -575,7 +577,7 @@ describe('opening-hours-helpers', () => {
 
     it('should return false when datePeriod is override but the range does not match with holiday', () => {
       expect(
-        isHoliday(
+        isHolidayOrEve(
           {
             ...datePeriod,
             startDate: '25.12.2022',
@@ -594,7 +596,7 @@ describe('opening-hours-helpers', () => {
 
     it('should return false when datePeriod is override and name does not match with holiday', () => {
       expect(
-        isHoliday(
+        isHolidayOrEve(
           {
             ...datePeriod,
             startDate: '31.12.2022',

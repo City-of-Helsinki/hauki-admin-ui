@@ -286,8 +286,3 @@ export type Choice<T> = {
   value: T;
   label: LanguageStrings;
 };
-
-export type Holiday = {
-  date: string;
-  name: LanguageStrings;
-};
