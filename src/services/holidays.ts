@@ -50,6 +50,14 @@ const eves: Eve[] = [
       en: 'Day before May Day',
     },
   },
+  {
+    for: 'Pääsiäispäivä',
+    name: {
+      fi: 'Pääsiäislauantai',
+      sv: 'Påsklördag',
+      en: 'Easter Saturday',
+    },
+  },
 ];
 
 // eslint-disable-next-line import/prefer-default-export
