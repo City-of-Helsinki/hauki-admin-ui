@@ -4,22 +4,22 @@ import { LanguageStrings } from '../common/lib/types';
 
 const formatDate = (date: Date): string => date.toISOString().split('T')[0];
 
-type Eve = {
-  for: string;
+type UnofficialHoliday = {
+  before: string;
   name: LanguageStrings;
 };
 
 export type Holiday = {
   date: string;
   name: LanguageStrings;
-  eve: boolean;
+  official: boolean;
 };
 
-export const isHoliday = (holiday: Holiday): boolean => !holiday.eve;
+export const isHoliday = (holiday: Holiday): boolean => holiday.official;
 
-const eves: Eve[] = [
+const unofficialHolidaysConfig: UnofficialHoliday[] = [
   {
-    for: 'Jouluaatto',
+    before: 'Jouluaatto',
     name: {
       fi: 'Jouluaaton aatto',
       sv: 'Dagen före julafton',
@@ -27,7 +27,7 @@ const eves: Eve[] = [
     },
   },
   {
-    for: 'Juhannusaatto',
+    before: 'Juhannusaatto',
     name: {
       fi: 'Juhannusaaton aatto',
       sv: 'Dagen före midsommarafton',
@@ -35,7 +35,7 @@ const eves: Eve[] = [
     },
   },
   {
-    for: 'Uudenvuodenaatto',
+    before: 'Uudenvuodenaatto',
     name: {
       fi: 'Uudenvuodenaaton aatto',
       sv: 'Dagen före nyårsafton',
@@ -43,7 +43,7 @@ const eves: Eve[] = [
     },
   },
   {
-    for: 'Vappu',
+    before: 'Vappu',
     name: {
       fi: 'Vappuaaton aatto',
       sv: 'Dagen före valborg',
@@ -51,7 +51,7 @@ const eves: Eve[] = [
     },
   },
   {
-    for: 'Pääsiäispäivä',
+    before: 'Pääsiäispäivä',
     name: {
       fi: 'Pääsiäislauantai',
       sv: 'Påsklördag',
@@ -61,7 +61,7 @@ const eves: Eve[] = [
 ];
 
 // eslint-disable-next-line import/prefer-default-export
-export const getHolidaysAndEves = (): Holiday[] => {
+export const getHolidays = (): Holiday[] => {
   const now = new Date();
   const currentYear = now.getFullYear();
   const start = formatDate(now);
@@ -99,7 +99,7 @@ export const getHolidaysAndEves = (): Holiday[] => {
       []
     )
     .map(({ fi, sv, en }) => ({
-      eve: false,
+      official: true,
       date: fi.date.split(' ')[0],
       name: {
         fi: fi.name,
@@ -110,9 +110,9 @@ export const getHolidaysAndEves = (): Holiday[] => {
     }))
     .filter((date) => date.date >= start && date.date <= end);
 
-  const foundEves = eves.map((eve) => {
+  const unofficialHolidays = unofficialHolidaysConfig.map((eve) => {
     const foundHoliday = holidays.find(
-      (holiday) => holiday.name.fi === eve.for
+      (holiday) => holiday.name.fi === eve.before
     );
 
     if (!foundHoliday) {
@@ -120,7 +120,7 @@ export const getHolidaysAndEves = (): Holiday[] => {
     }
 
     return {
-      eve: true,
+      official: false,
       date: sub(new Date(foundHoliday.date), { days: 1 })
         .toISOString()
         .split('T')[0],
@@ -128,7 +128,7 @@ export const getHolidaysAndEves = (): Holiday[] => {
     };
   });
 
-  return [...holidays, ...foundEves].sort((a, b) =>
+  return [...holidays, ...unofficialHolidays].sort((a, b) =>
     a?.date.localeCompare(b?.date)
   );
 };

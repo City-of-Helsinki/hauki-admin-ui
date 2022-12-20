@@ -541,7 +541,7 @@ describe('opening-hours-helpers', () => {
           en: "New Year's Eve",
         },
         start_date: '2022-12-31',
-        eve: false,
+        official: true,
       },
       {
         date: '2023-01-01',
@@ -552,7 +552,7 @@ describe('opening-hours-helpers', () => {
           en: "New Year's Day",
         },
         start_date: '2022-12-31',
-        eve: false,
+        official: true,
       },
     ];
 
