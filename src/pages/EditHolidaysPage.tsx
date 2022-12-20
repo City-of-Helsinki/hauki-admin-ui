@@ -17,7 +17,7 @@ import {
 } from '../common/helpers/opening-hours-helpers';
 import api from '../common/utils/api/api';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
-import { getHolidaysAndEves, Holiday } from '../services/holidays';
+import { getHolidays, Holiday } from '../services/holidays';
 import {
   formatDate,
   getNumberOfTheWeekday,
@@ -308,7 +308,7 @@ export default function EditHolidaysPage({
           api.getResource(resourceId),
           getDatePeriodFormConfig(),
         ]);
-        setHolidays(getHolidaysAndEves());
+        setHolidays(getHolidays());
         setResource(apiResource);
         setDatePeriodConfig(uiDatePeriodOptions);
       } catch (e) {
