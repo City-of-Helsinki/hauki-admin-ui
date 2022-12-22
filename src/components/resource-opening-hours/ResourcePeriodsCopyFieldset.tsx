@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Notification, IconCopy } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
@@ -27,6 +27,32 @@ export default function ResourcePeriodsCopyFieldset({
 }): JSX.Element {
   const { hasOpenerWindow, closeAppWindow } = useAppContext();
   const [isCopyLoading, setIsCopyLoading] = useState<boolean>(false);
+  const [copied, setCopied] = useState(0);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      console.log('terve');
+      setCopied((i) => {
+        const newCount = i + 2;
+        const targetResourcesLength = targetResources.length;
+        if (newCount >= targetResourcesLength) {
+          return targetResourcesLength;
+        }
+        return newCount;
+      });
+    }, 300);
+    return () => {
+      if (id) {
+        clearTimeout(id);
+      }
+    };
+  }, [copied, targetResources]);
+
+  useEffect(() => {
+    if (isCopyLoading) {
+      setCopied(1);
+    }
+  }, [isCopyLoading]);
 
   const copyDatePeriods = async (): Promise<void> => {
     setIsCopyLoading(true);
@@ -76,7 +102,7 @@ export default function ResourcePeriodsCopyFieldset({
         <PrimaryButton
           iconLeft={<IconCopy aria-hidden />}
           isLoading={isCopyLoading}
-          loadingText="Aukiolotietoja kopioidaan"
+          loadingText={`Aukiolotietoja kopioidaan ${copied}/${targetResources?.length}`}
           onClick={(): void => {
             copyDatePeriods();
           }}>{`Päivitä aukiolotiedot ${
