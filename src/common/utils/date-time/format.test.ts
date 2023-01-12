@@ -28,6 +28,12 @@ describe('format', () => {
         'Voimassa toistaiseksi'
       );
     });
+
+    it('should return formatted start date when startDate is same as endDate', () => {
+      expect(
+        formatDateRange({ startDate: '31.12.2020', endDate: '31.12.2020' })
+      ).toEqual('Voimassa 31.12.2020');
+    });
   });
 
   describe('createWeekdaysStringFromIndices', () => {

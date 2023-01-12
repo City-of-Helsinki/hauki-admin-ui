@@ -6,11 +6,13 @@ import './DayCheckbox.scss';
 
 const DayCheckbox = ({
   currentDay,
+  disabled,
   namePrefix,
   onChange,
   checked,
 }: {
   currentDay: number;
+  disabled: boolean;
   namePrefix: string;
   onChange: (checked: boolean) => void;
   checked?: boolean;
@@ -21,6 +23,7 @@ const DayCheckbox = ({
     <label htmlFor={id} className="day-label">
       <input
         data-test={id}
+        disabled={disabled}
         id={id}
         type="checkbox"
         onChange={(): void => {

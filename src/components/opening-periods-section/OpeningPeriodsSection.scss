@@ -25,28 +25,6 @@
   }
 }
 
-.opening-periods-header-light {
-  @extend .opening-periods-header;
-
-  background-color: var(--opening-periods-header-light-background-color);
-  color: var(--opening-periods-header-light-color);
-
-  .opening-period-header-button {
-    font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
-    color: var(--opening-periods-header-light-button-color);
-    border-color: var(--opening-periods-header-light-button-border-color) !important;
-
-    &:hover {
-      background-color: var(--opening-periods-header-light-button-hover-background-color) !important;
-      color: var(--opening-periods-header-light-button-hover-color) !important;
-    }
-
-    &:focus {
-      color: var(--opening-periods-header-light-button-focus-color);
-    }
-  }
-}
-
 .opening-periods-header-title {
   flex: 1;
   font-size: $fontsize-heading-s;
@@ -58,18 +36,11 @@
   color: inherit;
 }
 
-.period-count {
+.opening-periods-period-count {
   font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
-  font-size: $fontsize-body-m;
+  font-size: $fontsize-body-xl;
   color: inherit;
   margin: 0;
-}
-
-.opening-periods-header-language-selector {
-  font-family: HelsinkiGrotesk-Bold, Arial, sans-serif;
-  color: inherit;
-  font-size: $fontsize-body-m;
-  margin-right: $spacing-xl;
 }
 
 .opening-periods-list {
@@ -93,18 +64,23 @@
   margin-bottom: $spacing-2-xl;
 }
 
-.exception-opening-periods-list {
-  @extend .opening-periods-list;
+.opening-period-loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-l;
 }
 
-.exception-periods-header {
+.opening-periods-header-light {
   @extend .opening-periods-header;
 
   background: $color-coat-of-arms-light;
-}
+  color: var(--opening-periods-header-light-color);
 
-.exception-periods-title {
-  @extend .opening-periods-header-title;
+  .opening-periods-header-title {
+    color: $color-coat-of-arms;
+  }
 
-  color: $color-coat-of-arms;
+  .opening-periods-period-count {
+    color: $color-coat-of-arms-dark;
+  }
 }

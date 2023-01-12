@@ -11,7 +11,10 @@ import {
   Rule,
   InputOption,
 } from '../../common/lib/types';
-import { getWeekdayLongNameByIndexAndLang } from '../../common/utils/date-time/format';
+import {
+  formatDateRange,
+  getWeekdayLongNameByIndexAndLang,
+} from '../../common/utils/date-time/format';
 import TimeSpans from '../time-span/TimeSpans';
 import DayCheckbox from './DayCheckbox';
 import './OpeningHoursWeekdays.scss';
@@ -22,6 +25,10 @@ import {
 } from '../../constants';
 import { useAppContext } from '../../App-context';
 import { getUiId } from '../../common/utils/form/form';
+import {
+  byDateRange,
+  getEnabledWeekdays,
+} from '../../common/utils/date-time/date-time';
 
 type InflectLabels = {
   [language in Language]: {
@@ -45,6 +52,7 @@ const OpeningHoursWeekdays = ({
   i: openingHoursIdx,
   item,
   offsetTop = 0,
+  onDropFinished,
   resourceStates,
   rules: ruleValues,
   onDayChange,
@@ -53,6 +61,7 @@ const OpeningHoursWeekdays = ({
   i: number;
   item: TOpeningHours;
   offsetTop?: number;
+  onDropFinished: () => void;
   resourceStates: TranslatedApiChoice[];
   rules: Rule[];
   onDayChange: (day: number, checked: boolean, offsetTop: number) => void;
@@ -64,16 +73,23 @@ const OpeningHoursWeekdays = ({
     control,
     name: `${namePrefix}.timeSpanGroups`,
   });
+  const [startDate, endDate] = watch(['startDate', 'endDate']);
+  const enabledWeekdays = getEnabledWeekdays(startDate, endDate);
   const [removedDay, setRemovedDay] = React.useState<number | null>(null);
   const [isMoving, setIsMoving] = React.useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const rules: InputOption<RuleType>[] = ruleValues.map((rule) => ({
     label: uiRuleLabels[rule.type][language],
     value: rule.type,
   }));
 
   useEffect(() => {
+    let animate: Animation | undefined;
+    const handleFinish = () => {
+      setIsMoving(false);
+      onDropFinished();
+    };
+
     if (dropIn && ref.current) {
       const dropInAnimation = [
         {
@@ -84,15 +100,16 @@ const OpeningHoursWeekdays = ({
         { marginTop: 0 },
       ];
       setIsMoving(true);
-      ref.current
-        .animate(dropInAnimation, {
-          duration: 600,
-          iterations: 1,
-          easing: 'ease',
-        })
-        .addEventListener('finish', () => setIsMoving(false));
+      animate = ref.current.animate(dropInAnimation, {
+        duration: 600,
+        iterations: 1,
+        easing: 'ease',
+      });
+      animate.addEventListener('finish', handleFinish);
     }
-  }, [dropIn, offsetTop, ref, setIsMoving]);
+
+    return () => animate?.removeEventListener('finish', handleFinish);
+  }, [dropIn, offsetTop, onDropFinished, ref, setIsMoving]);
 
   const weekdays = watch(
     `openingHours.${openingHoursIdx}.weekdays`,
@@ -150,16 +167,18 @@ const OpeningHoursWeekdays = ({
 
   return (
     <div
-      ref={containerRef}
       style={{ zIndex: isMoving ? 1 : undefined }}
       role="group"
       aria-label={`Aukiolomääritys ${openingHoursIdx + 1}`}>
       <div ref={ref} className="card opening-hours-container">
         <div>
-          <div
-            id={getUiId([namePrefix, 'weekdays'])}
-            className="weekdays-label">
-            Päivä tai päiväryhmä
+          <div className="weekdays-header">
+            <div
+              id={getUiId([namePrefix, 'weekdays'])}
+              className="weekdays-label">
+              Päivä tai päiväryhmä
+            </div>
+            <div>{formatDateRange({ startDate, endDate })}</div>
           </div>
           <div
             className="weekdays"
@@ -187,27 +206,30 @@ const OpeningHoursWeekdays = ({
               name={`openingHours.${openingHoursIdx}.weekdays`}
               render={(): JSX.Element => (
                 <>
-                  {[1, 2, 3, 4, 5, 6, 7].map((day) => (
-                    <DayCheckbox
-                      key={`${namePrefix}-${day}`}
-                      checked={weekdays.includes(day)}
-                      currentDay={day}
-                      namePrefix={namePrefix}
-                      onChange={(checked): void => {
-                        onDayChange(
-                          day,
-                          checked,
-                          ref.current?.getBoundingClientRect().top || 0
-                        );
-                        if (
-                          !isOnlySelectedDay(day, item.weekdays) &&
-                          !checked
-                        ) {
-                          setRemovedDay(day);
-                        }
-                      }}
-                    />
-                  ))}
+                  {[1, 2, 3, 4, 5, 6, 7]
+                    .sort(byDateRange(startDate, endDate))
+                    .map((day) => (
+                      <DayCheckbox
+                        key={`${namePrefix}-${day}`}
+                        checked={weekdays.includes(day)}
+                        disabled={!enabledWeekdays.includes(day)}
+                        currentDay={day}
+                        namePrefix={namePrefix}
+                        onChange={(checked): void => {
+                          onDayChange(
+                            day,
+                            checked,
+                            ref.current?.getBoundingClientRect().top || 0
+                          );
+                          if (
+                            !isOnlySelectedDay(day, item.weekdays) &&
+                            !checked
+                          ) {
+                            setRemovedDay(day);
+                          }
+                        }}
+                      />
+                    ))}
                 </>
               )}
             />
@@ -225,50 +247,54 @@ const OpeningHoursWeekdays = ({
                 }}
                 render={({ field: { onChange, value } }): JSX.Element => (
                   <>
-                    <Select<InputOption<RuleType>>
-                      className="rule-select"
-                      defaultValue={rules[0]}
-                      label="Toistuvuus"
-                      onChange={(rule: InputOption<RuleType>): void => {
-                        const toValue = (ruleType: RuleType): Rule =>
-                          ruleValues.find((elem) => elem.type === ruleType) ||
-                          defaultRule;
+                    {rules.length > 0 && (
+                      <Select<InputOption<RuleType>>
+                        className="rule-select"
+                        defaultValue={rules[0]}
+                        label="Toistuvuus"
+                        onChange={(rule: InputOption<RuleType>): void => {
+                          const toValue = (ruleType: RuleType): Rule =>
+                            ruleValues.find((elem) => elem.type === ruleType) ||
+                            defaultRule;
 
-                        onChange(toValue(rule.value));
+                          onChange(toValue(rule.value));
 
-                        const counterparts: { [key in RuleType]: RuleType } = {
-                          week_even: 'week_odd',
-                          week_odd: 'week_even',
-                          week_every: 'week_every',
-                        };
+                          const counterparts: {
+                            [key in RuleType]: RuleType;
+                          } = {
+                            week_even: 'week_odd',
+                            week_odd: 'week_even',
+                            week_every: 'week_every',
+                          };
 
-                        const pair: { idx: number; newValue: RuleType } = {
-                          idx: i === 0 ? 1 : 0, // We allow only two rules to exists at a time
-                          newValue: counterparts[rule.value],
-                        };
+                          const pair: { idx: number; newValue: RuleType } = {
+                            idx: i === 0 ? 1 : 0, // We allow only two rules to exists at a time
+                            newValue: counterparts[rule.value],
+                          };
 
-                        if (fields.length === 1) {
-                          append(
-                            {
-                              ...defaultTimeSpanGroup,
-                              rule: toValue(pair.newValue),
-                            },
-                            { shouldFocus: false }
-                          );
-                        } else if (rule.value === 'week_every') {
-                          remove(pair.idx);
-                        } else {
-                          setValue(
-                            `${namePrefix}.timeSpanGroups.${pair.idx}.rule`,
-                            toValue(pair.newValue)
-                          );
-                        }
-                      }}
-                      options={rules}
-                      placeholder="Valitse"
-                      required
-                      value={rules.find((rule) => rule.value === value.type)}
-                    />
+                          if (fields.length === 1) {
+                            append(
+                              {
+                                ...defaultTimeSpanGroup,
+                                rule: toValue(pair.newValue),
+                              },
+                              { shouldFocus: false }
+                            );
+                          } else if (rule.value === 'week_every') {
+                            remove(pair.idx);
+                          } else {
+                            setValue(
+                              `${namePrefix}.timeSpanGroups.${pair.idx}.rule`,
+                              toValue(pair.newValue)
+                            );
+                          }
+                        }}
+                        options={rules}
+                        placeholder="Valitse"
+                        required
+                        value={rules.find((rule) => rule.value === value.type)}
+                      />
+                    )}
                     <div
                       role="group"
                       aria-label={

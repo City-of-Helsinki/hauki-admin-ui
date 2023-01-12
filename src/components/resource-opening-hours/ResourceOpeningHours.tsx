@@ -1,264 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { LoadingSpinner, Notification } from 'hds-react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { partition } from 'lodash';
+import { Notification } from 'hds-react';
 import {
-  ApiDatePeriod,
   Language,
   DatePeriod,
   Resource,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
-import { PrimaryButton, SecondaryButton } from '../button/Button';
-import OpeningPeriod from './opening-period/OpeningPeriod';
-import './ResourceOpeningHours.scss';
 import {
   apiDatePeriodToDatePeriod,
-  getActiveDatePeriod,
-  getDatePeriodName,
   isHolidayOrEve,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
 import HolidaysTable from '../holidays-table/HolidaysTable';
 import { getHolidays } from '../../services/holidays';
-import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
-import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
+import OpeningPeriodsList from '../opening-periods-list/OpeningPeriodsList';
+import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
 
-const OpeningPeriodsNotFound = ({ text }: { text: string }): JSX.Element => (
-  <p className="opening-periods-not-found">{text}</p>
-);
-
-const ExceptionPeriodsList = ({
-  datePeriodConfig,
-  datePeriods,
-  deletePeriod,
-  language,
-  parentId,
-  resourceId,
-  isLoading,
-  holidaysTableInitiallyOpen,
-}: {
-  datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: DatePeriod[];
-  deletePeriod: (id: number) => Promise<void>;
-  language: Language;
-  parentId?: number;
-  resourceId: number;
-  isLoading: boolean;
-  holidaysTableInitiallyOpen: boolean;
-}): JSX.Element => {
-  const history = useHistory();
-  const holidays = getHolidays();
-  const [holidayDatePeriods, exceptions] = partition(
-    datePeriods,
-    (datePeriod) => isHolidayOrEve(datePeriod, holidays)
-  );
-  const ref = useRef<HTMLButtonElement>(null);
-
-  return (
-    <>
-      <section className="opening-periods-section">
-        <header className="exception-periods-header">
-          <h2 className="exception-periods-title">Poikkeavat päivät</h2>
-          <PrimaryButton
-            ref={ref}
-            dataTest="add-new-exception-period-button"
-            onClick={() => {
-              if (parentId) {
-                history.push(
-                  `/resource/${parentId}/child/${resourceId}/exception/new`
-                );
-              } else {
-                history.push(`/resource/${resourceId}/exception/new`);
-              }
-            }}
-            size="small">
-            Lisää poikkeava päivä +
-          </PrimaryButton>
-        </header>
-        {isLoading ? (
-          <div className="loading-spinner-container">
-            <LoadingSpinner loadingText="Haetaan aukioloja" small />
-          </div>
-        ) : (
-          <ul className="opening-periods-list">
-            {exceptions.length === 0 ? (
-              <li>
-                <OpeningPeriodsNotFound text="Ei poikkeavia päiviä. Voit lisätä poikkeavan päivän painamalla “Lisää poikkeava päivä“ -painiketta." />
-              </li>
-            ) : (
-              exceptions.map((exception, i) => (
-                <li key={exception.id}>
-                  <OpeningPeriodAccordion
-                    editUrl={
-                      parentId
-                        ? `/resource/${parentId}/child/${resourceId}/exception/${exception.id}`
-                        : `/resource/${resourceId}/exception/${exception.id}`
-                    }
-                    initiallyOpen={i <= 10}
-                    onDelete={async () => {
-                      if (exception.id) {
-                        await deletePeriod(exception.id);
-                        ref.current?.focus();
-                      }
-                    }}
-                    periodName={getDatePeriodName(language, exception)}
-                    dateRange={`${
-                      exception.startDate ?? ''
-                    } — poikkeavat aukiolot`}>
-                    <ExceptionOpeningHours
-                      datePeriod={exception}
-                      datePeriodConfig={datePeriodConfig}
-                    />
-                  </OpeningPeriodAccordion>
-                </li>
-              ))
-            )}
-          </ul>
-        )}
-      </section>
-      <section>
-        <header className="exception-periods-header">
-          <h2 className="exception-periods-title">Juhlapyhät</h2>
-          <PrimaryButton
-            dataTest="edit-holidays-button"
-            onClick={() =>
-              history.push(
-                `/resource/${
-                  parentId ? `${parentId}/child/${resourceId}` : resourceId
-                }/holidays`
-              )
-            }
-            size="small">
-            Muokkaa juhlapyhiä
-          </PrimaryButton>
-        </header>
-        {isLoading && exceptions.length === 0 ? (
-          <div className="loading-spinner-container">
-            <LoadingSpinner loadingText="Haetaan aukioloja" small />
-          </div>
-        ) : (
-          <ul className="opening-periods-list">
-            <li>
-              <HolidaysTable
-                datePeriodConfig={datePeriodConfig}
-                datePeriods={holidayDatePeriods}
-                holidays={holidays}
-                initiallyOpen={holidaysTableInitiallyOpen}
-              />
-            </li>
-          </ul>
-        )}
-      </section>
-    </>
-  );
-};
-
-enum PeriodsListTheme {
-  DEFAULT = 'DEFAULT',
-  LIGHT = 'LIGHT',
-}
-
-const OpeningPeriodsList = ({
-  id,
-  parentId,
-  addNewOpeningPeriodButtonDataTest,
-  resourceId,
-  title,
-  datePeriods,
-  datePeriodConfig,
-  theme,
-  notFoundLabel,
-  deletePeriod,
-  language,
-  isLoading,
-}: {
-  id: string;
-  parentId?: number;
-  addNewOpeningPeriodButtonDataTest?: string;
-  resourceId: number;
-  title: string;
-  datePeriods: DatePeriod[];
-  datePeriodConfig?: UiDatePeriodConfig;
-  theme: PeriodsListTheme;
-  notFoundLabel: string;
-  deletePeriod: (id: number) => Promise<void>;
-  language: Language;
-  isLoading: boolean;
-}): JSX.Element => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const openingPeriodsHeaderClassName =
-    theme === PeriodsListTheme.LIGHT
-      ? 'opening-periods-header-light'
-      : 'opening-periods-header';
-
-  const history = useHistory();
-  const currentDatePeriod = getActiveDatePeriod(
-    new Date().toISOString().split('T')[0],
-    datePeriods
-  );
-
-  return (
-    <section className="opening-periods-section">
-      <header className={openingPeriodsHeaderClassName}>
-        <h2 className="opening-periods-header-title">{title}</h2>
-        <p className="period-count">{datePeriods.length} aukioloaikaa</p>
-        <SecondaryButton
-          ref={ref}
-          dataTest={addNewOpeningPeriodButtonDataTest}
-          size="small"
-          className="opening-period-header-button"
-          light
-          onClick={(): void => {
-            if (parentId) {
-              history.push(
-                `/resource/${parentId}/child/${resourceId}/period/new`
-              );
-            } else {
-              history.push(`/resource/${resourceId}/period/new`);
-            }
-          }}>
-          Lisää aukioloaika +
-        </SecondaryButton>
-      </header>
-      {isLoading && datePeriods.length === 0 && (
-        <div className="loading-spinner-container">
-          <LoadingSpinner loadingText="Haetaan aukiolojoja" small />
-        </div>
-      )}
-      {datePeriodConfig && (
-        <ul className="opening-periods-list" data-test={id}>
-          {datePeriods.length > 0 ? (
-            datePeriods.map((datePeriod: DatePeriod, index) => (
-              <li key={datePeriod.id}>
-                <OpeningPeriod
-                  current={currentDatePeriod === datePeriod}
-                  datePeriodConfig={datePeriodConfig}
-                  datePeriod={datePeriod}
-                  resourceId={resourceId}
-                  language={language}
-                  deletePeriod={async (datePeriodId) => {
-                    await deletePeriod(datePeriodId);
-                    ref.current?.focus();
-                  }}
-                  initiallyOpen={index <= 10}
-                  parentId={parentId}
-                />
-              </li>
-            ))
-          ) : (
-            <li>
-              <OpeningPeriodsNotFound text={notFoundLabel} />
-            </li>
-          )}
-        </ul>
-      )}
-    </section>
-  );
-};
-
-export default function ResourceOpeningHours({
+const ResourceOpeningHours = ({
   language,
   parentId,
   resource,
@@ -268,14 +28,14 @@ export default function ResourceOpeningHours({
   parentId?: number;
   resource: Resource;
   holidaysTableInitiallyOpen?: boolean;
-}): JSX.Element | null {
+}): JSX.Element | null => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
   const [datePeriodConfig, setDatePeriodConfig] = useState<
     UiDatePeriodConfig
   >();
-  const [[defaultPeriods, exceptions], setDividedDatePeriods] = useState<
-    [ApiDatePeriod[], ApiDatePeriod[]]
+  const [[normalDatePeriods, exceptions], setDividedDatePeriods] = useState<
+    [DatePeriod[], DatePeriod[]]
   >([[], []]);
   const [isLoading, setLoading] = useState(false);
   const fetchDatePeriods = async (id: number): Promise<void> => {
@@ -286,7 +46,7 @@ export default function ResourceOpeningHours({
         getDatePeriodFormConfig(),
       ]);
       const datePeriodLists = partition(
-        apiDatePeriods,
+        apiDatePeriods.map(apiDatePeriodToDatePeriod),
         (datePeriod) => !datePeriod.override
       );
       setDividedDatePeriods(datePeriodLists);
@@ -306,6 +66,12 @@ export default function ResourceOpeningHours({
     fetchDatePeriods(resourceId);
   };
 
+  const holidays = getHolidays();
+  const [holidayDatePeriods, exceptionDatePeriods] = partition(
+    exceptions,
+    (datePeriod) => isHolidayOrEve(datePeriod, holidays)
+  );
+
   if (error) {
     return (
       <>
@@ -323,28 +89,69 @@ export default function ResourceOpeningHours({
     <>
       <OpeningPeriodsList
         id="resource-opening-periods-list"
-        parentId={parentId}
+        addDatePeriodButtonText="Lisää aukioloaika +"
         addNewOpeningPeriodButtonDataTest="add-new-opening-period-button"
-        resourceId={resourceId}
         title="Aukioloajat"
-        datePeriods={defaultPeriods.map(apiDatePeriodToDatePeriod)}
+        datePeriods={normalDatePeriods}
         datePeriodConfig={datePeriodConfig}
-        theme={PeriodsListTheme.DEFAULT}
-        notFoundLabel="Ei määriteltyjä aukioloaikoja. Aloita painamalla “Lisää aukioloaika” -painiketta."
+        theme="DEFAULT"
+        emptyState="Ei määriteltyjä aukioloaikoja. Aloita painamalla “Lisää aukioloaika” -painiketta."
         deletePeriod={deletePeriod}
         language={language}
         isLoading={isLoading}
+        newUrl={
+          parentId
+            ? `/resource/${parentId}/child/${resourceId}/period/new`
+            : `/resource/${resourceId}/period/new`
+        }
+        editUrl={(datePeriod) =>
+          parentId
+            ? `/resource/${parentId}/child/${resourceId}/period/${datePeriod.id}`
+            : `/resource/${resourceId}/period/${datePeriod.id}`
+        }
       />
-      <ExceptionPeriodsList
+      <OpeningPeriodsList
+        id="resource-exception-opening-periods-list"
+        addDatePeriodButtonText="Lisää poikkeava päivä +"
+        addNewOpeningPeriodButtonDataTest="add-new-exception-opening-period-button"
         datePeriodConfig={datePeriodConfig}
-        datePeriods={exceptions.map(apiDatePeriodToDatePeriod)}
+        datePeriods={exceptionDatePeriods}
         deletePeriod={deletePeriod}
-        language={language}
-        parentId={parentId}
-        resourceId={resourceId}
         isLoading={isLoading}
-        holidaysTableInitiallyOpen={holidaysTableInitiallyOpen}
+        language={language}
+        emptyState="Ei poikkeavia päiviä. Voit lisätä poikkeavan päivän painamalla “Lisää poikkeava päivä“ -painiketta."
+        theme="LIGHT"
+        title="Poikkeavat päivät"
+        newUrl={
+          parentId
+            ? `/resource/${parentId}/child/${resourceId}/exception/new`
+            : `/resource/${resourceId}/exception/new`
+        }
+        editUrl={(datePeriod) =>
+          parentId
+            ? `/resource/${parentId}/child/${resourceId}/exception/${datePeriod.id}`
+            : `/resource/${resourceId}/exception/${datePeriod.id}`
+        }
       />
+      <OpeningPeriodsSection
+        addNewOpeningPeriodButtonDataTest="edit-holidays-button"
+        addDatePeriodButtonText="Muokkaa juhlapyhiä"
+        datePeriods={holidayDatePeriods}
+        isLoading={isLoading}
+        newUrl={`/resource/${
+          parentId ? `${parentId}/child/${resourceId}` : resourceId
+        }/holidays`}
+        title="Juhlapyhät"
+        theme="LIGHT">
+        <HolidaysTable
+          datePeriodConfig={datePeriodConfig}
+          datePeriods={holidayDatePeriods}
+          holidays={holidays}
+          initiallyOpen={holidaysTableInitiallyOpen}
+        />
+      </OpeningPeriodsSection>
     </>
   );
-}
+};
+
+export default ResourceOpeningHours;

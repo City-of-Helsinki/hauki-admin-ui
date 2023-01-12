@@ -260,7 +260,7 @@ export type DatePeriod = {
   name: LanguageStrings;
   openingHours: OpeningHours[];
   startDate: string | null;
-  override?: boolean;
+  override: boolean;
   resourceState?: ResourceState;
 };
 

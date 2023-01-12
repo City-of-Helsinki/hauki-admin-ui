@@ -72,7 +72,7 @@
 .time-span__range {
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  gap: 0.5rem;
   grid-column: 1/3;
 }
 
@@ -80,10 +80,6 @@
   .time-span__range {
     grid-column: auto;
   }
-}
-
-.time-span__range-divider {
-  margin-top: 1.5rem;
 }
 
 .time-span__resource-state-select {

@@ -26,6 +26,10 @@ export const formatDateRange = ({
     return 'Voimassa toistaiseksi';
   }
 
+  if (startDate === endDate) {
+    return `Voimassa ${startDate}`;
+  }
+
   if (!endDate) {
     return `Voimassa ${startDate} alkaen`;
   }

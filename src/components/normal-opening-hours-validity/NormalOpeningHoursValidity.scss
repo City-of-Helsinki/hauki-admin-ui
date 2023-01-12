@@ -1,0 +1,40 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.opening-hours-validity__selections {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.2rem 3rem;
+}
+
+.opening-hours-validity__dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.3rem;
+}
+
+.opening-hours-validity__title {
+  margin: 0;
+}
+
+.opening-hours-validity__title legend {
+  font-size: $fontsize-heading-xs;
+  font-weight: bold;
+}
+
+.opening-hours-validity__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.opening-hours-validity__date {
+  width: 160px;
+}
+
+@media screen and (min-width: $breakpoint-m) {
+  .opening-hours-validity__date {
+    max-width: 165px;
+  }
+}

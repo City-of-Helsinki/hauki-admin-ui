@@ -5,7 +5,7 @@ import {
   ApiDatePeriod,
 } from '../common/lib/types';
 import api from '../common/utils/api/api';
-import OpeningHoursForm from '../components/opening-hours-form/OpeningHoursForm';
+import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
 
 export default function CreateNewOpeningPeriodPage({
@@ -44,7 +44,7 @@ export default function CreateNewOpeningPeriodPage({
     api.postDatePeriod(data);
 
   return (
-    <OpeningHoursForm
+    <NormalOpeningHoursForm
       datePeriodConfig={datePeriodConfig}
       submitFn={submitFn}
       resource={resource}

@@ -29,29 +29,31 @@ const OpeningHoursFormPreviewMobile = ({
   const isMobile = useMobile();
 
   return (
-    <div ref={mobilePreview}>
-      <SupplementaryButton
-        className="opening-hours-preview-mobile-toggle"
-        iconRight={
-          isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />
-        }
-        size={isMobile ? 'small' : 'default'}
-        {...buttonProps}>
-        Esikatselu
-      </SupplementaryButton>
-      <div
-        aria-hidden={!isOpen}
-        className={`opening-hours-preview-mobile ${
-          isOpen
-            ? 'opening-hours-preview-mobile--open'
-            : 'opening-hours-preview-mobile--closed'
-        }`}>
-        <OpeningHoursFormPreview
-          className="opening-hours-preview-mobile-preview"
-          datePeriod={datePeriod}
-          resourceStates={resourceStates}
-          tabIndex={isMobile && isOpen ? 0 : -1}
-        />
+    <div className="mobile-preview-container">
+      <div ref={mobilePreview}>
+        <SupplementaryButton
+          className="opening-hours-preview-mobile-toggle"
+          iconRight={
+            isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />
+          }
+          size={isMobile ? 'small' : 'default'}
+          {...buttonProps}>
+          Esikatselu
+        </SupplementaryButton>
+        <div
+          aria-hidden={!isOpen}
+          className={`opening-hours-preview-mobile ${
+            isOpen
+              ? 'opening-hours-preview-mobile--open'
+              : 'opening-hours-preview-mobile--closed'
+          }`}>
+          <OpeningHoursFormPreview
+            className="opening-hours-preview-mobile-preview"
+            datePeriod={datePeriod}
+            resourceStates={resourceStates}
+            tabIndex={isMobile && isOpen ? 0 : -1}
+          />
+        </div>
       </div>
     </div>
   );

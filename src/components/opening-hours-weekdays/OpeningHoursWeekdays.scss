@@ -2,6 +2,7 @@
 
 .opening-hours-container {
   align-items: stretch;
+  background-color: $color-white;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -32,4 +33,10 @@
     font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
     font-size: $fontsize-heading-xxs;
   }
+}
+
+.weekdays-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }

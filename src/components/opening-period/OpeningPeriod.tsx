@@ -3,32 +3,31 @@ import {
   Language,
   DatePeriod,
   UiDatePeriodConfig,
-} from '../../../common/lib/types';
-import { formatDateRange } from '../../../common/utils/date-time/format';
+  ResourceState,
+} from '../../common/lib/types';
+import { formatDateRange } from '../../common/utils/date-time/format';
 import './OpeningPeriod.scss';
-import OpeningHoursPreview from '../../opening-hours-preview/OpeningHoursPreview';
-import OpeningPeriodAccordion from '../../opening-period-accordion/OpeningPeriodAccordion';
-import { getDatePeriodName } from '../../../common/helpers/opening-hours-helpers';
+import OpeningHoursPreview from '../opening-hours-preview/OpeningHoursPreview';
+import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
+import { getDatePeriodName } from '../../common/helpers/opening-hours-helpers';
 
-export default function OpeningPeriod({
+const OpeningPeriod = ({
   current = false,
-  resourceId,
   datePeriod,
   datePeriodConfig,
+  editUrl,
   language,
   deletePeriod,
   initiallyOpen = false,
-  parentId,
 }: {
   current?: boolean;
-  resourceId: number;
   datePeriod: DatePeriod;
-  datePeriodConfig: UiDatePeriodConfig;
+  datePeriodConfig?: UiDatePeriodConfig;
+  editUrl: string;
   language: Language;
   deletePeriod: (id: number) => Promise<void>;
   initiallyOpen: boolean;
-  parentId?: number;
-}): JSX.Element {
+}): JSX.Element => {
   const formattedDateRange = formatDateRange({
     startDate: datePeriod.startDate,
     endDate: datePeriod.endDate,
@@ -45,19 +44,21 @@ export default function OpeningPeriod({
         }
         return Promise.resolve();
       }}
-      editUrl={
-        parentId
-          ? `/resource/${parentId}/child/${resourceId}/period/${datePeriod.id}`
-          : `/resource/${resourceId}/period/${datePeriod.id}`
-      }
+      editUrl={editUrl}
       initiallyOpen={initiallyOpen}
       isActive={current}>
       <div className="date-period-details-container">
-        <OpeningHoursPreview
-          openingHours={datePeriod.openingHours}
-          resourceStates={datePeriodConfig.resourceState.options}
-        />
+        {datePeriod.resourceState === ResourceState.CLOSED ? (
+          'Suljettu'
+        ) : (
+          <OpeningHoursPreview
+            openingHours={datePeriod.openingHours}
+            resourceStates={datePeriodConfig?.resourceState.options ?? []}
+          />
+        )}
       </div>
     </OpeningPeriodAccordion>
   );
-}
+};
+
+export default OpeningPeriod;

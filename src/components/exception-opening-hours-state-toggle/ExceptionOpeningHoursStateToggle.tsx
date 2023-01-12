@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { RadioButton, SelectionGroup } from 'hds-react';
-import { TranslatedApiChoice } from '../../common/lib/types';
-import TimeSpans from '../time-span/TimeSpans';
-import './ExceptionOpeningHoursFormInputs.scss';
+import { useFormContext } from 'react-hook-form';
+import { DatePeriod } from '../../common/lib/types';
+import './ExceptionOpeningHoursStateToggle.scss';
+import { getDifferenceInDays } from '../../common/utils/date-time/date-time';
 
-const ExceptionOpeningHoursFormInputs = ({
+const ExceptionOpeningHoursStateToggle = ({
   id,
+  children,
   isOpen: isOpenInitially,
   onClose,
   onOpen,
-  resourceStates,
 }: {
   id: string;
+  children?: ReactNode;
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
-  resourceStates: TranslatedApiChoice[];
 }): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(isOpenInitially);
+  const { watch } = useFormContext<DatePeriod>();
+  const [startDate, endDate] = watch(['startDate', 'endDate']);
+  const differenceInDays = getDifferenceInDays(startDate, endDate);
 
   return (
     <>
@@ -29,7 +33,7 @@ const ExceptionOpeningHoursFormInputs = ({
           id={`${id}-closed-state-checkbox`}
           name={`${id}-closed-state-checkbox`}
           checked={!isOpen}
-          label="Suljettu koko päivän"
+          label={differenceInDays > 0 ? 'Suljettu' : 'Suljettu koko päivän'}
           onChange={(): void => {
             setOpen(false);
             onClose();
@@ -47,17 +51,9 @@ const ExceptionOpeningHoursFormInputs = ({
           }}
         />
       </SelectionGroup>
-      {isOpen && (
-        <div className="exception-opening-hours-time-spans">
-          <TimeSpans
-            openingHoursIdx={0}
-            resourceStates={resourceStates}
-            timeSpanGroupIdx={0}
-          />
-        </div>
-      )}
+      {isOpen && children}
     </>
   );
 };
 
-export default ExceptionOpeningHoursFormInputs;
+export default ExceptionOpeningHoursStateToggle;

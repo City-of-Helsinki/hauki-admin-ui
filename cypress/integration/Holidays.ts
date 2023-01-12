@@ -9,19 +9,20 @@ describe('User adds a new holiday opening period', () => {
     cy.intercept('POST', '/v1/date_period/').as('saveHoliday');
 
     // Go to add new openings hours
-    cy.get('[data-test=edit-holidays-button]').click();
+    cy.get('[data-test=edit-holidays-button]').first().click();
 
     // Select holiday
-    cy.get('[data-test=holiday-17-checkbox]').check();
+    cy.contains('Jouluaatto').click();
 
     // Set exceptional opening hours
-    cy.get('label[for="holiday-17-open-state-checkbox"]').click();
+    cy.contains('Poikkeava aukiolo').click();
 
     cy.setHdsTimeInputTime({
       id: 'openingHours-0-timeSpanGroups-0-timeSpans-0-start-time',
       hours: '08',
       minutes: '00',
     });
+
     cy.setHdsTimeInputTime({
       id: 'openingHours-0-timeSpanGroups-0-timeSpans-0-end-time',
       hours: '16',
@@ -36,8 +37,18 @@ describe('User adds a new holiday opening period', () => {
     cy.get('[data-test=submit-opening-hours-button]').click();
 
     cy.get('[data-testid=holiday-form-success]', {
-      timeout: 10000,
-    }).should('be.visible');
+      timeout: 30000,
+    })
+      .should('be.visible')
+      .contains('Jouluaatto aukiolon lisääminen onnistui');
+
+    cy.contains('Palaa etusivulle').click({ force: true });
+
+    cy.wait(4000);
+
+    cy.get('[data-test=openingPeriodAccordionButton-holidays]').first().click();
+
+    cy.contains('08:00-16:00Itsepalvelu').should('be.visible');
 
     // Clean up
     cy.wait('@saveHoliday').then((interception) => {

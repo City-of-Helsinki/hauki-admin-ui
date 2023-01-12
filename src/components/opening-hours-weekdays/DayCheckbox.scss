@@ -41,6 +41,11 @@ label.day-label {
     outline: blue solid 2px;
   }
 
+  & input[type='checkbox']:disabled ~ .day-option {
+    background: gray;
+    color: white;
+  }
+
   & input[type='checkbox']:checked ~ .day-option:hover {
     background-color: var(--color-coat-of-arms-dark);
     border-color: var(--color-coat-of-arms-dark);
