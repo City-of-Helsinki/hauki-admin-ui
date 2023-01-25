@@ -3,11 +3,10 @@
 describe('User adds a new holiday opening period', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
+    cy.intercept('POST', '/v1/date_period/').as('saveHoliday');
   });
 
   it('Users successfully adds a new holiday opening hours', () => {
-    cy.intercept('POST', '/v1/date_period/').as('saveHoliday');
-
     // Go to add new openings hours
     cy.get('[data-test=edit-holidays-button]').first().click();
 
@@ -49,7 +48,9 @@ describe('User adds a new holiday opening period', () => {
     cy.get('[data-test=openingPeriodAccordionButton-holidays]').first().click();
 
     cy.contains('08:00-16:00Itsepalvelu').should('be.visible');
+  });
 
+  afterEach(() => {
     // Clean up
     cy.wait('@saveHoliday').then((interception) => {
       cy.deleteDatePeriod(interception.response?.body.id);
