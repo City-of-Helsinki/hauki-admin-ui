@@ -104,7 +104,7 @@ const TimeSpan = ({
                   hoursLabel="tunnit"
                   id={getUiId([namePrefix, 'start-time'])}
                   invalid={!!fieldState.error?.message}
-                  label="Alkaen klo"
+                  label="Alkaa klo"
                   minutesLabel="minuutit"
                   name={field.name}
                   onBlur={field.onBlur}
@@ -122,7 +122,6 @@ const TimeSpan = ({
               )}
               rules={timeInputRules}
             />
-            <div className="time-span__range-divider">-</div>
             <Controller
               control={control}
               name={`${namePrefix}.end_time`}
@@ -134,7 +133,7 @@ const TimeSpan = ({
                   hoursLabel="tunnit"
                   id={getUiId([namePrefix, 'end-time'])}
                   invalid={!!fieldState.error?.message}
-                  label="Päättyen klo"
+                  label="Päättyy klo"
                   minutesLabel="minuutit"
                   name={field.name}
                   onBlur={field.onBlur}

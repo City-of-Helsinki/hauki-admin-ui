@@ -1,11 +1,13 @@
 /// <reference types="jest" />
 
+import { defaultTimeSpanGroup } from '../../constants';
 import { DatePeriod, OpeningHours, ResourceState } from '../lib/types';
 import {
   apiDatePeriodToDatePeriod,
   datePeriodToApiDatePeriod,
   datePeriodToRules,
   getActiveDatePeriod,
+  alignOpeningHoursWeekdaysToDateRange,
   isHolidayOrEve,
 } from './opening-hours-helpers';
 
@@ -314,9 +316,24 @@ describe('opening-hours-helpers', () => {
           name: { fi: 'Normaali aukiolo', sv: null, en: null },
           openingHours,
           id: 1,
+          override: false,
           startDate: '06.06.2022',
         })
       ).toEqual(apiDatePeriod);
+    });
+
+    it('should map to correct data', () => {
+      expect(
+        datePeriodToApiDatePeriod(8414, {
+          endDate: '31.12.2022',
+          fixed: true,
+          name: { fi: 'Normaali aukiolo', sv: null, en: null },
+          openingHours,
+          id: 1,
+          startDate: '06.06.2022',
+          override: true,
+        })
+      ).toEqual({ ...apiDatePeriod, override: true });
     });
   });
 
@@ -631,6 +648,104 @@ describe('opening-hours-helpers', () => {
           },
         ]
       `);
+    });
+  });
+
+  describe('alignOpeningHoursWeekdaysToDateRange', () => {
+    it('should return opening hours as is when the date range is one week', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          openingHours,
+          '16.01.2023',
+          '22.01.2023'
+        )
+      ).toEqual(openingHours);
+    });
+
+    it('should return opening hours as is when the date range is way over week', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          openingHours,
+          '12.01.2023',
+          '29.01.2023'
+        )
+      ).toEqual(openingHours);
+    });
+
+    it('should drop out Sunday when the date range is less than week', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          openingHours,
+          '16.01.2023',
+          '21.01.2023'
+        )
+      ).toEqual(openingHours.slice(0, 2));
+    });
+
+    it('should drop out Monday, Tuesday, Saturday and Sunday when the date range starts from the middle', () => {
+      let expectedOpeningHours = openingHours.slice(0, 2);
+      expectedOpeningHours = [
+        {
+          ...expectedOpeningHours[0],
+          weekdays: [3, 4, 5],
+        },
+      ];
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          openingHours,
+          '18.01.2023',
+          '20.01.2023'
+        )
+      ).toEqual(expectedOpeningHours);
+    });
+
+    it('should add Monday and Tuesday to first row when previously the date range was less than a week', () => {
+      const prevOpeningHours = [
+        {
+          ...openingHours[0],
+          weekdays: [3, 4, 5],
+        },
+        ...openingHours.slice(1),
+      ];
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          prevOpeningHours,
+          '16.01.2023',
+          '22.01.2023'
+        )
+      ).toEqual(openingHours);
+    });
+
+    it('should return default time span group with all the weekdays when there were no previously existing opening hours', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange([], '16.01.2023', '22.01.2023')
+      ).toEqual([
+        {
+          timeSpanGroups: [defaultTimeSpanGroup],
+          weekdays: [1, 2, 3, 4, 5, 6, 7],
+        },
+      ]);
+    });
+
+    it('should return default time span group with all the days in range when there were no previously existing opening hours', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange([], '17.01.2023', '20.01.2023')
+      ).toEqual([
+        {
+          timeSpanGroups: [defaultTimeSpanGroup],
+          weekdays: [2, 3, 4, 5],
+        },
+      ]);
+    });
+
+    it('should return opening hours as is when end date is before start date', () => {
+      expect(
+        alignOpeningHoursWeekdaysToDateRange(
+          openingHours,
+          '17.01.2023',
+          '15.01.2023'
+        )
+      ).toEqual(openingHours);
     });
   });
 });

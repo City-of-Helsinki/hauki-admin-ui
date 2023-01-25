@@ -1,3 +1,5 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
 .opening-hours-preview-mobile {
   border-bottom: 1px solid var(--hauki-content-border-color);
   left: 0;
@@ -24,4 +26,10 @@
 
 .opening-hours-preview-mobile-preview {
   padding-bottom: var(--spacing-xl);
+}
+
+@media screen and (min-width: $breakpoint-l) {
+  .mobile-preview-container {
+    display: none;
+  }
 }

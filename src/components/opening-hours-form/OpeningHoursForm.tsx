@@ -1,17 +1,14 @@
-/* eslint-disable */
+import React, { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { IconSort } from 'hds-react';
-import React, { useRef, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import {
   ApiDatePeriod,
   Language,
   Resource,
-  ResourceState,
   UiDatePeriodConfig,
   DatePeriod,
+  ResourceState,
 } from '../../common/lib/types';
-import { SupplementaryButton } from '../button/Button';
-import OpeningHoursFormPreview from '../opening-hours-form-preview/OpeningHoursFormPreview';
 import './OpeningHoursForm.scss';
 import {
   apiDatePeriodToDatePeriod,
@@ -20,83 +17,80 @@ import {
   datePeriodToRules,
 } from '../../common/helpers/opening-hours-helpers';
 import toast from '../notification/Toast';
-import OpeningHoursWeekdays from '../opening-hours-weekdays/OpeningHoursWeekdays';
-import { defaultTimeSpan, defaultTimeSpanGroup } from '../../constants';
-import OpeningHoursValidity from './OpeningHoursValidity';
-import useMobile from '../../hooks/useMobile';
-import { formatDate } from '../../common/utils/date-time/format';
+import NormalOpeningHoursValidity from '../normal-opening-hours-validity/NormalOpeningHoursValidity';
 import OpeningHoursTitles from './OpeningHoursTitles';
 import OpeningHoursFormPreviewMobile from '../opening-hours-form-preview/OpeningHoursFormPreviewMobile';
 import ResourceTitle from '../resource-title/ResourceTitle';
 import { useAppContext } from '../../App-context';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import OpeningHoursFormActions from './OpeningHoursFormActions';
+import ExceptionOpeningHoursValidity from '../exception-opening-hours-validity/ExceptionOpeningHoursValidity';
+import OpeningHours from './OpeningHours';
+import OpeningHoursFormPreview from '../opening-hours-form-preview/OpeningHoursFormPreview';
+import { SupplementaryButton } from '../button/Button';
+import useMobile from '../../hooks/useMobile';
 
-const getDefaultsValues = (datePeriod: ApiDatePeriod | undefined): DatePeriod =>
-  datePeriod
-    ? apiDatePeriodToDatePeriod(datePeriod)
-    : {
-        fixed: false,
-        endDate: null,
-        startDate: formatDate(new Date().toISOString()),
-        name: {
-          fi: null,
-          sv: null,
-          en: null,
-        },
-        openingHours: [
-          {
-            weekdays: [1, 2, 3, 4, 5],
-            timeSpanGroups: [defaultTimeSpanGroup],
-          },
-          {
-            weekdays: [6, 7],
-            timeSpanGroups: [
-              {
-                ...defaultTimeSpanGroup,
-                timeSpans: [
-                  {
-                    ...defaultTimeSpan,
-                    resource_state: ResourceState.CLOSED,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+export type FormConfig = {
+  exception: boolean;
+  defaultValues: DatePeriod;
+  texts: {
+    submit: {
+      notifications: {
+        success: string;
+        error: string;
       };
+    };
+    title: {
+      placeholders: {
+        fi: string;
+        sv: string;
+        en: string;
+      };
+    };
+  };
+};
+
+export type OpeningHoursFormProps = {
+  config: FormConfig;
+  datePeriod?: ApiDatePeriod;
+  datePeriodConfig: UiDatePeriodConfig;
+  submitFn: (values: ApiDatePeriod) => Promise<ApiDatePeriod>;
+  resource: Resource;
+};
 
 const OpeningHoursForm = ({
+  config,
   datePeriod,
   datePeriodConfig,
   submitFn,
   resource,
 }: {
+  config: FormConfig;
   datePeriod?: ApiDatePeriod;
   datePeriodConfig: UiDatePeriodConfig;
   submitFn: (values: ApiDatePeriod) => Promise<ApiDatePeriod>;
   resource: Resource;
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
-  const defaultValues: DatePeriod = getDefaultsValues(datePeriod);
+  const defaultValues: DatePeriod = datePeriod
+    ? apiDatePeriodToDatePeriod(datePeriod)
+    : config.defaultValues;
+
   const [isSaving, setSaving] = useState(false);
-  const [dropInRow, setDropInRow] = useState<number>();
-  const offsetTop = useRef<number>();
   const form = useForm<DatePeriod>({
     defaultValues,
   });
-  const { control, getValues, reset, setValue, watch } = form;
-  const { insert, fields, remove } = useFieldArray({
-    control,
-    name: 'openingHours',
-  });
+  const { clearErrors, getFieldState, setValue, trigger, watch } = form;
   const isMobile = useMobile();
   const {
     resourceState: { options: resourceStates = [] },
   } = datePeriodConfig;
+  const formValues = watch();
+  const { fixed, startDate, endDate } = formValues;
+  const { isDirty: endDateDirty } = getFieldState('endDate', form.formState);
+  const returnToResourcePage = useReturnToResourcePage();
   const rules = datePeriodToRules(defaultValues);
 
-  const returnToResourcePage = useReturnToResourcePage();
   const onSubmit = (values: DatePeriod): void => {
     if (!resource) {
       throw new Error('Resource not found');
@@ -106,106 +100,41 @@ const OpeningHoursForm = ({
       .then(() => {
         toast.success({
           dataTestId: 'opening-period-form-success',
-          label: 'Aukiolon tallennus onnistui',
+          label: config.texts.submit.notifications.success,
         });
         returnToResourcePage();
       })
       .catch(() => {
         toast.error({
           dataTestId: 'opening-period-form-error',
-          label: 'Aukiolon tallennus epäonnistui',
+          label: config.texts.submit.notifications.error,
         });
       })
       .finally(() => setSaving(false));
   };
 
-  const allDayAreUncheckedForRow = (idx: number): boolean => {
-    const weekdays = getValues(`openingHours.${idx}.weekdays`) as number[];
-
-    return weekdays.length === 0;
-  };
-
-  const setDay = (i: number, day: number, checked: boolean): void => {
-    const weekdays = getValues(`openingHours.${i}.weekdays`) as number[];
-    if (checked) {
-      setValue(`openingHours.${i}.weekdays`, [...weekdays, day]);
-    } else {
-      setValue(
-        `openingHours.${i}.weekdays`,
-        weekdays.filter((d) => d !== day)
-      );
-    }
-  };
-
-  const findPreviousChecked = (currentIdx: number, day: number): number =>
-    fields.findIndex(
-      (item, idx: number) =>
-        idx !== currentIdx &&
-        (getValues(`openingHours.${idx}.weekdays`) as number[]).includes(day)
-    );
-
-  const addNewRow = (currIndex: number, day: number): void => {
-    const newIdx = currIndex + 1;
-    const values = {
-      weekdays: [day],
-      timeSpanGroups: [
-        {
-          ...defaultTimeSpanGroup,
-          timeSpans: [
-            {
-              ...defaultTimeSpan,
-              resource_state: ResourceState.NO_OPENING_HOURS,
-            },
-          ],
-        },
-      ],
-    };
-    insert(newIdx, values, { shouldFocus: false });
-    // FIXME: For some reason the normal array won't get added in the insert
-    setValue(`openingHours.${newIdx}`, values);
-    setDropInRow(newIdx);
-  };
-
-  const toggleWeekday = (openingHoursIdx: number) => (
-    day: number,
-    checked: boolean,
-    newOffsetTop: number
-  ) => {
-    offsetTop.current = newOffsetTop;
-    setDropInRow(undefined);
-    if (checked) {
-      setDay(openingHoursIdx, day, true);
-      const prevId = findPreviousChecked(openingHoursIdx, day);
-      if (prevId >= 0) {
-        setDay(prevId, day, false);
-        if (allDayAreUncheckedForRow(prevId)) {
-          remove(prevId);
-        }
-      }
-    } else {
-      const weekdays = getValues(
-        `openingHours.${openingHoursIdx}.weekdays`
-      ).filter((d) => d !== day);
-      if (weekdays.length) {
-        setValue(`openingHours.${openingHoursIdx}.weekdays`, weekdays);
-        addNewRow(openingHoursIdx, day);
-      }
-    }
-  };
-
-  const formValues = watch();
-
   const sortOpeningHours = () => {
-    setDropInRow(undefined);
-    reset({
-      ...getValues(),
-      openingHours: [...formValues.openingHours].sort(byWeekdays),
-    });
+    setValue('openingHours', [...formValues.openingHours].sort(byWeekdays));
     toast.info({
       label: 'Päiväryhmät järjestetty viikonpäivien mukaan',
       position: 'bottom-right',
     });
   };
+
+  useEffect(() => {
+    // Validate only when end date has been changed so no annoying validation before the field is actually touched.
+    // This would otherwise happen when the user initially changes the start date to be after the end date.
+    if (endDate && endDateDirty) {
+      trigger('endDate');
+    }
+  }, [endDateDirty, startDate, endDate, trigger]);
+
+  useEffect(() => {
+    if (!fixed) {
+      setValue('endDate', null);
+      clearErrors('endDate');
+    }
+  }, [fixed, clearErrors, setValue]);
 
   return (
     (resource && datePeriodConfig && (
@@ -216,13 +145,11 @@ const OpeningHoursForm = ({
               language={language}
               resource={resource}
               titleAddon={formValues.name[language] || undefined}>
-              <div className="mobile-preview-container">
-                <OpeningHoursFormPreviewMobile
-                  datePeriod={formValues}
-                  language={language}
-                  resourceStates={resourceStates}
-                />
-              </div>
+              <OpeningHoursFormPreviewMobile
+                datePeriod={formValues}
+                language={language}
+                resourceStates={resourceStates}
+              />
             </ResourceTitle>
             <section className="opening-hours-form__content">
               <div className="card">
@@ -232,42 +159,40 @@ const OpeningHoursForm = ({
               </div>
               <OpeningHoursTitles
                 placeholders={{
-                  fi: 'Esim. kesäkausi',
-                  sv: 'T.ex. sommartid',
-                  en: 'E.g. summertime',
+                  fi: config.texts.title.placeholders.fi,
+                  sv: config.texts.title.placeholders.sv,
+                  en: config.texts.title.placeholders.en,
                 }}
               />
-              <OpeningHoursValidity />
-              <div className="opening-hours-form__fields">
-                <section className="opening-hours-section">
-                  {fields.map((field, i) => (
-                    <OpeningHoursWeekdays
-                      key={field.id}
-                      dropIn={dropInRow === i}
-                      offsetTop={offsetTop.current}
-                      i={i}
-                      item={field}
-                      resourceStates={resourceStates}
+              {config.exception ? (
+                <ExceptionOpeningHoursValidity />
+              ) : (
+                <NormalOpeningHoursValidity />
+              )}
+              {formValues.resourceState !== ResourceState.CLOSED && (
+                <div className="opening-hours-form__fields">
+                  <section className="opening-hours-section">
+                    <OpeningHours
                       rules={rules}
-                      onDayChange={toggleWeekday(i)}
+                      resourceStates={resourceStates}
                     />
-                  ))}
-                </section>
-                <aside className="opening-hours-form__aside">
-                  <OpeningHoursFormPreview
-                    datePeriod={formValues}
-                    resourceStates={resourceStates}
-                    tabIndex={isMobile ? -1 : 0}
-                  />
-                  <div className="sort-weekdays-container">
-                    <SupplementaryButton
-                      iconLeft={<IconSort />}
-                      onClick={sortOpeningHours}>
-                      Järjestä päiväryhmät viikonpäivien mukaan
-                    </SupplementaryButton>
-                  </div>
-                </aside>
-              </div>
+                  </section>
+                  <aside className="opening-hours-form__aside">
+                    <OpeningHoursFormPreview
+                      datePeriod={formValues}
+                      resourceStates={resourceStates}
+                      tabIndex={isMobile ? -1 : 0}
+                    />
+                    <div className="sort-weekdays-container">
+                      <SupplementaryButton
+                        iconLeft={<IconSort />}
+                        onClick={sortOpeningHours}>
+                        Järjestä päiväryhmät viikonpäivien mukaan
+                      </SupplementaryButton>
+                    </div>
+                  </aside>
+                </div>
+              )}
             </section>
           </div>
           <OpeningHoursFormActions isSaving={isSaving} />

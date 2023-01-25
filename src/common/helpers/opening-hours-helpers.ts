@@ -1,4 +1,5 @@
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
+import { defaultTimeSpanGroup } from '../../constants';
 import { Holiday } from '../../services/holidays';
 import {
   ApiDatePeriod,
@@ -15,6 +16,7 @@ import {
   RuleType,
   Language,
 } from '../lib/types';
+import { getEnabledWeekdays } from '../utils/date-time/date-time';
 import {
   formatDate,
   transformDateToApiFormat,
@@ -127,7 +129,7 @@ export const datePeriodToApiDatePeriod = (
     fi: null,
     sv: null,
   },
-  override: false,
+  override: datePeriod.override,
   resource,
   start_date: datePeriod.startDate
     ? transformDateToApiFormat(datePeriod.startDate)
@@ -388,4 +390,69 @@ export const getDatePeriodName = (
     default:
       return 'Normal opening hours';
   }
+};
+
+const updateWeekdays = (enabledWeekdays: number[]) => (
+  openingHours: OpeningHours
+): OpeningHours => ({
+  ...openingHours,
+  weekdays: openingHours.weekdays.filter((d: number) =>
+    enabledWeekdays.includes(d)
+  ),
+});
+
+const hasWeekdays = (openingHours: OpeningHours) =>
+  openingHours.weekdays.length > 0;
+
+const hasWeekday = (weekday: number) => (openingHours: OpeningHours) =>
+  openingHours.weekdays.includes(weekday);
+
+export const alignOpeningHoursWeekdaysToDateRange = (
+  openingHours: OpeningHours[],
+  startDate: string | null,
+  endDate: string | null
+): OpeningHours[] => {
+  const enabledWeekdays = getEnabledWeekdays(startDate, endDate);
+
+  if (enabledWeekdays.length === 0) {
+    return openingHours;
+  }
+
+  const updatedOpeningHours = openingHours
+    .map(updateWeekdays(enabledWeekdays))
+    .filter(hasWeekdays);
+
+  const nonFoundWeekdays = enabledWeekdays.filter(
+    (weekday) => !updatedOpeningHours.some(hasWeekday(weekday))
+  );
+
+  if (updatedOpeningHours.length > 0) {
+    return updatedOpeningHours.reduce((acc, elem, idx) => {
+      if (idx === 0) {
+        return [
+          {
+            ...elem,
+            // Adds previously non found weekdays to the first row
+            weekdays: [...elem.weekdays, ...nonFoundWeekdays].sort(
+              (a, b) => a - b
+            ),
+          },
+          // And keeps rest as is
+          ...acc.slice(1),
+        ];
+      }
+      return acc;
+    }, updatedOpeningHours);
+  }
+
+  if (openingHours.length === 1) {
+    return [{ ...openingHours[0], weekdays: nonFoundWeekdays }];
+  }
+
+  return [
+    {
+      weekdays: nonFoundWeekdays,
+      timeSpanGroups: [defaultTimeSpanGroup],
+    },
+  ];
 };

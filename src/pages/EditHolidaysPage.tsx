@@ -35,9 +35,10 @@ import { useAppContext } from '../App-context';
 import './EditHolidaysPage.scss';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import useMobile from '../hooks/useMobile';
-import ExceptionOpeningHoursFormInputs from '../components/exception-opening-hours-form-inputs/ExceptionOpeningHoursFormInputs';
-import ExceptionOpeningHours from '../components/exception-opening-hours/ExceptionOpeningHours';
+import ExceptionOpeningHoursStateToggle from '../components/exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
+import HolidayOpeningHours from '../components/holiday-opening-hours/HolidayOpeningHours';
 import { defaultTimeSpanGroup } from '../constants';
+import TimeSpans from '../components/time-span/TimeSpans';
 
 type FormActions = {
   create: (values: DatePeriod) => Promise<void>;
@@ -126,7 +127,7 @@ const HolidayForm = ({
             ? form.handleSubmit(saveExisting)
             : form.handleSubmit(createNew)
         }>
-        <ExceptionOpeningHoursFormInputs
+        <ExceptionOpeningHoursStateToggle
           id={id}
           isOpen={
             valueToUse && valueToUse.resourceState
@@ -134,9 +135,15 @@ const HolidayForm = ({
               : false
           }
           onClose={onClosedSelect}
-          onOpen={onOpenSelect}
-          resourceStates={resourceStates}
-        />
+          onOpen={onOpenSelect}>
+          <div className="holiday-opening-hours-time-spans">
+            <TimeSpans
+              openingHoursIdx={0}
+              resourceStates={resourceStates}
+              timeSpanGroupIdx={0}
+            />
+          </div>
+        </ExceptionOpeningHoursStateToggle>
         <div className="holiday-form-actions">
           <PrimaryButton
             dataTest="submit-opening-hours-button"
@@ -221,6 +228,8 @@ const HolidayListItem = ({
                   </p>
                 </>
               }
+              isLoading={willBeRemoved}
+              loadingText="Poistetaan aukiolojaksoa"
               isOpen={isModalOpen}
               onClose={closeModal}
               confirmText="Poista"
@@ -263,9 +272,8 @@ const HolidayListItem = ({
             ) : (
               <>
                 <div className="holidays-list-item-column">
-                  <ExceptionOpeningHours
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    datePeriod={value!}
+                  <HolidayOpeningHours
+                    datePeriod={value}
                     datePeriodConfig={datePeriodConfig}
                   />
                 </div>
@@ -334,21 +342,13 @@ export default function EditHolidaysPage({
     [holidays]
   );
 
-  const formValuesToHolidayPeriod = (
-    resourceIdToSave: number,
-    values: DatePeriod
-  ): ApiDatePeriod => ({
-    ...datePeriodToApiDatePeriod(resourceIdToSave, values),
-    override: true,
-  });
-
   const create = async (values: DatePeriod): Promise<void> => {
     if (!resource) {
       throw new Error('Resource not found');
     }
 
     return api
-      .postDatePeriod(formValuesToHolidayPeriod(resource.id, values))
+      .postDatePeriod(datePeriodToApiDatePeriod(resource.id, values))
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
@@ -371,7 +371,7 @@ export default function EditHolidaysPage({
     }
 
     return api
-      .putDatePeriod(formValuesToHolidayPeriod(resource.id, values))
+      .putDatePeriod(datePeriodToApiDatePeriod(resource.id, values))
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',

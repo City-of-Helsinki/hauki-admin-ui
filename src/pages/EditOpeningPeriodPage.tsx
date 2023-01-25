@@ -5,8 +5,8 @@ import {
   UiDatePeriodConfig,
   Resource,
 } from '../common/lib/types';
-import OpeningHoursForm from '../components/opening-hours-form/OpeningHoursForm';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
+import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
 
 export default function EditOpeningPeriodPage({
   resourceId,
@@ -54,7 +54,7 @@ export default function EditOpeningPeriodPage({
   }
 
   return (
-    <OpeningHoursForm
+    <NormalOpeningHoursForm
       datePeriod={datePeriod}
       datePeriodConfig={datePeriodConfig}
       resource={resource}

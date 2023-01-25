@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { datePeriodOptions } from '../../../../test/fixtures/api-options';
-import { datePeriod } from '../../../../test/fixtures/date-period';
+import { datePeriodOptions } from '../../../test/fixtures/api-options';
+import { datePeriod } from '../../../test/fixtures/date-period';
 import {
   DatePeriod,
   Language,
   UiDatePeriodConfig,
-} from '../../../common/lib/types';
+} from '../../common/lib/types';
 import OpeningPeriod from './OpeningPeriod';
 
 const testDatePeriod: DatePeriod = datePeriod;
@@ -18,8 +18,8 @@ describe(`<OpeningPeriod />`, () => {
     const { container } = render(
       <Router>
         <OpeningPeriod
+          editUrl="some-url"
           initiallyOpen={false}
-          resourceId={1}
           datePeriod={testDatePeriod}
           language={Language.FI}
           datePeriodConfig={testDatePeriodOptions}

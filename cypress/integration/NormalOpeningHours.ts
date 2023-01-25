@@ -7,22 +7,22 @@ describe('User adds a new opening period', () => {
 
   it('Users successfully adds a new opening hours', () => {
     // Go to add new openings hours
-    cy.get('[data-test=add-new-opening-period-button]').click();
+    cy.get('[data-test=add-new-opening-period-button]').first().click();
 
     // Fill in opening hours
+    const now = new Date();
 
     // Start filling the form, first is opening period title in finnish
-    cy.get('[data-test=opening-period-title-fi').type(
-      `e2e-test Testijakson otsikko ${new Date().toJSON()}`
-    );
+    const titleFi = `e2e-test Testijakson otsikko ${now.toJSON()}`;
+    cy.get('[data-test=opening-period-title-fi').type(titleFi);
 
     // ...then in swedish
     cy.get('[data-test=opening-period-title-sv').type(
-      `e2e-test test periods rubrik ${new Date().toJSON()}`
+      `e2e-test test periods rubrik ${now.toJSON()}`
     );
     // ...then in english
     cy.get('[data-test=opening-period-title-en').type(
-      `e2e-test test period's title ${new Date().toJSON()}`
+      `e2e-test test period's title ${now.toJSON()}`
     );
 
     // Then select the begin and end date for the period. For the test we wish to select the summer dates
@@ -31,7 +31,9 @@ describe('User adds a new opening period', () => {
     });
     cy.get('[data-test=opening-period-begin-date]').click();
     cy.get('button[aria-label="Valitse alkupäivämäärä"]').click();
-    cy.get('select[aria-label="Kuukausi"]').first().select('5');
+    cy.get('select[aria-label="Kuukausi"]')
+      .first()
+      .select(`${now.getMonth() + 2}`);
     cy.get(`[role="dialog"] button[data-date$="01"]`)
       .filter(':visible')
       .click({ force: true });
@@ -39,8 +41,10 @@ describe('User adds a new opening period', () => {
     cy.get('button[aria-label="Valitse loppupäivämäärä"]')
       .filter(':visible')
       .click();
-    cy.get('select[aria-label="Kuukausi"]').last().select('6');
-    cy.get(`[role="dialog"] button[data-date$="31"]`)
+    cy.get('select[aria-label="Kuukausi"]')
+      .last()
+      .select(`${now.getMonth() + 3}`);
+    cy.get(`[role="dialog"] button[data-date$="28"]`)
       .filter(':visible')
       .click({ force: true });
 
@@ -106,28 +110,31 @@ describe('User adds a new opening period', () => {
     cy.get('[data-test=submit-opening-hours-button]').click();
 
     cy.get('[data-testid=opening-period-form-success]', {
-      timeout: 10000,
-    }).should('be.visible');
+      timeout: 30000,
+    })
+      .should('be.visible')
+      .contains('Aukiolon tallennus onnistui');
+    cy.contains(titleFi);
   });
 
   it('Users successfully adds a weekday with no opening hours', () => {
     // Go to add new openings hours
-    cy.get('[data-test=add-new-opening-period-button]').click();
+    cy.get('[data-test=add-new-opening-period-button]').first().click();
 
     // Fill in opening hours
+    const now = new Date();
 
     // Start filling the form, first is opening period title in finnish
-    cy.get('[data-test=opening-period-title-fi').type(
-      `e2e-test Testijakson otsikko ${new Date().toJSON()}`
-    );
+    const titleFi = `e2e-test Testijakson otsikko ${now.toJSON()}`;
+    cy.get('[data-test=opening-period-title-fi').type(titleFi);
 
     // ...then in swedish
     cy.get('[data-test=opening-period-title-sv').type(
-      `e2e-test test periods rubrik ${new Date().toJSON()}`
+      `e2e-test test periods rubrik ${now.toJSON()}`
     );
     // ...then in english
     cy.get('[data-test=opening-period-title-en').type(
-      `e2e-test test period's title ${new Date().toJSON()}`
+      `e2e-test test period's title ${now.toJSON()}`
     );
 
     // Then select the begin and end date for the period. For the test we wish to select the summer dates
@@ -136,7 +143,9 @@ describe('User adds a new opening period', () => {
     });
     cy.get('[data-test=opening-period-begin-date]').click();
     cy.get('button[aria-label="Valitse alkupäivämäärä"]').click();
-    cy.get('select[aria-label="Kuukausi"]').first().select('5');
+    cy.get('select[aria-label="Kuukausi"]')
+      .first()
+      .select(`${now.getMonth() + 2}`);
     cy.get(`[role="dialog"] button[data-date$="01"]`)
       .filter(':visible')
       .click({ force: true });
@@ -144,8 +153,10 @@ describe('User adds a new opening period', () => {
     cy.get('button[aria-label="Valitse loppupäivämäärä"]')
       .filter(':visible')
       .click();
-    cy.get('select[aria-label="Kuukausi"]').last().select('6');
-    cy.get(`[role="dialog"] button[data-date$="31"]`)
+    cy.get('select[aria-label="Kuukausi"]')
+      .last()
+      .select(`${now.getMonth() + 3}`);
+    cy.get(`[role="dialog"] button[data-date$="28"]`)
       .filter(':visible')
       .click({ force: true });
 
@@ -177,7 +188,11 @@ describe('User adds a new opening period', () => {
     cy.get('[data-test=submit-opening-hours-button]').click();
 
     cy.get('[data-testid=opening-period-form-success]', {
-      timeout: 10000,
-    }).should('be.visible');
+      timeout: 30000,
+    })
+      .should('be.visible')
+      .contains('Aukiolon tallennus onnistui');
+
+    cy.contains(titleFi);
   });
 });

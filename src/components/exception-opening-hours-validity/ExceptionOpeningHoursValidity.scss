@@ -1,0 +1,20 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.exception-date {
+  max-width: 160px;
+  width: 100%;
+}
+
+.exception-opening-hours-validity {
+  margin-bottom: 0.5rem;
+}
+
+.exception-opening-hours-validity__title legend {
+  font-size: $fontsize-heading-xs;
+  font-weight: bold;
+}
+
+.exception-opening-hours-validity__dates {
+  display: flex;
+  gap: 1rem;
+}

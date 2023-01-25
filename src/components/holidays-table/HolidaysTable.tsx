@@ -8,32 +8,12 @@ import {
 } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
 import { Holiday, isHoliday } from '../../services/holidays';
-import ExceptionOpeningHours from '../exception-opening-hours/ExceptionOpeningHours';
+import HolidayOpeningHours from '../holiday-opening-hours/HolidayOpeningHours';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import './HolidaysTable.scss';
 
-const HolidayOpeningHours = ({
-  datePeriods,
-  holiday,
-  datePeriodConfig,
-}: {
-  datePeriodConfig?: UiDatePeriodConfig;
-  datePeriods: DatePeriod[];
-  holiday: Holiday;
-}): JSX.Element => {
-  const datePeriod = datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
-
-  if (datePeriod) {
-    return (
-      <ExceptionOpeningHours
-        datePeriod={datePeriod}
-        datePeriodConfig={datePeriodConfig}
-      />
-    );
-  }
-
-  return <>Ei poikkeavia aukioloja</>;
-};
+const findHolidayDatePeriod = (holiday: Holiday, datePeriods: DatePeriod[]) =>
+  datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
 
 export const UpcomingHolidayNotification = ({
   datePeriodConfig,
@@ -45,22 +25,23 @@ export const UpcomingHolidayNotification = ({
   holidays: Holiday[];
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
-  const holiday = holidays.find(isHoliday);
+  const nextHoliday = holidays.find(isHoliday);
 
-  if (!holiday) {
+  if (!nextHoliday) {
     throw new Error('Holiday not found');
   }
+
+  const datePeriod = findHolidayDatePeriod(nextHoliday, datePeriods);
 
   return (
     <div className="upcoming-holidays">
       <span>
-        Seuraava juhlapyhä: <strong>{holiday.name[language]}</strong>
+        Seuraava juhlapyhä: <strong>{nextHoliday.name[language]}</strong>
       </span>
       <span className="upcoming-holidays-divider">—</span>
       <HolidayOpeningHours
         datePeriodConfig={datePeriodConfig}
-        datePeriods={datePeriods}
-        holiday={holiday}
+        datePeriod={datePeriod}
       />
     </div>
   );
@@ -141,8 +122,7 @@ const HolidaysTable = ({
                 role="cell">
                 <HolidayOpeningHours
                   datePeriodConfig={datePeriodConfig}
-                  datePeriods={datePeriods}
-                  holiday={holiday}
+                  datePeriod={findHolidayDatePeriod(holiday, datePeriods)}
                 />
               </div>
             </div>
