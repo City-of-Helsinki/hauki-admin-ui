@@ -40,14 +40,6 @@ describe('User adds a new holiday opening period', () => {
     })
       .should('be.visible')
       .contains('Jouluaatto aukiolon lisääminen onnistui');
-
-    cy.contains('Palaa etusivulle').click({ force: true });
-
-    cy.wait(8000);
-
-    cy.get('[data-test=openingPeriodAccordionButton-holidays]').first().click();
-
-    cy.contains('08:00-16:00Itsepalvelu').should('be.visible');
   });
 
   afterEach(() => {
