@@ -20,16 +20,14 @@ import Main from './components/main/Main';
 import NavigationAndFooterWrapper from './components/navigation-and-footer-wrapper/NavigationAndFooterWrapper';
 import HaukiNavigation from './components/navigation/HaukiNavigation';
 import './App.scss';
-
-import CreateNewOpeningPeriodPage from './pages/CreateNewOpeningPeriodPage';
-
 import { Language } from './common/lib/types';
 import PrivateResourceRoute from './components/router/PrivateResourceRoute';
 import ResourcePage from './pages/ResourcePage';
-import EditOpeningPeriodPage from './pages/EditOpeningPeriodPage';
+import AddNormalOpeningHoursPage from './pages/AddNormalOpeningHoursPage';
+import EditNormalOpeningHoursPage from './pages/EditNormalOpeningHoursPage';
 import EditHolidaysPage from './pages/EditHolidaysPage';
-import CreateNewExceptionPage from './pages/CreateNewExceptionPage';
-import EditExceptionPage from './pages/EditExceptionPage';
+import AddExceptionOpeningHoursPage from './pages/AddExceptionOpeningHoursPage';
+import EditExceptionOpeningHoursPage from './pages/EditExceptionOpeningHoursPage';
 
 type OptionalAuthTokens = AuthTokens | undefined;
 
@@ -151,9 +149,7 @@ export default function App(): JSX.Element {
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <CreateNewOpeningPeriodPage
-                        resourceId={match.params.id}
-                      />
+                      <AddNormalOpeningHoursPage resourceId={match.params.id} />
                     </Main>
                   </>
                 )}
@@ -173,7 +169,7 @@ export default function App(): JSX.Element {
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <EditOpeningPeriodPage
+                      <EditNormalOpeningHoursPage
                         resourceId={match.params.id}
                         datePeriodId={match.params.datePeriodId}
                       />
@@ -214,7 +210,9 @@ export default function App(): JSX.Element {
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <CreateNewExceptionPage resourceId={match.params.id} />
+                      <AddExceptionOpeningHoursPage
+                        resourceId={match.params.id}
+                      />
                     </Main>
                   </>
                 )}
@@ -234,7 +232,7 @@ export default function App(): JSX.Element {
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <EditExceptionPage
+                      <EditExceptionOpeningHoursPage
                         datePeriodId={match.params.datePeriodId}
                         resourceId={match.params.id}
                       />

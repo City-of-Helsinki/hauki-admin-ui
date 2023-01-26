@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Resource, UiDatePeriodConfig } from '../common/lib/types';
+import {
+  Resource,
+  UiDatePeriodConfig,
+  ApiDatePeriod,
+} from '../common/lib/types';
 import api from '../common/utils/api/api';
-import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';
+import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
 
-export default function CreateNewExceptionPage({
+const AddNormalOpeningHoursPage = ({
   resourceId,
 }: {
   resourceId: string;
-}): JSX.Element {
+}): JSX.Element => {
   const [resource, setResource] = useState<Resource>();
   const [datePeriodConfig, setDatePeriodConfig] = useState<
     UiDatePeriodConfig
@@ -36,11 +40,16 @@ export default function CreateNewExceptionPage({
     return <h1>Ladataan...</h1>;
   }
 
+  const submitFn = (data: ApiDatePeriod): Promise<ApiDatePeriod> =>
+    api.postDatePeriod(data);
+
   return (
-    <ExceptionOpeningHoursForm
+    <NormalOpeningHoursForm
       datePeriodConfig={datePeriodConfig}
+      submitFn={submitFn}
       resource={resource}
-      submitFn={api.postDatePeriod}
     />
   );
-}
+};
+
+export default AddNormalOpeningHoursPage;

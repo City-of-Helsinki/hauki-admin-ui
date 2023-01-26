@@ -6,15 +6,15 @@ import {
   Resource,
 } from '../common/lib/types';
 import { getDatePeriodFormConfig } from '../services/datePeriodFormConfig';
-import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';
+import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
 
-export default function EditExceptionPage({
+const EditNormalOpeningHoursPage = ({
   resourceId,
   datePeriodId,
 }: {
   resourceId: string;
   datePeriodId: string;
-}): JSX.Element {
+}): JSX.Element => {
   const id = parseInt(datePeriodId, 10);
   const [resource, setResource] = useState<Resource>();
   const [datePeriodConfig, setDatePeriodConfig] = useState<
@@ -54,11 +54,13 @@ export default function EditExceptionPage({
   }
 
   return (
-    <ExceptionOpeningHoursForm
+    <NormalOpeningHoursForm
       datePeriod={datePeriod}
       datePeriodConfig={datePeriodConfig}
       resource={resource}
       submitFn={submitFn}
     />
   );
-}
+};
+
+export default EditNormalOpeningHoursPage;
