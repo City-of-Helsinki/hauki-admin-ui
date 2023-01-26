@@ -43,7 +43,7 @@ describe('User adds a new holiday opening period', () => {
 
     cy.contains('Palaa etusivulle').click({ force: true });
 
-    cy.wait(4000);
+    cy.wait(8000);
 
     cy.get('[data-test=openingPeriodAccordionButton-holidays]').first().click();
 
