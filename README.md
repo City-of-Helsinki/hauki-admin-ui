@@ -24,7 +24,7 @@ It is also possible to configure API's URL by setting env variable API_URL, for 
 
 1. Export required environment variables: 
     ```shell 
-    export HAUKI_KEY=<HAUKI_KEY> HAUKI_USER=<HAUKI_USER> HAUKI_ORGANIZATION=<HAUKI_ORGANIZATION> HAUKI_RESOURCE=<HAUKI_RESOURCE>
+    export HAUKI_KEY=<HAUKI_KEY> HAUKI_USER=<HAUKI_USER> HAUKI_ORGANIZATION=<HAUKI_ORGANIZATION> HAUKI_RESOURCE=<HAUKI_RESOURCE> HAUKI_SOURCE=<HAUKI_SOURCE>
     ```
 2. Generate query-parameters: 
    ```shell 
