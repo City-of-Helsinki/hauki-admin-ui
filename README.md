@@ -118,8 +118,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Type instantiation is excessively deep and possibly infinite
 
 At the times the compilation might fail to the following error while
-running development server locally causing the developer to restart
-the server whenever the error occurs and slowing down the development.
+running the development server locally causing the developer to restart
+the server whenever the error occurs and slows down the development.
 
 ```
 Type instantiation is excessively deep and possibly infinite
