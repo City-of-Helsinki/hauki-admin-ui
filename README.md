@@ -101,3 +101,23 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Known issues
+## Type instantiation is excessively deep and possibly infinite
+
+At the times the compilation might fail to the following error while
+running development server locally causing the developer to restart
+the server whenever the error occurs and slowing down the development.
+
+```
+Type instantiation is excessively deep and possibly infinite
+```
+
+This started to occur after upgrading `react-hook-form` from v6 to v7.
+The current react-hook-form and TypeScript versions are locked because of this
+to mitigate the issue.
+
+More info about the issue can be found here:
+https://github.com/react-hook-form/react-hook-form/issues/6679
+
+According to to the previous discussion to discharge the issue consider upgrading to `react-hook-form` v8.
