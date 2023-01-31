@@ -1,5 +1,8 @@
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
-import { defaultTimeSpanGroup } from '../../constants';
+import {
+  defaultNoOpeningHoursTimeSpanGroup,
+  defaultTimeSpanGroup,
+} from '../../constants';
 import { Holiday } from '../../services/holidays';
 import {
   ApiDatePeriod,
@@ -466,3 +469,110 @@ export const alignOpeningHoursWeekdaysToDateRange = (
     },
   ];
 };
+
+type SelectResult = {
+  updated: {
+    idx: number;
+    weekdays: number[];
+  }[];
+};
+
+type SelectWeekdayResult = SelectResult & {
+  removed?: number;
+};
+
+type UnselectWeekdayResult = SelectResult & {
+  added?: { idx: number; value: OpeningHours };
+};
+
+const addWeekday = (
+  weekday: number,
+  openingHours: OpeningHours
+): OpeningHours => ({
+  ...openingHours,
+  weekdays: [...openingHours.weekdays, weekday],
+});
+
+const removeWeekday = (
+  weekday: number,
+  openingHours: OpeningHours
+): OpeningHours => ({
+  ...openingHours,
+  weekdays: openingHours.weekdays.filter((d) => d !== weekday),
+});
+
+const setSelected = (
+  openingHours: OpeningHours[],
+  weekday: number,
+  row: number
+): SelectWeekdayResult => {
+  const result: SelectWeekdayResult = {
+    updated: [],
+  };
+  const curr = openingHours[row];
+
+  if (curr.weekdays.includes(weekday)) {
+    return result;
+  }
+
+  result.updated = [{ idx: row, weekdays: addWeekday(weekday, curr).weekdays }];
+
+  const prevIdx = openingHours.findIndex((o) => o.weekdays.includes(weekday));
+  if (prevIdx >= 0) {
+    const prev = removeWeekday(weekday, openingHours[prevIdx]);
+    if (prev.weekdays.length === 0) {
+      result.removed = prevIdx;
+    } else {
+      result.updated = [
+        ...result.updated,
+        { idx: prevIdx, weekdays: prev.weekdays },
+      ];
+    }
+  }
+
+  return result;
+};
+
+const setUnselected = (
+  openingHours: OpeningHours[],
+  weekday: number,
+  row: number
+): UnselectWeekdayResult => {
+  const result: UnselectWeekdayResult = { updated: [] };
+  const curr = openingHours[row];
+
+  if (curr.weekdays.length === 1) {
+    return result;
+  }
+
+  result.updated = [
+    { idx: row, weekdays: removeWeekday(weekday, curr).weekdays },
+  ];
+
+  result.added = {
+    idx: row + 1,
+    value: {
+      weekdays: [weekday],
+      timeSpanGroups: [defaultNoOpeningHoursTimeSpanGroup],
+    },
+  };
+
+  return result;
+};
+
+/**
+ * Helper function for managing opening hours rows
+ *
+ * It returns a result of which rows should be updated
+ * with which data, which rows should be deleted and which
+ * one added depending on if a weekday is selected on unselected.
+ */
+export const updateWeekday = (
+  openingHours: OpeningHours[],
+  weekday: number,
+  select: boolean,
+  row: number
+): SelectWeekdayResult | UnselectWeekdayResult =>
+  select
+    ? setSelected(openingHours, weekday, row)
+    : setUnselected(openingHours, weekday, row);
