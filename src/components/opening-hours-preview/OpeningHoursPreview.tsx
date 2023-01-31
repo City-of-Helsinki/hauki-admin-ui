@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useAppContext } from '../../App-context';
 import { openingHoursToPreviewRows } from '../../common/helpers/preview-helpers';
 import {
@@ -167,36 +167,29 @@ const OpeningHoursPreview = ({
               </tr>
             </thead>
             <tbody>
-              {previewRow.openingHours.map((openingHour, openingHourIdx) => {
-                const rowClass =
-                  openingHourIdx % 2 === 0
-                    ? 'time-span-row--odd'
-                    : 'time-span-row--even';
-
-                return (
-                  <Fragment key={`opening-hours-${openingHourIdx}`}>
-                    {openingHour.timeSpans.map((timeSpan, timeSpanIdx) => (
-                      <Fragment key={`time-span-${timeSpanIdx}`}>
-                        <TimeSpanRow
-                          key={`time-span-row-${timeSpanIdx}`}
-                          className={rowClass}
-                          idx={timeSpanIdx}
-                          label={
-                            timeSpanIdx === 0
-                              ? createWeekdaysStringFromIndices(
-                                  openingHour.weekdays,
-                                  language
-                                )
-                              : ''
-                          }
-                          resourceStates={resourceStates}
-                          timeSpan={timeSpan}
-                        />
-                      </Fragment>
-                    ))}
-                  </Fragment>
-                );
-              })}
+              {previewRow.openingHours.map((openingHour, openingHourIdx) =>
+                openingHour.timeSpans.map((timeSpan, timeSpanIdx) => (
+                  <TimeSpanRow
+                    key={`time-span-row-${timeSpanIdx}`}
+                    className={
+                      openingHourIdx % 2 === 0
+                        ? 'time-span-row--odd'
+                        : 'time-span-row--even'
+                    }
+                    idx={timeSpanIdx}
+                    label={
+                      timeSpanIdx === 0
+                        ? createWeekdaysStringFromIndices(
+                            openingHour.weekdays,
+                            language
+                          )
+                        : ''
+                    }
+                    resourceStates={resourceStates}
+                    timeSpan={timeSpan}
+                  />
+                ))
+              )}
             </tbody>
           </table>
         )
