@@ -16,11 +16,6 @@ import { SupplementaryButton } from '../button/Button';
 import TimeSpan from './TimeSpan';
 import './TimeSpans.scss';
 
-/**
- * Resets start and end times.
- * Also depending on if the description is allowed
- * for the resource type it either resets it or keeps it untouched.
- */
 const resetTimeSpan = (timeSpan: TTimeSpan): TTimeSpan => ({
   ...defaultTimeSpan,
   id: timeSpan.id,
