@@ -16,7 +16,12 @@ import { SupplementaryButton } from '../button/Button';
 import TimeSpan from './TimeSpan';
 import './TimeSpans.scss';
 
-const resetStartAndEndTimes = (timeSpan: TTimeSpan): TTimeSpan => ({
+/**
+ * Resets start and end times.
+ * Also depending on if the description is allowed
+ * for the resource type it either resets it or keeps it untouched.
+ */
+const resetTimeSpan = (timeSpan: TTimeSpan): TTimeSpan => ({
   ...defaultTimeSpan,
   id: timeSpan.id,
   description:
@@ -58,7 +63,7 @@ const TimeSpans = ({
     if (onlyOneTimeSpanAllowed) {
       setValue(
         firstTimeSpanKey,
-        resetStartAndEndTimes(getValues(`${firstTimeSpanKey}`))
+        resetTimeSpan(getValues(`${firstTimeSpanKey}`))
       );
 
       if (fields.length > 1) {
