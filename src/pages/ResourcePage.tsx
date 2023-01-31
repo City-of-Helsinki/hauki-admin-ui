@@ -42,7 +42,7 @@ const ResourceDetailsSection = ({
   </ResourceSection>
 );
 
-export default function ResourcePage({
+const ResourcePage = ({
   childId,
   id,
   targetResourcesString,
@@ -50,7 +50,7 @@ export default function ResourcePage({
   childId?: string;
   id: string;
   targetResourcesString?: string;
-}): JSX.Element {
+}): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
   const [resource, setResource] = useState<Resource | undefined>(undefined);
@@ -227,4 +227,6 @@ export default function ResourcePage({
       )}
     </div>
   );
-}
+};
+
+export default ResourcePage;
