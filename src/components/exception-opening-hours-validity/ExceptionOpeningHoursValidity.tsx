@@ -112,7 +112,9 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
             },
           ]);
         }}
-        isOpen={resourceState ? resourceState !== ResourceState.CLOSED : false}
+        initiallyOpen={
+          resourceState ? resourceState !== ResourceState.CLOSED : false
+        }
       />
     </div>
   );

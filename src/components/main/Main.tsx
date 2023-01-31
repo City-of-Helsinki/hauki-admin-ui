@@ -10,8 +10,10 @@ export function MainContainer({ children }: Partial<MainProps>): JSX.Element {
   return <div className="main-container">{children}</div>;
 }
 
-export default ({ id, children }: MainProps): JSX.Element => (
+const Main = ({ id, children }: MainProps): JSX.Element => (
   <main id={id} className="main">
     <MainContainer>{children}</MainContainer>
   </main>
 );
+
+export default Main;

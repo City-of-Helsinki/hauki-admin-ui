@@ -79,7 +79,7 @@ interface PrivateRouteProps extends RouteProps {
   id: string;
 }
 
-export default function (routeProps: PrivateRouteProps): JSX.Element {
+const PrivateResourceRoute = (routeProps: PrivateRouteProps): JSX.Element => {
   const { render, ...rest } = routeProps;
 
   return (
@@ -106,4 +106,6 @@ export default function (routeProps: PrivateRouteProps): JSX.Element {
       }}
     />
   );
-}
+};
+
+export default PrivateResourceRoute;

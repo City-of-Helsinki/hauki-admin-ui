@@ -326,6 +326,16 @@ export const isHolidayOrEve = (
 export const isDescriptionAllowed = (resourceState: ResourceState): boolean =>
   resourceState !== ResourceState.NO_OPENING_HOURS;
 
+export const areStartAndEndTimesAllowed = (
+  timeSpanIdx: number,
+  resourceState?: ResourceState
+): boolean =>
+  resourceState === undefined ||
+  [ResourceState.NO_OPENING_HOURS, ResourceState.CLOSED].includes(
+    resourceState
+  ) === false ||
+  timeSpanIdx !== 0;
+
 const ruleTypeOrder: RuleType[] = ['week_every', 'week_even', 'week_odd'];
 
 export const byRuleType = (a: Rule, b: Rule): number =>

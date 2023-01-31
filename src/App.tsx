@@ -43,7 +43,7 @@ const getPersistentTokens = (): OptionalAuthTokens => {
   return getTokens();
 };
 
-export default function App(): JSX.Element {
+const App = (): JSX.Element => {
   const hasOpenerWindow =
     document.referrer && document.referrer !== window.location.href;
 
@@ -246,4 +246,6 @@ export default function App(): JSX.Element {
       </AppContext.Provider>
     </div>
   );
-}
+};
+
+export default App;

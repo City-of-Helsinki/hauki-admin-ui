@@ -29,16 +29,12 @@ describe('User adds a new exception date period', () => {
     cy.get('[data-test=exception-start-date]').click();
     cy.get('button[aria-label="Valitse alkupäivämäärä"]').first().click();
 
-    const currDay = now.getDate() + 1;
+    const currMonth = now.getMonth() + 2;
 
-    cy.get(`[role="dialog"] button[data-date$="${currDay}"]`)
-      .filter(':visible')
-      .click({ force: true });
-
-    cy.get('[data-test=exception-end-date]').click();
-    cy.get('button[aria-label="Valitse loppupäivämäärä"]').first().click();
-
-    cy.get(`[role="dialog"] button[data-date$="${currDay}"]`)
+    cy.get('[data-test=exception-start-date]').click();
+    cy.get('button[aria-label="Valitse alkupäivämäärä"]').first().click();
+    cy.get('select[aria-label="Kuukausi"]').first().select(`${currMonth}`);
+    cy.get(`[role="dialog"] button[data-date$="01"]`)
       .filter(':visible')
       .click({ force: true });
 
@@ -112,19 +108,21 @@ describe('User adds a new exception date period', () => {
     cy.get('[data-test=opening-period-title-en').type(
       `e2e-test exception test period's title ${now.toJSON()}`
     );
+
+    const currMonth = now.getMonth() + 2;
+
     cy.get('[data-test=exception-start-date]').click();
     cy.get('button[aria-label="Valitse alkupäivämäärä"]').first().click();
-
-    const currDay = now.getDate();
-
-    cy.get(`[role="dialog"] button[data-date$="${currDay}"]`)
+    cy.get('select[aria-label="Kuukausi"]').first().select(`${currMonth}`);
+    cy.get(`[role="dialog"] button[data-date$="01"]`)
       .filter(':visible')
       .click({ force: true });
-
-    cy.get('[data-test=exception-end-date]').click();
-    cy.get('button[aria-label="Valitse loppupäivämäärä"]').first().click();
-
-    cy.get(`[role="dialog"] button[data-date$="${currDay + 2}"]`)
+    cy.get('[data-test="exception-end-date"]').click();
+    cy.get('button[aria-label="Valitse loppupäivämäärä"]')
+      .filter(':visible')
+      .click();
+    cy.get('select[aria-label="Kuukausi"]').last().select(`${currMonth}`);
+    cy.get(`[role="dialog"] button[data-date$="05"]`)
       .filter(':visible')
       .click({ force: true });
 

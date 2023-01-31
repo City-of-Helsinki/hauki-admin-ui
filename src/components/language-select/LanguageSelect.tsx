@@ -27,7 +27,7 @@ export const displayLangVersionNotFound = ({
 const formatSelectedLanguage = (selectedLanguage: Language): string =>
   selectedLanguage.toUpperCase();
 
-export default function LanguageSelect({
+const LanguageSelect = ({
   id,
   label,
   className,
@@ -43,7 +43,7 @@ export default function LanguageSelect({
   onSelect: (language: Language) => void;
   formatter?: (selectedLanguage: Language) => string;
   theme?: 'dark';
-}): JSX.Element {
+}): JSX.Element => {
   const componentClassName = `custom-language-select${
     theme ? ` custom-language-select--${theme}` : ''
   }${className ? ` ${className}` : ''}`;
@@ -71,4 +71,6 @@ export default function LanguageSelect({
       ))}
     </Navigation.LanguageSelector>
   );
-}
+};
+
+export default LanguageSelect;

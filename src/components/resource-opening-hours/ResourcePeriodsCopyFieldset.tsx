@@ -16,7 +16,7 @@ export type TargetResourcesProps = {
   modified?: string;
 };
 
-export default function ResourcePeriodsCopyFieldset({
+const ResourcePeriodsCopyFieldset = ({
   mainResourceName,
   mainResourceId,
   targetResources = [],
@@ -24,7 +24,7 @@ export default function ResourcePeriodsCopyFieldset({
   modified,
 }: TargetResourcesProps & {
   onChange: (value: TargetResourcesProps | undefined) => void;
-}): JSX.Element {
+}): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow } = useAppContext();
   const [isCopyLoading, setIsCopyLoading] = useState<boolean>(false);
 
@@ -93,4 +93,6 @@ export default function ResourcePeriodsCopyFieldset({
       </Notification>
     </div>
   );
-}
+};
+
+export default ResourcePeriodsCopyFieldset;

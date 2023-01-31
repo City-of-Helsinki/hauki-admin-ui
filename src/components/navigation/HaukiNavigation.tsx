@@ -14,7 +14,7 @@ import { SecondaryButton } from '../button/Button';
 import toast from '../notification/Toast';
 import LanguageSelect from '../language-select/LanguageSelect';
 
-export default function HaukiNavigation(): JSX.Element {
+const HaukiNavigation = (): JSX.Element => {
   const {
     hasOpenerWindow,
     closeAppWindow,
@@ -116,4 +116,6 @@ export default function HaukiNavigation(): JSX.Element {
       </Navigation.Actions>
     </Navigation>
   );
-}
+};
+
+export default HaukiNavigation;

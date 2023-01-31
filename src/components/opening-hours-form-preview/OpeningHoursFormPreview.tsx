@@ -19,7 +19,6 @@ const OpeningHoursFormPreview = ({
   <div
     aria-labelledby="opening-hours-form-preview"
     className={`card opening-hours-form-preview ${className || ''}`}
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     tabIndex={tabIndex}>
     <h2
       id="opening-hours-form-preview"
