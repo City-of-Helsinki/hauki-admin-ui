@@ -29,16 +29,12 @@ describe('User adds a new exception date period', () => {
     cy.get('[data-test=exception-start-date]').click();
     cy.get('button[aria-label="Valitse alkupäivämäärä"]').first().click();
 
-    const currDay = now.getDate();
+    const currMonth = now.getMonth() + 2;
 
-    cy.get(`[role="dialog"] button[data-date$="${currDay}"]`)
-      .filter(':visible')
-      .click({ force: true });
-
-    cy.get('[data-test=exception-end-date]').click();
-    cy.get('button[aria-label="Valitse loppupäivämäärä"]').first().click();
-
-    cy.get(`[role="dialog"] button[data-date$="${currDay}"]`)
+    cy.get('[data-test=exception-start-date]').click();
+    cy.get('button[aria-label="Valitse alkupäivämäärä"]').first().click();
+    cy.get('select[aria-label="Kuukausi"]').first().select(`${currMonth}`);
+    cy.get(`[role="dialog"] button[data-date$="01"]`)
       .filter(':visible')
       .click({ force: true });
 
