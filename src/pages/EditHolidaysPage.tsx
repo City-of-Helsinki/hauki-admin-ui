@@ -129,7 +129,7 @@ const HolidayForm = ({
         }>
         <ExceptionOpeningHoursStateToggle
           id={id}
-          isOpen={
+          initiallyOpen={
             valueToUse && valueToUse.resourceState
               ? valueToUse.resourceState !== ResourceState.CLOSED
               : false
@@ -294,11 +294,11 @@ const HolidayListItem = ({
   );
 };
 
-export default function EditHolidaysPage({
+const EditHolidaysPage = ({
   resourceId,
 }: {
   resourceId: string;
-}): JSX.Element {
+}): JSX.Element => {
   const [resource, setResource] = useState<Resource>();
   const [holidayValues, setHolidayValues] = useState<
     DatePeriod[] | undefined
@@ -495,4 +495,6 @@ export default function EditHolidaysPage({
       </div>
     </>
   );
-}
+};
+
+export default EditHolidaysPage;

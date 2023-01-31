@@ -8,17 +8,17 @@ import { getDifferenceInDays } from '../../common/utils/date-time/date-time';
 const ExceptionOpeningHoursStateToggle = ({
   id,
   children,
-  isOpen: isOpenInitially,
+  initiallyOpen,
   onClose,
   onOpen,
 }: {
   id: string;
   children?: ReactNode;
-  isOpen: boolean;
+  initiallyOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
 }): JSX.Element => {
-  const [isOpen, setOpen] = useState<boolean>(isOpenInitially);
+  const [isOpen, setOpen] = useState<boolean>(initiallyOpen);
   const { watch } = useFormContext<DatePeriod>();
   const [startDate, endDate] = watch(['startDate', 'endDate']);
   const differenceInDays = getDifferenceInDays(startDate, endDate);
