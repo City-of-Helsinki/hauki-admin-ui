@@ -1,10 +1,12 @@
 import { IconPlusCircle } from 'hds-react';
 import React, { useEffect, useRef } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { isDescriptionAllowed } from '../../common/helpers/opening-hours-helpers';
+import {
+  areStartAndEndTimesAllowed,
+  isDescriptionAllowed,
+} from '../../common/helpers/opening-hours-helpers';
 import {
   DatePeriod,
-  ResourceState,
   TimeSpan as TTimeSpan,
   TranslatedApiChoice,
 } from '../../common/lib/types';
@@ -14,12 +16,7 @@ import { SupplementaryButton } from '../button/Button';
 import TimeSpan from './TimeSpan';
 import './TimeSpans.scss';
 
-const shouldHideTimeSpan = (resourceState: ResourceState): boolean =>
-  [ResourceState.CLOSED, ResourceState.NO_OPENING_HOURS].includes(
-    resourceState
-  );
-
-const resetTimeSpan = (timeSpan: TTimeSpan): TTimeSpan => ({
+const resetStartAndEndTimes = (timeSpan: TTimeSpan): TTimeSpan => ({
   ...defaultTimeSpan,
   id: timeSpan.id,
   description:
@@ -52,15 +49,16 @@ const TimeSpans = ({
   const firstTimeSpanResourceState = watch(
     `${firstTimeSpanKey}.resource_state`
   );
-  const hideAddTimeSpan =
-    !!firstTimeSpanResourceState &&
-    shouldHideTimeSpan(firstTimeSpanResourceState);
+  const onlyOneTimeSpanAllowed = !areStartAndEndTimesAllowed(
+    first,
+    firstTimeSpanResourceState
+  );
 
   useEffect(() => {
-    if (hideAddTimeSpan) {
+    if (onlyOneTimeSpanAllowed) {
       setValue(
         firstTimeSpanKey,
-        resetTimeSpan(getValues(`${firstTimeSpanKey}`))
+        resetStartAndEndTimes(getValues(`${firstTimeSpanKey}`))
       );
 
       if (fields.length > 1) {
@@ -73,9 +71,8 @@ const TimeSpans = ({
     }
   }, [
     fields,
-    firstTimeSpanResourceState,
     firstTimeSpanKey,
-    hideAddTimeSpan,
+    onlyOneTimeSpanAllowed,
     getValues,
     setValue,
     remove,
@@ -97,14 +94,13 @@ const TimeSpans = ({
             i === 0
               ? undefined
               : (): void => {
-                  // eslint-disable-next-line no-unused-expressions
                   ref.current?.focus();
                   remove(i);
                 }
           }
         />
       ))}
-      {!hideAddTimeSpan && (
+      {!onlyOneTimeSpanAllowed && (
         <div>
           <SupplementaryButton
             dataTest={getUiId([namePrefix, 'add-time-span-button'])}

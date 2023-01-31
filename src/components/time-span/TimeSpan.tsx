@@ -17,7 +17,10 @@ import {
   getUiId,
   toCharCount,
 } from '../../common/utils/form/form';
-import { isDescriptionAllowed } from '../../common/helpers/opening-hours-helpers';
+import {
+  areStartAndEndTimesAllowed,
+  isDescriptionAllowed,
+} from '../../common/helpers/opening-hours-helpers';
 
 const validateTime = (value: string | null) => {
   const re = /\d{2}:\d{2}/;
@@ -80,17 +83,15 @@ const TimeSpan = ({
     })
     .map(choiceToOption(language));
 
-  const showTimeSpans =
-    (resourceState !== ResourceState.NO_OPENING_HOURS &&
-      resourceState !== ResourceState.CLOSED) ||
-    i !== 0;
+  const displayStartAndEndTimes =
+    resourceState && areStartAndEndTimesAllowed(i, resourceState);
 
   return (
     <div
       className="time-span time-span--with-extra-fields"
       role="group"
       aria-label={groupLabel}>
-      {showTimeSpans && (
+      {displayStartAndEndTimes && (
         <>
           <div className="time-span__range">
             <Controller
@@ -191,79 +192,78 @@ const TimeSpan = ({
           />
         )}
       />
-      {!resourceState ||
-        (isDescriptionAllowed(resourceState) && (
-          <>
-            <div className="time-span__descriptions">
-              <Controller
-                defaultValue={item?.description.fi ?? ''}
-                name={`${namePrefix}.description.fi`}
-                rules={descriptionRules}
-                render={({
-                  field: { name, onChange, onBlur, value },
-                  fieldState: { error },
-                }): JSX.Element => (
-                  <TextInput
-                    errorText={error?.message}
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    id={getUiId([name])}
-                    invalid={!!error}
-                    label="Kuvaus suomeksi"
-                    name={name}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    placeholder="Esim. seniorit"
-                    value={value || ''}
-                  />
-                )}
-              />
-              <Controller
-                defaultValue={item?.description.sv ?? ''}
-                name={`${namePrefix}.description.sv`}
-                rules={descriptionRules}
-                render={({
-                  field: { name, onChange, onBlur, value },
-                  fieldState: { error },
-                }): JSX.Element => (
-                  <TextInput
-                    errorText={error?.message}
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    id={getUiId([name])}
-                    invalid={!!error}
-                    label="Kuvaus ruotsiksi"
-                    name={name}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    placeholder="T.ex. seniorer"
-                    value={value || ''}
-                  />
-                )}
-              />
-              <Controller
-                defaultValue={item?.description.en ?? ''}
-                name={`${namePrefix}.description.en`}
-                rules={descriptionRules}
-                render={({
-                  field: { name, onChange, onBlur, value },
-                  fieldState: { error },
-                }): JSX.Element => (
-                  <TextInput
-                    errorText={error?.message}
-                    helperText={toCharCount(descriptionMaxLength, value)}
-                    id={getUiId([name])}
-                    invalid={!!error}
-                    label="Kuvaus englanniksi"
-                    name={name}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    placeholder="E.g. seniors"
-                    value={value || ''}
-                  />
-                )}
-              />
-            </div>
-          </>
-        ))}
+      {resourceState && isDescriptionAllowed(resourceState) && (
+        <>
+          <div className="time-span__descriptions">
+            <Controller
+              defaultValue={item?.description.fi ?? ''}
+              name={`${namePrefix}.description.fi`}
+              rules={descriptionRules}
+              render={({
+                field: { name, onChange, onBlur, value },
+                fieldState: { error },
+              }): JSX.Element => (
+                <TextInput
+                  errorText={error?.message}
+                  helperText={toCharCount(descriptionMaxLength, value)}
+                  id={getUiId([name])}
+                  invalid={!!error}
+                  label="Kuvaus suomeksi"
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  placeholder="Esim. seniorit"
+                  value={value || ''}
+                />
+              )}
+            />
+            <Controller
+              defaultValue={item?.description.sv ?? ''}
+              name={`${namePrefix}.description.sv`}
+              rules={descriptionRules}
+              render={({
+                field: { name, onChange, onBlur, value },
+                fieldState: { error },
+              }): JSX.Element => (
+                <TextInput
+                  errorText={error?.message}
+                  helperText={toCharCount(descriptionMaxLength, value)}
+                  id={getUiId([name])}
+                  invalid={!!error}
+                  label="Kuvaus ruotsiksi"
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  placeholder="T.ex. seniorer"
+                  value={value || ''}
+                />
+              )}
+            />
+            <Controller
+              defaultValue={item?.description.en ?? ''}
+              name={`${namePrefix}.description.en`}
+              rules={descriptionRules}
+              render={({
+                field: { name, onChange, onBlur, value },
+                fieldState: { error },
+              }): JSX.Element => (
+                <TextInput
+                  errorText={error?.message}
+                  helperText={toCharCount(descriptionMaxLength, value)}
+                  id={getUiId([name])}
+                  invalid={!!error}
+                  label="Kuvaus englanniksi"
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  placeholder="E.g. seniors"
+                  value={value || ''}
+                />
+              )}
+            />
+          </div>
+        </>
+      )}
       <div className="remove-time-span-button">
         {onDelete && (
           <SupplementaryButton iconLeft={<IconTrash />} onClick={onDelete}>
