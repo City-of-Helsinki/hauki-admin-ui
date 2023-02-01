@@ -12,6 +12,7 @@ import {
   getActiveDatePeriod,
   alignOpeningHoursWeekdaysToDateRange,
   isHolidayOrEve,
+  updateRule,
   updateWeekday,
 } from './opening-hours-helpers';
 
@@ -788,6 +789,298 @@ describe('updateWeekday', () => {
 
   it('should return no updates when trying to unselect the only weekday on a row', () => {
     expect(updateWeekday(openingHours, 6, true, 1)).toEqual({
+      updated: [],
+    });
+  });
+});
+
+describe('updateRule', () => {
+  it('should add new time span group when selecting week even rule', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        openingHours[0].timeSpanGroups,
+        'week_even',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+      ],
+      added: {
+        ...defaultTimeSpanGroup,
+        rule: { type: 'week_odd', id: undefined, group: undefined },
+      },
+    });
+  });
+
+  it('should add new time span group when selecting odd week rule', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        openingHours[0].timeSpanGroups,
+        'week_odd',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+      ],
+      added: {
+        ...defaultTimeSpanGroup,
+        rule: { type: 'week_even', id: undefined, group: undefined },
+      },
+    });
+  });
+
+  it('should swap rules when selecting odd week rule', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        openingHours[1].timeSpanGroups,
+        'week_odd',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+        {
+          idx: 1,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+      ],
+    });
+  });
+
+  it('should swap rules when selecting week even rule', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        [
+          {
+            ...openingHours[1].timeSpanGroups[0],
+            rule: { type: 'week_odd', id: undefined, group: undefined },
+          },
+          {
+            ...openingHours[1].timeSpanGroups[1],
+            rule: { type: 'week_even', id: undefined, group: undefined },
+          },
+        ],
+        'week_even',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+        {
+          idx: 1,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+      ],
+    });
+  });
+
+  it('should swap rules when selecting odd week rule', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        openingHours[1].timeSpanGroups,
+        'week_odd',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+        {
+          idx: 1,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+      ],
+    });
+  });
+
+  it('should swap rules when selecting week even rule on second row', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        [
+          {
+            ...openingHours[1].timeSpanGroups[0],
+            rule: { type: 'week_even', id: undefined, group: undefined },
+          },
+          {
+            ...openingHours[1].timeSpanGroups[1],
+            rule: { type: 'week_odd', id: undefined, group: undefined },
+          },
+        ],
+        'week_even',
+        1
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 1,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+        {
+          idx: 0,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+      ],
+    });
+  });
+
+  it('should swap rules when selecting week odd rule on second row', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        [
+          {
+            ...openingHours[1].timeSpanGroups[0],
+            rule: { type: 'week_odd', id: undefined, group: undefined },
+          },
+          {
+            ...openingHours[1].timeSpanGroups[1],
+            rule: { type: 'week_even', id: undefined, group: undefined },
+          },
+        ],
+        'week_odd',
+        1
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 1,
+          value: { type: 'week_odd', id: undefined, group: undefined },
+        },
+        {
+          idx: 0,
+          value: { type: 'week_even', id: undefined, group: undefined },
+        },
+      ],
+    });
+  });
+
+  it('should delete second row when selecting week every for first row', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        [
+          {
+            ...openingHours[1].timeSpanGroups[0],
+            rule: { type: 'week_odd', id: undefined, group: undefined },
+          },
+          {
+            ...openingHours[1].timeSpanGroups[1],
+            rule: { type: 'week_even', id: undefined, group: undefined },
+          },
+        ],
+        'week_every',
+        0
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 0,
+          value: { type: 'week_every', id: undefined, group: undefined },
+        },
+      ],
+      removed: 1,
+    });
+  });
+
+  it('should delete first row when selecting week every for second row', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        [
+          {
+            ...openingHours[1].timeSpanGroups[0],
+            rule: { type: 'week_odd', id: undefined, group: undefined },
+          },
+          {
+            ...openingHours[1].timeSpanGroups[1],
+            rule: { type: 'week_even', id: undefined, group: undefined },
+          },
+        ],
+        'week_every',
+        1
+      )
+    ).toEqual({
+      updated: [
+        {
+          idx: 1,
+          value: { type: 'week_every', id: undefined, group: undefined },
+        },
+      ],
+      removed: 0,
+    });
+  });
+
+  it('should return no updates when updating existing value', () => {
+    expect(
+      updateRule(
+        [
+          { type: 'week_every', id: undefined, group: undefined },
+          { type: 'week_odd', id: undefined, group: undefined },
+          { type: 'week_even', id: undefined, group: undefined },
+        ],
+        openingHours[0].timeSpanGroups,
+        'week_every',
+        0
+      )
+    ).toEqual({
       updated: [],
     });
   });

@@ -18,17 +18,14 @@ import {
 import TimeSpans from '../time-span/TimeSpans';
 import DayCheckbox from './DayCheckbox';
 import './OpeningHoursWeekdays.scss';
-import {
-  defaultRule,
-  defaultTimeSpanGroup,
-  uiRuleLabels,
-} from '../../constants';
+import { defaultRule, uiRuleLabels } from '../../constants';
 import { useAppContext } from '../../App-context';
 import { getUiId } from '../../common/utils/form/form';
 import {
   byDateRange,
   getEnabledWeekdays,
 } from '../../common/utils/date-time/date-time';
+import { updateRule } from '../../common/helpers/opening-hours-helpers';
 
 type InflectLabels = {
   [language in Language]: {
@@ -68,7 +65,7 @@ const OpeningHoursWeekdays = ({
 }): JSX.Element => {
   const namePrefix = `openingHours.${openingHoursIdx}` as const;
   const { language = Language.FI } = useAppContext();
-  const { control, setValue, watch } = useFormContext<DatePeriod>();
+  const { control, getValues, setValue, watch } = useFormContext<DatePeriod>();
   const { append, fields, remove } = useFieldArray({
     control,
     name: `${namePrefix}.timeSpanGroups`,
@@ -165,6 +162,29 @@ const OpeningHoursWeekdays = ({
           .join(', ')} aukioloajat`
   );
 
+  const handleRuleChange = (i: number) => (
+    rule: InputOption<RuleType>
+  ): void => {
+    const result = updateRule(
+      ruleValues,
+      getValues(`${namePrefix}.timeSpanGroups`),
+      rule.value,
+      i
+    );
+
+    result.updated.forEach((o) =>
+      setValue(`${namePrefix}.timeSpanGroups.${o.idx}.rule`, o.value)
+    );
+
+    if (result.removed !== undefined) {
+      remove(result.removed);
+    }
+
+    if (result.added) {
+      append(result.added, { shouldFocus: false });
+    }
+  };
+
   return (
     <div
       style={{ zIndex: isMoving ? 1 : undefined }}
@@ -245,50 +265,14 @@ const OpeningHoursWeekdays = ({
                 rules={{
                   required: 'Pakollinen',
                 }}
-                render={({ field: { onChange, value } }): JSX.Element => (
+                render={({ field: { value } }): JSX.Element => (
                   <>
                     {rules.length > 0 && (
                       <Select<InputOption<RuleType>>
                         className="rule-select"
                         defaultValue={rules[0]}
                         label="Toistuvuus"
-                        onChange={(rule: InputOption<RuleType>): void => {
-                          const toValue = (ruleType: RuleType): Rule =>
-                            ruleValues.find((elem) => elem.type === ruleType) ||
-                            defaultRule;
-
-                          onChange(toValue(rule.value));
-
-                          const counterparts: {
-                            [key in RuleType]: RuleType;
-                          } = {
-                            week_even: 'week_odd',
-                            week_odd: 'week_even',
-                            week_every: 'week_every',
-                          };
-
-                          const pair: { idx: number; newValue: RuleType } = {
-                            idx: i === 0 ? 1 : 0, // We allow only two rules to exists at a time
-                            newValue: counterparts[rule.value],
-                          };
-
-                          if (fields.length === 1) {
-                            append(
-                              {
-                                ...defaultTimeSpanGroup,
-                                rule: toValue(pair.newValue),
-                              },
-                              { shouldFocus: false }
-                            );
-                          } else if (rule.value === 'week_every') {
-                            remove(pair.idx);
-                          } else {
-                            setValue(
-                              `${namePrefix}.timeSpanGroups.${pair.idx}.rule`,
-                              toValue(pair.newValue)
-                            );
-                          }
-                        }}
+                        onChange={handleRuleChange(i)}
                         options={rules}
                         placeholder="Valitse"
                         required

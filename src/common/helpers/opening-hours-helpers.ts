@@ -2,6 +2,7 @@ import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import {
   defaultNoOpeningHoursTimeSpanGroup,
   defaultTimeSpanGroup,
+  defaultRule,
 } from '../../constants';
 import { Holiday } from '../../services/holidays';
 import {
@@ -576,3 +577,63 @@ export const updateWeekday = (
   select
     ? setSelected(openingHours, weekday, row)
     : setUnselected(openingHours, weekday, row);
+type UpdateRuleResult = {
+  updated: { idx: number; value: Rule }[];
+  removed?: number;
+  added?: TimeSpanGroup;
+};
+
+const counterparts: {
+  [key in RuleType]: RuleType;
+} = {
+  week_even: 'week_odd',
+  week_odd: 'week_even',
+  week_every: 'week_every',
+};
+
+const toValue = (ruleValues: Rule[], ruleType: RuleType) =>
+  ruleValues.find((elem) => elem.type === ruleType) || defaultRule;
+
+export const updateRule = (
+  ruleValues: Rule[],
+  timeSpanGroups: TimeSpanGroup[],
+  rule: RuleType,
+  idx: number
+): UpdateRuleResult => {
+  let result: UpdateRuleResult = {
+    updated: [],
+  };
+
+  if (timeSpanGroups[idx].rule.type === rule) {
+    return result;
+  }
+
+  result.updated = [{ idx, value: toValue(ruleValues, rule) }];
+
+  if (rule === 'week_every') {
+    if (timeSpanGroups.length > 1) {
+      result.removed = idx ? 0 : 1;
+    }
+    return result;
+  }
+
+  if (timeSpanGroups.length > 1) {
+    result = {
+      ...result,
+      updated: [
+        ...result.updated,
+        {
+          idx: idx ? 0 : 1,
+          value: toValue(ruleValues, counterparts[rule]),
+        },
+      ],
+    };
+  } else {
+    result.added = {
+      ...defaultTimeSpanGroup,
+      rule: toValue(ruleValues, counterparts[rule]),
+    };
+  }
+
+  return result;
+};
