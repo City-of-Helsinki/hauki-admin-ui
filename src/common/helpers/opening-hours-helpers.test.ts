@@ -1,6 +1,9 @@
 /// <reference types="jest" />
 
-import { defaultTimeSpanGroup } from '../../constants';
+import {
+  defaultNoOpeningHoursTimeSpanGroup,
+  defaultTimeSpanGroup,
+} from '../../constants';
 import { DatePeriod, OpeningHours, ResourceState } from '../lib/types';
 import {
   apiDatePeriodToDatePeriod,
@@ -9,6 +12,7 @@ import {
   getActiveDatePeriod,
   alignOpeningHoursWeekdaysToDateRange,
   isHolidayOrEve,
+  updateWeekday,
 } from './opening-hours-helpers';
 
 const openingHours: OpeningHours[] = [
@@ -746,6 +750,45 @@ describe('opening-hours-helpers', () => {
           '15.01.2023'
         )
       ).toEqual(openingHours);
+    });
+  });
+});
+
+describe('updateWeekday', () => {
+  it('should add new row when weekday gets unselected', () => {
+    expect(updateWeekday(openingHours, 3, false, 0)).toEqual({
+      updated: [
+        {
+          idx: 0,
+          weekdays: [1, 2, 4, 5],
+        },
+      ],
+      added: {
+        idx: 1,
+        value: {
+          weekdays: [3],
+          timeSpanGroups: [defaultNoOpeningHoursTimeSpanGroup],
+        },
+      },
+    });
+  });
+
+  it('should remove row when its` last weekday gets selected from another row', () => {
+    expect(updateWeekday(openingHours, 7, true, 1)).toEqual({
+      updated: [{ idx: 1, weekdays: [6, 7] }],
+      removed: 2,
+    });
+  });
+
+  it('should return no updates when trying to select already selected weekday on a row', () => {
+    expect(updateWeekday(openingHours, 4, true, 0)).toEqual({
+      updated: [],
+    });
+  });
+
+  it('should return no updates when trying to unselect the only weekday on a row', () => {
+    expect(updateWeekday(openingHours, 6, true, 1)).toEqual({
+      updated: [],
     });
   });
 });

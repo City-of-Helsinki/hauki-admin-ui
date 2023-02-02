@@ -4,6 +4,7 @@ import {
   RuleType,
   Language,
   Rule,
+  TimeSpanGroup,
 } from './common/lib/types';
 
 export const uiRuleLabels: {
@@ -30,7 +31,7 @@ export const defaultTimeSpan: TimeSpan = {
   resource_state: ResourceState.OPEN,
 };
 
-export const defaultTimeSpanGroup = {
+export const defaultTimeSpanGroup: TimeSpanGroup = {
   rule: { id: undefined, type: 'week_every' as const },
   timeSpans: [defaultTimeSpan],
 };
@@ -39,4 +40,14 @@ export const defaultRule: Rule = {
   id: undefined,
   group: undefined,
   type: 'week_every' as const,
+};
+
+export const defaultNoOpeningHoursTimeSpanGroup: TimeSpanGroup = {
+  ...defaultTimeSpanGroup,
+  timeSpans: [
+    {
+      ...defaultTimeSpan,
+      resource_state: ResourceState.NO_OPENING_HOURS,
+    },
+  ],
 };
