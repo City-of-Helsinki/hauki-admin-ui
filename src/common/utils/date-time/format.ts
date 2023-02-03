@@ -4,7 +4,7 @@ import { getDay } from 'date-fns';
 import { Language, Weekdays, WeekdayTypes } from '../../lib/types';
 
 export const dateApiFormat = 'yyyy-MM-dd';
-export const dateFormFormat = 'dd.MM.yyyy';
+export const dateFormFormat = 'd.M.yyyy';
 export const datetimeFormFormat = `${dateFormFormat} HH:mm`;
 
 export const formatDate = (

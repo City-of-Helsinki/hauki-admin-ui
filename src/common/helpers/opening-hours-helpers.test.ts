@@ -224,7 +224,7 @@ const datePeriod: DatePeriod = {
   name: { en: null, fi: 'Normaali aukiolo', sv: null },
   endDate: '31.12.2022',
   fixed: true,
-  startDate: '06.06.2022',
+  startDate: '6.6.2022',
   openingHours: [
     {
       weekdays: [1, 2, 3, 4, 5],
@@ -322,7 +322,7 @@ describe('opening-hours-helpers', () => {
           openingHours,
           id: 1,
           override: false,
-          startDate: '06.06.2022',
+          startDate: '6.6.2022',
         })
       ).toEqual(apiDatePeriod);
     });
@@ -335,7 +335,7 @@ describe('opening-hours-helpers', () => {
           name: { fi: 'Normaali aukiolo', sv: null, en: null },
           openingHours,
           id: 1,
-          startDate: '06.06.2022',
+          startDate: '6.6.2022',
           override: true,
         })
       ).toEqual({ ...apiDatePeriod, override: true });
@@ -349,7 +349,7 @@ describe('opening-hours-helpers', () => {
         fixed: true,
         name: { fi: 'Normaali aukiolo', sv: null, en: null },
         openingHours,
-        startDate: '06.06.2022',
+        startDate: '6.6.2022',
         id: 1,
         override: false,
         resourceState: undefined,
