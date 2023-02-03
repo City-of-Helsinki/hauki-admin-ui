@@ -351,13 +351,15 @@ export default {
 
   copyDatePeriods: async (
     resourceId: number,
-    targetResources: string[]
+    targetResources: string[],
+    datePeriods: number[]
   ): Promise<boolean> => {
     const permission = await apiPost<PermissionResponse>({
       path: `${resourceBasePath}/${resourceId}/copy_date_periods`,
       parameters: {
-        replace: true,
+        replace: false,
         target_resources: targetResources.join(','),
+        selected_date_periods: datePeriods.join(','),
       },
     });
     return permission.has_permission;

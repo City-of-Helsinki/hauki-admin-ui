@@ -24,11 +24,15 @@ const ResourceOpeningHours = ({
   parentId,
   resource,
   holidaysTableInitiallyOpen = false,
+  selectedDatePeriods,
+  onSelect,
 }: {
   language: Language;
   parentId?: number;
   resource: Resource;
   holidaysTableInitiallyOpen?: boolean;
+  selectedDatePeriods?: number[];
+  onSelect?: (datePeriodId: number[], selected: boolean) => void;
 }): JSX.Element | null => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -118,6 +122,10 @@ const ResourceOpeningHours = ({
             ? `/resource/${parentId}/child/${resourceId}/period/${datePeriod.id}`
             : `/resource/${resourceId}/period/${datePeriod.id}`
         }
+        selected={selectedDatePeriods?.filter((o: number) =>
+          normalDatePeriods.find((d) => d.id === o)
+        )}
+        onSelect={onSelect}
       />
       <OpeningPeriodsList
         id="resource-exception-opening-periods-list"
@@ -141,6 +149,10 @@ const ResourceOpeningHours = ({
             ? `/resource/${parentId}/child/${resourceId}/exception/${datePeriod.id}`
             : `/resource/${resourceId}/exception/${datePeriod.id}`
         }
+        selected={selectedDatePeriods?.filter((o: number) =>
+          exceptionDatePeriods.find((d) => d.id === o)
+        )}
+        onSelect={onSelect}
       />
       <OpeningPeriodsSection
         addNewOpeningPeriodButtonDataTest="edit-holidays-button"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Notification, IconCopy } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
@@ -22,13 +22,22 @@ const ResourcePeriodsCopyFieldset = ({
   targetResources = [],
   onChange,
   modified,
+  datePeriodIds,
 }: TargetResourcesProps & {
-  onChange: (value: TargetResourcesProps | undefined) => void;
+  datePeriodIds: number[];
+  onChange: (
+    value: (TargetResourcesProps & { datePeriodIds: number[] }) | undefined
+  ) => void;
 }): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow } = useAppContext();
   const [isCopyLoading, setIsCopyLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | undefined>();
 
   const copyDatePeriods = async (): Promise<void> => {
+    if (datePeriodIds.length === 0) {
+      setError('Valitse vähintää yksi aukiolojakso');
+      return;
+    }
     setIsCopyLoading(true);
 
     if (!mainResourceId || targetResources.length === 0) {
@@ -36,7 +45,7 @@ const ResourcePeriodsCopyFieldset = ({
     }
 
     try {
-      await api.copyDatePeriods(mainResourceId, targetResources);
+      await api.copyDatePeriods(mainResourceId, targetResources, datePeriodIds);
       toast.success({
         dataTestId: 'period-copy-success',
         label:
@@ -47,6 +56,7 @@ const ResourcePeriodsCopyFieldset = ({
         mainResourceId,
         targetResources,
         modified: new Date().toJSON(),
+        datePeriodIds,
       });
       setIsCopyLoading(false);
       if (closeAppWindow) {
@@ -65,32 +75,60 @@ const ResourcePeriodsCopyFieldset = ({
     }
   };
 
+  useEffect(() => {
+    setError(undefined);
+  }, [datePeriodIds, setError]);
+
   return (
     <div className="resource-copy-date-periods">
       <Notification
+        className="resource-copy-date-periods__notification"
+        style={{
+          fontSize: '1rem',
+        }}
         type="alert"
         label={`Olet valinnut joukkopäivityksessä ${
           (targetResources?.length || 0) + 1
         } pistettä. Klikkasit "${mainResourceName}"n aukiolotietoa. Sinulle on auennut ”${mainResourceName}”n aukiolotieto muokattavaksi.`}>
-        <p>{`Kun olet muokannut ${mainResourceName}n aukiolotietoa, paina alla olevaa painiketta. Aukiolotieto päivittyy joukkopäivityksessä valitsemissasi toimipisteissä.`}</p>
-        <PrimaryButton
-          iconLeft={<IconCopy aria-hidden />}
-          isLoading={isCopyLoading}
-          loadingText="Aukiolotietoja kopioidaan"
-          onClick={(): void => {
-            copyDatePeriods();
-          }}>{`Päivitä aukiolotiedot ${
-          targetResources?.length
-        } muuhun toimipisteeseen${
-          hasOpenerWindow ? '. Ikkuna sulkeutuu.' : ''
-        }`}</PrimaryButton>
-        {modified && (
-          <span className="resource-copy-modified-text">{`Tiedot päivitetty ${formatDate(
-            modified,
-            datetimeFormFormat
-          )}`}</span>
-        )}
+        <div className="resource-copy-date-periods__notification-content">
+          <ul>
+            <li>
+              Aukioloajat kopioidaan joukkopäivityksessä valitsemiisi
+              toimipisteisiin
+            </li>
+            <li>
+              Valitse kopioitavat aukiolotiedot (rasti ruutuun aukiolojan
+              edessä)
+            </li>
+            <li>
+              {`Vie kopiointi loppuun painamalla "Kopioi aukiolotiedot x muuhun
+            toimipisteeseen"`}
+            </li>
+          </ul>
+          <PrimaryButton
+            iconLeft={<IconCopy aria-hidden />}
+            isLoading={isCopyLoading}
+            loadingText="Aukiolotietoja kopioidaan"
+            onClick={(): void => {
+              copyDatePeriods();
+            }}>{`Kopioi aukiolotiedot ${
+            targetResources?.length
+          } muuhun toimipisteeseen${
+            hasOpenerWindow ? '. Ikkuna sulkeutuu.' : ''
+          }`}</PrimaryButton>
+          {modified && (
+            <span className="resource-copy-modified-text">{`Tiedot päivitetty ${formatDate(
+              modified,
+              datetimeFormFormat
+            )}`}</span>
+          )}
+        </div>
       </Notification>
+      {error && (
+        <Notification type="error" label="Aukiolojaksoja ei valittu">
+          Valitse vähintään yksi aukiolojakso jatkaaksesi.
+        </Notification>
+      )}
     </div>
   );
 };

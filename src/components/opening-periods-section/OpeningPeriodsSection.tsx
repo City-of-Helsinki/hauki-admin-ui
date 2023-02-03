@@ -1,4 +1,4 @@
-import { LoadingSpinner } from 'hds-react';
+import { Checkbox, LoadingSpinner } from 'hds-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
@@ -16,6 +16,8 @@ type Props = {
   newUrl: string;
   theme: 'DEFAULT' | 'LIGHT';
   title: string;
+  selected?: boolean;
+  onSelect?: (selected: boolean) => void;
 };
 
 const OpeningPeriodsSection = ({
@@ -29,6 +31,8 @@ const OpeningPeriodsSection = ({
   newUrl,
   title,
   theme,
+  selected,
+  onSelect,
 }: Props): JSX.Element => {
   const history = useHistory();
   const openingPeriodsHeaderClassName =
@@ -41,6 +45,16 @@ const OpeningPeriodsSection = ({
   return (
     <section className="opening-periods-section">
       <header className={openingPeriodsHeaderClassName}>
+        {onSelect && (
+          <div>
+            <Checkbox
+              className="opening-periods-section__select-all"
+              id={`${id}-opening-period-select-all`}
+              onChange={() => onSelect(!selected)}
+              checked={!isLoading && selected}
+            />
+          </div>
+        )}
         <h2 className="opening-periods-header-title">{title}</h2>
         <p className="opening-periods-period-count">
           {datePeriods.length}{' '}

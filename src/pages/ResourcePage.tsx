@@ -62,6 +62,7 @@ const ResourcePage = ({
     TargetResourcesProps | undefined
   >(undefined);
   const targetResourcesStorageKey = 'targetResources';
+  const [selectedDatePeriods, setSelectedDatePeriod] = useState<number[]>([]);
 
   const hasTargetResources =
     targetResourceData?.mainResourceId === resource?.id &&
@@ -154,7 +155,11 @@ const ResourcePage = ({
       {hasTargetResources && (
         <ResourcePeriodsCopyFieldset
           {...targetResourceData}
-          onChange={(resourceData): void => setTargetResourceData(resourceData)}
+          onChange={(resourceData): void => {
+            setTargetResourceData(resourceData);
+            setSelectedDatePeriod([]);
+          }}
+          datePeriodIds={selectedDatePeriods}
         />
       )}
       {!hasTargetResources && parentResources?.length > 0 && (
@@ -189,6 +194,23 @@ const ResourcePage = ({
             language={language}
             resource={resource}
             holidaysTableInitiallyOpen={childResources.length === 0}
+            selectedDatePeriods={selectedDatePeriods}
+            onSelect={
+              hasTargetResources
+                ? (datePeriodId: number[], selected: boolean) => {
+                    if (selected) {
+                      setSelectedDatePeriod((ids: number[]) => [
+                        ...ids,
+                        ...datePeriodId,
+                      ]);
+                    } else {
+                      setSelectedDatePeriod((ids: number[]) =>
+                        ids.filter((i) => !datePeriodId.includes(i))
+                      );
+                    }
+                  }
+                : undefined
+            }
           />
         )}
       </ResourceSection>

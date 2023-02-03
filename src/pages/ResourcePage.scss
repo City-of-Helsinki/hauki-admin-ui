@@ -15,7 +15,35 @@
 }
 
 .resource-copy-date-periods {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
   margin: var(--spacing-m) 0;
+  gap: 1rem;
+
+  button {
+    font-size: 1rem !important;
+  }
+}
+
+.resource-copy-date-periods__notification {
+  gap: 30rem;
+
+  ul {
+    padding-left: 2rem;
+    font-size: 1rem;
+  }
+
+  ul li {
+    line-height: 2;
+  }
+}
+
+.resource-copy-date-periods__notification-content {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .resource-copy-modified-text {

@@ -18,6 +18,8 @@ const OpeningPeriod = ({
   language,
   deletePeriod,
   initiallyOpen = false,
+  selected,
+  onSelect,
 }: {
   datePeriod: ActiveDatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
@@ -25,8 +27,12 @@ const OpeningPeriod = ({
   language: Language;
   deletePeriod: (id: number) => Promise<void>;
   initiallyOpen: boolean;
+  selected?: boolean;
+  onSelect?: (selected: boolean) => void;
 }): JSX.Element => (
   <OpeningPeriodAccordion
+    onSelect={onSelect}
+    selected={selected}
     id={`${datePeriod.id}`}
     periodName={getDatePeriodName(language, datePeriod)}
     dateRange={formatDateRange({

@@ -28,6 +28,8 @@ const OpeningPeriodsList = ({
   isLoading,
   newUrl,
   editUrl,
+  onSelect,
+  selected,
 }: {
   id: string;
   addNewOpeningPeriodButtonDataTest: string;
@@ -42,6 +44,8 @@ const OpeningPeriodsList = ({
   isLoading: boolean;
   newUrl: string;
   editUrl: (datePeriod: DatePeriod) => string;
+  onSelect?: (datePeriodId: number[], selected: boolean) => void;
+  selected?: number[];
 }): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
@@ -55,7 +59,20 @@ const OpeningPeriodsList = ({
       isLoading={isLoading}
       newUrl={newUrl}
       theme={theme}
-      title={title}>
+      title={title}
+      selected={
+        !!datePeriods.length &&
+        datePeriods.every((i) => selected?.includes(i.id!))
+      }
+      onSelect={
+        onSelect &&
+        ((allSelected) => {
+          onSelect(
+            datePeriods.map((d) => d.id!),
+            allSelected
+          );
+        })
+      }>
       {datePeriods.length > 0 ? (
         datePeriods.map((datePeriod, index) => (
           <OpeningPeriod
@@ -68,6 +85,13 @@ const OpeningPeriodsList = ({
               await deletePeriod(datePeriodId);
               ref.current?.focus();
             }}
+            selected={selected?.includes(datePeriod.id!)}
+            onSelect={
+              onSelect &&
+              ((s) => {
+                onSelect([datePeriod.id!], s);
+              })
+            }
             initiallyOpen={index <= 10}
           />
         ))

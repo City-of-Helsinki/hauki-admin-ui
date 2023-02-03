@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   IconAngleDown,
   IconAngleUp,
   IconPenLine,
@@ -20,6 +21,8 @@ type Props = {
   isActive?: boolean;
   onDelete?: () => void | Promise<void>;
   periodName?: string | null;
+  selected?: boolean;
+  onSelect?: (selected: boolean) => void;
 };
 
 const OpeningPeriodAccordion = ({
@@ -31,6 +34,8 @@ const OpeningPeriodAccordion = ({
   isActive = false,
   onDelete,
   periodName,
+  selected,
+  onSelect,
 }: Props): JSX.Element => {
   const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
   const DeleteModalText = (): JSX.Element => (
@@ -59,6 +64,15 @@ const OpeningPeriodAccordion = ({
       className="opening-period"
       data-test={`openingPeriod${id ? `-${id}` : ''}`}>
       <div className="opening-period-header">
+        {onSelect && (
+          <div className="opening-period-select opening-period-header-column">
+            <Checkbox
+              id={`opening-period-select-${id}`}
+              checked={selected}
+              onChange={() => onSelect(!selected)}
+            />
+          </div>
+        )}
         <div className="opening-period-title opening-period-header-column">
           <h3>{periodName}</h3>
         </div>
