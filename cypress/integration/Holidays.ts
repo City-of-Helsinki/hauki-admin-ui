@@ -14,7 +14,7 @@ describe('User adds a new holiday opening period', () => {
     cy.contains('Jouluaatto').click();
 
     // Set exceptional opening hours
-    cy.contains('Poikkeava aukiolo').click();
+    cy.contains('Poikkeava aukioloaika').click();
 
     cy.setHdsTimeInputTime({
       id: 'openingHours-0-timeSpanGroups-0-timeSpans-0-start-time',
