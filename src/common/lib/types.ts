@@ -264,6 +264,10 @@ export type DatePeriod = {
   resourceState?: ResourceState;
 };
 
+export type ActiveDatePeriod = {
+  isActive: boolean;
+} & DatePeriod;
+
 export type PreviewOpeningHours = {
   timeSpans: TimeSpan[];
   weekdays: number[];

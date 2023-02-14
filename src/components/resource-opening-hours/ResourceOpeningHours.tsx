@@ -3,13 +3,14 @@ import { partition } from 'lodash';
 import { Notification } from 'hds-react';
 import {
   Language,
-  DatePeriod,
   Resource,
   UiDatePeriodConfig,
+  ActiveDatePeriod,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
 import {
   apiDatePeriodToDatePeriod,
+  getActiveDatePeriods,
   isHolidayOrEve,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
@@ -35,7 +36,7 @@ const ResourceOpeningHours = ({
     UiDatePeriodConfig
   >();
   const [[normalDatePeriods, exceptions], setDividedDatePeriods] = useState<
-    [DatePeriod[], DatePeriod[]]
+    [ActiveDatePeriod[], ActiveDatePeriod[]]
   >([[], []]);
   const [isLoading, setLoading] = useState(false);
   const fetchDatePeriods = async (id: number): Promise<void> => {
@@ -45,8 +46,16 @@ const ResourceOpeningHours = ({
         api.getDatePeriods(id),
         getDatePeriodFormConfig(),
       ]);
+      const datePeriods = apiDatePeriods.map(apiDatePeriodToDatePeriod);
+      const activeDatePeriods = getActiveDatePeriods(
+        new Date().toISOString().split('T')[0],
+        datePeriods
+      );
       const datePeriodLists = partition(
-        apiDatePeriods.map(apiDatePeriodToDatePeriod),
+        datePeriods.map((datePeriod) => ({
+          ...datePeriod,
+          isActive: activeDatePeriods.includes(datePeriod),
+        })),
         (datePeriod) => !datePeriod.override
       );
       setDividedDatePeriods(datePeriodLists);

@@ -1,4 +1,5 @@
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
+import { partition } from 'lodash';
 import {
   defaultNoOpeningHoursTimeSpanGroup,
   defaultTimeSpanGroup,
@@ -291,20 +292,30 @@ const dateRangeIsShorter = (
   datePeriod: DatePeriod
 ): boolean => getTimeRange(datePeriod) < getTimeRange(other);
 
-export const getActiveDatePeriod = (
-  date: string,
-  dates: DatePeriod[]
-): DatePeriod | undefined => {
-  return dates.reduce((acc: DatePeriod | undefined, current: DatePeriod) => {
-    if (
-      isWithinRange(date, current) &&
-      (!acc || dateRangeIsShorter(acc, current))
-    ) {
+const getShortestDatePeriod = (dates: DatePeriod[]): DatePeriod | undefined =>
+  dates.reduce((acc: DatePeriod, current: DatePeriod) => {
+    if (!acc || dateRangeIsShorter(acc, current)) {
       return current;
     }
 
     return acc;
-  }, undefined);
+  }, dates[0]);
+
+export const getActiveDatePeriods = (
+  date: string,
+  dates: DatePeriod[]
+): DatePeriod[] => {
+  const [exceptions, normalDatePeriods] = partition(
+    dates.filter((datePeriod) => isWithinRange(date, datePeriod)),
+    (datePeriod) => datePeriod.override
+  );
+
+  if (exceptions.length) {
+    const shortestDatePeriod = getShortestDatePeriod(exceptions);
+    return shortestDatePeriod ? [shortestDatePeriod] : [];
+  }
+
+  return normalDatePeriods;
 };
 
 const dayInMilliseconds = 24 * 60 * 60 * 1000;

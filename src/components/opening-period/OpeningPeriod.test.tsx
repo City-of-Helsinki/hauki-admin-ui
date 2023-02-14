@@ -4,13 +4,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { datePeriodOptions } from '../../../test/fixtures/api-options';
 import { datePeriod } from '../../../test/fixtures/date-period';
 import {
-  DatePeriod,
+  ActiveDatePeriod,
   Language,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import OpeningPeriod from './OpeningPeriod';
 
-const testDatePeriod: DatePeriod = datePeriod;
+const testDatePeriod: ActiveDatePeriod = { ...datePeriod, isActive: false };
 const testDatePeriodOptions: UiDatePeriodConfig = datePeriodOptions;
 
 describe(`<OpeningPeriod />`, () => {
