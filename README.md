@@ -31,20 +31,35 @@ It is also possible to configure API's URL by setting env variable API_URL, for 
     export HAUKI_KEY=<HAUKI_KEY> HAUKI_USER=<HAUKI_USER> HAUKI_ORGANIZATION=<HAUKI_ORGANIZATION> HAUKI_RESOURCE=<HAUKI_RESOURCE> HAUKI_SOURCE=<HAUKI_SOURCE>
     ```
 
-2. Generate query-parameters:
+2. Install dependencies:
 
    ```shell
-   node scripts/generate-auth-params.js
+   yarn
    ```
 
-3. Copy generated query-parameters to clipboard.  
-4. Start dev server:
+3. Start dev server:
 
    ```shell
    yarn start
    ```
 
-5. Visit localhost:
+4. Visit localhost:
+
+   ```shell
+   ./scripts/open_local.sh
+   ```
+
+Alternatively
+
+4. Generate query-parameters:
+
+   ```shell
+   node scripts/generate-auth-params.js
+   ```
+
+5. Copy generated query-parameters to clipboard.
+
+6. Visit localhost:
 
    ```
    http://localhost:3000/resource/<HAUKI_RESOURCE>?<paste generated query parameters here>
