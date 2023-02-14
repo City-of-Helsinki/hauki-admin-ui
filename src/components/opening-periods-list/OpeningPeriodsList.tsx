@@ -1,6 +1,6 @@
 import React from 'react';
-import { getActiveDatePeriod } from '../../common/helpers/opening-hours-helpers';
 import {
+  ActiveDatePeriod,
   DatePeriod,
   Language,
   UiDatePeriodConfig,
@@ -33,7 +33,7 @@ const OpeningPeriodsList = ({
   addNewOpeningPeriodButtonDataTest: string;
   addDatePeriodButtonText: string;
   title: string;
-  datePeriods: DatePeriod[];
+  datePeriods: ActiveDatePeriod[];
   datePeriodConfig?: UiDatePeriodConfig;
   theme: PeriodsListTheme;
   emptyState: string;
@@ -44,10 +44,6 @@ const OpeningPeriodsList = ({
   editUrl: (datePeriod: DatePeriod) => string;
 }): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
-  const currentDatePeriod = getActiveDatePeriod(
-    new Date().toISOString().split('T')[0],
-    datePeriods
-  );
 
   return (
     <OpeningPeriodsSection
@@ -61,10 +57,9 @@ const OpeningPeriodsList = ({
       theme={theme}
       title={title}>
       {datePeriods.length > 0 ? (
-        datePeriods.map((datePeriod: DatePeriod, index) => (
+        datePeriods.map((datePeriod, index) => (
           <OpeningPeriod
             key={datePeriod.id}
-            current={currentDatePeriod === datePeriod}
             datePeriodConfig={datePeriodConfig}
             editUrl={editUrl(datePeriod)}
             datePeriod={datePeriod}

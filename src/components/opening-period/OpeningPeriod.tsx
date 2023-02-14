@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Language,
-  DatePeriod,
   UiDatePeriodConfig,
   ResourceState,
+  ActiveDatePeriod,
 } from '../../common/lib/types';
 import { formatDateRange } from '../../common/utils/date-time/format';
 import './OpeningPeriod.scss';
@@ -12,7 +12,6 @@ import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAcc
 import { getDatePeriodName } from '../../common/helpers/opening-hours-helpers';
 
 const OpeningPeriod = ({
-  current = false,
   datePeriod,
   datePeriodConfig,
   editUrl,
@@ -20,8 +19,7 @@ const OpeningPeriod = ({
   deletePeriod,
   initiallyOpen = false,
 }: {
-  current?: boolean;
-  datePeriod: DatePeriod;
+  datePeriod: ActiveDatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
   editUrl: string;
   language: Language;
@@ -43,7 +41,7 @@ const OpeningPeriod = ({
     }}
     editUrl={editUrl}
     initiallyOpen={initiallyOpen}
-    isActive={current}>
+    isActive={datePeriod.isActive}>
     <div className="date-period-details-container">
       {datePeriod.resourceState === ResourceState.CLOSED ? (
         'Suljettu'
