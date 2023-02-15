@@ -6,7 +6,7 @@
     "node": ">=12 <15"
   },
   "dependencies": {
-    "@sentry/react": "^6.11.0",
+    "@sentry/react": "^6.19.7",
     "@sentry/tracing": "^6.11.0",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.2.2",
