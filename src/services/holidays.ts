@@ -1,79 +1,102 @@
-import { sub } from 'date-fns';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Holidays, { HolidaysTypes } from 'date-holidays';
 import { LanguageStrings } from '../common/lib/types';
 
-const formatDate = (date: Date): string => date.toISOString().split('T')[0];
+const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
+  [
+    'thursday after 06-19',
+    {
+      name: {
+        fi: 'Juhannusaaton aatto',
+        sv: 'Dagen före midsommarafton',
+        en: 'Day before Midsummer Day',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    'easter -3',
+    {
+      name: { fi: 'Kiirastorstai', sv: 'Skärtorsdagen', en: 'Maundy Thursday' },
+      type: 'optional',
+    },
+  ],
+  [
+    'easter -1',
+    {
+      name: { fi: 'Pääsiäislauantai', sv: 'Påsklördag', en: 'Easter Saturday' },
+      type: 'optional',
+    },
+  ],
+  [
+    '04-30',
+    {
+      name: { fi: 'Vappuaatto', sv: 'Valborgsafton', en: 'May Day Eve' },
+      type: 'optional',
+    },
+  ],
+  [
+    '12-23',
+    {
+      name: {
+        fi: 'Jouluaaton aatto',
+        sv: 'Dagen före julafton',
+        en: 'Day before Christmas Eve',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    '12-30',
+    {
+      name: {
+        fi: 'Uudenvuodenaaton aatto',
+        sv: 'Dagen före nyårsafton',
+        en: "Day before New Year's Eve",
+      },
+      type: 'optional',
+    },
+  ],
+];
 
-type UnofficialHoliday = {
-  before: string;
-  name: LanguageStrings;
-};
+const formatDate = (date: Date): string => date.toISOString().split('T')[0];
 
 export type Holiday = {
   date: string;
   name: LanguageStrings;
-  official: boolean;
 };
 
-export const isHoliday = (holiday: Holiday): boolean => holiday.official;
+const hd = new Holidays();
+hd.init('FI');
+// Change translations for May Day. It is called Labour Day in the library.
+const mayDay = hd.getRule('05-01');
+hd.setRule({
+  ...mayDay,
+  // @ts-ignore
+  name: { ...mayDay.name, sv: 'Valborg', en: 'May Day' },
+});
+// Missing Swedish translation for Father's day.
+const fathersDay = hd.getRule('2nd sunday in November');
+hd.setRule({
+  ...fathersDay,
+  // @ts-ignore
+  name: { ...fathersDay.name, sv: 'Fars dag' },
+});
 
-const unofficialHolidaysConfig: UnofficialHoliday[] = [
-  {
-    before: 'Jouluaatto',
-    name: {
-      fi: 'Jouluaaton aatto',
-      sv: 'Dagen före julafton',
-      en: 'Day before Christmas Eve',
-    },
-  },
-  {
-    before: 'Juhannusaatto',
-    name: {
-      fi: 'Juhannusaaton aatto',
-      sv: 'Dagen före midsommarafton',
-      en: 'Day before Midsummer Day',
-    },
-  },
-  {
-    before: 'Uudenvuodenaatto',
-    name: {
-      fi: 'Uudenvuodenaaton aatto',
-      sv: 'Dagen före nyårsafton',
-      en: "Day before New Year's Eve",
-    },
-  },
-  {
-    before: 'Vappu',
-    name: {
-      fi: 'Vappuaaton aatto',
-      sv: 'Dagen före valborg',
-      en: 'Day before May Day',
-    },
-  },
-  {
-    before: 'Pääsiäispäivä',
-    name: {
-      fi: 'Pääsiäislauantai',
-      sv: 'Påsklördag',
-      en: 'Easter Saturday',
-    },
-  },
-];
+customHolidays.forEach(([rule, opts]) => hd.setHoliday(rule, opts));
 
-// eslint-disable-next-line import/prefer-default-export
-export const getHolidays = (): Holiday[] => {
-  const now = new Date();
+export const isHoliday = (holiday: Holiday): boolean =>
+  hd.isHoliday(holiday.date) !== false;
+
+export const getHolidays = (now: Date | undefined = new Date()): Holiday[] => {
   const currentYear = now.getFullYear();
-  const start = formatDate(now);
   const later = new Date();
   const nextYear = currentYear + 1;
   later.setFullYear(nextYear);
+  const start = formatDate(now);
   const end = formatDate(later);
 
-  const hd = new Holidays();
-  hd.init('FI');
-
-  const holidays = [currentYear, currentYear + 1]
+  const holidays = [currentYear, nextYear]
     .map((year) => ({
       fi: hd.getHolidays(year, 'fi'),
       sv: hd.getHolidays(year, 'sv'),
@@ -99,36 +122,10 @@ export const getHolidays = (): Holiday[] => {
       []
     )
     .map(({ fi, sv, en }) => ({
-      official: true,
       date: fi.date.split(' ')[0],
-      name: {
-        fi: fi.name,
-        // There is a bug in the holidays lib
-        sv: fi.name === 'Isänpäivä' ? 'Fars dag' : sv.name,
-        en: en.name,
-      },
+      name: { fi: fi.name, sv: sv.name, en: en.name },
     }))
     .filter((date) => date.date >= start && date.date <= end);
 
-  const unofficialHolidays = unofficialHolidaysConfig.map((eve) => {
-    const foundHoliday = holidays.find(
-      (holiday) => holiday.name.fi === eve.before
-    );
-
-    if (!foundHoliday) {
-      throw new Error('');
-    }
-
-    return {
-      official: false,
-      date: sub(new Date(foundHoliday.date), { days: 1 })
-        .toISOString()
-        .split('T')[0],
-      name: eve.name,
-    };
-  });
-
-  return [...holidays, ...unofficialHolidays].sort((a, b) =>
-    a?.date.localeCompare(b?.date)
-  );
+  return holidays;
 };
