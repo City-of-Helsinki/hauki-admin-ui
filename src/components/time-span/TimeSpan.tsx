@@ -93,60 +93,6 @@ const TimeSpan = ({
       aria-label={groupLabel}>
       {displayStartAndEndTimes && (
         <>
-          <div className="time-span__range">
-            <Controller
-              control={control}
-              name={`${namePrefix}.start_time`}
-              defaultValue={item?.start_time ?? ''}
-              render={({ field, fieldState }): JSX.Element => (
-                <TimeInput
-                  disabled={disabled || fullDay}
-                  errorText={fieldState.error?.message}
-                  hoursLabel="tunnit"
-                  id={getUiId([namePrefix, 'start-time'])}
-                  invalid={!!fieldState.error?.message}
-                  label="Alkaa klo"
-                  minutesLabel="minuutit"
-                  name={field.name}
-                  onBlur={field.onBlur}
-                  onChange={field.onChange}
-                  ref={(e) => {
-                    field.ref(e);
-                    if (innerRef) {
-                      // eslint-disable-next-line no-param-reassign
-                      innerRef.current = e;
-                    }
-                  }}
-                  required
-                  value={field.value ?? ''}
-                />
-              )}
-              rules={timeInputRules}
-            />
-            <Controller
-              control={control}
-              name={`${namePrefix}.end_time`}
-              defaultValue={item?.end_time ?? ''}
-              render={({ field, fieldState }): JSX.Element => (
-                <TimeInput
-                  disabled={disabled || fullDay}
-                  errorText={fieldState.error?.message}
-                  hoursLabel="tunnit"
-                  id={getUiId([namePrefix, 'end-time'])}
-                  invalid={!!fieldState.error?.message}
-                  label="Päättyy klo"
-                  minutesLabel="minuutit"
-                  name={field.name}
-                  onBlur={field.onBlur}
-                  onChange={field.onChange}
-                  ref={field.ref}
-                  required
-                  value={field.value ?? ''}
-                />
-              )}
-              rules={timeInputRules}
-            />
-          </div>
           <Controller
             defaultValue={item?.full_day ?? false}
             render={({ field }): JSX.Element => (
@@ -161,12 +107,71 @@ const TimeSpan = ({
                     field.onChange(e.target.checked);
                   }}
                   checked={field.value}
+                  ref={(e) => {
+                    field.ref(e);
+                    if (innerRef) {
+                      // eslint-disable-next-line no-param-reassign
+                      innerRef.current = e;
+                    }
+                  }}
                 />
               </div>
             )}
             control={control}
             name={`${namePrefix}.full_day`}
           />
+          {!fullDay && (
+            <>
+              <div className="time-span__range">
+                <Controller
+                  control={control}
+                  name={`${namePrefix}.start_time`}
+                  defaultValue={item?.start_time ?? ''}
+                  render={({ field, fieldState }): JSX.Element => (
+                    <TimeInput
+                      disabled={disabled}
+                      errorText={fieldState.error?.message}
+                      hoursLabel="tunnit"
+                      id={getUiId([namePrefix, 'start-time'])}
+                      invalid={!!fieldState.error?.message}
+                      label="Alkaa klo"
+                      minutesLabel="minuutit"
+                      name={field.name}
+                      onBlur={field.onBlur}
+                      onChange={field.onChange}
+                      required
+                      ref={field.ref}
+                      value={field.value ?? ''}
+                    />
+                  )}
+                  rules={timeInputRules}
+                />
+                <Controller
+                  control={control}
+                  name={`${namePrefix}.end_time`}
+                  defaultValue={item?.end_time ?? ''}
+                  render={({ field, fieldState }): JSX.Element => (
+                    <TimeInput
+                      disabled={disabled}
+                      errorText={fieldState.error?.message}
+                      hoursLabel="tunnit"
+                      id={getUiId([namePrefix, 'end-time'])}
+                      invalid={!!fieldState.error?.message}
+                      label="Päättyy klo"
+                      minutesLabel="minuutit"
+                      name={field.name}
+                      onBlur={field.onBlur}
+                      onChange={field.onChange}
+                      ref={field.ref}
+                      required
+                      value={field.value ?? ''}
+                    />
+                  )}
+                  rules={timeInputRules}
+                />
+              </div>
+            </>
+          )}
         </>
       )}
       <Controller

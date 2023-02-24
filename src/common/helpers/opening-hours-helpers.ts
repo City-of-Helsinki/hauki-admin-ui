@@ -43,11 +43,11 @@ const toApiTimeSpan = (group: number | undefined, days: number[]) => (
 ): ApiTimeSpan => ({
   id: timeSpan.id,
   description: timeSpan.description,
-  end_time: timeSpan.end_time || null,
+  end_time: (!timeSpan.full_day && timeSpan.end_time) || null,
   full_day: timeSpan.full_day,
   group,
   resource_state: timeSpan.resource_state,
-  start_time: timeSpan.start_time || null,
+  start_time: (!timeSpan.full_day && timeSpan.start_time) || null,
   weekdays: days,
   end_time_on_next_day:
     (timeSpan.start_time &&
