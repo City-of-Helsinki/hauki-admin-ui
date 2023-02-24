@@ -1,6 +1,6 @@
 import { Checkbox, IconTrash, Select, TextInput, TimeInput } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 import {
   InputOption,
   Language,
@@ -51,7 +51,7 @@ type Props = {
   openingHoursIdx: number;
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
-  innerRef?: MutableRefObject<HTMLInputElement | null>;
+  innerRef?: MutableRefObject<HTMLElement | null>;
 };
 
 const TimeSpan = ({
@@ -86,11 +86,47 @@ const TimeSpan = ({
   const displayStartAndEndTimes =
     resourceState && areStartAndEndTimesAllowed(i, resourceState);
 
+  const resourceStateName = `${namePrefix}.resource_state` as const;
+  const resourceStateId = getUiId([resourceStateName]);
+
+  useEffect(() => {
+    if (innerRef) {
+      // The toggle-button postfix comes from HDS and if that ever changes this will break
+      // eslint-disable-next-line no-param-reassign
+      innerRef.current = document.getElementById(
+        `${resourceStateId}-toggle-button`
+      );
+    }
+  }, [innerRef, resourceStateId]);
+
   return (
     <div
       className="time-span time-span--with-extra-fields"
       role="group"
       aria-label={groupLabel}>
+      <Controller
+        defaultValue={item?.resource_state ?? ResourceState.OPEN}
+        name={resourceStateName}
+        control={control}
+        rules={{
+          required: 'Pakollinen',
+        }}
+        render={({ field: { onChange, value } }): JSX.Element => (
+          <Select<InputOption>
+            disabled={disabled}
+            id={resourceStateId}
+            label="Aukiolon tyyppi"
+            options={sanitizedResourceStateOptions}
+            className="time-span__resource-state-select"
+            onChange={(option: InputOption): void => onChange(option.value)}
+            placeholder="Valitse"
+            required
+            value={sanitizedResourceStateOptions.find(
+              (option) => option.value === value
+            )}
+          />
+        )}
+      />
       {displayStartAndEndTimes && (
         <>
           <Controller
@@ -107,13 +143,6 @@ const TimeSpan = ({
                     field.onChange(e.target.checked);
                   }}
                   checked={field.value}
-                  ref={(e) => {
-                    field.ref(e);
-                    if (innerRef) {
-                      // eslint-disable-next-line no-param-reassign
-                      innerRef.current = e;
-                    }
-                  }}
                 />
               </div>
             )}
@@ -174,29 +203,6 @@ const TimeSpan = ({
           )}
         </>
       )}
-      <Controller
-        defaultValue={item?.resource_state ?? ResourceState.OPEN}
-        name={`${namePrefix}.resource_state`}
-        control={control}
-        rules={{
-          required: 'Pakollinen',
-        }}
-        render={({ field: { name, onChange, value } }): JSX.Element => (
-          <Select<InputOption>
-            disabled={disabled}
-            id={getUiId([name])}
-            label="Aukiolon tyyppi"
-            options={sanitizedResourceStateOptions}
-            className="time-span__resource-state-select"
-            onChange={(option: InputOption): void => onChange(option.value)}
-            placeholder="Valitse"
-            required
-            value={sanitizedResourceStateOptions.find(
-              (option) => option.value === value
-            )}
-          />
-        )}
-      />
       {resourceState && isDescriptionAllowed(resourceState) && (
         <>
           <div className="time-span__descriptions">

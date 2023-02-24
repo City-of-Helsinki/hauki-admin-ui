@@ -9,7 +9,7 @@
 
 @media screen and (min-width: $breakpoint-s) {
   .time-span {
-    grid-template-columns: 70px auto 1fr 1fr;
+    grid-template-columns: auto auto auto 1fr;
   }
 }
 
@@ -98,12 +98,19 @@
 @media screen and (min-width: $breakpoint-s) {
   .time-span__full-day-checkbox-container {
     grid-column: auto;
+    padding: 0 0.5rem;
   }
 }
 
 .time-span__full-day-checkbox {
-  margin-top: 2.75rem;
+  margin-top: 1rem;
   padding-bottom: 1rem;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .time-span__full-day-checkbox {
+    margin-top: 2.75rem;
+  }
 }
 
 @media screen and (min-width: $breakpoint-m) {
