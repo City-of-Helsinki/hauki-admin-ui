@@ -1,5 +1,5 @@
 import { IconPlusCircle } from 'hds-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import {
   areStartAndEndTimesAllowed,
@@ -42,6 +42,7 @@ const TimeSpans = ({
     name: namePrefix,
   });
   const ref = useRef<HTMLInputElement>(null);
+  const [timeSpansChanged, setTimeSpansChanged] = useState(false);
 
   // Without this for some reason the key inference breaks :(
   const first = 0 as number;
@@ -78,12 +79,19 @@ const TimeSpans = ({
     remove,
   ]);
 
+  useEffect(() => {
+    if (timeSpansChanged) {
+      ref.current?.focus();
+      setTimeSpansChanged(false);
+    }
+  }, [timeSpansChanged]);
+
   return (
     <div className="time-spans">
       {fields.map((field, i) => (
         <TimeSpan
           key={field.id}
-          innerRef={i === fields.length - 2 ? ref : undefined}
+          innerRef={i === fields.length - 1 ? ref : undefined}
           openingHoursIdx={openingHoursIdx}
           timeSpanGroupIdx={timeSpanGroupIdx}
           i={i}
@@ -94,8 +102,8 @@ const TimeSpans = ({
             i === 0
               ? undefined
               : (): void => {
-                  ref.current?.focus();
                   remove(i);
+                  setTimeSpansChanged(true);
                 }
           }
         />
@@ -106,7 +114,10 @@ const TimeSpans = ({
             dataTest={getUiId([namePrefix, 'add-time-span-button'])}
             className="add-time-span-button"
             iconLeft={<IconPlusCircle />}
-            onClick={(): void => append(defaultTimeSpan)}
+            onClick={(): void => {
+              append(defaultTimeSpan, { shouldFocus: false });
+              setTimeSpansChanged(true);
+            }}
             type="button">
             Lisää aukiolomääritys
           </SupplementaryButton>
