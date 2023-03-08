@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -47,12 +47,12 @@ const App = (): JSX.Element => {
   const hasOpenerWindow =
     document.referrer && document.referrer !== window.location.href;
 
-  const closeAppWindow = (): void => {
+  const closeAppWindow = useCallback((): void => {
     // A window can only close itself if it has an parent opener.
     if (hasOpenerWindow) {
       window.close();
     }
-  };
+  }, [hasOpenerWindow]);
 
   const searchParams: SearchParameters = urlUtils.parseSearchParameters(
     window ? window.location.search : ''
@@ -66,18 +66,30 @@ const App = (): JSX.Element => {
     getPersistentTokens()
   );
 
-  const clearAuth = (): void => {
+  const clearAuth = useCallback((): void => {
     setAuthTokens(undefined);
     removeTokens();
-  };
+  }, [setAuthTokens]);
 
   const [language, setLanguage] = useState(Language.FI);
+  const appContextValue = useMemo(
+    () => ({
+      hasOpenerWindow,
+      closeAppWindow,
+      language,
+      setLanguage,
+    }),
+    [hasOpenerWindow, closeAppWindow, language, setLanguage]
+  );
+  const authContextValue = useMemo(() => ({ authTokens, clearAuth }), [
+    authTokens,
+    clearAuth,
+  ]);
 
   return (
     <div className="App">
-      <AppContext.Provider
-        value={{ hasOpenerWindow, closeAppWindow, language, setLanguage }}>
-        <AuthContext.Provider value={{ authTokens, clearAuth }}>
+      <AppContext.Provider value={appContextValue}>
+        <AuthContext.Provider value={authContextValue}>
           <Router>
             <Switch>
               <Route exact path="/">
