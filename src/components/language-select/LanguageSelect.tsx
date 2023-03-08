@@ -44,9 +44,9 @@ const LanguageSelect = ({
   formatter?: (selectedLanguage: Language) => string;
   theme?: 'dark';
 }): JSX.Element => {
-  const componentClassName = `custom-language-select${
-    theme ? ` custom-language-select--${theme}` : ''
-  }${className ? ` ${className}` : ''}`;
+  const languageSelectTheme = theme ? ` custom-language-select--${theme}` : '';
+  const resolvedClassName = className ? ` ${className}` : '';
+  const componentClassName = `custom-language-select${languageSelectTheme}${resolvedClassName}`;
 
   return (
     <Navigation.LanguageSelector
