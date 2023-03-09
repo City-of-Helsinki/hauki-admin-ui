@@ -43,7 +43,7 @@ const groupByConsecutiveDays = (
 
   const groups: PreviewOpeningHours[][] = [[]];
   let i = 0;
-  individualDays
+  [...individualDays]
     .sort((a, b) => {
       return a.weekdays[0] - b.weekdays[0];
     })
