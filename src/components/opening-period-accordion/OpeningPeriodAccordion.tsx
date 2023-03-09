@@ -22,6 +22,34 @@ type Props = {
   periodName?: string | null;
 };
 
+type DeleteModalTextProps = {
+  dateRange?: ReactNode | null;
+  periodName?: string | null;
+};
+
+const DeleteModalText = ({
+  dateRange,
+  periodName,
+}: DeleteModalTextProps): JSX.Element => (
+  <>
+    <p>Olet poistamassa aukiolojakson</p>
+    <p>
+      <b>
+        {periodName}
+        <br />
+        {dateRange}
+      </b>
+    </p>
+  </>
+);
+
+type AccordionIconProps = {
+  isOpen: boolean;
+};
+
+const AccordionIcon = ({ isOpen }: AccordionIconProps): JSX.Element =>
+  isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
+
 const OpeningPeriodAccordion = ({
   children,
   dateRange,
@@ -33,31 +61,19 @@ const OpeningPeriodAccordion = ({
   periodName,
 }: Props): JSX.Element => {
   const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
-  const DeleteModalText = (): JSX.Element => (
-    <>
-      <p>Olet poistamassa aukiolojakson</p>
-      <p>
-        <b>
-          {periodName}
-          <br />
-          {dateRange}
-        </b>
-      </p>
-    </>
-  );
+
   const { isModalOpen, openModal, closeModal } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
   });
   const [isDeleting, setDeleting] = useState(false);
   const deleteRef = useRef<HTMLButtonElement>(null);
-  const AccordionIcon = (): JSX.Element =>
-    isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
+  const dataTestPostFix = id ? `-${id}` : '';
 
   return (
     <div
       className="opening-period"
-      data-test={`openingPeriod${id ? `-${id}` : ''}`}>
+      data-test={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
         <div className="opening-period-title opening-period-header-column">
           <h3>{periodName}</h3>
@@ -75,7 +91,7 @@ const OpeningPeriodAccordion = ({
             {editUrl && (
               <Link
                 className="opening-period-edit-link button-icon"
-                data-test={`openingPeriodEditLink${id ? `-${id}` : ''}`}
+                data-test={`openingPeriodEditLink${dataTestPostFix}`}
                 to={editUrl}>
                 <IconPenLine aria-hidden="true" />
                 <span className="hiddenFromScreen">{`Muokkaa ${
@@ -87,7 +103,7 @@ const OpeningPeriodAccordion = ({
               <button
                 ref={deleteRef}
                 className="button-icon"
-                data-test={`openingPeriodDeleteLink${id ? `-${id}` : ''}`}
+                data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
                 type="button"
                 onClick={openModal}>
                 <IconTrash aria-hidden="true" />
@@ -99,10 +115,10 @@ const OpeningPeriodAccordion = ({
           </div>
           <button
             className="button-icon"
-            data-test={`openingPeriodAccordionButton${id ? `-${id}` : ''}`}
+            data-test={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
             {...buttonProps}>
-            <AccordionIcon aria-hidden="true" />
+            <AccordionIcon isOpen={isOpen} />
             <span className="hiddenFromScreen">{`Näytä ${
               periodName || 'nimetön'
             }`}</span>
@@ -130,7 +146,9 @@ const OpeningPeriodAccordion = ({
           isLoading={isDeleting}
           loadingText="Poistetaan aukiolojaksoa"
           title={deleteModalTitle}
-          text={<DeleteModalText />}
+          text={
+            <DeleteModalText periodName={periodName} dateRange={dateRange} />
+          }
           isOpen={isModalOpen}
           onClose={() => {
             closeModal();

@@ -167,7 +167,7 @@ const ResourcePage = ({
             Tämä alakohde sijaitsee seuraavissa toimipisteissä.
           </p>
           {parentResources?.map((parentResource, index) => (
-            <div className="related-resource-list-item" key={index}>
+            <div className="related-resource-list-item" key={parentResource.id}>
               <Link
                 dataTest={`parent-resource-name-${index}`}
                 href={`/resource/${parentResource.id}`}
@@ -204,9 +204,9 @@ const ResourcePage = ({
             </p>
           </section>
           <section>
-            {childResources?.map((childResource, index) => (
+            {childResources?.map((childResource) => (
               <Accordion
-                key={index}
+                key={childResource.id}
                 initiallyOpen={childId === `${childResource.id}`}
                 heading={
                   childResource?.name[language] ||

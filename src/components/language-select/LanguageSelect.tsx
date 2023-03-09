@@ -30,47 +30,37 @@ const formatSelectedLanguage = (selectedLanguage: Language): string =>
 const LanguageSelect = ({
   id,
   label,
-  className,
   selectedLanguage,
   onSelect,
   formatter = formatSelectedLanguage,
-  theme,
 }: {
   id: string;
   label: string;
-  className?: string;
   selectedLanguage: Language;
   onSelect: (language: Language) => void;
   formatter?: (selectedLanguage: Language) => string;
-  theme?: 'dark';
-}): JSX.Element => {
-  const componentClassName = `custom-language-select${
-    theme ? ` custom-language-select--${theme}` : ''
-  }${className ? ` ${className}` : ''}`;
-
-  return (
-    <Navigation.LanguageSelector
-      id={id}
-      buttonAriaLabel={label}
-      className={componentClassName}
-      label={formatter(selectedLanguage)}>
-      {languageOptions.map((languageOption) => (
-        <Navigation.Item
-          as="a"
-          href="#"
-          key={languageOption.value}
-          label={languageOption.label}
-          lang={selectedLanguage}
-          onClick={(
-            e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-          ): void => {
-            e.preventDefault();
-            onSelect(languageOption.value);
-          }}
-        />
-      ))}
-    </Navigation.LanguageSelector>
-  );
-};
+}): JSX.Element => (
+  <Navigation.LanguageSelector
+    id={id}
+    buttonAriaLabel={label}
+    className="custom-language-select"
+    label={formatter(selectedLanguage)}>
+    {languageOptions.map((languageOption) => (
+      <Navigation.Item
+        as="a"
+        href="#"
+        key={languageOption.value}
+        label={languageOption.label}
+        lang={selectedLanguage}
+        onClick={(
+          e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+        ): void => {
+          e.preventDefault();
+          onSelect(languageOption.value);
+        }}
+      />
+    ))}
+  </Navigation.LanguageSelector>
+);
 
 export default LanguageSelect;

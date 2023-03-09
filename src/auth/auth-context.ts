@@ -66,7 +66,8 @@ export const parseAuthParams = (queryStr: string): AuthTokens | undefined => {
   }, {});
 
   if (
-    authKeys.sort().toString() === Object.keys(authParams).sort().toString()
+    [...authKeys].sort().toString() ===
+    Object.keys(authParams).sort().toString()
   ) {
     return (authParams as unknown) as AuthTokens;
   }

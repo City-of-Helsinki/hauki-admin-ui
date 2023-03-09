@@ -158,7 +158,7 @@ export function createWeekdaysStringFromIndices(
       })}`;
     }
 
-    if (!(index === weekdaySpans.length - 1)) {
+    if (index !== weekdaySpans.length - 1) {
       weekdaysString += `, `;
     }
   });
