@@ -22,6 +22,34 @@ type Props = {
   periodName?: string | null;
 };
 
+type DeleteModalTextProps = {
+  dateRange?: ReactNode | null;
+  periodName?: string | null;
+};
+
+const DeleteModalText = ({
+  dateRange,
+  periodName,
+}: DeleteModalTextProps): JSX.Element => (
+  <>
+    <p>Olet poistamassa aukiolojakson</p>
+    <p>
+      <b>
+        {periodName}
+        <br />
+        {dateRange}
+      </b>
+    </p>
+  </>
+);
+
+type AccordionIconProps = {
+  isOpen: boolean;
+};
+
+const AccordionIcon = ({ isOpen }: AccordionIconProps): JSX.Element =>
+  isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
+
 const OpeningPeriodAccordion = ({
   children,
   dateRange,
@@ -33,26 +61,13 @@ const OpeningPeriodAccordion = ({
   periodName,
 }: Props): JSX.Element => {
   const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
-  const DeleteModalText = (): JSX.Element => (
-    <>
-      <p>Olet poistamassa aukiolojakson</p>
-      <p>
-        <b>
-          {periodName}
-          <br />
-          {dateRange}
-        </b>
-      </p>
-    </>
-  );
+
   const { isModalOpen, openModal, closeModal } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
   });
   const [isDeleting, setDeleting] = useState(false);
   const deleteRef = useRef<HTMLButtonElement>(null);
-  const AccordionIcon = (): JSX.Element =>
-    isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
   const dataTestPostFix = id ? `-${id}` : '';
 
   return (
@@ -103,7 +118,7 @@ const OpeningPeriodAccordion = ({
             data-test={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
             {...buttonProps}>
-            <AccordionIcon aria-hidden="true" />
+            <AccordionIcon isOpen={isOpen} />
             <span className="hiddenFromScreen">{`Näytä ${
               periodName || 'nimetön'
             }`}</span>
@@ -131,7 +146,9 @@ const OpeningPeriodAccordion = ({
           isLoading={isDeleting}
           loadingText="Poistetaan aukiolojaksoa"
           title={deleteModalTitle}
-          text={<DeleteModalText />}
+          text={
+            <DeleteModalText periodName={periodName} dateRange={dateRange} />
+          }
           isOpen={isModalOpen}
           onClose={() => {
             closeModal();
