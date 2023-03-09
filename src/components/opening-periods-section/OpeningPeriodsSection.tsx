@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from '../button/Button';
 import './OpeningPeriodsSection.scss';
 
 type Props = {
-  addDatePeriodButtonRef?: React.Ref<HTMLButtonElement> | undefined;
+  addDatePeriodButtonRef?: React.Ref<HTMLButtonElement>;
   addDatePeriodButtonText: string;
   addNewOpeningPeriodButtonDataTest: string;
   children: React.ReactNode;
