@@ -53,12 +53,12 @@ const OpeningPeriodAccordion = ({
   const deleteRef = useRef<HTMLButtonElement>(null);
   const AccordionIcon = (): JSX.Element =>
     isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
-  const dataTextPostFix = id ? `-${id}` : '';
+  const dataTestPostFix = id ? `-${id}` : '';
 
   return (
     <div
       className="opening-period"
-      data-test={`openingPeriod${dataTextPostFix}`}>
+      data-test={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
         <div className="opening-period-title opening-period-header-column">
           <h3>{periodName}</h3>
@@ -76,7 +76,7 @@ const OpeningPeriodAccordion = ({
             {editUrl && (
               <Link
                 className="opening-period-edit-link button-icon"
-                data-test={`openingPeriodEditLink${dataTextPostFix}`}
+                data-test={`openingPeriodEditLink${dataTestPostFix}`}
                 to={editUrl}>
                 <IconPenLine aria-hidden="true" />
                 <span className="hiddenFromScreen">{`Muokkaa ${
@@ -88,7 +88,7 @@ const OpeningPeriodAccordion = ({
               <button
                 ref={deleteRef}
                 className="button-icon"
-                data-test={`openingPeriodDeleteLink${dataTextPostFix}`}
+                data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
                 type="button"
                 onClick={openModal}>
                 <IconTrash aria-hidden="true" />
@@ -100,7 +100,7 @@ const OpeningPeriodAccordion = ({
           </div>
           <button
             className="button-icon"
-            data-test={`openingPeriodAccordionButton${dataTextPostFix}`}
+            data-test={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
             {...buttonProps}>
             <AccordionIcon aria-hidden="true" />
