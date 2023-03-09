@@ -15,9 +15,11 @@ const useReturnToResourcePage = (): (() => void) => {
       throw new Error('Invalid route. No resource id found from the path.');
     }
 
-    const path = parentId ? `${parentId}/child/${resourceId}` : resourceId;
+    const resourcePath = parentId
+      ? `${parentId}/child/${resourceId}`
+      : resourceId;
 
-    history.push(`/resource/${path}`);
+    history.push(`/resource/${resourcePath}`);
   }, [history, parentId, resourceId]);
 };
 
