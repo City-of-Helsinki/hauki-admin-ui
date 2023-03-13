@@ -4,7 +4,7 @@ import {
   IconMenuDots,
   IconPenLine,
   IconTrash,
-  Tag,
+  StatusLabel,
   useAccordion,
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
@@ -91,15 +91,12 @@ const OpeningPeriodAccordion = ({
         <div className="opening-period-dates opening-period-header-column">
           {dateRange}
           {isActive && (
-            <Tag
+            <StatusLabel
               className="opening-period-active"
               aria-label="Voimassa nyt"
-              theme={{
-                '--tag-background': 'var(--color-coat-of-arms)',
-                '--tag-color': 'var(--color-white)',
-              }}>
+              type="info">
               Voimassa nyt
-            </Tag>
+            </StatusLabel>
           )}
         </div>
         <div className="opening-period-actions opening-period-header-column">
