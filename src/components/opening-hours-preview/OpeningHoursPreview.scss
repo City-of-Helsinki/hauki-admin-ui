@@ -5,6 +5,13 @@
   margin-bottom: 1.5rem;
   padding: 3px 0;
   table-layout: fixed;
+  width: 100%;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .opening-hours-preview-table {
+    width: revert;
+  }
 }
 
 .opening-hours-preview-table:last-child {
