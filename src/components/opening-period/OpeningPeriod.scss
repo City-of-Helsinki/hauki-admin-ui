@@ -53,9 +53,9 @@
   }
 }
 
-.opening-period-dates-status {
-  padding: 0 $spacing-5-xl 0 $spacing-s;
+.opening-period-active {
   white-space: nowrap;
+  flex-direction: row;
 }
 
 .opening-period-title {
