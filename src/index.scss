@@ -62,7 +62,7 @@ code {
   cursor: pointer;
   display: inline-block;
   font: inherit;
-  padding: var(--spacing-xs) var(--spacing-s);
+  padding: var(--spacing-xs);
 
   &:hover {
     background-color: var(--button-icon-hover-background-color);
@@ -71,5 +71,9 @@ code {
   &:focus {
     border-radius: 0;
     outline: 2px solid var(--button-icon-focus-border-color);
+  }
+
+  & svg {
+    display: flex;
   }
 }

@@ -1,6 +1,7 @@
 import {
   IconAngleDown,
   IconAngleUp,
+  IconMenuDots,
   IconPenLine,
   IconTrash,
   StatusLabel,
@@ -10,6 +11,8 @@ import React, { ReactNode, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useMobile from '../../hooks/useMobile';
 
 type Props = {
   children: ReactNode;
@@ -61,7 +64,13 @@ const OpeningPeriodAccordion = ({
   periodName,
 }: Props): JSX.Element => {
   const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
-
+  const {
+    buttonProps: actionsMenuButtonProps,
+    isOpen: isActionsMenuOpen,
+    closeAccordion: closeActionsMenu,
+  } = useAccordion({ initiallyOpen: false });
+  const actionsMenuRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(actionsMenuRef, closeActionsMenu);
   const { isModalOpen, openModal, closeModal } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
@@ -69,15 +78,16 @@ const OpeningPeriodAccordion = ({
   const [isDeleting, setDeleting] = useState(false);
   const deleteRef = useRef<HTMLButtonElement>(null);
   const dataTestPostFix = id ? `-${id}` : '';
+  const isMobile = useMobile();
 
   return (
     <div
       className="opening-period"
       data-test={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
-        <div className="opening-period-title opening-period-header-column">
-          <h3>{periodName}</h3>
-        </div>
+        <h3 className="opening-period-title opening-period-header-column">
+          {periodName}
+        </h3>
         <div className="opening-period-dates opening-period-header-column">
           {dateRange}
           {isActive && (
@@ -87,32 +97,77 @@ const OpeningPeriodAccordion = ({
           )}
         </div>
         <div className="opening-period-actions opening-period-header-column">
-          <div>
-            {editUrl && (
-              <Link
-                className="opening-period-edit-link button-icon"
-                data-test={`openingPeriodEditLink${dataTestPostFix}`}
-                to={editUrl}>
-                <IconPenLine aria-hidden="true" />
-                <span className="hiddenFromScreen">{`Muokkaa ${
-                  periodName || 'nimettömän'
-                } aukiolojakson tietoja`}</span>
-              </Link>
-            )}
-            {onDelete && (
+          {!isMobile && (
+            <>
+              {editUrl && (
+                <Link
+                  className="button-icon opening-period-action-edit"
+                  data-test={`openingPeriodEditLink${dataTestPostFix}`}
+                  to={editUrl}>
+                  <IconPenLine aria-hidden="true" />
+                  <span className="hiddenFromScreen">{`Muokkaa ${
+                    periodName || 'nimettömän'
+                  } aukiolojakson tietoja`}</span>
+                </Link>
+              )}
+              {onDelete && (
+                <button
+                  ref={deleteRef}
+                  className="button-icon opening-period-action-delete"
+                  data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
+                  type="button"
+                  onClick={openModal}>
+                  <IconTrash aria-hidden="true" />
+                  <span className="hiddenFromScreen">{`Poista ${
+                    periodName || 'nimetön'
+                  } aukiolojakso`}</span>
+                </button>
+              )}
+            </>
+          )}
+          {isMobile && (editUrl || onDelete) && (
+            <div className="opening-period-actions-menu" ref={actionsMenuRef}>
               <button
                 ref={deleteRef}
-                className="button-icon"
+                className="button-icon opening-period-actions-menu-toggle"
                 data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
                 type="button"
-                onClick={openModal}>
-                <IconTrash aria-hidden="true" />
-                <span className="hiddenFromScreen">{`Poista ${
+                {...actionsMenuButtonProps}>
+                <IconMenuDots aria-hidden="true" />
+                <span className="hiddenFromScreen">{`Avaa ${
                   periodName || 'nimetön'
-                } aukiolojakso`}</span>
+                } aukiolojakson muokkaa ja poista valikko`}</span>
               </button>
-            )}
-          </div>
+              {isActionsMenuOpen && (
+                <div className="opening-period-actions-menu-items">
+                  {editUrl && (
+                    <Link
+                      className="opening-period-actions-menu-item"
+                      to={editUrl}>
+                      Muokkaa
+                      <span className="hiddenFromScreen">{`Muokkaa ${
+                        periodName || 'nimettömän'
+                      } aukiolojakson tietoja`}</span>
+                    </Link>
+                  )}
+                  {onDelete && (
+                    <button
+                      className="opening-period-actions-menu-item"
+                      onClick={() => {
+                        closeActionsMenu();
+                        openModal();
+                      }}
+                      type="button">
+                      Poista
+                      <span className="hiddenFromScreen">{`Poista ${
+                        periodName || 'nimetön'
+                      } aukiolojakso`}</span>
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
           <button
             className="button-icon"
             data-test={`openingPeriodAccordionButton${dataTestPostFix}`}

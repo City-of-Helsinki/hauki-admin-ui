@@ -33,23 +33,46 @@
 }
 
 .opening-period-dates {
-  flex-basis: 18ch;
+  align-items: stretch;
+  flex-basis: 100%;
+  flex-direction: column;
   flex-grow: 1;
+  gap: $spacing-2-xs $spacing-s;
   line-height: $lineheight-l;
+  margin-bottom: $spacing-s;
+  order: 1;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .opening-period-dates {
+    align-items: center;
+    flex-basis: 18ch;
+    flex-direction: row;
+    margin-bottom: revert;
+    order: revert;
+  }
 }
 
 .opening-period-dates-status {
-  flex: 1;
+  padding: 0 $spacing-5-xl 0 $spacing-s;
+  white-space: nowrap;
 }
 
 .opening-period-title {
   display: flex;
   justify-content: normal;
+  margin: 0;
+  margin-left: $spacing-m;
 }
 
-.opening-period-edit-link {
+.opening-period-action-edit {
   color: $color-black;
-  margin-left: auto;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .opening-period-action-delete {
+    margin-right: $spacing-s;
+  }
 }
 
 .date-period-details-container {
@@ -74,16 +97,43 @@
 
 .opening-period-actions {
   flex: 1 1;
-}
-
-@media screen and (min-width: $breakpoint-l) {
-  .opening-period-actions {
-    flex: 0.8 0.8;
-  }
+  justify-content: flex-end;
+  gap: 0;
 }
 
 @media screen and (min-width: $breakpoint-xl) {
   .opening-period-actions {
     flex: 0.65 0.65;
   }
+}
+
+.opening-period-actions-menu {
+  position: relative;
+}
+
+.opening-period-actions-menu-items {
+  align-items: stretch;
+  background: white;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  left: -1px;
+  position: absolute;
+}
+
+.opening-period-actions-menu-item {
+  background: transparent;
+  border: 0;
+  color: $color-black;
+  display: block;
+  line-height: $lineheight-l;
+  margin: 0;
+  padding: $spacing-xs $spacing-s;
+  text-align: left;
+  text-decoration: none;
+}
+
+.opening-period-actions-menu-item:hover {
+  background: $color-bus;
+  color: $color-white;
 }
