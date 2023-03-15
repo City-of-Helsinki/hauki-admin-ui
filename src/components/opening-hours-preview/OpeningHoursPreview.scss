@@ -5,13 +5,6 @@
   margin-bottom: 1.5rem;
   padding: 3px 0;
   table-layout: fixed;
-  width: 100%;
-}
-
-@media screen and (min-width: $breakpoint-s) {
-  .opening-hours-preview-table {
-    width: revert;
-  }
 }
 
 .opening-hours-preview-table:last-child {
@@ -30,11 +23,13 @@
 }
 
 .opening-hours-preview-table__day-column {
+  vertical-align: top;
   width: 80px;
 }
 
 .opening-hours-preview-table__time-span-column {
   padding: 0 10px;
+  vertical-align: top;
 }
 
 td {
@@ -50,7 +45,7 @@ td::first-letter {
 .opening-hours-preview-time-span {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .opening-hours-preview-time-span__time {
@@ -87,9 +82,10 @@ td::first-letter {
 }
 
 .opening-hours-preview-time-span-container {
+  align-items: start;
   display: grid;
-  grid-template-columns: 100px auto 1fr;
-  gap: 5px;
+  grid-template-columns: minmax(auto, 120px) auto 1fr;
+  gap: 10px;
 }
 
 .opening-hours-preview-time-span-container--no-time-spans {
