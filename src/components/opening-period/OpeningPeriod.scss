@@ -75,7 +75,7 @@
 }
 
 .date-period-details-container {
-  align-items: flex-start;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
 
@@ -90,6 +90,7 @@
 
 @media screen and (min-width: $breakpoint-m) {
   .date-period-details-container {
+    align-items: flex-start;
     flex-direction: row;
   }
 }

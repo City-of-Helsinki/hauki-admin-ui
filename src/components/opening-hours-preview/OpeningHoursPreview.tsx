@@ -72,12 +72,13 @@ export const TimeSpan = ({
   }
 
   const hideOpeningHours = shouldHideOpeningHours(timeSpan, idx);
+  const description = timeSpan.description[language];
 
   return (
     <span
-      className={`opening-hours-preview-time-span-container ${
+      className={`opening-hours-preview-time-span-container${
         hideOpeningHours
-          ? 'opening-hours-preview-time-span-container--no-time-spans'
+          ? ' opening-hours-preview-time-span-container--no-time-spans'
           : ''
       }`}>
       {!hideOpeningHours && (
@@ -102,7 +103,7 @@ export const TimeSpan = ({
         resourceStates={resourceStates}
         timeSpan={timeSpan}
       />
-      <span>{timeSpan.description[language]}</span>
+      {description && <span>{description}</span>}
     </span>
   );
 };
