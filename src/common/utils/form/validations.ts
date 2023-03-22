@@ -1,8 +1,7 @@
 import { UseFormGetValues } from 'react-hook-form';
 import { DatePeriod } from '../../lib/types';
-import { parseFormDate } from '../date-time/format';
+import { parseFormDate, transformDateToApiFormat } from '../date-time/format';
 
-// eslint-disable-next-line import/prefer-default-export
 export const endDateAfterStartDate = (
   getValues: UseFormGetValues<DatePeriod>
 ) => (endDate: string | null): string | undefined => {
@@ -16,4 +15,13 @@ export const endDateAfterStartDate = (
     return undefined;
   }
   return undefined;
+};
+
+export const isValidDate = (date: string): string | undefined => {
+  try {
+    transformDateToApiFormat(date);
+    return undefined;
+  } catch (e) {
+    return 'Tarkista päivämäärä';
+  }
 };
