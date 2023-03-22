@@ -4,7 +4,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
 import { DatePeriod, Language, ResourceState } from '../../common/lib/types';
 import { parseFormDate } from '../../common/utils/date-time/format';
-import { endDateAfterStartDate } from '../../common/utils/form/validations';
+import {
+  endDateAfterStartDate,
+  isValidDate,
+} from '../../common/utils/form/validations';
 import { defaultTimeSpanGroup } from '../../constants';
 import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
 import './ExceptionOpeningHoursValidity.scss';
@@ -62,6 +65,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
               )}
               rules={{
                 required: 'Pakollinen',
+                validate: isValidDate,
               }}
             />
             <Controller
@@ -91,7 +95,10 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
               )}
               rules={{
                 required: 'Pakollinen',
-                validate: endDateAfterStartDate(getValues),
+                validate: {
+                  validDate: isValidDate,
+                  endDateAfterStartDate: endDateAfterStartDate(getValues),
+                },
               }}
             />
           </div>

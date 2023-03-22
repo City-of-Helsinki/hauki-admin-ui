@@ -3,7 +3,10 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
 import { Language, DatePeriod } from '../../common/lib/types';
-import { endDateAfterStartDate } from '../../common/utils/form/validations';
+import {
+  endDateAfterStartDate,
+  isValidDate,
+} from '../../common/utils/form/validations';
 import './NormalOpeningHoursValidity.scss';
 
 const NormalOpeningHoursValidity = (): JSX.Element => {
@@ -46,6 +49,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                 name="startDate"
                 rules={{
                   required: 'Pakollinen',
+                  validate: isValidDate,
                 }}
                 render={({
                   field: startDateField,
@@ -77,7 +81,10 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                   name="endDate"
                   rules={{
                     required: 'Pakollinen',
-                    validate: endDateAfterStartDate(getValues),
+                    validate: {
+                      validDate: isValidDate,
+                      endDateAfterStartDate: endDateAfterStartDate(getValues),
+                    },
                   }}
                   render={({
                     field: endDateField,
