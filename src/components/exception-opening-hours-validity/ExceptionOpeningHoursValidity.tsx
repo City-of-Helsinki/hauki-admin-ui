@@ -47,14 +47,14 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                   label="Alkaa"
                   language={language}
                   name={name}
-                  onChange={(e) => {
-                    onChange(e);
+                  onChange={(newStartDate) => {
+                    onChange(newStartDate);
                     if (
                       endDate &&
-                      parseFormDate(e).getTime() >
+                      parseFormDate(newStartDate).getTime() >
                         parseFormDate(endDate).getTime()
                     ) {
-                      setValue('endDate', e);
+                      setValue('endDate', newStartDate);
                     }
                   }}
                   onBlur={onBlur}
