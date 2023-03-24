@@ -27,14 +27,13 @@ describe('Open aukiolot app', () => {
     );
   });
 
-  it.skip('Has no detectable a11y violations on add new opening period page', () => {
+  it('Has no detectable a11y violations on add new opening period page', () => {
     cy.injectAxe();
     cy.get('[data-test=resource-info]', { timeout: 5000 }).should('be.visible');
 
-    // Go to add new opening period page by pressing the header button
-    cy.get('[data-test=add-new-opening-period-button]').click();
+    cy.get('[data-test=add-new-opening-period-button]').first().click();
 
-    cy.get('[data-test=add-new-opening-period-form]', {
+    cy.get('[data-test=opening-period-form]', {
       timeout: 5000,
     }).should('be.visible');
 
