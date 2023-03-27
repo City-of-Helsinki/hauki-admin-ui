@@ -179,7 +179,7 @@ const OpeningHoursForm = ({
                       resourceStates={resourceStates}
                     />
                   </section>
-                  <aside className="opening-hours-form__aside">
+                  <div className="opening-hours-form__aside">
                     <OpeningHoursFormPreview
                       datePeriod={formValues}
                       resourceStates={resourceStates}
@@ -192,7 +192,7 @@ const OpeningHoursForm = ({
                         Järjestä päiväryhmät viikonpäivien mukaan
                       </SupplementaryButton>
                     </div>
-                  </aside>
+                  </div>
                 </div>
               )}
             </section>
