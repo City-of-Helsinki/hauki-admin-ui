@@ -162,28 +162,28 @@ const OpeningHoursWeekdays = ({
           .join(', ')} aukioloajat`
   );
 
-  const handleRuleChange = (i: number) => (
-    rule: InputOption<RuleType>
-  ): void => {
-    const result = updateRule(
-      ruleValues,
-      getValues(`${namePrefix}.timeSpanGroups`),
-      rule.value,
-      i
-    );
+  const handleRuleChange =
+    (i: number) =>
+    (rule: InputOption<RuleType>): void => {
+      const result = updateRule(
+        ruleValues,
+        getValues(`${namePrefix}.timeSpanGroups`),
+        rule.value,
+        i
+      );
 
-    result.updated.forEach((o) =>
-      setValue(`${namePrefix}.timeSpanGroups.${o.idx}.rule`, o.value)
-    );
+      result.updated.forEach((o) =>
+        setValue(`${namePrefix}.timeSpanGroups.${o.idx}.rule`, o.value)
+      );
 
-    if (result.removed !== undefined) {
-      remove(result.removed);
-    }
+      if (result.removed !== undefined) {
+        remove(result.removed);
+      }
 
-    if (result.added) {
-      append(result.added, { shouldFocus: false });
-    }
-  };
+      if (result.added) {
+        append(result.added, { shouldFocus: false });
+      }
+    };
 
   return (
     <div

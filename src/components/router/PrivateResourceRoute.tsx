@@ -85,9 +85,7 @@ const PrivateResourceRoute = (routeProps: PrivateRouteProps): JSX.Element => {
   return (
     <Route
       {...rest}
-      render={(
-        props: RouteComponentProps<{ id: string }>
-      ): JSX.Element | ReactNode => {
+      render={(props: RouteComponentProps<{ id?: string }>) => {
         if (!render) {
           // eslint-disable-next-line no-console
           console.error(

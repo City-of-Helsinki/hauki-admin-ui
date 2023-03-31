@@ -99,7 +99,7 @@ const addTokensToRequestConfig = (
     headers: {
       ...config.headers,
       Authorization: `haukisigned ${querystring.stringify(
-        (authTokens as unknown) as ParsedUrlQueryInput
+        authTokens as unknown as ParsedUrlQueryInput
       )}`,
     },
   };
@@ -268,24 +268,26 @@ export default {
 
     const resourceStateChoices = configResponse.resource_state.choices;
 
-    const resourceStateOptions: TranslatedApiChoice[] = resourceStateChoices.map(
-      convertApiChoiceToTranslatedApiChoice
-    );
+    const resourceStateOptions: TranslatedApiChoice[] =
+      resourceStateChoices.map(convertApiChoiceToTranslatedApiChoice);
 
     const timeSpanGroupOptions =
       configResponse.time_span_groups.child.children.rules.child.children;
 
-    const ruleContextOptions: TranslatedApiChoice[] = timeSpanGroupOptions.context.choices.map(
-      convertApiChoiceToTranslatedApiChoice
-    );
+    const ruleContextOptions: TranslatedApiChoice[] =
+      timeSpanGroupOptions.context.choices.map(
+        convertApiChoiceToTranslatedApiChoice
+      );
 
-    const ruleSubjectOptions: TranslatedApiChoice[] = timeSpanGroupOptions.subject.choices.map(
-      convertApiChoiceToTranslatedApiChoice
-    );
+    const ruleSubjectOptions: TranslatedApiChoice[] =
+      timeSpanGroupOptions.subject.choices.map(
+        convertApiChoiceToTranslatedApiChoice
+      );
 
-    const ruleFrequencyModifierOptions: TranslatedApiChoice[] = timeSpanGroupOptions.frequency_modifier.choices.map(
-      convertApiChoiceToTranslatedApiChoice
-    );
+    const ruleFrequencyModifierOptions: TranslatedApiChoice[] =
+      timeSpanGroupOptions.frequency_modifier.choices.map(
+        convertApiChoiceToTranslatedApiChoice
+      );
 
     return {
       name: configResponse.name,

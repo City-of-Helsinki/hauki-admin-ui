@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -81,10 +81,10 @@ const App = (): JSX.Element => {
     }),
     [hasOpenerWindow, closeAppWindow, language, setLanguage]
   );
-  const authContextValue = useMemo(() => ({ authTokens, clearAuth }), [
-    authTokens,
-    clearAuth,
-  ]);
+  const authContextValue = useMemo(
+    () => ({ authTokens, clearAuth }),
+    [authTokens, clearAuth]
+  );
 
   return (
     <div className="App">
@@ -132,13 +132,13 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  childId: string;
-                }>): ReactElement => (
+                  id?: string;
+                  childId?: string;
+                }>) => (
                   <NavigationAndFooterWrapper>
                     <Main id="main">
                       <ResourcePage
-                        id={match.params.id}
+                        id={match.params.id || ''}
                         childId={match.params.childId}
                         targetResourcesString={targetResourcesStr}
                       />
@@ -156,12 +156,14 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
+                  id?: string;
+                }>) => (
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <AddNormalOpeningHoursPage resourceId={match.params.id} />
+                      <AddNormalOpeningHoursPage
+                        resourceId={match.params.id || ''}
+                      />
                     </Main>
                   </>
                 )}
@@ -175,15 +177,15 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  datePeriodId: string;
-                }>): ReactElement => (
+                  id?: string;
+                  datePeriodId?: string;
+                }>) => (
                   <>
                     <HaukiNavigation />
                     <Main id="main">
                       <EditNormalOpeningHoursPage
-                        resourceId={match.params.id}
-                        datePeriodId={match.params.datePeriodId}
+                        resourceId={match.params.id || ''}
+                        datePeriodId={match.params.datePeriodId || ''}
                       />
                     </Main>
                   </>
@@ -198,12 +200,12 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
+                  id?: string;
+                }>) => (
                   <>
                     <HaukiNavigation />
                     <Main id="main">
-                      <EditHolidaysPage resourceId={match.params.id} />
+                      <EditHolidaysPage resourceId={match.params.id || ''} />
                     </Main>
                   </>
                 )}
@@ -217,13 +219,13 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
+                  id?: string;
+                }>) => (
                   <>
                     <HaukiNavigation />
                     <Main id="main">
                       <AddExceptionOpeningHoursPage
-                        resourceId={match.params.id}
+                        resourceId={match.params.id || ''}
                       />
                     </Main>
                   </>
@@ -238,15 +240,15 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  datePeriodId: string;
-                }>): ReactElement => (
+                  id?: string;
+                  datePeriodId?: string;
+                }>) => (
                   <>
                     <HaukiNavigation />
                     <Main id="main">
                       <EditExceptionOpeningHoursPage
-                        datePeriodId={match.params.datePeriodId}
-                        resourceId={match.params.id}
+                        datePeriodId={match.params.datePeriodId || ''}
+                        resourceId={match.params.id || ''}
                       />
                     </Main>
                   </>

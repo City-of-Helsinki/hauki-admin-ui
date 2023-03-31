@@ -3,9 +3,8 @@ import { UiDatePeriodConfig } from '../common/lib/types';
 import { getDatePeriodFormConfig } from './datePeriodFormConfig';
 
 const useDatePeriodConfig = (): UiDatePeriodConfig | undefined => {
-  const [datePeriodConfig, setDatePeriodConfig] = useState<
-    UiDatePeriodConfig
-  >();
+  const [datePeriodConfig, setDatePeriodConfig] =
+    useState<UiDatePeriodConfig>();
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {

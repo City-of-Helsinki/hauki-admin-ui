@@ -303,9 +303,8 @@ const EditHolidaysPage = ({
   const [holidayValues, setHolidayValues] = useState<
     DatePeriod[] | undefined
   >();
-  const [datePeriodConfig, setDatePeriodConfig] = useState<
-    UiDatePeriodConfig
-  >();
+  const [datePeriodConfig, setDatePeriodConfig] =
+    useState<UiDatePeriodConfig>();
   const { language = Language.FI } = useAppContext();
   const [holidays, setHolidays] = useState<Holiday[]>([]);
 

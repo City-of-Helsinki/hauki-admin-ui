@@ -69,7 +69,7 @@ export const parseAuthParams = (queryStr: string): AuthTokens | undefined => {
     [...authKeys].sort().toString() ===
     Object.keys(authParams).sort().toString()
   ) {
-    return (authParams as unknown) as AuthTokens;
+    return authParams as unknown as AuthTokens;
   }
 
   return undefined;

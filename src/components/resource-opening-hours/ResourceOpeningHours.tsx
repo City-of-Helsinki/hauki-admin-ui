@@ -32,9 +32,8 @@ const ResourceOpeningHours = ({
 }): JSX.Element | null => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [datePeriodConfig, setDatePeriodConfig] = useState<
-    UiDatePeriodConfig
-  >();
+  const [datePeriodConfig, setDatePeriodConfig] =
+    useState<UiDatePeriodConfig>();
   const [[normalDatePeriods, exceptions], setDividedDatePeriods] = useState<
     [ActiveDatePeriod[], ActiveDatePeriod[]]
   >([[], []]);

@@ -65,7 +65,8 @@ const TimeSpan = ({
   resourceStates,
   timeSpanGroupIdx,
 }: Props): JSX.Element => {
-  const namePrefix = `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
+  const namePrefix =
+    `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
   const { language = Language.FI } = useAppContext();
   const { control, watch } = useFormContext<DatePeriod>();
   const fullDay = watch(`${namePrefix}.full_day`);
