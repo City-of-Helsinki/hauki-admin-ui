@@ -14,8 +14,9 @@ describe(`<Collapse />`, () => {
     );
 
     expect(collapse.find('h3').text()).toEqual('Test Title');
-
-    expect(collapse.find('p').getDOMNode()).toHaveClass('hiddenFromScreen');
+    expect(collapse.find('#test-content').getDOMNode()).toHaveClass(
+      'hiddenFromScreen'
+    );
   });
 
   it('should show content when clicked', () => {
@@ -30,6 +31,8 @@ describe(`<Collapse />`, () => {
 
     collapse.find('button').simulate('click');
 
-    expect(collapse.find('p').getDOMNode()).not.toHaveClass('hiddenFromScreen');
+    expect(collapse.find('#test-content').getDOMNode()).not.toHaveClass(
+      'hiddenFromScreen'
+    );
   });
 });
