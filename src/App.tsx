@@ -134,17 +134,23 @@ const App = (): JSX.Element => {
                 }: RouteComponentProps<{
                   id?: string;
                   childId?: string;
-                }>) => (
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <ResourcePage
-                        id={match.params.id || ''}
-                        childId={match.params.childId}
-                        targetResourcesString={targetResourcesStr}
-                      />
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                )}
+                }>) => {
+                  const { id, childId } = match.params;
+
+                  return (
+                    id && (
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <ResourcePage
+                            id={id}
+                            childId={childId}
+                            targetResourcesString={targetResourcesStr}
+                          />
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="create-new-opening-period-route"
@@ -157,16 +163,20 @@ const App = (): JSX.Element => {
                   match,
                 }: RouteComponentProps<{
                   id?: string;
-                }>) => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <AddNormalOpeningHoursPage
-                        resourceId={match.params.id || ''}
-                      />
-                    </Main>
-                  </>
-                )}
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <AddNormalOpeningHoursPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="edit-opening-period-route"
@@ -179,17 +189,24 @@ const App = (): JSX.Element => {
                 }: RouteComponentProps<{
                   id?: string;
                   datePeriodId?: string;
-                }>) => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditNormalOpeningHoursPage
-                        resourceId={match.params.id || ''}
-                        datePeriodId={match.params.datePeriodId || ''}
-                      />
-                    </Main>
-                  </>
-                )}
+                }>) => {
+                  const { id, datePeriodId } = match.params;
+
+                  return (
+                    id &&
+                    datePeriodId && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditNormalOpeningHoursPage
+                            resourceId={id}
+                            datePeriodId={datePeriodId}
+                          />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="edit-holidays-route"
@@ -201,14 +218,20 @@ const App = (): JSX.Element => {
                   match,
                 }: RouteComponentProps<{
                   id?: string;
-                }>) => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditHolidaysPage resourceId={match.params.id || ''} />
-                    </Main>
-                  </>
-                )}
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditHolidaysPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="add-exception-route"
@@ -220,16 +243,20 @@ const App = (): JSX.Element => {
                   match,
                 }: RouteComponentProps<{
                   id?: string;
-                }>) => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <AddExceptionOpeningHoursPage
-                        resourceId={match.params.id || ''}
-                      />
-                    </Main>
-                  </>
-                )}
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <AddExceptionOpeningHoursPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="add-exception-route"
@@ -242,17 +269,24 @@ const App = (): JSX.Element => {
                 }: RouteComponentProps<{
                   id?: string;
                   datePeriodId?: string;
-                }>) => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditExceptionOpeningHoursPage
-                        datePeriodId={match.params.datePeriodId || ''}
-                        resourceId={match.params.id || ''}
-                      />
-                    </Main>
-                  </>
-                )}
+                }>) => {
+                  const { id, datePeriodId } = match.params;
+
+                  return (
+                    id &&
+                    datePeriodId && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditExceptionOpeningHoursPage
+                            datePeriodId={datePeriodId}
+                            resourceId={id}
+                          />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
             </Switch>
           </Router>

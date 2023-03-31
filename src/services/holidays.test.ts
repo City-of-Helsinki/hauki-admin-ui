@@ -213,6 +213,38 @@ describe('holidays', () => {
               "sv": "Trettondedag jul",
             },
           },
+          Object {
+            "date": "2024-03-28",
+            "name": Object {
+              "en": "Maundy Thursday",
+              "fi": "Kiirastorstai",
+              "sv": "Skärtorsdagen",
+            },
+          },
+          Object {
+            "date": "2024-03-29",
+            "name": Object {
+              "en": "Good Friday",
+              "fi": "Pitkäperjantai",
+              "sv": "Långfredagen",
+            },
+          },
+          Object {
+            "date": "2024-03-30",
+            "name": Object {
+              "en": "Easter Saturday",
+              "fi": "Pääsiäislauantai",
+              "sv": "Påsklördag",
+            },
+          },
+          Object {
+            "date": "2024-03-31",
+            "name": Object {
+              "en": "Easter Sunday",
+              "fi": "Pääsiäispäivä",
+              "sv": "Påskdagen",
+            },
+          },
         ]
       `);
       expect(getHolidays(new Date('2024-01-01'))).toMatchInlineSnapshot(`
