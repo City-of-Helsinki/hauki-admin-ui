@@ -22,36 +22,35 @@ const OpeningHours = ({ resourceStates, rules }: Props): JSX.Element => {
     name: 'openingHours',
   });
 
-  const handleDayChange = (openingHoursIdx: number) => (
-    day: number,
-    checked: boolean,
-    newOffsetTop: number
-  ) => {
-    offsetTop.current = newOffsetTop;
-    setDropInRow(undefined);
-    const openingHours = getValues('openingHours');
-    const result = updateWeekday(openingHours, day, checked, openingHoursIdx);
+  const handleDayChange =
+    (openingHoursIdx: number) =>
+    (day: number, checked: boolean, newOffsetTop: number) => {
+      offsetTop.current = newOffsetTop;
+      setDropInRow(undefined);
+      const openingHours = getValues('openingHours');
+      const result = updateWeekday(openingHours, day, checked, openingHoursIdx);
 
-    result.updated.forEach((o) =>
-      setValue(`openingHours.${o.idx}.weekdays`, o.weekdays)
-    );
+      result.updated.forEach((o) =>
+        setValue(`openingHours.${o.idx}.weekdays`, o.weekdays)
+      );
 
-    if ('added' in result && result.added) {
-      insert(result.added.idx, result.added.value, { shouldFocus: false });
-      // FIXME: For some reason basic array won't get added in the insert.
-      // Probably because of the weekdays because they have not registered inputs.
-      setValue(`openingHours.${result.added.idx}`, result.added.value);
-      setDropInRow(result.added.idx);
-    }
+      if ('added' in result && result.added) {
+        insert(result.added.idx, result.added.value, { shouldFocus: false });
+        // FIXME: For some reason basic array won't get added in the insert.
+        // Probably because of the weekdays because they have not registered inputs.
+        setValue(`openingHours.${result.added.idx}`, result.added.value);
+        setDropInRow(result.added.idx);
+      }
 
-    if ('removed' in result && result.removed !== undefined) {
-      remove(result.removed);
-    }
-  };
+      if ('removed' in result && result.removed !== undefined) {
+        remove(result.removed);
+      }
+    };
 
-  const resetDropInRow = useCallback(() => setDropInRow(undefined), [
-    setDropInRow,
-  ]);
+  const resetDropInRow = useCallback(
+    () => setDropInRow(undefined),
+    [setDropInRow]
+  );
 
   useEffect(() => {
     setDropInRow(undefined);

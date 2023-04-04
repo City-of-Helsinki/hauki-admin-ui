@@ -38,23 +38,23 @@ export const byWeekdays = (
   return day1 - day2;
 };
 
-const toApiTimeSpan = (group: number | undefined, days: number[]) => (
-  timeSpan: TimeSpan
-): ApiTimeSpan => ({
-  id: timeSpan.id,
-  description: timeSpan.description,
-  end_time: (!timeSpan.full_day && timeSpan.end_time) || null,
-  full_day: timeSpan.full_day,
-  group,
-  resource_state: timeSpan.resource_state,
-  start_time: (!timeSpan.full_day && timeSpan.start_time) || null,
-  weekdays: days,
-  end_time_on_next_day:
-    (timeSpan.start_time &&
-      timeSpan.end_time &&
-      timeSpan.start_time > timeSpan.end_time) ||
-    false,
-});
+const toApiTimeSpan =
+  (group: number | undefined, days: number[]) =>
+  (timeSpan: TimeSpan): ApiTimeSpan => ({
+    id: timeSpan.id,
+    description: timeSpan.description,
+    end_time: (!timeSpan.full_day && timeSpan.end_time) || null,
+    full_day: timeSpan.full_day,
+    group,
+    resource_state: timeSpan.resource_state,
+    start_time: (!timeSpan.full_day && timeSpan.start_time) || null,
+    weekdays: days,
+    end_time_on_next_day:
+      (timeSpan.start_time &&
+        timeSpan.end_time &&
+        timeSpan.start_time > timeSpan.end_time) ||
+      false,
+  });
 
 const frequencyModifierMap: { [key in RuleType]: string } = {
   week_every: 'every',
@@ -417,14 +417,14 @@ export const getDatePeriodName = (
   }
 };
 
-const updateWeekdays = (enabledWeekdays: number[]) => (
-  openingHours: OpeningHours
-): OpeningHours => ({
-  ...openingHours,
-  weekdays: openingHours.weekdays.filter((d: number) =>
-    enabledWeekdays.includes(d)
-  ),
-});
+const updateWeekdays =
+  (enabledWeekdays: number[]) =>
+  (openingHours: OpeningHours): OpeningHours => ({
+    ...openingHours,
+    weekdays: openingHours.weekdays.filter((d: number) =>
+      enabledWeekdays.includes(d)
+    ),
+  });
 
 const hasWeekdays = (openingHours: OpeningHours) =>
   openingHours.weekdays.length > 0;

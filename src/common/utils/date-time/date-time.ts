@@ -44,20 +44,19 @@ export const getEnabledWeekdays = (
 const findDate = (dates: Date[], day: number) =>
   dates.find((date) => getNumberOfTheWeekday(date.toISOString()) === day);
 
-export const byDateRange = (
-  startDate: string | null,
-  endDate: string | null
-) => (dayA: number, dayB: number): number => {
-  if (startDate && endDate && getDifferenceInDays(startDate, endDate) <= 6) {
-    const datesBetween = eachDayOfInterval({
-      start: parseFormDate(startDate),
-      end: add(parseFormDate(startDate), { days: 6 }),
-    });
-    const dateA = findDate(datesBetween, dayA);
-    const dateB = findDate(datesBetween, dayB);
+export const byDateRange =
+  (startDate: string | null, endDate: string | null) =>
+  (dayA: number, dayB: number): number => {
+    if (startDate && endDate && getDifferenceInDays(startDate, endDate) <= 6) {
+      const datesBetween = eachDayOfInterval({
+        start: parseFormDate(startDate),
+        end: add(parseFormDate(startDate), { days: 6 }),
+      });
+      const dateA = findDate(datesBetween, dayA);
+      const dateB = findDate(datesBetween, dayB);
 
-    return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0);
-  }
+      return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0);
+    }
 
-  return dayA - dayB;
-};
+    return dayA - dayB;
+  };

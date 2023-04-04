@@ -213,6 +213,46 @@ describe('holidays', () => {
               "sv": "Trettondedag jul",
             },
           },
+          Object {
+            "date": "2024-03-28",
+            "name": Object {
+              "en": "Maundy Thursday",
+              "fi": "Kiirastorstai",
+              "sv": "Skärtorsdagen",
+            },
+          },
+          Object {
+            "date": "2024-03-29",
+            "name": Object {
+              "en": "Good Friday",
+              "fi": "Pitkäperjantai",
+              "sv": "Långfredagen",
+            },
+          },
+          Object {
+            "date": "2024-03-30",
+            "name": Object {
+              "en": "Easter Saturday",
+              "fi": "Pääsiäislauantai",
+              "sv": "Påsklördag",
+            },
+          },
+          Object {
+            "date": "2024-03-31",
+            "name": Object {
+              "en": "Easter Sunday",
+              "fi": "Pääsiäispäivä",
+              "sv": "Påskdagen",
+            },
+          },
+          Object {
+            "date": "2024-04-01",
+            "name": Object {
+              "en": "Easter Monday",
+              "fi": "2. pääsiäispäivä",
+              "sv": "Annandag påsk",
+            },
+          },
         ]
       `);
       expect(getHolidays(new Date('2024-01-01'))).toMatchInlineSnapshot(`
@@ -635,6 +675,30 @@ describe('holidays', () => {
               "en": "Epiphany",
               "fi": "Loppiainen",
               "sv": "Trettondedag jul",
+            },
+          },
+          Object {
+            "date": "2026-04-02",
+            "name": Object {
+              "en": "Maundy Thursday",
+              "fi": "Kiirastorstai",
+              "sv": "Skärtorsdagen",
+            },
+          },
+          Object {
+            "date": "2026-04-03",
+            "name": Object {
+              "en": "Good Friday",
+              "fi": "Pitkäperjantai",
+              "sv": "Långfredagen",
+            },
+          },
+          Object {
+            "date": "2026-04-04",
+            "name": Object {
+              "en": "Easter Saturday",
+              "fi": "Pääsiäislauantai",
+              "sv": "Påsklördag",
             },
           },
         ]

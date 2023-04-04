@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -81,10 +81,10 @@ const App = (): JSX.Element => {
     }),
     [hasOpenerWindow, closeAppWindow, language, setLanguage]
   );
-  const authContextValue = useMemo(() => ({ authTokens, clearAuth }), [
-    authTokens,
-    clearAuth,
-  ]);
+  const authContextValue = useMemo(
+    () => ({ authTokens, clearAuth }),
+    [authTokens, clearAuth]
+  );
 
   return (
     <div className="App">
@@ -132,19 +132,25 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  childId: string;
-                }>): ReactElement => (
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <ResourcePage
-                        id={match.params.id}
-                        childId={match.params.childId}
-                        targetResourcesString={targetResourcesStr}
-                      />
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                )}
+                  id?: string;
+                  childId?: string;
+                }>) => {
+                  const { id, childId } = match.params;
+
+                  return (
+                    id && (
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <ResourcePage
+                            id={id}
+                            childId={childId}
+                            targetResourcesString={targetResourcesStr}
+                          />
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="create-new-opening-period-route"
@@ -156,15 +162,21 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <AddNormalOpeningHoursPage resourceId={match.params.id} />
-                    </Main>
-                  </>
-                )}
+                  id?: string;
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <AddNormalOpeningHoursPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="edit-opening-period-route"
@@ -175,19 +187,26 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  datePeriodId: string;
-                }>): ReactElement => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditNormalOpeningHoursPage
-                        resourceId={match.params.id}
-                        datePeriodId={match.params.datePeriodId}
-                      />
-                    </Main>
-                  </>
-                )}
+                  id?: string;
+                  datePeriodId?: string;
+                }>) => {
+                  const { id, datePeriodId } = match.params;
+
+                  return (
+                    id &&
+                    datePeriodId && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditNormalOpeningHoursPage
+                            resourceId={id}
+                            datePeriodId={datePeriodId}
+                          />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="edit-holidays-route"
@@ -198,15 +217,21 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditHolidaysPage resourceId={match.params.id} />
-                    </Main>
-                  </>
-                )}
+                  id?: string;
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditHolidaysPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="add-exception-route"
@@ -217,17 +242,21 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                }>): ReactElement => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <AddExceptionOpeningHoursPage
-                        resourceId={match.params.id}
-                      />
-                    </Main>
-                  </>
-                )}
+                  id?: string;
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <AddExceptionOpeningHoursPage resourceId={id} />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
               <PrivateResourceRoute
                 id="add-exception-route"
@@ -238,19 +267,26 @@ const App = (): JSX.Element => {
                 render={({
                   match,
                 }: RouteComponentProps<{
-                  id: string;
-                  datePeriodId: string;
-                }>): ReactElement => (
-                  <>
-                    <HaukiNavigation />
-                    <Main id="main">
-                      <EditExceptionOpeningHoursPage
-                        datePeriodId={match.params.datePeriodId}
-                        resourceId={match.params.id}
-                      />
-                    </Main>
-                  </>
-                )}
+                  id?: string;
+                  datePeriodId?: string;
+                }>) => {
+                  const { id, datePeriodId } = match.params;
+
+                  return (
+                    id &&
+                    datePeriodId && (
+                      <>
+                        <HaukiNavigation />
+                        <Main id="main">
+                          <EditExceptionOpeningHoursPage
+                            datePeriodId={datePeriodId}
+                            resourceId={id}
+                          />
+                        </Main>
+                      </>
+                    )
+                  );
+                }}
               />
             </Switch>
           </Router>

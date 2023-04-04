@@ -15,12 +15,8 @@ import toast from '../notification/Toast';
 import LanguageSelect from '../language-select/LanguageSelect';
 
 const HaukiNavigation = (): JSX.Element => {
-  const {
-    hasOpenerWindow,
-    closeAppWindow,
-    language,
-    setLanguage,
-  } = useAppContext();
+  const { hasOpenerWindow, closeAppWindow, language, setLanguage } =
+    useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
   const { authTokens, clearAuth } = authProps;
   const history = useHistory();

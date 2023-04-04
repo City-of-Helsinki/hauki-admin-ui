@@ -1,5 +1,5 @@
 # ===============================================
-FROM helsinkitest/node:12-slim as staticbuilder
+FROM helsinkitest/node:16-slim AS staticbuilder
 # ===============================================
 
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity

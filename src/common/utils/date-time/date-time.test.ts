@@ -23,13 +23,7 @@ describe('date-time', () => {
   describe('getEnabledWeekdays', () => {
     it('should return correct days', () => {
       expect(getEnabledWeekdays('02.01.2023', '08.01.2023')).toEqual([
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
+        1, 2, 3, 4, 5, 6, 7,
       ]);
     });
 
@@ -39,37 +33,19 @@ describe('date-time', () => {
 
     it('should return all days when range is over a week', () => {
       expect(getEnabledWeekdays('02.01.2023', '09.01.2023')).toEqual([
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
+        1, 2, 3, 4, 5, 6, 7,
       ]);
     });
 
     it('should return all days when end date is missing', () => {
       expect(getEnabledWeekdays('02.01.2023', null)).toEqual([
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
+        1, 2, 3, 4, 5, 6, 7,
       ]);
     });
 
     it('should return all days when start date is missing', () => {
       expect(getEnabledWeekdays(null, '09.01.2023')).toEqual([
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
+        1, 2, 3, 4, 5, 6, 7,
       ]);
     });
 

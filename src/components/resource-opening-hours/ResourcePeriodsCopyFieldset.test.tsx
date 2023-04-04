@@ -78,8 +78,7 @@ describe(`<ResourcePeriodsCopyFieldset/>`, () => {
 
     userEvent.click(
       screen.getByRole('button', {
-        name:
-          'Päivitä aukiolotiedot 1 muuhun toimipisteeseen. Ikkuna sulkeutuu.',
+        name: 'Päivitä aukiolotiedot 1 muuhun toimipisteeseen. Ikkuna sulkeutuu.',
       })
     );
 

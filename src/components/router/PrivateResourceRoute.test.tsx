@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
@@ -43,9 +43,7 @@ const renderRoutesWithPrivateRoute = (): ReactWrapper => {
         id="resource-route"
         exact
         path="/resource/:id"
-        render={({
-          match,
-        }: RouteComponentProps<{ id: string }>): ReactElement => (
+        render={({ match }: RouteComponentProps<{ id?: string }>) => (
           <h1>{match.params.id}</h1>
         )}
       />
@@ -60,10 +58,10 @@ const mockContext = (
 ): void => {
   jest.spyOn(AuthContext, 'useAuth').mockImplementation(
     () =>
-      (({
+      ({
         authTokens: tokens,
         clearTokens: (): void => undefined,
-      } as unknown) as Partial<AuthContext.AuthContextProps>)
+      } as unknown as Partial<AuthContext.AuthContextProps>)
   );
 };
 
