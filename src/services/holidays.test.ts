@@ -693,6 +693,14 @@ describe('holidays', () => {
               "sv": "Långfredagen",
             },
           },
+          Object {
+            "date": "2026-04-04",
+            "name": Object {
+              "en": "Easter Saturday",
+              "fi": "Pääsiäislauantai",
+              "sv": "Påsklördag",
+            },
+          },
         ]
       `);
     });
