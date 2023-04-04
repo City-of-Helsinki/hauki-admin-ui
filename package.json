@@ -2,6 +2,9 @@
   "name": "hauki-admin-ui",
   "version": "0.1.1",
   "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
     "@sentry/react": "^6.19.7",
     "@sentry/tracing": "^6.16.1",
