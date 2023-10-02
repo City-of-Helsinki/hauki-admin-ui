@@ -232,6 +232,14 @@ export default {
   getResource: (id: string): Promise<Resource> =>
     apiGet<Resource>({ path: `${resourceBasePath}/${id}` }),
 
+  getResources: (ids: string[]): Promise<Resource[]> =>
+    apiGet<{ results: Resource[] }>({
+      path: `${resourceBasePath}`,
+      parameters: {
+        resource_ids: ids.join(','),
+      },
+    }).then((response) => response.results),
+
   getChildResourcesByParentId: (id: number): Promise<Resource[]> =>
     apiGet<{ results: Resource[] }>({
       path: `${resourceBasePath}`,

@@ -20,8 +20,8 @@ const ResourcePeriodsCopyFieldset = ({
   mainResourceName,
   mainResourceId,
   targetResources = [],
-  onChange,
   modified,
+  onChange,
 }: TargetResourcesProps & {
   onChange: (value: TargetResourcesProps | undefined) => void;
 }): JSX.Element => {

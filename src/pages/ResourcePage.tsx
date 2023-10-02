@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Accordion, Notification } from 'hds-react';
+import { Accordion, Notification, IconArrowRight } from 'hds-react';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';
@@ -13,6 +13,8 @@ import ResourcePeriodsCopyFieldset, {
 } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 import './ResourcePage.scss';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
+import { SecondaryButton } from '../components/button/Button';
+import useGoToResourceBatchUpdatePage from '../hooks/useGoToResourceBatchUpdatePage';
 
 const ResourceSection = ({
   id,
@@ -62,6 +64,7 @@ const ResourcePage = ({
     TargetResourcesProps | undefined
   >(undefined);
   const targetResourcesStorageKey = 'targetResources';
+  const goToResourceBatchUpdatePage = useGoToResourceBatchUpdatePage();
 
   const hasTargetResources =
     targetResourceData?.mainResourceId === resource?.id &&
@@ -150,6 +153,13 @@ const ResourcePage = ({
           Tällä toimipisteellä on {childResources.length} alakohdetta. Niiden
           aukioloajat löytyvät alempana tällä sivulla.
         </p>
+      )}
+      {hasTargetResources && (
+        <SecondaryButton
+          iconRight={<IconArrowRight aria-hidden />}
+          onClick={goToResourceBatchUpdatePage}>
+          Jatka joukkopäivitykseen
+        </SecondaryButton>
       )}
       {hasTargetResources && (
         <ResourcePeriodsCopyFieldset
