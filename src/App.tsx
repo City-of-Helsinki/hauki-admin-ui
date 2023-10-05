@@ -143,7 +143,7 @@ const App = (): JSX.Element => {
                       <NavigationAndFooterWrapper>
                         <Main id="main">
                           <ResourcePage
-                            id={id}
+                            mainResourceId={id}
                             childId={childId}
                             targetResourcesString={targetResourcesStr}
                           />
@@ -169,7 +169,7 @@ const App = (): JSX.Element => {
                       <NavigationAndFooterWrapper>
                         <Main id="main">
                           <ResourceBatchUpdatePage
-                            id={id}
+                            mainResourceId={id}
                             targetResourcesString={targetResourcesStr}
                           />
                         </Main>

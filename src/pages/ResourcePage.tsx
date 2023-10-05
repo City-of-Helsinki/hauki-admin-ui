@@ -46,11 +46,11 @@ const ResourceDetailsSection = ({
 
 const ResourcePage = ({
   childId,
-  id,
+  mainResourceId,
   targetResourcesString,
 }: {
   childId?: string;
-  id: string;
+  mainResourceId: string;
   targetResourcesString?: string;
 }): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
@@ -74,10 +74,15 @@ const ResourcePage = ({
   useEffect(() => {
     if (resource) {
       if (targetResourcesString) {
-        const mainResourceId = resource.id;
-        const mainResourceName = resource?.name[language];
-        const targetResources = targetResourcesString.split(',');
-        const newData = { mainResourceId, mainResourceName, targetResources };
+        const targetResourceIDs = targetResourcesString.split(',');
+        const newData = {
+          mainResourceId: resource.id,
+          mainResourceName: resource?.name[language],
+          targetResources: targetResourceIDs.map((id) => ({
+            id,
+            name: '',
+          })),
+        };
         setTargetResourceData(newData);
         sessionStorage.storeItem<TargetResourcesProps>({
           key: targetResourcesStorageKey,
@@ -102,7 +107,7 @@ const ResourcePage = ({
     // UseEffect's callbacks are synchronous to prevent a race condition.
     // We can not use an async function as an useEffect's callback because it would return Promise<void>
     api
-      .getResource(id)
+      .getResource(mainResourceId)
       .then(async (r: Resource) => {
         setResource(r);
         const resourceHasChildren = r.children.length > 0;
@@ -124,7 +129,7 @@ const ResourcePage = ({
         setError(e);
         setLoading(false);
       });
-  }, [id]);
+  }, [mainResourceId]);
 
   if (error) {
     return (

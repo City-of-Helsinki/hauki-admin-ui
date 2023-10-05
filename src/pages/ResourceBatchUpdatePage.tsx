@@ -19,21 +19,11 @@ import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 
-const onConfirm = () => {
-  console.log('onConfirm()');
-};
-const onClose = () => {
-  console.log('onClose()');
-};
-const onRemove = (id: string) => {
-  console.log('onRemove()', id);
-};
-
 const ResourceBatchUpdatePage = ({
-  id,
+  mainResourceId,
   targetResourcesString,
 }: {
-  id: string;
+  mainResourceId: string;
   targetResourcesString?: string;
 }): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
@@ -41,18 +31,37 @@ const ResourceBatchUpdatePage = ({
   const [resource, setResource] = useState<Resource | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [targetResourceInfos, setTargetResourceInfos] = useState<Resource[]>(
-    []
-  );
   const [pageIndex, setPageIndex] = useState(0);
   const [selectedRadioItem, setSelectedRadioItem] = useState('copy');
-  const onChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedRadioItem(event.target.value);
-  };
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
   const targetResourcesStorageKey = 'targetResources';
+
+  const onChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedRadioItem(event.target.value);
+  };
+  const onConfirm = () => {
+    console.log('onConfirm()');
+  };
+  const onClose = () => {
+    console.log('onClose()');
+  };
+  const onRemove = (id: string) => {
+    if (targetResourceData?.targetResources) {
+      const newData = {
+        ...targetResourceData,
+        targetResources: targetResourceData.targetResources.filter(
+          (r) => r.id !== id
+        ),
+      };
+      setTargetResourceData(newData);
+      sessionStorage.storeItem<TargetResourcesProps>({
+        key: targetResourcesStorageKey,
+        value: newData,
+      });
+    }
+  };
 
   const cols = [
     {
@@ -67,46 +76,77 @@ const ResourceBatchUpdatePage = ({
     {
       key: 'remove',
       headerName: '',
-      transform: (item: { id: string }) => {
+      transform: (item: { remove: string }) => {
         return (
           <div style={{ textAlign: 'right', color: 'red' }}>
-            <SupplementaryButton size="small" onClick={() => onRemove(item.id)}>
-              <IconTrash size="xs" />
+            <SupplementaryButton
+              size="small"
+              onClick={() => onRemove(item.remove)}>
+              <IconTrash
+                size="xs"
+                aria-label="Poista"
+                color="var(--color-error)"
+              />
             </SupplementaryButton>
           </div>
         );
       },
     },
   ];
-  const rows = targetResourceInfos?.map((res) => ({
-    id: res.id,
-    resource: res?.name[language],
-    remove: 'x',
-  }));
 
-  useEffect(() => {
-    const fetchTargetResourceInfos = async (ids: string[]): Promise<void> => {
-      setLoading(true);
-      try {
-        const [resources] = await Promise.all([api.getResources(ids)]);
-        setTargetResourceInfos(resources);
-      } catch (e) {
-        setError(e as Error);
-      }
-      setLoading(false);
+  const rows = targetResourceData?.targetResources?.map((res) => {
+    return {
+      id: res.id,
+      resource: res.name,
+      remove: res.id,
     };
+  });
+
+  // get data of target resources
+  useEffect(() => {
     if (resource) {
       if (targetResourcesString) {
-        const mainResourceId = resource.id;
-        const mainResourceName = resource?.name[language];
-        const targetResources = targetResourcesString.split(',');
-        const newData = { mainResourceId, mainResourceName, targetResources };
-        setTargetResourceData(newData);
-        sessionStorage.storeItem<TargetResourcesProps>({
-          key: targetResourcesStorageKey,
-          value: newData,
-        });
-        fetchTargetResourceInfos(targetResources);
+        const targetResourceIDs = targetResourcesString.split(',');
+        setLoading(true);
+        api
+          .getResources(targetResourceIDs)
+          .then(async (resources: Resource[]) => {
+            // get id and name of resources if there is a match from origin
+            const targetResources = targetResourceIDs
+              .map((id) => ({
+                id,
+                resource: resources.find((res) =>
+                  (res as any).origins.some(
+                    (origin: any) =>
+                      origin.data_source.id === id.split(':')[0] &&
+                      origin.origin_id === id.split(':')[1]
+                  )
+                ),
+              }))
+              .filter((r) => r.resource)
+              .map((r) => ({
+                id: r.id,
+                name: r?.resource?.name[language],
+              }));
+
+            const newData = {
+              mainResourceId: resource.id,
+              mainResourceName: resource?.name[language],
+              targetResources,
+            };
+
+            setTargetResourceData(newData);
+            sessionStorage.storeItem<TargetResourcesProps>({
+              key: targetResourcesStorageKey,
+              value: newData,
+            });
+
+            setLoading(false);
+          })
+          .catch((e: Error) => {
+            setError(e);
+            setLoading(false);
+          });
       } else {
         const oldData = sessionStorage.getItem<TargetResourcesProps>(
           targetResourcesStorageKey
@@ -122,9 +162,11 @@ const ResourceBatchUpdatePage = ({
     }
   }, [language, resource, targetResourcesString]);
 
+  // get main resource
   useEffect((): void => {
+    setLoading(true);
     api
-      .getResource(id)
+      .getResource(mainResourceId)
       .then(async (r: Resource) => {
         setResource(r);
         setLoading(false);
@@ -133,14 +175,14 @@ const ResourceBatchUpdatePage = ({
         setError(e);
         setLoading(false);
       });
-  }, [id]);
+  }, [mainResourceId]);
 
   if (error) {
     return (
       <>
         <h1 className="resource-info-title">Virhe</h1>
-        <Notification label="Toimipistettä ei saatu ladattua." type="error">
-          Tarkista toimipiste-id.
+        <Notification label="Toimipisteitä ei saatu ladattua." type="error">
+          Tarkista toimipisteiden id:t.
         </Notification>
       </>
     );
@@ -149,12 +191,12 @@ const ResourceBatchUpdatePage = ({
   if (isLoading || !resource) {
     return (
       <>
-        <h1 className="resource-info-title">Toimipisteen tietojen haku</h1>
+        <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
       </>
     );
   }
 
-  const resourceCount = targetResourceInfos?.length || 0;
+  const resourceCount = targetResourceData?.targetResources?.length || 0;
   const pageSize = 10;
   const pageCount = Math.ceil(resourceCount / pageSize);
   const mainResourceName = targetResourceData?.mainResourceName;
@@ -200,7 +242,6 @@ const ResourceBatchUpdatePage = ({
             onChange={(event, index) => {
               event.preventDefault();
               setPageIndex(index);
-              console.log('Pagination setPageIndex', index);
             }}
             pageCount={pageCount}
             pageHref={() => '#'}
