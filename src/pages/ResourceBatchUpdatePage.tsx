@@ -90,86 +90,88 @@ const ResourceBatchUpdatePage = ({
   };
 
   // table definition
-  const cols = [
-    {
-      key: 'id',
-      headerName: 'ID',
-      isSortable: true,
-      transform: (item: { id: string }) => {
-        return <div style={{ textAlign: 'right' }}>{item.id}</div>;
+  const tableDef = {
+    cols: [
+      {
+        key: 'id',
+        headerName: 'ID',
+        isSortable: true,
+        transform: (item: { id: string }) => {
+          return <div style={{ textAlign: 'right' }}>{item.id}</div>;
+        },
       },
-    },
-    { key: 'resource', headerName: 'Toimipiste', isSortable: true },
-    {
-      key: 'remove',
-      headerName: '',
-      transform: (item: { remove: string }) => {
-        return (
-          <div style={{ textAlign: 'right', color: 'red' }}>
-            <SupplementaryButton
-              size="small"
-              onClick={() => onRemove(item.remove)}>
-              <IconTrash
-                size="xs"
-                aria-label="Poista"
-                color="var(--color-error)"
-              />
-            </SupplementaryButton>
-          </div>
-        );
+      { key: 'resource', headerName: 'Toimipiste', isSortable: true },
+      {
+        key: 'remove',
+        headerName: '',
+        transform: (item: { remove: string }) => {
+          return (
+            <div style={{ textAlign: 'right', color: 'red' }}>
+              <SupplementaryButton
+                size="small"
+                onClick={() => onRemove(item.remove)}>
+                <IconTrash
+                  size="xs"
+                  aria-label="Poista"
+                  color="var(--color-error)"
+                />
+              </SupplementaryButton>
+            </div>
+          );
+        },
       },
-    },
-  ];
-  const rows = targetResourceData?.targetResources?.map((res) => {
-    return {
+    ],
+    rows: targetResourceData?.targetResources?.map((res) => ({
       id: res.id,
       resource: res.name,
       remove: res.id,
-    };
-  });
+    })),
+  };
 
   // get data of target resources
   useEffect(() => {
     if (resource) {
       if (targetResourcesString) {
         const targetResourceIDs = targetResourcesString.split(',');
+
+        const handleApiResponse = async (resources: Resource[]) => {
+          // for some reason origins are not part of Resource type, this need to be fixed in API
+          const resourcesWithOrigins = resources as ResourceWithOrigins[];
+          const targetResources = targetResourceIDs
+            .map((id) => ({
+              id,
+              resource: resourcesWithOrigins.find((res) =>
+                res.origins.some(
+                  (origin) =>
+                    origin.data_source.id === id.split(':')[0] &&
+                    origin.origin_id === id.split(':')[1]
+                )
+              ),
+            }))
+            .filter((r) => r.resource)
+            .map((r) => ({
+              id: r.id,
+              name: r?.resource?.name[language],
+            }));
+
+          const newData = {
+            mainResourceId: resource.id,
+            mainResourceName: resource?.name[language],
+            targetResources,
+          };
+
+          setTargetResourceData(newData);
+          sessionStorage.storeItem<TargetResourcesProps>({
+            key: targetResourcesStorageKey,
+            value: newData,
+          });
+          setLoading(false);
+        };
+
         setLoading(true);
         api
           .getResources(targetResourceIDs)
-          .then(async (resources: Resource[]) => {
-            // for some reason origins are not part of Resource type, this need to be fixed in API
-            const resourcesWithOrigins = resources as ResourceWithOrigins[];
-            const targetResources = targetResourceIDs
-              .map((id) => ({
-                id,
-                resource: resourcesWithOrigins.find((res) =>
-                  res.origins.some(
-                    (origin) =>
-                      origin.data_source.id === id.split(':')[0] &&
-                      origin.origin_id === id.split(':')[1]
-                  )
-                ),
-              }))
-              .filter((r) => r.resource)
-              .map((r) => ({
-                id: r.id,
-                name: r?.resource?.name[language],
-              }));
-
-            const newData = {
-              mainResourceId: resource.id,
-              mainResourceName: resource?.name[language],
-              targetResources,
-            };
-
-            setTargetResourceData(newData);
-            sessionStorage.storeItem<TargetResourcesProps>({
-              key: targetResourcesStorageKey,
-              value: newData,
-            });
-
-            setLoading(false);
-          })
+          .then(handleApiResponse)
           .catch((e: Error) => {
             setError(e);
             setLoading(false);
@@ -246,10 +248,10 @@ const ResourceBatchUpdatePage = ({
             näet valitsemasi toimipisteet ja voit tarvittaessa poistaa
             yksittäisiä toimipisteitä listalta.
           </p>
-          {rows && (
+          {tableDef.rows && (
             <Table
-              cols={cols}
-              rows={rows.slice(
+              cols={tableDef.cols}
+              rows={tableDef.rows.slice(
                 pageIndex * pageSize,
                 (pageIndex + 1) * pageSize
               )}
