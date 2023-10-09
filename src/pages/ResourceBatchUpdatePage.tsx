@@ -44,7 +44,6 @@ const ResourceBatchUpdatePage = ({
   targetResourcesString,
 }: ResourceBatchUpdatePageProps): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
-  const language = contextLanguage || Language.FI;
   const [resource, setResource] = useState<Resource | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -53,15 +52,25 @@ const ResourceBatchUpdatePage = ({
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
+
+  // page constants
+  const pageSize = 10;
+  const resourceCount = targetResourceData?.targetResources?.length || 0;
+  const pageCount = Math.ceil(resourceCount / pageSize);
+  const mainResourceName = targetResourceData?.mainResourceName;
+  const language = contextLanguage || Language.FI;
   const targetResourcesStorageKey = 'targetResources';
 
+  // event functions
   const onChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioItem(event.target.value);
   };
   const onConfirm = () => {
+    // TODO: will be implemented later
     console.log('onConfirm()');
   };
   const onClose = () => {
+    // TODO: will be implemented later
     console.log('onClose()');
   };
   const onRemove = (id: string) => {
@@ -80,6 +89,7 @@ const ResourceBatchUpdatePage = ({
     }
   };
 
+  // table definition
   const cols = [
     {
       key: 'id',
@@ -110,7 +120,6 @@ const ResourceBatchUpdatePage = ({
       },
     },
   ];
-
   const rows = targetResourceData?.targetResources?.map((res) => {
     return {
       id: res.id,
@@ -169,12 +178,10 @@ const ResourceBatchUpdatePage = ({
         const oldData = sessionStorage.getItem<TargetResourcesProps>(
           targetResourcesStorageKey
         );
-        if (oldData) {
-          if (oldData.mainResourceId === resource?.id) {
-            setTargetResourceData(oldData);
-          } else {
-            sessionStorage.removeItem(targetResourcesStorageKey);
-          }
+        if (oldData && oldData.mainResourceId === resource?.id) {
+          setTargetResourceData(oldData);
+        } else {
+          sessionStorage.removeItem(targetResourcesStorageKey);
         }
       }
     }
@@ -214,11 +221,6 @@ const ResourceBatchUpdatePage = ({
     );
   }
 
-  const resourceCount = targetResourceData?.targetResources?.length || 0;
-  const pageSize = 10;
-  const pageCount = Math.ceil(resourceCount / pageSize);
-  const mainResourceName = targetResourceData?.mainResourceName;
-
   return (
     <div className="resource-batch-update-page">
       <section className="section-title">
@@ -233,6 +235,7 @@ const ResourceBatchUpdatePage = ({
       <section className="section-spans">
         <h2>Valitut aukiolot</h2>
         <p>Olet valinnut joukkopäivitykseen alla olevat aukioloajat.</p>
+        {/* this block will be implemented later */}
       </section>
 
       <div className="section-resource-update">
