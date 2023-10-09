@@ -19,13 +19,15 @@ import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 
+export type ResourceBatchUpdatePageProps = {
+  mainResourceId: string;
+  targetResourcesString?: string;
+};
+
 const ResourceBatchUpdatePage = ({
   mainResourceId,
   targetResourcesString,
-}: {
-  mainResourceId: string;
-  targetResourcesString?: string;
-}): JSX.Element => {
+}: ResourceBatchUpdatePageProps): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
   const [resource, setResource] = useState<Resource | undefined>(undefined);
@@ -188,7 +190,7 @@ const ResourceBatchUpdatePage = ({
     );
   }
 
-  if (isLoading || !resource) {
+  if (isLoading || !resource || !targetResourceData) {
     return (
       <>
         <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
