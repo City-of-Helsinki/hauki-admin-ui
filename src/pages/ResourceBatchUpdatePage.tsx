@@ -24,6 +24,21 @@ export type ResourceBatchUpdatePageProps = {
   targetResourcesString?: string;
 };
 
+// for some reason origins are not part of Resource type, this need to be fixed in API
+type ResourceWithOrigins = Resource & {
+  origins: {
+    origin_id: string;
+    data_source: {
+      id: string;
+      name: {
+        fi: string;
+        sv: string;
+        en: string;
+      };
+    };
+  }[];
+};
+
 const ResourceBatchUpdatePage = ({
   mainResourceId,
   targetResourcesString,
@@ -113,13 +128,14 @@ const ResourceBatchUpdatePage = ({
         api
           .getResources(targetResourceIDs)
           .then(async (resources: Resource[]) => {
-            // get id and name of resources if there is a match from origin
+            // for some reason origins are not part of Resource type, this need to be fixed in API
+            const resourcesWithOrigins = resources as ResourceWithOrigins[];
             const targetResources = targetResourceIDs
               .map((id) => ({
                 id,
-                resource: resources.find((res) =>
-                  (res as any).origins.some(
-                    (origin: any) =>
+                resource: resourcesWithOrigins.find((res) =>
+                  res.origins.some(
+                    (origin) =>
                       origin.data_source.id === id.split(':')[0] &&
                       origin.origin_id === id.split(':')[1]
                   )
