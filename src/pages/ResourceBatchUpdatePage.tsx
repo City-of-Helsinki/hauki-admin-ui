@@ -25,7 +25,7 @@ export type ResourceBatchUpdatePageProps = {
 };
 
 // for some reason origins are not part of Resource type, this need to be fixed in API
-type ResourceWithOrigins = Resource & {
+export type ResourceWithOrigins = Resource & {
   origins: {
     origin_id: string;
     data_source: {

@@ -10,87 +10,118 @@ import {
 } from '@testing-library/react';
 import ResourceBatchUpdatePage, {
   ResourceBatchUpdatePageProps,
+  ResourceWithOrigins,
 } from './ResourceBatchUpdatePage';
+import { ResourceType } from '../common/lib/types';
 import api from '../common/utils/api/api';
+import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 
 const testResourceBatchUpdatePagePros: ResourceBatchUpdatePageProps = {
   mainResourceId: 'tprek:10',
   targetResourcesString: 'tprek:11,tprek:12,tprek:13,tprek:14',
 };
 
-const testGetResourceResponse = {
+const testGetResourceResponse: ResourceWithOrigins = {
   id: 1010,
+  modified: '',
   name: { fi: 'test pk 10 fi', sv: 'test pk 10 sv', en: 'test pk 10 en' },
+  description: { fi: '', sv: '', en: '' },
+  address: { fi: '', sv: '', en: '' },
+  extra_data: { citizen_url: '', admin_url: '' },
+  parents: [],
+  children: [],
+  resource_type: ResourceType.UNIT,
   origins: [
     {
       data_source: {
         id: 'tprek',
-        name: { fi: 'Toimipisterekisteri', sv: null, en: null },
+        name: { fi: 'Toimipisterekisteri', sv: '', en: '' },
       },
       origin_id: '10',
     },
     {
-      data_source: { id: 'asti', name: { fi: null, sv: null, en: null } },
+      data_source: { id: 'asti', name: { fi: '', sv: '', en: '' } },
       origin_id: '110',
     },
   ],
 };
 
-const testGetResourcesResponse = [
+const testGetResourcesResponse: ResourceWithOrigins[] = [
   {
     id: 1011,
+    modified: '',
     name: { fi: 'test pk 11 fi', sv: 'test pk 11 sv', en: 'test pk 11 en' },
+    description: { fi: '', sv: '', en: '' },
+    address: { fi: '', sv: '', en: '' },
+    extra_data: { citizen_url: '', admin_url: '' },
+    parents: [],
+    children: [],
+    resource_type: ResourceType.UNIT,
     origins: [
       {
         data_source: {
           id: 'tprek',
-          name: { fi: 'Toimipisterekisteri', sv: null, en: null },
+          name: { fi: 'Toimipisterekisteri', sv: '', en: '' },
         },
         origin_id: '11',
       },
       {
-        data_source: { id: 'asti', name: { fi: null, sv: null, en: null } },
+        data_source: { id: 'asti', name: { fi: '', sv: '', en: '' } },
         origin_id: '111',
       },
     ],
   },
   {
     id: 1012,
+    modified: '',
     name: { fi: 'test pk 12 fi', sv: 'test pk 12 sv', en: 'test pk 12 en' },
+    description: { fi: '', sv: '', en: '' },
+    address: { fi: '', sv: '', en: '' },
+    extra_data: { citizen_url: '', admin_url: '' },
+    parents: [],
+    children: [],
+    resource_type: ResourceType.UNIT,
     origins: [
       {
         data_source: {
           id: 'tprek',
-          name: { fi: 'Toimipisterekisteri', sv: null, en: null },
+          name: { fi: 'Toimipisterekisteri', sv: '', en: '' },
         },
         origin_id: '12',
       },
       {
-        data_source: { id: 'asti', name: { fi: null, sv: null, en: null } },
+        data_source: { id: 'asti', name: { fi: '', sv: '', en: '' } },
         origin_id: '112',
       },
     ],
   },
   {
     id: 1013,
+    modified: '',
     name: { fi: 'test pk 13 fi', sv: 'test pk 13 sv', en: 'test pk 13 en' },
+    description: { fi: '', sv: '', en: '' },
+    address: { fi: '', sv: '', en: '' },
+    extra_data: { citizen_url: '', admin_url: '' },
+    parents: [],
+    children: [],
+    resource_type: ResourceType.UNIT,
     origins: [
       {
         data_source: {
           id: 'tprek',
-          name: { fi: 'Toimipisterekisteri', sv: null, en: null },
+          name: { fi: 'Toimipisterekisteri', sv: '', en: '' },
         },
         origin_id: '13',
       },
       {
-        data_source: { id: 'asti', name: { fi: null, sv: null, en: null } },
+        data_source: { id: 'asti', name: { fi: '', sv: '', en: '' } },
         origin_id: '112',
       },
     ],
   },
 ];
 
-const testTargetResourceData = {
+const testTargetResourceData: TargetResourcesProps = {
   mainResourceId: 1010,
   mainResourceName: 'test pk 10 fi',
   targetResources: [
@@ -119,7 +150,7 @@ const renderPage = () =>
 describe(`<ResourceBatchUpdatePage />`, () => {
   beforeEach(() => {
     const sessionStorageMock = (() => {
-      const store = {};
+      const store: { [key: string]: string } = {};
 
       return {
         getItem: (key: string | number) => store[key] || null,
@@ -178,7 +209,7 @@ describe(`<ResourceBatchUpdatePage />`, () => {
   it('should call get resource api correctly', async () => {
     const apiGetResourceSpy = jest
       .spyOn(api, 'getResource')
-      .mockImplementation(() => Promise.resolve(true));
+      .mockImplementation(() => Promise.resolve(testGetResourceResponse));
 
     renderPage();
 
@@ -192,17 +223,17 @@ describe(`<ResourceBatchUpdatePage />`, () => {
   it('should call get resources api correctly', async () => {
     jest
       .spyOn(api, 'getResource')
-      .mockImplementation(() => Promise.resolve(true));
+      .mockImplementation(() => Promise.resolve(testGetResourceResponse));
 
     const apiGetResourcesSpy = jest
       .spyOn(api, 'getResources')
-      .mockImplementation(() => Promise.resolve(true));
+      .mockImplementation(() => Promise.resolve(testGetResourcesResponse));
 
     renderPage();
 
     await waitFor(async () => {
       expect(apiGetResourcesSpy).toHaveBeenCalledWith(
-        testResourceBatchUpdatePagePros.targetResourcesString.split(',')
+        testResourceBatchUpdatePagePros.targetResourcesString?.split(',')
       );
     });
   });
@@ -241,7 +272,7 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     });
 
     const td = getByTestId(container, 'remove-1');
-    const removeButton = td.querySelector('button');
+    const removeButton = td.querySelector('button') as Element;
     fireEvent.click(removeButton);
 
     const testTargetResourceDataAfterRemove = {
