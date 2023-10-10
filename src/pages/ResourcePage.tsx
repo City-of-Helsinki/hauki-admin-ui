@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Accordion, Notification } from 'hds-react';
+import { Accordion, Notification, IconArrowRight } from 'hds-react';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';
@@ -13,6 +13,8 @@ import ResourcePeriodsCopyFieldset, {
 } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 import './ResourcePage.scss';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
+import { SecondaryButton } from '../components/button/Button';
+import useGoToResourceBatchUpdatePage from '../hooks/useGoToResourceBatchUpdatePage';
 
 const ResourceSection = ({
   id,
@@ -44,11 +46,11 @@ const ResourceDetailsSection = ({
 
 const ResourcePage = ({
   childId,
-  id,
+  mainResourceId,
   targetResourcesString,
 }: {
   childId?: string;
-  id: string;
+  mainResourceId: string;
   targetResourcesString?: string;
 }): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
@@ -62,6 +64,7 @@ const ResourcePage = ({
     TargetResourcesProps | undefined
   >(undefined);
   const targetResourcesStorageKey = 'targetResources';
+  const goToResourceBatchUpdatePage = useGoToResourceBatchUpdatePage();
 
   const hasTargetResources =
     targetResourceData?.mainResourceId === resource?.id &&
@@ -71,10 +74,15 @@ const ResourcePage = ({
   useEffect(() => {
     if (resource) {
       if (targetResourcesString) {
-        const mainResourceId = resource.id;
-        const mainResourceName = resource?.name[language];
-        const targetResources = targetResourcesString.split(',');
-        const newData = { mainResourceId, mainResourceName, targetResources };
+        const targetResourceIDs = targetResourcesString.split(',');
+        const newData = {
+          mainResourceId: resource.id,
+          mainResourceName: resource?.name[language],
+          targetResources: targetResourceIDs.map((id) => ({
+            id,
+            name: '',
+          })),
+        };
         setTargetResourceData(newData);
         sessionStorage.storeItem<TargetResourcesProps>({
           key: targetResourcesStorageKey,
@@ -99,7 +107,7 @@ const ResourcePage = ({
     // UseEffect's callbacks are synchronous to prevent a race condition.
     // We can not use an async function as an useEffect's callback because it would return Promise<void>
     api
-      .getResource(id)
+      .getResource(mainResourceId)
       .then(async (r: Resource) => {
         setResource(r);
         const resourceHasChildren = r.children.length > 0;
@@ -121,7 +129,7 @@ const ResourcePage = ({
         setError(e);
         setLoading(false);
       });
-  }, [id]);
+  }, [mainResourceId]);
 
   if (error) {
     return (
@@ -150,6 +158,13 @@ const ResourcePage = ({
           Tällä toimipisteellä on {childResources.length} alakohdetta. Niiden
           aukioloajat löytyvät alempana tällä sivulla.
         </p>
+      )}
+      {hasTargetResources && (
+        <SecondaryButton
+          iconRight={<IconArrowRight aria-hidden />}
+          onClick={goToResourceBatchUpdatePage}>
+          Jatka joukkopäivitykseen
+        </SecondaryButton>
       )}
       {hasTargetResources && (
         <ResourcePeriodsCopyFieldset

@@ -156,7 +156,7 @@ describe(`<ResourcePage />`, () => {
 
     render(
       <Router>
-        <ResourcePage id="tprek:8100" />
+        <ResourcePage mainResourceId="tprek:8100" />
       </Router>
     );
 
@@ -177,7 +177,7 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage id="tprek:8100" />
+          <ResourcePage mainResourceId="tprek:8100" />
         </Router>
       );
     });
@@ -197,7 +197,7 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage id="tprek:8100" />
+          <ResourcePage mainResourceId="tprek:8100" />
         </Router>
       );
     });
@@ -214,7 +214,7 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       container = render(
         <Router>
-          <ResourcePage id="tprek:8100" />
+          <ResourcePage mainResourceId="tprek:8100" />
         </Router>
       ).container;
     });
@@ -239,7 +239,7 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       container = render(
         <Router>
-          <ResourcePage id="tprek:8100" />
+          <ResourcePage mainResourceId="tprek:8100" />
         </Router>
       ).container;
     });
@@ -255,7 +255,7 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage id="tprek:8100" />
+          <ResourcePage mainResourceId="tprek:8100" />
         </Router>
       );
     });

@@ -10,8 +10,8 @@ import ResourcePeriodsCopyFieldset, {
 
 const testCopyResourceData: TargetResourcesProps = {
   mainResourceId: 1111,
-  mainResourceName: 'testTargetResource',
-  targetResources: ['tprek: 1122'],
+  mainResourceName: 'testMainResource',
+  targetResources: [{ id: 'tprek: 1122', name: 'testTargetResource' }],
 };
 
 describe(`<ResourcePeriodsCopyFieldset/>`, () => {
@@ -54,7 +54,7 @@ describe(`<ResourcePeriodsCopyFieldset/>`, () => {
     await waitFor(async () => {
       expect(apiCopySpy).toHaveBeenCalledWith(
         testCopyResourceData.mainResourceId,
-        testCopyResourceData.targetResources
+        testCopyResourceData.targetResources?.map((resource) => resource.id)
       );
       expect(toastSuccessSpy).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith({

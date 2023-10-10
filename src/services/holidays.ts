@@ -90,9 +90,10 @@ export const isHoliday = (holiday: Holiday): boolean =>
 
 export const getHolidays = (now: Date | undefined = new Date()): Holiday[] => {
   const currentYear = now.getFullYear();
-  const later = new Date();
+  const later = new Date(now);
   const nextYear = currentYear + 1;
   later.setFullYear(nextYear);
+  later.setDate(later.getDate() - 1);
   const start = formatDate(now);
   const end = formatDate(later);
 

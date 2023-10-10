@@ -12,7 +12,7 @@ import toast from '../notification/Toast';
 export type TargetResourcesProps = {
   mainResourceName?: string;
   mainResourceId?: number;
-  targetResources?: string[];
+  targetResources?: { id: string; name?: string }[];
   modified?: string;
 };
 
@@ -20,8 +20,8 @@ const ResourcePeriodsCopyFieldset = ({
   mainResourceName,
   mainResourceId,
   targetResources = [],
-  onChange,
   modified,
+  onChange,
 }: TargetResourcesProps & {
   onChange: (value: TargetResourcesProps | undefined) => void;
 }): JSX.Element => {
@@ -36,7 +36,10 @@ const ResourcePeriodsCopyFieldset = ({
     }
 
     try {
-      await api.copyDatePeriods(mainResourceId, targetResources);
+      await api.copyDatePeriods(
+        mainResourceId,
+        targetResources.map((item) => item.id)
+      );
       toast.success({
         dataTestId: 'period-copy-success',
         label:

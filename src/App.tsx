@@ -23,6 +23,7 @@ import './App.scss';
 import { Language } from './common/lib/types';
 import PrivateResourceRoute from './components/router/PrivateResourceRoute';
 import ResourcePage from './pages/ResourcePage';
+import ResourceBatchUpdatePage from './pages/ResourceBatchUpdatePage';
 import AddNormalOpeningHoursPage from './pages/AddNormalOpeningHoursPage';
 import EditNormalOpeningHoursPage from './pages/EditNormalOpeningHoursPage';
 import EditHolidaysPage from './pages/EditHolidaysPage';
@@ -142,8 +143,33 @@ const App = (): JSX.Element => {
                       <NavigationAndFooterWrapper>
                         <Main id="main">
                           <ResourcePage
-                            id={id}
+                            mainResourceId={id}
                             childId={childId}
+                            targetResourcesString={targetResourcesStr}
+                          />
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    )
+                  );
+                }}
+              />
+              <PrivateResourceRoute
+                id="resource-batch-update-route"
+                exact
+                path={['/resource/:id/batch']}
+                render={({
+                  match,
+                }: RouteComponentProps<{
+                  id?: string;
+                }>) => {
+                  const { id } = match.params;
+
+                  return (
+                    id && (
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <ResourceBatchUpdatePage
+                            mainResourceId={id}
                             targetResourcesString={targetResourcesStr}
                           />
                         </Main>

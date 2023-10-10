@@ -1,0 +1,55 @@
+@import 'node_modules/hds-design-tokens/lib/all.scss';
+
+.resource-batch-update-page {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-layout-m;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-s;
+    padding: $spacing-m $spacing-l;
+    background-color: white;
+    position: relative;
+
+    > *,
+    .list-options {
+      margin: 0;
+    }
+  }
+
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 0;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .section-resources {
+    td {
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+  }
+
+  .section-resource-update {
+    display: flex;
+    gap: $spacing-layout-xs;
+    background-color: transparent;
+    align-items: flex-start;
+  }
+
+  .button-confirm {
+    margin-top: $spacing-s;
+  }
+
+  .button-close {
+    position: absolute;
+    right: 0;
+  }
+}
