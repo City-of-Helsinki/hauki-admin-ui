@@ -275,30 +275,30 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     const removeButton = td.querySelector('button') as Element;
     fireEvent.click(removeButton);
 
-    const testTargetResourceDataAfterRemove = {
+    const afterRemove = {
       ...testTargetResourceData,
       targetResources: [
-        testTargetResourceData.targetResources[0],
-        testTargetResourceData.targetResources[2],
+        testTargetResourceData.targetResources?.at(0),
+        testTargetResourceData.targetResources?.at(2),
       ],
     };
 
     const storedData = sessionStorage.getItem('targetResources');
 
-    expect(storedData).toEqual(
-      JSON.stringify(testTargetResourceDataAfterRemove)
-    );
+    expect(afterRemove.targetResources?.at(0)).toBeDefined();
+    expect(afterRemove.targetResources?.at(1)).toBeDefined();
+    expect(storedData).toEqual(JSON.stringify(afterRemove));
     expect(getByTestId(container, 'id-0')).toHaveTextContent(
-      testTargetResourceDataAfterRemove.targetResources[0].id
+      afterRemove.targetResources?.at(0)?.id || ''
     );
     expect(getByTestId(container, 'resource-0')).toHaveTextContent(
-      testTargetResourceDataAfterRemove.targetResources[0].name
+      afterRemove.targetResources?.at(0)?.name || ''
     );
     expect(getByTestId(container, 'id-1')).toHaveTextContent(
-      testTargetResourceDataAfterRemove.targetResources[1].id
+      afterRemove.targetResources?.at(1)?.id || ''
     );
     expect(getByTestId(container, 'resource-1')).toHaveTextContent(
-      testTargetResourceDataAfterRemove.targetResources[1].name
+      afterRemove.targetResources?.at(1)?.name || ''
     );
   });
 });
