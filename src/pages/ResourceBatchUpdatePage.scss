@@ -13,8 +13,9 @@
     background-color: white;
     position: relative;
 
-    > *, .list-options {
-      margin: 0px;
+    > *,
+    .list-options {
+      margin: 0;
     }
   }
 
@@ -22,10 +23,10 @@
     display: flex;
     justify-content: space-between;
     background-color: transparent;
-    padding: 0px;
+    padding: 0;
 
     h1 {
-      margin: 0px;
+      margin: 0;
     }
   }
 
@@ -49,6 +50,6 @@
 
   .button-close {
     position: absolute;
-    right: 0px;
+    right: 0;
   }
 }

@@ -140,6 +140,22 @@ const testTargetResourceData: TargetResourcesProps = {
   ],
 };
 
+// same as testTargetResourceData, but second target resource removed
+const testTargetAfterRemove: TargetResourcesProps = {
+  mainResourceId: 1010,
+  mainResourceName: 'test pk 10 fi',
+  targetResources: [
+    {
+      id: 'tprek:11',
+      name: 'test pk 11 fi',
+    },
+    {
+      id: 'tprek:13',
+      name: 'test pk 13 fi',
+    },
+  ],
+};
+
 const renderPage = () =>
   render(
     <Router>
@@ -275,30 +291,20 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     const removeButton = td.querySelector('button') as Element;
     fireEvent.click(removeButton);
 
-    const afterRemove = {
-      ...testTargetResourceData,
-      targetResources: [
-        testTargetResourceData.targetResources?.at(0),
-        testTargetResourceData.targetResources?.at(2),
-      ],
-    };
+    type TargetResource = { id: string; name: string };
+    const res0 = (
+      testTargetAfterRemove.targetResources as TargetResource[]
+    )[0] as TargetResource;
+    const res1 = (
+      testTargetAfterRemove.targetResources as TargetResource[]
+    )[1] as TargetResource;
 
-    const storedData = sessionStorage.getItem('targetResources');
-
-    expect(afterRemove.targetResources?.at(0)).toBeDefined();
-    expect(afterRemove.targetResources?.at(1)).toBeDefined();
-    expect(storedData).toEqual(JSON.stringify(afterRemove));
-    expect(getByTestId(container, 'id-0')).toHaveTextContent(
-      afterRemove.targetResources?.at(0)?.id || ''
+    expect(sessionStorage.getItem('targetResources')).toEqual(
+      JSON.stringify(testTargetAfterRemove)
     );
-    expect(getByTestId(container, 'resource-0')).toHaveTextContent(
-      afterRemove.targetResources?.at(0)?.name || ''
-    );
-    expect(getByTestId(container, 'id-1')).toHaveTextContent(
-      afterRemove.targetResources?.at(1)?.id || ''
-    );
-    expect(getByTestId(container, 'resource-1')).toHaveTextContent(
-      afterRemove.targetResources?.at(1)?.name || ''
-    );
+    expect(getByTestId(container, 'id-0')).toHaveTextContent(res0.id);
+    expect(getByTestId(container, 'resource-0')).toHaveTextContent(res0.name);
+    expect(getByTestId(container, 'id-1')).toHaveTextContent(res1.id);
+    expect(getByTestId(container, 'resource-1')).toHaveTextContent(res1.name);
   });
 });
