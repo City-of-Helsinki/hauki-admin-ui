@@ -39,9 +39,16 @@
 
   .section-resource-update {
     display: flex;
+    flex-direction: column;
     gap: $spacing-layout-xs;
     background-color: transparent;
     align-items: flex-start;
+  }
+
+  @media screen and (min-width: $breakpoint-m) {
+    .section-resource-update {
+      flex-direction: row;
+    }
   }
 
   .button-confirm {

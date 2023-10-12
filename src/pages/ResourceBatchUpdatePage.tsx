@@ -96,9 +96,6 @@ const ResourceBatchUpdatePage = ({
         key: 'id',
         headerName: 'ID',
         isSortable: true,
-        transform: (item: { id: string }) => {
-          return <div style={{ textAlign: 'right' }}>{item.id}</div>;
-        },
       },
       { key: 'resource', headerName: 'Toimipiste', isSortable: true },
       {
