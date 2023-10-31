@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer } from 'hds-react';
+import { Footer, logoFi, Logo } from 'hds-react';
 import './HaukiFooter.scss';
 
 const HaukiFooter = (): JSX.Element => (
@@ -11,13 +11,16 @@ const HaukiFooter = (): JSX.Element => (
       theme={{
         '--footer-background': 'var(--hauki-footer-background-color)',
       }}>
-      <Footer.Base>
-        <Footer.Item
+      <Footer.Base
+        copyrightHolder="Helsingin Kaupunki"
+        logo={<Logo src={logoFi} size="medium" alt="Helsingin kaupunki" />}
+        backToTopLabel="Takaisin ylös">
+        <Footer.Link
           href="https://kaupunkialustana.hel.fi/aukiolosovelluksen-saavutettavuusseloste/"
           target="_blank"
           label="Saavutettavuusseloste"
         />
-        <Footer.Item
+        <Footer.Link
           href="/content-license.txt"
           target="_blank"
           label="Sisältölisenssi CC BY 4.0"

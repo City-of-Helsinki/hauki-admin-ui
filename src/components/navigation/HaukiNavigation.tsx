@@ -1,22 +1,23 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   IconCrossCircleFill,
-  IconQuestionCircle,
   IconUser,
-  Navigation,
+  Header,
+  logoFiDark,
+  Logo,
+  Link,
 } from 'hds-react';
 import api from '../../common/utils/api/api';
 import { useAppContext } from '../../App-context';
 import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
 import './HaukiNavigation.scss';
-import { SecondaryButton } from '../button/Button';
 import toast from '../notification/Toast';
-import LanguageSelect from '../language-select/LanguageSelect';
+import { languageOptions } from '../../common/utils/language/language-utils';
 
 const HaukiNavigation = (): JSX.Element => {
-  const { hasOpenerWindow, closeAppWindow, language, setLanguage } =
-    useAppContext();
+  const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
   const { authTokens, clearAuth } = authProps;
   const history = useHistory();
@@ -59,58 +60,48 @@ const HaukiNavigation = (): JSX.Element => {
   };
 
   return (
-    <Navigation
+    <Header
       theme={{
-        '--header-background-color': 'var(--hauki-header-background-color)',
-        '--header-color': 'var(--hauki-header-color)',
-        '--header-focus-outline-color': 'var(--color-white)',
-        '--mobile-menu-color': 'var(--hauki-header-color)',
-        '--mobile-menu-background-color':
-          'var(--hauki-header-background-color)',
+        '--actionbar-background-color': 'var(--hauki-header-background-color)',
+        '--header-color': 'var(--color-white)',
       }}
-      titleUrl={`/resource/${id}`}
-      title="Aukiolot"
-      menuToggleAriaLabel="Menu"
-      skipTo="#main"
-      skipToContentLabel="Siirry pääsisältöön">
-      <Navigation.Actions>
-        <a
-          className="instructions-link"
-          href="https://kaupunkialustana.hel.fi/aukiolosovellus-ohje/"
-          target="_blank"
-          rel="noreferrer">
-          <IconQuestionCircle aria-hidden="true" /> Ohje
-        </a>
+      className="header"
+      languages={languageOptions}
+      onDidChangeLanguage={setLanguage}>
+      <Header.SkipLink skipTo="#main" label="Siirry pääsisältöön" />
+      <Header.ActionBar
+        title="Aukiolot"
+        titleHref={`/resource/${id}`}
+        frontPageLabel="Etusivu"
+        menuButtonAriaLabel="Menu"
+        logo={<Logo src={logoFiDark} alt="Helsingin kaupunki" />}>
+        <Header.LanguageSelector />
         {isAuthenticated && (
           <>
-            <Navigation.Item as="div">
-              <div className="navigation-user">
-                <IconUser aria-hidden />
-                <span className="navigation-user-name">
-                  {authTokens && authTokens[TokenKeys.usernameKey]}
-                </span>
-              </div>
-            </Navigation.Item>
-            {language && setLanguage && (
-              <LanguageSelect
-                id="language-select"
-                label="Sivun kielivalinta"
-                selectedLanguage={language}
-                onSelect={setLanguage}
-              />
-            )}
-            <SecondaryButton
-              dataTest="close-app-button"
-              className="navigation-button"
-              iconRight={<IconCrossCircleFill aria-hidden />}
-              onClick={(): Promise<void> => onCloseButtonClick()}
-              light>
-              Sulje
-            </SecondaryButton>
+            <Header.ActionBarItem
+              fixedRightPosition
+              id="action-bar-user"
+              label={authTokens && authTokens[TokenKeys.usernameKey]}
+              icon={<IconUser aria-hidden />}>
+              <Link
+                data-testid="close-app-button"
+                href="#"
+                onClick={onCloseButtonClick}>
+                <IconCrossCircleFill aria-hidden /> Sulje
+              </Link>
+            </Header.ActionBarItem>
           </>
         )}
-      </Navigation.Actions>
-    </Navigation>
+      </Header.ActionBar>
+      <Header.NavigationMenu>
+        <Header.Link
+          label="Ohje"
+          href="https://kaupunkialustana.hel.fi/aukiolosovellus-ohje/"
+          target="_blank"
+          rel="noreferrer"
+        />
+      </Header.NavigationMenu>
+    </Header>
   );
 };
 
