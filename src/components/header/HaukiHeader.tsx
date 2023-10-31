@@ -83,6 +83,7 @@ const HaukiHeader = (): JSX.Element => {
             label={authTokens?.[TokenKeys.usernameKey]}
             icon={<IconUser aria-hidden />}>
             <Link
+              className="closeLink"
               data-testid="close-app-button"
               href="#"
               onClick={onCloseButtonClick}>

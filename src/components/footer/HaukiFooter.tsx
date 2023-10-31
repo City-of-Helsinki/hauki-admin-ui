@@ -13,6 +13,7 @@ const HaukiFooter = (): JSX.Element => (
       }}>
       <Footer.Base
         copyrightHolder="Helsingin Kaupunki"
+        copyrightText="Kaikki oikeudet pidätetään."
         logo={<Logo src={logoFi} size="medium" alt="Helsingin kaupunki" />}
         backToTopLabel="Takaisin ylös">
         <Footer.Link
