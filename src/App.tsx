@@ -18,7 +18,7 @@ import {
 } from './auth/auth-context';
 import Main from './components/main/Main';
 import NavigationAndFooterWrapper from './components/navigation-and-footer-wrapper/NavigationAndFooterWrapper';
-import HaukiNavigation from './components/navigation/HaukiNavigation';
+import HaukiHeader from './components/header/HaukiHeader';
 import './App.scss';
 import { Language } from './common/lib/types';
 import PrivateResourceRoute from './components/router/PrivateResourceRoute';
@@ -195,7 +195,7 @@ const App = (): JSX.Element => {
                   return (
                     id && (
                       <>
-                        <HaukiNavigation />
+                        <HaukiHeader />
                         <Main id="main">
                           <AddNormalOpeningHoursPage resourceId={id} />
                         </Main>
@@ -222,7 +222,7 @@ const App = (): JSX.Element => {
                     id &&
                     datePeriodId && (
                       <>
-                        <HaukiNavigation />
+                        <HaukiHeader />
                         <Main id="main">
                           <EditNormalOpeningHoursPage
                             resourceId={id}
@@ -250,7 +250,7 @@ const App = (): JSX.Element => {
                   return (
                     id && (
                       <>
-                        <HaukiNavigation />
+                        <HaukiHeader />
                         <Main id="main">
                           <EditHolidaysPage resourceId={id} />
                         </Main>
@@ -275,7 +275,7 @@ const App = (): JSX.Element => {
                   return (
                     id && (
                       <>
-                        <HaukiNavigation />
+                        <HaukiHeader />
                         <Main id="main">
                           <AddExceptionOpeningHoursPage resourceId={id} />
                         </Main>
@@ -302,7 +302,7 @@ const App = (): JSX.Element => {
                     id &&
                     datePeriodId && (
                       <>
-                        <HaukiNavigation />
+                        <HaukiHeader />
                         <Main id="main">
                           <EditExceptionOpeningHoursPage
                             datePeriodId={datePeriodId}

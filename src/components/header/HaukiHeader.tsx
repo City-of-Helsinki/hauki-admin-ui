@@ -12,11 +12,11 @@ import {
 import api from '../../common/utils/api/api';
 import { useAppContext } from '../../App-context';
 import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
-import './HaukiNavigation.scss';
+import './HaukiHeader.scss';
 import toast from '../notification/Toast';
 import { languageOptions } from '../../common/utils/language/language-utils';
 
-const HaukiNavigation = (): JSX.Element => {
+const HaukiHeader = (): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
   const { authTokens, clearAuth } = authProps;
@@ -77,20 +77,18 @@ const HaukiNavigation = (): JSX.Element => {
         logo={<Logo src={logoFiDark} alt="Helsingin kaupunki" />}>
         <Header.LanguageSelector />
         {isAuthenticated && (
-          <>
-            <Header.ActionBarItem
-              fixedRightPosition
-              id="action-bar-user"
-              label={authTokens && authTokens[TokenKeys.usernameKey]}
-              icon={<IconUser aria-hidden />}>
-              <Link
-                data-testid="close-app-button"
-                href="#"
-                onClick={onCloseButtonClick}>
-                <IconCrossCircleFill aria-hidden /> Sulje
-              </Link>
-            </Header.ActionBarItem>
-          </>
+          <Header.ActionBarItem
+            fixedRightPosition
+            id="action-bar-user"
+            label={authTokens?.[TokenKeys.usernameKey]}
+            icon={<IconUser aria-hidden />}>
+            <Link
+              data-testid="close-app-button"
+              href="#"
+              onClick={onCloseButtonClick}>
+              <IconCrossCircleFill aria-hidden /> Sulje
+            </Link>
+          </Header.ActionBarItem>
         )}
       </Header.ActionBar>
       <Header.NavigationMenu>
@@ -105,4 +103,4 @@ const HaukiNavigation = (): JSX.Element => {
   );
 };
 
-export default HaukiNavigation;
+export default HaukiHeader;

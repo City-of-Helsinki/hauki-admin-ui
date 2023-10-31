@@ -5,9 +5,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import api from '../../common/utils/api/api';
 import { AppContext } from '../../App-context';
 import { AuthContext } from '../../auth/auth-context';
-import HaukiNavigation from './HaukiNavigation';
+import HaukiHeader from './HaukiHeader';
 
-describe('<HaukiNavigation>', () => {
+describe('<HaukiHeader>', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -33,7 +33,7 @@ describe('<HaukiNavigation>', () => {
               authTokens: { hsa_username: 'tester' },
               clearAuth: jest.fn(),
             }}>
-            <HaukiNavigation />
+            <HaukiHeader />
           </AuthContext.Provider>
         </AppContext.Provider>
       </Router>
@@ -70,7 +70,7 @@ describe('<HaukiNavigation>', () => {
         <AppContext.Provider value={{ hasOpenerWindow: true, closeAppWindow }}>
           <AuthContext.Provider
             value={{ authTokens: { name: 'tester' }, clearAuth: jest.fn() }}>
-            <HaukiNavigation />
+            <HaukiHeader />
           </AuthContext.Provider>
         </AppContext.Provider>
       </Router>

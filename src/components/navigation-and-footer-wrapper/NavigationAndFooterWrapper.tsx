@@ -1,5 +1,5 @@
 import React from 'react';
-import HaukiNavigation from '../navigation/HaukiNavigation';
+import HaukiHeader from '../header/HaukiHeader';
 import HaukiFooter from '../footer/HaukiFooter';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const NavigationAndFooterWrapper = ({ children }: Props): JSX.Element => (
   <>
-    <HaukiNavigation />
+    <HaukiHeader />
     {children}
     <HaukiFooter />
   </>
