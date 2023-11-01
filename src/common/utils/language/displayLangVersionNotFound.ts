@@ -1,12 +1,6 @@
-import { Language, LanguageOption } from '../../lib/types';
+import { Language } from '../../lib/types';
 
-export const languageOptions: LanguageOption[] = [
-  { label: 'Suomeksi', value: Language.FI },
-  { label: 'Svenska', value: Language.SV },
-  { label: 'English', value: Language.EN },
-];
-
-export const displayLangVersionNotFound = ({
+const displayLangVersionNotFound = ({
   language,
   label,
 }: {
@@ -20,3 +14,5 @@ export const displayLangVersionNotFound = ({
   };
   return texts[language];
 };
+
+export default displayLangVersionNotFound;

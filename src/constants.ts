@@ -5,6 +5,7 @@ import {
   Language,
   Rule,
   TimeSpanGroup,
+  LanguageOption,
 } from './common/lib/types';
 
 export const uiRuleLabels: {
@@ -51,3 +52,9 @@ export const defaultNoOpeningHoursTimeSpanGroup: TimeSpanGroup = {
     },
   ],
 };
+
+export const languageOptions: LanguageOption[] = [
+  { label: 'Suomeksi', value: Language.FI },
+  { label: 'Svenska', value: Language.SV },
+  { label: 'English', value: Language.EN },
+];

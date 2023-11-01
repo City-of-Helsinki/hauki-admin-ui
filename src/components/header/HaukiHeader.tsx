@@ -14,8 +14,8 @@ import { useAppContext } from '../../App-context';
 import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
 import './HaukiHeader.scss';
 import toast from '../notification/Toast';
-import { languageOptions } from '../../common/utils/language/language-utils';
 import { Language } from '../../common/lib/types';
+import { languageOptions } from '../../constants';
 
 const HaukiHeader = (): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();

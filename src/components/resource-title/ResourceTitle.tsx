@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { Language, Resource } from '../../common/lib/types';
 import { isUnitResource } from '../../common/utils/resource/helper';
 import './ResourceTitle.scss';
-import { displayLangVersionNotFound } from '../../common/utils/language/language-utils';
+import displayLangVersionNotFound from '../../common/utils/language/displayLangVersionNotFound';
 
 const resourceTitleId = 'resource-title';
 

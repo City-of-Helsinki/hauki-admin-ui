@@ -14,7 +14,7 @@ import './ResourcePage.scss';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
 import { SecondaryButton } from '../components/button/Button';
 import useGoToResourceBatchUpdatePage from '../hooks/useGoToResourceBatchUpdatePage';
-import { displayLangVersionNotFound } from '../common/utils/language/language-utils';
+import displayLangVersionNotFound from '../common/utils/language/displayLangVersionNotFound';
 
 const ResourceSection = ({
   id,
