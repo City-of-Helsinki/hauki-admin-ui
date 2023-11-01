@@ -50,7 +50,9 @@ const HaukiHeader = (): JSX.Element => {
     }
   };
 
-  const onCloseButtonClick = async (): Promise<void> => {
+  const onCloseButtonClick = async (e: React.MouseEvent): Promise<void> => {
+    e.preventDefault();
+
     if (isAuthenticated) {
       await signOut();
     }
