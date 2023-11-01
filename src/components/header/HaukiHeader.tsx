@@ -15,6 +15,7 @@ import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
 import './HaukiHeader.scss';
 import toast from '../notification/Toast';
 import { languageOptions } from '../../common/utils/language/language-utils';
+import { Language } from '../../common/lib/types';
 
 const HaukiHeader = (): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
@@ -67,7 +68,14 @@ const HaukiHeader = (): JSX.Element => {
       }}
       className="header"
       languages={languageOptions}
-      onDidChangeLanguage={setLanguage}>
+      onDidChangeLanguage={(language) => {
+        if (setLanguage) {
+          const newLanguage =
+            Language[language.toUpperCase() as keyof typeof Language];
+
+          setLanguage(newLanguage);
+        }
+      }}>
       <Header.SkipLink skipTo="#main" label="Siirry pääsisältöön" />
       <Header.ActionBar
         title="Aukiolot"
