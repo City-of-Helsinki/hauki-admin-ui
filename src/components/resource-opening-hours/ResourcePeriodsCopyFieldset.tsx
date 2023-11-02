@@ -38,7 +38,8 @@ const ResourcePeriodsCopyFieldset = ({
     try {
       await api.copyDatePeriods(
         mainResourceId,
-        targetResources.map((item) => item.id)
+        targetResources.map((item) => item.id),
+        true
       );
       toast.success({
         dataTestId: 'period-copy-success',

@@ -54,7 +54,8 @@ describe(`<ResourcePeriodsCopyFieldset/>`, () => {
     await waitFor(async () => {
       expect(apiCopySpy).toHaveBeenCalledWith(
         testCopyResourceData.mainResourceId,
-        testCopyResourceData.targetResources?.map((resource) => resource.id)
+        testCopyResourceData.targetResources?.map((resource) => resource.id),
+        true
       );
       expect(toastSuccessSpy).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith({

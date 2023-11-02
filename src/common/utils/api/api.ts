@@ -361,12 +361,13 @@ export default {
 
   copyDatePeriods: async (
     resourceId: number,
-    targetResources: string[]
+    targetResources: string[],
+    replace: boolean
   ): Promise<boolean> => {
     const permission = await apiPost<PermissionResponse>({
       path: `${resourceBasePath}/${resourceId}/copy_date_periods`,
       parameters: {
-        replace: true,
+        replace,
         target_resources: targetResources.join(','),
       },
     });
