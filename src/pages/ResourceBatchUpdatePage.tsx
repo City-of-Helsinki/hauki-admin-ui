@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Notification,
   Table,
@@ -13,7 +14,13 @@ import {
   SupplementaryButton,
 } from '../components/button/Button';
 import { useAppContext } from '../App-context';
+import { AuthContextProps, useAuth } from '../auth/auth-context';
 import api from '../common/utils/api/api';
+import toast from '../components/notification/Toast';
+import {
+  NotificationModal,
+  useModal,
+} from '../components/modal/NotificationModal';
 import { Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
@@ -43,7 +50,16 @@ const ResourceBatchUpdatePage = ({
   mainResourceId,
   targetResourcesString,
 }: ResourceBatchUpdatePageProps): JSX.Element => {
-  const { language: contextLanguage } = useAppContext();
+  const {
+    hasOpenerWindow,
+    closeAppWindow,
+    language: contextLanguage,
+  } = useAppContext();
+  const authProps: Partial<AuthContextProps> = useAuth();
+  const { authTokens, clearAuth } = authProps;
+  const history = useHistory();
+  const isAuthenticated = !!authTokens;
+  const { isModalOpen, openModal } = useModal();
   const [resource, setResource] = useState<Resource | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -61,20 +77,79 @@ const ResourceBatchUpdatePage = ({
   const language = contextLanguage || Language.FI;
   const targetResourcesStorageKey = 'targetResources';
 
+  const showErrorNotification = (text: string): void =>
+    toast.error({
+      label: text,
+    });
+  const showSuccessNotification = (text: string): void =>
+    toast.success({
+      label: text,
+    });
+  const signOut = async (): Promise<void> => {
+    try {
+      const isAuthInvalidated = await api.invalidateAuth();
+      if (isAuthInvalidated) {
+        if (clearAuth) {
+          clearAuth();
+        }
+        history.push('/');
+      } else {
+        showErrorNotification('Uloskirjautuminen hylättiin.');
+      }
+    } catch (e) {
+      showErrorNotification(
+        `Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ${e}`
+      );
+    }
+  };
+
   // event functions
   const onChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedRadioItem(event.target.value);
   };
-  const onConfirm = () => {
-    // TODO: will be implemented later
-    console.log('onConfirm()');
-  };
   const onClose = () => {
-    // TODO: will be implemented later
-    console.log('onClose()');
+    setLoading(false);
+    if (isAuthenticated) signOut();
+    if (hasOpenerWindow && closeAppWindow) closeAppWindow();
+  };
+  const onConfirm = () => {
+    if (
+      !mainResourceId ||
+      !targetResourceData ||
+      !targetResourceData?.targetResources ||
+      targetResourceData?.targetResources.length === 0
+    ) {
+      return;
+    }
+
+    setLoading(true);
+    openModal();
+    api
+      .copyDatePeriods(
+        resource?.id || 0,
+        targetResourceData?.targetResources
+          .filter((item) => item.id !== mainResourceId)
+          .map((item) => item.id),
+        selectedRadioItem === 'update'
+      )
+      .then(async () => {
+        setLoading(false);
+      })
+      .catch((e: Error) => {
+        setLoading(false);
+        setError(e);
+        showErrorNotification(
+          `Aukioloaikojen ${
+            selectedRadioItem === 'update' ? 'kopioiminen' : 'korvaaminen'
+          } epäonnistui. Virhe: ${e}`
+        );
+      });
   };
   const onRemove = (id: string) => {
     if (targetResourceData?.targetResources) {
+      const resourceName = targetResourceData.targetResources.find(
+        (r) => r.id === id
+      )?.name as string;
       const newData = {
         ...targetResourceData,
         targetResources: targetResourceData.targetResources.filter(
@@ -86,6 +161,7 @@ const ResourceBatchUpdatePage = ({
         key: targetResourcesStorageKey,
         value: newData,
       });
+      showSuccessNotification(`Toimipiste ${resourceName} on poistettu.`);
     }
   };
 
@@ -168,13 +244,17 @@ const ResourceBatchUpdatePage = ({
           setLoading(false);
         };
 
+        // fetch target resource data from api
         setLoading(true);
         api
           .getResources(targetResourceIDs)
           .then(handleApiResponse)
           .catch((e: Error) => {
-            setError(e);
             setLoading(false);
+            setError(e);
+            showErrorNotification(
+              `Toimipisteiden tietoja ei saatu ladattua. Virhe: ${e}`
+            );
           });
       } else {
         const oldData = sessionStorage.getItem<TargetResourcesProps>(
@@ -199,8 +279,11 @@ const ResourceBatchUpdatePage = ({
         setLoading(false);
       })
       .catch((e: Error) => {
-        setError(e);
         setLoading(false);
+        setError(e);
+        showErrorNotification(
+          `Toimipisteen tietoja ei saatu ladattua. Virhe: ${e}`
+        );
       });
   }, [mainResourceId]);
 
@@ -215,7 +298,7 @@ const ResourceBatchUpdatePage = ({
     );
   }
 
-  if (isLoading || !resource || !targetResourceData) {
+  if (isLoading && (!resource || !targetResourceData || !mainResourceId)) {
     return (
       <>
         <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
@@ -314,6 +397,22 @@ const ResourceBatchUpdatePage = ({
           </div>
         </section>
       </div>
+
+      <NotificationModal
+        title="Aukiolotiedot päivitetty"
+        text={
+          <span>
+            Toimipisteiden aukiolotiedot on päivitetty onnistuneesti
+            <br />
+            Aukiolosovellus sulkeutuu painikkeesta.
+          </span>
+        }
+        buttonText="Sulje aukiolosovellus"
+        loadingText="Päivitetään aukiolotietoja"
+        isLoading={isLoading}
+        isOpen={isModalOpen}
+        onClose={onClose}
+      />
     </div>
   );
 };
