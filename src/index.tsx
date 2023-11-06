@@ -8,7 +8,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 Sentry.init({
-  dsn: 'https://32119c5bf3e64d029d6b01440e639ffc@sentry.hel.fi/108',
+  dsn: window.ENV.SENTRY_DSN,
   integrations: [new Integrations.BrowserTracing()],
   environment: window.ENV.SENTRY_ENV,
   sampleRate: window.ENV.SENTRY_ENV === 'local' ? 0.0 : 1.0, // We do not wish to trace in local env by default
