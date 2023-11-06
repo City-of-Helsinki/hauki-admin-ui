@@ -6,3 +6,15 @@ import testSetup from './testSetup';
 
 configure({ adapter: new Adapter() });
 testSetup();
+
+const originalError = console.error.bind(console.error);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+console.error = (msg: any, ...optionalParams: any[]) => {
+  const msgStr = msg.toString();
+
+  return (
+    !msgStr.includes('Could not parse CSS stylesheet') &&
+    originalError(msg, ...optionalParams)
+  );
+};

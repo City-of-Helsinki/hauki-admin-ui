@@ -5,7 +5,6 @@ import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import Collapse from '../components/collapse/Collapse';
-import { displayLangVersionNotFound } from '../components/language-select/LanguageSelect';
 import { Link } from '../components/link/Link';
 import ResourceOpeningHours from '../components/resource-opening-hours/ResourceOpeningHours';
 import ResourcePeriodsCopyFieldset, {
@@ -15,6 +14,7 @@ import './ResourcePage.scss';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
 import { SecondaryButton } from '../components/button/Button';
 import useGoToResourceBatchUpdatePage from '../hooks/useGoToResourceBatchUpdatePage';
+import displayLangVersionNotFound from '../common/utils/language/displayLangVersionNotFound';
 
 const ResourceSection = ({
   id,

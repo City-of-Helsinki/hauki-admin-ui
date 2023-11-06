@@ -1,0 +1,15 @@
+@import '~hds-design-tokens/lib/all.scss';
+
+.header {
+  --nav-link-font-color: var(--color-black-90);
+
+  @media screen and (max-width: $breakpoint-l) {
+    --lang-selector-item-font-color: var(--color-black-90) !important;
+  }
+
+  .closeLink {
+    display: flex;
+    align-items: center;
+    color: var(--color-black-90);
+  }
+}
