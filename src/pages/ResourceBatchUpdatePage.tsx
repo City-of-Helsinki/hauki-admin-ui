@@ -209,11 +209,8 @@ const ResourceBatchUpdatePage = ({
 
         const handleApiResponse = async (resources: Resource[]) => {
           // for some reason origins are not part of Resource type, this need to be fixed in API
-          const resourcesWithOrigins = [
-            resource,
-            ...resources,
-          ] as ResourceWithOrigins[];
-          const targetResources = [mainResourceId, ...targetResourceIDs]
+          const resourcesWithOrigins = resources as ResourceWithOrigins[];
+          const targetResources = targetResourceIDs
             .map((id) => ({
               id,
               resource: resourcesWithOrigins.find((res) =>
@@ -267,7 +264,7 @@ const ResourceBatchUpdatePage = ({
         }
       }
     }
-  }, [language, resource, targetResourcesString, mainResourceId]);
+  }, [language, resource, targetResourcesString]);
 
   // get main resource
   useEffect((): void => {
