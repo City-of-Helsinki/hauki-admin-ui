@@ -203,6 +203,8 @@ const ResourceBatchUpdatePage = ({
 
   // get data of target resources
   useEffect(() => {
+    let isMounted = true;
+
     if (resource) {
       if (targetResourcesString) {
         const targetResourceIDs = targetResourcesString.split(',');
@@ -233,12 +235,14 @@ const ResourceBatchUpdatePage = ({
             targetResources,
           };
 
-          setTargetResourceData(newData);
           sessionStorage.storeItem<TargetResourcesProps>({
             key: targetResourcesStorageKey,
             value: newData,
           });
-          setLoading(false);
+          if (isMounted) {
+            setTargetResourceData(newData);
+            setLoading(false);
+          }
         };
 
         // fetch target resource data from api
@@ -264,16 +268,24 @@ const ResourceBatchUpdatePage = ({
         }
       }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [language, resource, targetResourcesString]);
 
   // get main resource
-  useEffect((): void => {
+  useEffect(() => {
+    let isMounted = true;
+
     setLoading(true);
     api
       .getResource(mainResourceId)
       .then(async (r: Resource) => {
-        setResource(r);
-        setLoading(false);
+        if (isMounted) {
+          setResource(r);
+          setLoading(false);
+        }
       })
       .catch((e: Error) => {
         setLoading(false);
@@ -282,6 +294,10 @@ const ResourceBatchUpdatePage = ({
           `Toimipisteen tietoja ei saatu ladattua. Virhe: ${e}`
         );
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [mainResourceId]);
 
   if (error) {
