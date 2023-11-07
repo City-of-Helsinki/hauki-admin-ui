@@ -123,7 +123,6 @@ const ResourceBatchUpdatePage = ({
     }
 
     setLoading(true);
-    openModal();
     api
       .copyDatePeriods(
         resource?.id || 0,
@@ -134,6 +133,7 @@ const ResourceBatchUpdatePage = ({
       )
       .then(async () => {
         setLoading(false);
+        openModal();
       })
       .catch((e: Error) => {
         setLoading(false);
@@ -406,7 +406,12 @@ const ResourceBatchUpdatePage = ({
             />
           </SelectionGroup>
           <div className="button-confirm">
-            <PrimaryButton onClick={onConfirm}>Vahvista</PrimaryButton>
+            <PrimaryButton
+              onClick={onConfirm}
+              loadingText="Päivitetään aukiolotietoja"
+              isLoading={isLoading}>
+              Vahvista
+            </PrimaryButton>
           </div>
         </section>
       </div>
@@ -421,8 +426,6 @@ const ResourceBatchUpdatePage = ({
           </span>
         }
         buttonText="Sulje aukiolosovellus"
-        loadingText="Päivitetään aukiolotietoja"
-        isLoading={isLoading}
         isOpen={isModalOpen}
         onClose={onClose}
       />
