@@ -309,7 +309,7 @@ const ResourceBatchUpdatePage = ({
   return (
     <div className="resource-batch-update-page">
       <section className="section-title">
-        <h1>Joukkopäivitys</h1>
+        <h1>{mainResourceName}</h1>
         <div className="button-close">
           <SecondaryButton size="small" onClick={onClose}>
             Palaa etusivulle
@@ -318,7 +318,7 @@ const ResourceBatchUpdatePage = ({
       </section>
 
       <section className="section-spans">
-        <h2>Valitut aukiolot</h2>
+        <h2>Joukkopäivitykseen valitut aukiolot</h2>
         <p>Olet valinnut joukkopäivitykseen alla olevat aukioloajat.</p>
         {/* this block will be implemented later */}
       </section>
