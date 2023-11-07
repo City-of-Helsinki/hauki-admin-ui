@@ -25,6 +25,7 @@ import { Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
+import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 
 export type ResourceBatchUpdatePageProps = {
   mainResourceId: string;
@@ -68,6 +69,7 @@ const ResourceBatchUpdatePage = ({
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
+  const ReturnToResourcePage = useReturnToResourcePage();
 
   // page constants
   const pageSize = 10;
@@ -324,7 +326,7 @@ const ResourceBatchUpdatePage = ({
       <section className="section-title">
         <h1>{mainResourceName}</h1>
         <div className="button-close">
-          <SecondaryButton size="small" onClick={onClose}>
+          <SecondaryButton size="small" onClick={ReturnToResourcePage}>
             Palaa etusivulle
           </SecondaryButton>
         </div>
