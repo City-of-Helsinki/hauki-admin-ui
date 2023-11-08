@@ -126,10 +126,6 @@ const testTargetResourceData: TargetResourcesProps = {
   mainResourceName: 'test pk 10 fi',
   targetResources: [
     {
-      id: 'tprek:10',
-      name: 'test pk 10 fi',
-    },
-    {
       id: 'tprek:11',
       name: 'test pk 11 fi',
     },
@@ -150,12 +146,8 @@ const testTargetAfterRemove: TargetResourcesProps = {
   mainResourceName: 'test pk 10 fi',
   targetResources: [
     {
-      id: 'tprek:10',
-      name: 'test pk 10 fi',
-    },
-    {
-      id: 'tprek:12',
-      name: 'test pk 12 fi',
+      id: 'tprek:11',
+      name: 'test pk 11 fi',
     },
     {
       id: 'tprek:13',

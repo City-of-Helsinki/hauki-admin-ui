@@ -25,6 +25,7 @@ import { Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
+import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 
 export type ResourceBatchUpdatePageProps = {
   mainResourceId: string;
@@ -68,6 +69,7 @@ const ResourceBatchUpdatePage = ({
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
+  const ReturnToResourcePage = useReturnToResourcePage();
 
   // page constants
   const pageSize = 10;
@@ -123,7 +125,6 @@ const ResourceBatchUpdatePage = ({
     }
 
     setLoading(true);
-    openModal();
     api
       .copyDatePeriods(
         resource?.id || 0,
@@ -134,6 +135,7 @@ const ResourceBatchUpdatePage = ({
       )
       .then(async () => {
         setLoading(false);
+        openModal();
       })
       .catch((e: Error) => {
         setLoading(false);
@@ -203,17 +205,16 @@ const ResourceBatchUpdatePage = ({
 
   // get data of target resources
   useEffect(() => {
+    let isMounted = true;
+
     if (resource) {
       if (targetResourcesString) {
         const targetResourceIDs = targetResourcesString.split(',');
 
         const handleApiResponse = async (resources: Resource[]) => {
           // for some reason origins are not part of Resource type, this need to be fixed in API
-          const resourcesWithOrigins = [
-            resource,
-            ...resources,
-          ] as ResourceWithOrigins[];
-          const targetResources = [mainResourceId, ...targetResourceIDs]
+          const resourcesWithOrigins = resources as ResourceWithOrigins[];
+          const targetResources = targetResourceIDs
             .map((id) => ({
               id,
               resource: resourcesWithOrigins.find((res) =>
@@ -236,12 +237,14 @@ const ResourceBatchUpdatePage = ({
             targetResources,
           };
 
-          setTargetResourceData(newData);
           sessionStorage.storeItem<TargetResourcesProps>({
             key: targetResourcesStorageKey,
             value: newData,
           });
-          setLoading(false);
+          if (isMounted) {
+            setTargetResourceData(newData);
+            setLoading(false);
+          }
         };
 
         // fetch target resource data from api
@@ -267,16 +270,24 @@ const ResourceBatchUpdatePage = ({
         }
       }
     }
-  }, [language, resource, targetResourcesString, mainResourceId]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language, resource, targetResourcesString]);
 
   // get main resource
-  useEffect((): void => {
+  useEffect(() => {
+    let isMounted = true;
+
     setLoading(true);
     api
       .getResource(mainResourceId)
       .then(async (r: Resource) => {
-        setResource(r);
-        setLoading(false);
+        if (isMounted) {
+          setResource(r);
+          setLoading(false);
+        }
       })
       .catch((e: Error) => {
         setLoading(false);
@@ -285,6 +296,10 @@ const ResourceBatchUpdatePage = ({
           `Toimipisteen tietoja ei saatu ladattua. Virhe: ${e}`
         );
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [mainResourceId]);
 
   if (error) {
@@ -309,16 +324,16 @@ const ResourceBatchUpdatePage = ({
   return (
     <div className="resource-batch-update-page">
       <section className="section-title">
-        <h1>Joukkopäivitys</h1>
+        <h1>{mainResourceName}</h1>
         <div className="button-close">
-          <SecondaryButton size="small" onClick={onClose}>
+          <SecondaryButton size="small" onClick={ReturnToResourcePage}>
             Palaa etusivulle
           </SecondaryButton>
         </div>
       </section>
 
       <section className="section-spans">
-        <h2>Valitut aukiolot</h2>
+        <h2>Joukkopäivitykseen valitut aukiolot</h2>
         <p>Olet valinnut joukkopäivitykseen alla olevat aukioloajat.</p>
         {/* this block will be implemented later */}
       </section>
@@ -393,7 +408,12 @@ const ResourceBatchUpdatePage = ({
             />
           </SelectionGroup>
           <div className="button-confirm">
-            <PrimaryButton onClick={onConfirm}>Vahvista</PrimaryButton>
+            <PrimaryButton
+              onClick={onConfirm}
+              loadingText="Päivitetään aukiolotietoja"
+              isLoading={isLoading}>
+              Vahvista
+            </PrimaryButton>
           </div>
         </section>
       </div>
@@ -408,8 +428,6 @@ const ResourceBatchUpdatePage = ({
           </span>
         }
         buttonText="Sulje aukiolosovellus"
-        loadingText="Päivitetään aukiolotietoja"
-        isLoading={isLoading}
         isOpen={isModalOpen}
         onClose={onClose}
       />
