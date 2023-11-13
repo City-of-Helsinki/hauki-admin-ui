@@ -201,11 +201,11 @@ const OpeningPeriodAccordion = ({
           </button>
         </div>
         <ConfirmationModal
-          onConfirm={async (): Promise<void> => {
+          onConfirm={() => {
             if (onDelete) {
               setDeleting(true);
               try {
-                await onDelete();
+                onDelete();
                 setDeleting(false);
                 toast.success({
                   label: `Aukiolo "${periodName}" poistettu onnistuneesti.`,

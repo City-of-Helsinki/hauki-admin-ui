@@ -212,6 +212,8 @@ const ResourceBatchUpdatePage = ({
         const targetResourceIDs = targetResourcesString.split(',');
 
         const handleApiResponse = async (resources: Resource[]) => {
+          if (!isMounted) return;
+
           // for some reason origins are not part of Resource type, this need to be fixed in API
           const resourcesWithOrigins = resources as ResourceWithOrigins[];
           const targetResources = targetResourceIDs
@@ -241,10 +243,8 @@ const ResourceBatchUpdatePage = ({
             key: targetResourcesStorageKey,
             value: newData,
           });
-          if (isMounted) {
-            setTargetResourceData(newData);
-            setLoading(false);
-          }
+          setTargetResourceData(newData);
+          setLoading(false);
         };
 
         // fetch target resource data from api
@@ -284,10 +284,10 @@ const ResourceBatchUpdatePage = ({
     api
       .getResource(mainResourceId)
       .then(async (r: Resource) => {
-        if (isMounted) {
-          setResource(r);
-          setLoading(false);
-        }
+        if (!isMounted) return;
+
+        setResource(r);
+        setLoading(false);
       })
       .catch((e: Error) => {
         setLoading(false);
