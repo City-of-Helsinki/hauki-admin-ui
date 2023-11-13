@@ -4,12 +4,34 @@ import { LanguageStrings } from '../common/lib/types';
 
 const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
   [
-    'thursday after 06-19',
+    '01-05',
+    {
+      name: {
+        fi: 'Loppiaisen aatto',
+        sv: 'Dagen före Trettondedag jul',
+        en: 'Epiphany Eve',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    'thursday after 06-18',
     {
       name: {
         fi: 'Juhannusaaton aatto',
         sv: 'Dagen före midsommarafton',
-        en: 'Day before Midsummer Day',
+        en: 'Day before Midsummer Eve',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    'sunday after 06-21',
+    {
+      name: {
+        fi: 'Juhannuksen jälkeinen sunnuntai',
+        sv: 'Söndag efter  Midsommardagen',
+        en: 'Sunday after Midsummer Day',
       },
       type: 'optional',
     },
@@ -29,9 +51,42 @@ const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
     },
   ],
   [
+    'easter +38',
+    {
+      name: {
+        fi: 'Helatorstain aatto',
+        sv: 'Dagen före Kristi himmelfärds dag',
+        en: 'Ascension Day Eve',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    'easter +39',
+    {
+      name: {
+        fi: 'Helatorstai',
+        sv: 'Kristi himmelfärds dag',
+        en: 'Ascension Day',
+      },
+      type: 'optional',
+    },
+  ],
+  [
     '04-30',
     {
       name: { fi: 'Vappuaatto', sv: 'Valborgsafton', en: 'May Day Eve' },
+      type: 'optional',
+    },
+  ],
+  [
+    '12-06',
+    {
+      name: {
+        fi: 'Itsenäisyyspäivän aatto',
+        sv: 'Dagen före Självständighetsdagen',
+        en: 'Independence Day Eve',
+      },
       type: 'optional',
     },
   ],
@@ -42,6 +97,17 @@ const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
         fi: 'Jouluaaton aatto',
         sv: 'Dagen före julafton',
         en: 'Day before Christmas Eve',
+      },
+      type: 'optional',
+    },
+  ],
+  [
+    '12-26',
+    {
+      name: {
+        fi: 'Tapaninpäivä',
+        sv: 'Annandag jul',
+        en: 'Boxing Day',
       },
       type: 'optional',
     },

@@ -14,6 +14,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2023-01-05",
+            "name": Object {
+              "en": "Epiphany Eve",
+              "fi": "Loppiaisen aatto",
+              "sv": "Dagen före Trettondedag jul",
+            },
+          },
+          Object {
             "date": "2023-01-06",
             "name": Object {
               "en": "Epiphany",
@@ -86,6 +94,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2023-05-17",
+            "name": Object {
+              "en": "Ascension Day Eve",
+              "fi": "Helatorstain aatto",
+              "sv": "Dagen före Kristi himmelfärds dag",
+            },
+          },
+          Object {
             "date": "2023-05-18",
             "name": Object {
               "en": "Ascension Day",
@@ -104,7 +120,7 @@ describe('holidays', () => {
           Object {
             "date": "2023-06-22",
             "name": Object {
-              "en": "Day before Midsummer Day",
+              "en": "Day before Midsummer Eve",
               "fi": "Juhannusaaton aatto",
               "sv": "Dagen före midsommarafton",
             },
@@ -126,6 +142,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2023-06-25",
+            "name": Object {
+              "en": "Sunday after Midsummer Day",
+              "fi": "Juhannuksen jälkeinen sunnuntai",
+              "sv": "Söndag efter  Midsommardagen",
+            },
+          },
+          Object {
             "date": "2023-11-04",
             "name": Object {
               "en": "All Saints' Day",
@@ -144,9 +168,9 @@ describe('holidays', () => {
           Object {
             "date": "2023-12-06",
             "name": Object {
-              "en": "Independence Day",
-              "fi": "Itsenäisyyspäivä",
-              "sv": "Självständighetsdagen",
+              "en": "Independence Day Eve",
+              "fi": "Itsenäisyyspäivän aatto",
+              "sv": "Dagen före Självständighetsdagen",
             },
           },
           Object {
@@ -177,7 +201,7 @@ describe('holidays', () => {
             "date": "2023-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "2. joulupäivä",
+              "fi": "Tapaninpäivä",
               "sv": "Annandag jul",
             },
           },
@@ -207,6 +231,14 @@ describe('holidays', () => {
               "en": "New Year's Day",
               "fi": "Uudenvuodenpäivä",
               "sv": "Nyårsdagen",
+            },
+          },
+          Object {
+            "date": "2024-01-05",
+            "name": Object {
+              "en": "Epiphany Eve",
+              "fi": "Loppiaisen aatto",
+              "sv": "Dagen före Trettondedag jul",
             },
           },
           Object {
@@ -274,6 +306,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2024-05-08",
+            "name": Object {
+              "en": "Ascension Day Eve",
+              "fi": "Helatorstain aatto",
+              "sv": "Dagen före Kristi himmelfärds dag",
+            },
+          },
+          Object {
             "date": "2024-05-09",
             "name": Object {
               "en": "Ascension Day",
@@ -300,7 +340,7 @@ describe('holidays', () => {
           Object {
             "date": "2024-06-20",
             "name": Object {
-              "en": "Day before Midsummer Day",
+              "en": "Day before Midsummer Eve",
               "fi": "Juhannusaaton aatto",
               "sv": "Dagen före midsommarafton",
             },
@@ -322,6 +362,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2024-06-23",
+            "name": Object {
+              "en": "Sunday after Midsummer Day",
+              "fi": "Juhannuksen jälkeinen sunnuntai",
+              "sv": "Söndag efter  Midsommardagen",
+            },
+          },
+          Object {
             "date": "2024-11-02",
             "name": Object {
               "en": "All Saints' Day",
@@ -340,9 +388,9 @@ describe('holidays', () => {
           Object {
             "date": "2024-12-06",
             "name": Object {
-              "en": "Independence Day",
-              "fi": "Itsenäisyyspäivä",
-              "sv": "Självständighetsdagen",
+              "en": "Independence Day Eve",
+              "fi": "Itsenäisyyspäivän aatto",
+              "sv": "Dagen före Självständighetsdagen",
             },
           },
           Object {
@@ -373,7 +421,7 @@ describe('holidays', () => {
             "date": "2024-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "2. joulupäivä",
+              "fi": "Tapaninpäivä",
               "sv": "Annandag jul",
             },
           },
@@ -403,6 +451,14 @@ describe('holidays', () => {
               "en": "New Year's Day",
               "fi": "Uudenvuodenpäivä",
               "sv": "Nyårsdagen",
+            },
+          },
+          Object {
+            "date": "2025-01-05",
+            "name": Object {
+              "en": "Epiphany Eve",
+              "fi": "Loppiaisen aatto",
+              "sv": "Dagen före Trettondedag jul",
             },
           },
           Object {
@@ -478,6 +534,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2025-05-28",
+            "name": Object {
+              "en": "Ascension Day Eve",
+              "fi": "Helatorstain aatto",
+              "sv": "Dagen före Kristi himmelfärds dag",
+            },
+          },
+          Object {
             "date": "2025-05-29",
             "name": Object {
               "en": "Ascension Day",
@@ -496,7 +560,7 @@ describe('holidays', () => {
           Object {
             "date": "2025-06-19",
             "name": Object {
-              "en": "Day before Midsummer Day",
+              "en": "Day before Midsummer Eve",
               "fi": "Juhannusaaton aatto",
               "sv": "Dagen före midsommarafton",
             },
@@ -518,6 +582,14 @@ describe('holidays', () => {
             },
           },
           Object {
+            "date": "2025-06-22",
+            "name": Object {
+              "en": "Sunday after Midsummer Day",
+              "fi": "Juhannuksen jälkeinen sunnuntai",
+              "sv": "Söndag efter  Midsommardagen",
+            },
+          },
+          Object {
             "date": "2025-11-01",
             "name": Object {
               "en": "All Saints' Day",
@@ -536,9 +608,9 @@ describe('holidays', () => {
           Object {
             "date": "2025-12-06",
             "name": Object {
-              "en": "Independence Day",
-              "fi": "Itsenäisyyspäivä",
-              "sv": "Självständighetsdagen",
+              "en": "Independence Day Eve",
+              "fi": "Itsenäisyyspäivän aatto",
+              "sv": "Dagen före Självständighetsdagen",
             },
           },
           Object {
@@ -569,7 +641,7 @@ describe('holidays', () => {
             "date": "2025-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "2. joulupäivä",
+              "fi": "Tapaninpäivä",
               "sv": "Annandag jul",
             },
           },
@@ -583,6 +655,226 @@ describe('holidays', () => {
           },
           Object {
             "date": "2025-12-31",
+            "name": Object {
+              "en": "New Year's Eve",
+              "fi": "Uudenvuodenaatto",
+              "sv": "Nyårsafton",
+            },
+          },
+        ]
+      `);
+      expect(getHolidays(new Date('2026-01-01'))).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "date": "2026-01-01",
+            "name": Object {
+              "en": "New Year's Day",
+              "fi": "Uudenvuodenpäivä",
+              "sv": "Nyårsdagen",
+            },
+          },
+          Object {
+            "date": "2026-01-05",
+            "name": Object {
+              "en": "Epiphany Eve",
+              "fi": "Loppiaisen aatto",
+              "sv": "Dagen före Trettondedag jul",
+            },
+          },
+          Object {
+            "date": "2026-01-06",
+            "name": Object {
+              "en": "Epiphany",
+              "fi": "Loppiainen",
+              "sv": "Trettondedag jul",
+            },
+          },
+          Object {
+            "date": "2026-04-02",
+            "name": Object {
+              "en": "Maundy Thursday",
+              "fi": "Kiirastorstai",
+              "sv": "Skärtorsdagen",
+            },
+          },
+          Object {
+            "date": "2026-04-03",
+            "name": Object {
+              "en": "Good Friday",
+              "fi": "Pitkäperjantai",
+              "sv": "Långfredagen",
+            },
+          },
+          Object {
+            "date": "2026-04-04",
+            "name": Object {
+              "en": "Easter Saturday",
+              "fi": "Pääsiäislauantai",
+              "sv": "Påsklördag",
+            },
+          },
+          Object {
+            "date": "2026-04-05",
+            "name": Object {
+              "en": "Easter Sunday",
+              "fi": "Pääsiäispäivä",
+              "sv": "Påskdagen",
+            },
+          },
+          Object {
+            "date": "2026-04-06",
+            "name": Object {
+              "en": "Easter Monday",
+              "fi": "2. pääsiäispäivä",
+              "sv": "Annandag påsk",
+            },
+          },
+          Object {
+            "date": "2026-04-30",
+            "name": Object {
+              "en": "May Day Eve",
+              "fi": "Vappuaatto",
+              "sv": "Valborgsafton",
+            },
+          },
+          Object {
+            "date": "2026-05-01",
+            "name": Object {
+              "en": "May Day",
+              "fi": "Vappu",
+              "sv": "Valborg",
+            },
+          },
+          Object {
+            "date": "2026-05-10",
+            "name": Object {
+              "en": "Mother's Day",
+              "fi": "Äitienpäivä",
+              "sv": "Mors dag",
+            },
+          },
+          Object {
+            "date": "2026-05-13",
+            "name": Object {
+              "en": "Ascension Day Eve",
+              "fi": "Helatorstain aatto",
+              "sv": "Dagen före Kristi himmelfärds dag",
+            },
+          },
+          Object {
+            "date": "2026-05-14",
+            "name": Object {
+              "en": "Ascension Day",
+              "fi": "Helatorstai",
+              "sv": "Kristi himmelfärds dag",
+            },
+          },
+          Object {
+            "date": "2026-05-24",
+            "name": Object {
+              "en": "Pentecost",
+              "fi": "Helluntaipäivä",
+              "sv": "Pingstdagen",
+            },
+          },
+          Object {
+            "date": "2026-06-18",
+            "name": Object {
+              "en": "Day before Midsummer Eve",
+              "fi": "Juhannusaaton aatto",
+              "sv": "Dagen före midsommarafton",
+            },
+          },
+          Object {
+            "date": "2026-06-19",
+            "name": Object {
+              "en": "Midsummer Eve",
+              "fi": "Juhannusaatto",
+              "sv": "Midsommarafton",
+            },
+          },
+          Object {
+            "date": "2026-06-20",
+            "name": Object {
+              "en": "Midsummer Day",
+              "fi": "Juhannuspäivä",
+              "sv": "Midsommardagen",
+            },
+          },
+          Object {
+            "date": "2026-06-21",
+            "name": Object {
+              "en": "Sunday after Midsummer Day",
+              "fi": "Juhannuksen jälkeinen sunnuntai",
+              "sv": "Söndag efter  Midsommardagen",
+            },
+          },
+          Object {
+            "date": "2026-10-31",
+            "name": Object {
+              "en": "All Saints' Day",
+              "fi": "Pyhäinpäivä",
+              "sv": "Alla Helgons dag",
+            },
+          },
+          Object {
+            "date": "2026-11-08",
+            "name": Object {
+              "en": "Father's Day",
+              "fi": "Isänpäivä",
+              "sv": "Fars dag",
+            },
+          },
+          Object {
+            "date": "2026-12-06",
+            "name": Object {
+              "en": "Independence Day Eve",
+              "fi": "Itsenäisyyspäivän aatto",
+              "sv": "Dagen före Självständighetsdagen",
+            },
+          },
+          Object {
+            "date": "2026-12-23",
+            "name": Object {
+              "en": "Day before Christmas Eve",
+              "fi": "Jouluaaton aatto",
+              "sv": "Dagen före julafton",
+            },
+          },
+          Object {
+            "date": "2026-12-24",
+            "name": Object {
+              "en": "Christmas Eve",
+              "fi": "Jouluaatto",
+              "sv": "Julafton",
+            },
+          },
+          Object {
+            "date": "2026-12-25",
+            "name": Object {
+              "en": "Christmas Day",
+              "fi": "Joulupäivä",
+              "sv": "Juldagen",
+            },
+          },
+          Object {
+            "date": "2026-12-26",
+            "name": Object {
+              "en": "Boxing Day",
+              "fi": "Tapaninpäivä",
+              "sv": "Annandag jul",
+            },
+          },
+          Object {
+            "date": "2026-12-30",
+            "name": Object {
+              "en": "Day before New Year's Eve",
+              "fi": "Uudenvuodenaaton aatto",
+              "sv": "Dagen före nyårsafton",
+            },
+          },
+          Object {
+            "date": "2026-12-31",
             "name": Object {
               "en": "New Year's Eve",
               "fi": "Uudenvuodenaatto",
