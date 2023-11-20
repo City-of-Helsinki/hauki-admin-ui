@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Accordion, Notification, IconArrowRight } from 'hds-react';
+import { Accordion, Notification, IconArrowRight, Card } from 'hds-react';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';
@@ -7,14 +7,16 @@ import sessionStorage from '../common/utils/storage/sessionStorage';
 import Collapse from '../components/collapse/Collapse';
 import { Link } from '../components/link/Link';
 import ResourceOpeningHours from '../components/resource-opening-hours/ResourceOpeningHours';
-import ResourcePeriodsCopyFieldset, {
-  TargetResourcesProps,
-} from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
+import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 import './ResourcePage.scss';
 import ResourceTitle from '../components/resource-title/ResourceTitle';
-import { SecondaryButton } from '../components/button/Button';
+import { PrimaryButton } from '../components/button/Button';
 import useGoToResourceBatchUpdatePage from '../hooks/useGoToResourceBatchUpdatePage';
 import displayLangVersionNotFound from '../common/utils/language/displayLangVersionNotFound';
+import {
+  DatePeriodSelectState,
+  useSelectedDatePeriodsContext,
+} from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 const ResourceSection = ({
   id,
@@ -63,13 +65,29 @@ const ResourcePage = ({
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
+  const [errorWhenNothingSelected, setErrorWhenNothingSelected] =
+    useState<boolean>(false);
   const targetResourcesStorageKey = 'targetResources';
   const goToResourceBatchUpdatePage = useGoToResourceBatchUpdatePage();
+  const {
+    selectedDatePeriods,
+    setDatePeriodSelectState,
+    datePeriodSelectState,
+  } = useSelectedDatePeriodsContext();
 
   const hasTargetResources =
     targetResourceData?.mainResourceId === resource?.id &&
     targetResourceData?.targetResources &&
     targetResourceData?.targetResources.length > 0;
+
+  useEffect(() => {
+    if (
+      hasTargetResources &&
+      datePeriodSelectState !== DatePeriodSelectState.ACTIVE
+    ) {
+      setDatePeriodSelectState(DatePeriodSelectState.ACTIVE);
+    }
+  }, [hasTargetResources, datePeriodSelectState, setDatePeriodSelectState]);
 
   useEffect(() => {
     if (resource) {
@@ -131,6 +149,14 @@ const ResourcePage = ({
       });
   }, [mainResourceId]);
 
+  const gotoBatchUpdatePage = (): void => {
+    if (selectedDatePeriods.length === 0) {
+      setErrorWhenNothingSelected(true);
+    } else {
+      goToResourceBatchUpdatePage();
+    }
+  };
+
   if (error) {
     return (
       <>
@@ -160,17 +186,36 @@ const ResourcePage = ({
         </p>
       )}
       {hasTargetResources && (
-        <SecondaryButton
-          iconRight={<IconArrowRight aria-hidden />}
-          onClick={goToResourceBatchUpdatePage}>
-          Jatka joukkopäivitykseen
-        </SecondaryButton>
-      )}
-      {hasTargetResources && (
-        <ResourcePeriodsCopyFieldset
-          {...targetResourceData}
-          onChange={(resourceData): void => setTargetResourceData(resourceData)}
-        />
+        <Card
+          border
+          heading={`Joukkopäivitys: ${targetResourceData?.targetResources?.length} toimipistettä valittu`}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+          text="Kun olet muokannut ja valinnut aukioloajat, voit jatkaa joukkopäivitykseen. Joukkopäivityksellä voit päivittää aukioloaikoja kaikille valituille toimipisteille samanaikaisesti.">
+          <PrimaryButton
+            dataTest="gotoBatchUpdateButton"
+            iconRight={<IconArrowRight aria-hidden />}
+            onClick={gotoBatchUpdatePage}>
+            Jatka joukkopäivitykseen
+          </PrimaryButton>
+          {errorWhenNothingSelected && (
+            <div>
+              <Notification
+                dataTestId="gotoBatchUpdateErrorNotification"
+                label="Valitse aukioloajat joukkopäivitystä varten."
+                type="error"
+                size="small"
+                style={{
+                  marginTop: 'var(--spacing-m)',
+                }}>
+                Valitse aukioloajat joukkopäivitystä varten.
+              </Notification>
+            </div>
+          )}
+        </Card>
       )}
       {!hasTargetResources && parentResources?.length > 0 && (
         <ResourceDetailsSection
@@ -200,11 +245,7 @@ const ResourcePage = ({
       )}
       <ResourceSection id="resource-opening-hours">
         {resource && (
-          <ResourceOpeningHours
-            language={language}
-            resource={resource}
-            holidaysTableInitiallyOpen={childResources.length === 0}
-          />
+          <ResourceOpeningHours language={language} resource={resource} />
         )}
       </ResourceSection>
       {!hasTargetResources && childResources?.length > 0 && (

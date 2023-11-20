@@ -1,4 +1,5 @@
 import React from 'react';
+import { Checkbox } from 'hds-react';
 import { useAppContext } from '../../App-context';
 import { isHolidayOrEve } from '../../common/helpers/opening-hours-helpers';
 import {
@@ -11,6 +12,10 @@ import { Holiday, isHoliday } from '../../services/holidays';
 import HolidayOpeningHours from '../holiday-opening-hours/HolidayOpeningHours';
 import OpeningPeriodAccordion from '../opening-period-accordion/OpeningPeriodAccordion';
 import './HolidaysTable.scss';
+import {
+  DatePeriodSelectState,
+  useSelectedDatePeriodsContext,
+} from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 const findHolidayDatePeriod = (holiday: Holiday, datePeriods: DatePeriod[]) =>
   datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
@@ -59,6 +64,13 @@ const HolidaysTable = ({
   initiallyOpen: boolean;
 }): JSX.Element => {
   const { language = Language.FI } = useAppContext();
+  const { selectedDatePeriods, toggleDatePeriod, datePeriodSelectState } =
+    useSelectedDatePeriodsContext();
+
+  const toggleChecked = (datePeriod: DatePeriod): void => {
+    toggleDatePeriod(datePeriod);
+  };
+
   return (
     <OpeningPeriodAccordion
       initiallyOpen={initiallyOpen}
@@ -105,28 +117,56 @@ const HolidaysTable = ({
           </div>
         </div>
         <div role="rowgroup">
-          {holidays.map((holiday) => (
-            <div className="holidays-table__row" role="row" key={holiday.date}>
+          {holidays.map((holiday) => {
+            const holidayDatePeriod = findHolidayDatePeriod(
+              holiday,
+              datePeriods
+            );
+            return (
               <div
-                className="holidays-table__cell holidays-table__cell--name"
-                role="cell">
-                {holiday.name[language]}
+                className="holidays-table__row"
+                role="row"
+                key={holiday.date}>
+                <div
+                  className="holidays-table__cell holidays-table__cell--name"
+                  role="cell">
+                  {holidayDatePeriod !== undefined &&
+                    holidayDatePeriod?.id &&
+                    datePeriodSelectState === DatePeriodSelectState.ACTIVE && (
+                      <Checkbox
+                        id={holidayDatePeriod.id?.toString() || ''}
+                        checked={selectedDatePeriods.some(
+                          (dp) => dp.id === holidayDatePeriod.id
+                        )}
+                        onChange={() => {
+                          toggleChecked(holidayDatePeriod);
+                        }}
+                      />
+                    )}
+                  {datePeriodSelectState === DatePeriodSelectState.ACTIVE ? (
+                    <label htmlFor={holidayDatePeriod?.id?.toString() || ''}>
+                      {holiday.name[language]}
+                    </label>
+                  ) : (
+                    holiday.name[language]
+                  )}
+                </div>
+                <div
+                  className="holidays-table__cell holidays-table__cell--date"
+                  role="cell">
+                  {formatDate(holiday.date)}
+                </div>
+                <div
+                  className="holidays-table__cell holidays-table__cell--opening-hours"
+                  role="cell">
+                  <HolidayOpeningHours
+                    datePeriodConfig={datePeriodConfig}
+                    datePeriod={holidayDatePeriod}
+                  />
+                </div>
               </div>
-              <div
-                className="holidays-table__cell holidays-table__cell--date"
-                role="cell">
-                {formatDate(holiday.date)}
-              </div>
-              <div
-                className="holidays-table__cell holidays-table__cell--opening-hours"
-                role="cell">
-                <HolidayOpeningHours
-                  datePeriodConfig={datePeriodConfig}
-                  datePeriod={findHolidayDatePeriod(holiday, datePeriods)}
-                />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </OpeningPeriodAccordion>

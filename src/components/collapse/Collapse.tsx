@@ -80,7 +80,7 @@ const Collapse = ({
         id={collapseContentId}
         role="region"
         aria-labelledby={buttonId}
-        className={`collapse-content ${!isOpenState ? 'hiddenFromScreen' : ''}`}
+        className={`collapse-content ${!isOpenState ? 'visually-hidden' : ''}`}
         hidden={!isOpenState}>
         {children}
       </div>

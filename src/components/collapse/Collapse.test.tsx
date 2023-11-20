@@ -15,7 +15,7 @@ describe(`<Collapse />`, () => {
 
     expect(collapse.find('h3').text()).toEqual('Test Title');
     expect(collapse.find('#test-content').getDOMNode()).toHaveClass(
-      'hiddenFromScreen'
+      'visually-hidden'
     );
   });
 
@@ -32,7 +32,7 @@ describe(`<Collapse />`, () => {
     collapse.find('button').simulate('click');
 
     expect(collapse.find('#test-content').getDOMNode()).not.toHaveClass(
-      'hiddenFromScreen'
+      'visually-hidden'
     );
   });
 });

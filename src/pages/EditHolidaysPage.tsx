@@ -283,7 +283,7 @@ const HolidayListItem = ({
                     onClick={() => setIsEditing(true)}
                     type="button">
                     <IconPenLine aria-hidden="true" />
-                    <span className="hiddenFromScreen">{`Muokkaa ${holiday} aukiolojakson tietoja`}</span>
+                    <span className="visually-hidden">{`Muokkaa ${holiday} aukiolojakson tietoja`}</span>
                   </button>
                 )}
               </>
@@ -397,7 +397,7 @@ const EditHolidaysPage = ({
     }
 
     return api
-      .deleteDatePeriod(values.id)
+      .deleteDatePeriod(Number(values.id))
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',

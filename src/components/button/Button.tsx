@@ -1,6 +1,6 @@
 import {
-  Button as HDSButton,
   ButtonSize,
+  Button as HDSButton,
   ButtonSize as HDSButtonSize,
 } from 'hds-react';
 import React, { ReactNode } from 'react';
@@ -21,6 +21,7 @@ interface ButtonProps {
   loadingText?: string;
   size?: ButtonSize;
   'aria-expanded'?: boolean;
+  style?: React.CSSProperties;
 }
 
 type SecondaryButtonProps = ButtonProps & {
@@ -47,6 +48,7 @@ export const SecondaryButton = React.forwardRef<
       light = false,
       size = 'default',
       'aria-expanded': ariaExpanded,
+      style,
     }: SecondaryButtonProps,
     ref
   ): JSX.Element => {
@@ -67,7 +69,8 @@ export const SecondaryButton = React.forwardRef<
         iconLeft={iconLeft}
         iconRight={iconRight}
         isLoading={isLoading}
-        loadingText={loadingText}>
+        loadingText={loadingText}
+        style={style}>
         {children}
       </HDSButton>
     );
@@ -89,6 +92,7 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loadingText,
       size = 'default',
       'aria-expanded': ariaExpanded,
+      style,
     }: ButtonProps,
     ref
   ): JSX.Element => {
@@ -108,7 +112,8 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         isLoading={isLoading}
         loadingText={loadingText}
-        size={size}>
+        size={size}
+        style={style}>
         {children}
       </HDSButton>
     );
@@ -133,6 +138,7 @@ export const SupplementaryButton = React.forwardRef<
       loadingText,
       size = 'default',
       'aria-expanded': ariaExpanded,
+      style,
     },
     ref
   ): JSX.Element => {
@@ -150,7 +156,8 @@ export const SupplementaryButton = React.forwardRef<
         isLoading={isLoading}
         loadingText={loadingText}
         disabled={disabled}
-        size={size}>
+        size={size}
+        style={style}>
         {children}
       </HDSButton>
     );

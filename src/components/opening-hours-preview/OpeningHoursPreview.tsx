@@ -153,7 +153,7 @@ const OpeningHoursPreview = ({
                 {uiRuleLabels[previewRow.rule.type][language]}
               </caption>
             )}
-            <thead className="opening-hours-preview-table__header hiddenFromScreen">
+            <thead className="opening-hours-preview-table__header visually-hidden">
               <tr>
                 <th
                   className="opening-hours-preview-table__day-column"

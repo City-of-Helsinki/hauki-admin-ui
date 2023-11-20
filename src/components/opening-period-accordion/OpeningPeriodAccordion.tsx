@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   IconAngleDown,
   IconAngleUp,
   IconMenuDots,
@@ -13,6 +14,10 @@ import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useMobile from '../../hooks/useMobile';
+import {
+  DatePeriodSelectState,
+  useSelectedDatePeriodsContext,
+} from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 type DeleteModalTextProps = {
   dateRange?: ReactNode | null;
@@ -66,7 +71,7 @@ const OpeningPeriodActionsMenu = React.forwardRef<
         type="button"
         {...buttonProps}>
         <IconMenuDots aria-hidden="true" />
-        <span className="hiddenFromScreen">{`Avaa ${
+        <span className="visually-hidden">{`Avaa ${
           periodName || 'nimetön'
         } aukiolojakson muokkaa ja poista valikko`}</span>
       </button>
@@ -75,7 +80,7 @@ const OpeningPeriodActionsMenu = React.forwardRef<
           {editUrl && (
             <Link className="opening-period-actions-menu-item" to={editUrl}>
               Muokkaa
-              <span className="hiddenFromScreen">{`Muokkaa ${
+              <span className="visually-hidden">{`Muokkaa ${
                 periodName || 'nimettömän'
               } aukiolojakson tietoja`}</span>
             </Link>
@@ -89,7 +94,7 @@ const OpeningPeriodActionsMenu = React.forwardRef<
               }}
               type="button">
               Poista
-              <span className="hiddenFromScreen">{`Poista ${
+              <span className="visually-hidden">{`Poista ${
                 periodName || 'nimetön'
               } aukiolojakso`}</span>
             </button>
@@ -105,6 +110,8 @@ type Props = {
   dateRange: ReactNode;
   editUrl?: string;
   id?: string;
+  toggleChecked?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
   initiallyOpen?: boolean;
   isActive?: boolean;
   onDelete?: () => void | Promise<void>;
@@ -120,6 +127,8 @@ const OpeningPeriodAccordion = ({
   isActive = false,
   onDelete,
   periodName,
+  toggleChecked,
+  checked,
 }: Props): JSX.Element => {
   const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -130,14 +139,30 @@ const OpeningPeriodAccordion = ({
   const deleteRef = useRef<HTMLButtonElement>(null);
   const dataTestPostFix = id ? `-${id}` : '';
   const isMobile = useMobile();
+  const { datePeriodSelectState } = useSelectedDatePeriodsContext();
 
   return (
     <div
       className="opening-period"
       data-test={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
+        {toggleChecked !== undefined &&
+          datePeriodSelectState === DatePeriodSelectState.ACTIVE && (
+            <Checkbox
+              id={`period-checkbox${dataTestPostFix}`}
+              value={id}
+              checked={checked}
+              onChange={toggleChecked}
+            />
+          )}
         <h3 className="opening-period-title opening-period-header-column">
-          {periodName}
+          {datePeriodSelectState === DatePeriodSelectState.ACTIVE ? (
+            <label htmlFor={`period-checkbox${dataTestPostFix}`}>
+              {periodName}
+            </label>
+          ) : (
+            periodName
+          )}
         </h3>
         <div className="opening-period-dates opening-period-header-column">
           {dateRange}
@@ -151,51 +176,54 @@ const OpeningPeriodAccordion = ({
           )}
         </div>
         <div className="opening-period-actions opening-period-header-column">
-          {!isMobile && (
-            <>
-              {editUrl && (
-                <Link
-                  className="button-icon opening-period-action-edit"
-                  data-test={`openingPeriodEditLink${dataTestPostFix}`}
-                  to={editUrl}>
-                  <IconPenLine aria-hidden="true" />
-                  <span className="hiddenFromScreen">{`Muokkaa ${
-                    periodName || 'nimettömän'
-                  } aukiolojakson tietoja`}</span>
-                </Link>
-              )}
-              {onDelete && (
-                <button
-                  ref={deleteRef}
-                  className="button-icon opening-period-action-delete"
-                  data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
-                  type="button"
-                  onClick={openModal}>
-                  <IconTrash aria-hidden="true" />
-                  <span className="hiddenFromScreen">{`Poista ${
-                    periodName || 'nimetön'
-                  } aukiolojakso`}</span>
-                </button>
-              )}
-            </>
-          )}
-          {isMobile && (editUrl || onDelete) && (
-            <OpeningPeriodActionsMenu
-              ref={deleteRef}
-              editUrl={editUrl}
-              onDelete={() => {
-                openModal();
-              }}
-              periodName={periodName}
-            />
-          )}
+          {!isMobile &&
+            datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
+              <>
+                {editUrl && (
+                  <Link
+                    className="button-icon opening-period-action-edit"
+                    data-test={`openingPeriodEditLink${dataTestPostFix}`}
+                    to={editUrl}>
+                    <IconPenLine aria-hidden="true" />
+                    <span className="visually-hidden">{`Muokkaa ${
+                      periodName || 'nimettömän'
+                    } aukiolojakson tietoja`}</span>
+                  </Link>
+                )}
+                {onDelete && (
+                  <button
+                    ref={deleteRef}
+                    className="button-icon opening-period-action-delete"
+                    data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
+                    type="button"
+                    onClick={openModal}>
+                    <IconTrash aria-hidden="true" />
+                    <span className="visually-hidden">{`Poista ${
+                      periodName || 'nimetön'
+                    } aukiolojakso`}</span>
+                  </button>
+                )}
+              </>
+            )}
+          {isMobile &&
+            (editUrl || onDelete) &&
+            datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
+              <OpeningPeriodActionsMenu
+                ref={deleteRef}
+                editUrl={editUrl}
+                onDelete={() => {
+                  openModal();
+                }}
+                periodName={periodName}
+              />
+            )}
           <button
             className="button-icon"
             data-test={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
             {...buttonProps}>
             <AccordionIcon isOpen={isOpen} />
-            <span className="hiddenFromScreen">{`Näytä ${
+            <span className="visually-hidden">{`Näytä ${
               periodName || 'nimetön'
             }`}</span>
           </button>

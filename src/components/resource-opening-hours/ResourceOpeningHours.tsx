@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { partition } from 'lodash';
 import { Notification } from 'hds-react';
 import {
   Language,
   Resource,
   UiDatePeriodConfig,
-  ActiveDatePeriod,
+  DatePeriod,
+  DatePeriodType,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
 import {
@@ -14,30 +15,39 @@ import {
   isHolidayOrEve,
 } from '../../common/helpers/opening-hours-helpers';
 import { getDatePeriodFormConfig } from '../../services/datePeriodFormConfig';
-import HolidaysTable from '../holidays-table/HolidaysTable';
 import { getHolidays } from '../../services/holidays';
 import OpeningPeriodsList from '../opening-periods-list/OpeningPeriodsList';
-import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
+import {
+  DatePeriodSelectState,
+  useSelectedDatePeriodsContext,
+} from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
+import { PrimaryButton } from '../button/Button';
 
 const ResourceOpeningHours = ({
   language,
   parentId,
   resource,
-  holidaysTableInitiallyOpen = false,
 }: {
   language: Language;
   parentId?: number;
   resource: Resource;
-  holidaysTableInitiallyOpen?: boolean;
 }): JSX.Element | null => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
   const [datePeriodConfig, setDatePeriodConfig] =
     useState<UiDatePeriodConfig>();
   const [[normalDatePeriods, exceptions], setDividedDatePeriods] = useState<
-    [ActiveDatePeriod[], ActiveDatePeriod[]]
+    [DatePeriod[], DatePeriod[]]
   >([[], []]);
   const [isLoading, setLoading] = useState(false);
+  const {
+    addDatePeriods,
+    clearDatePeriods,
+    datePeriodSelectState,
+    selectedDatePeriods,
+    updateSelectedDatePeriods,
+  } = useSelectedDatePeriodsContext();
+
   const fetchDatePeriods = async (id: number): Promise<void> => {
     setLoading(true);
     try {
@@ -80,6 +90,61 @@ const ResourceOpeningHours = ({
     (datePeriod) => isHolidayOrEve(datePeriod, holidays)
   );
 
+  const allDatePeriodsSelected =
+    selectedDatePeriods.length ===
+      normalDatePeriods.length + exceptions.length &&
+    selectedDatePeriods.length > 0;
+
+  const onChangeHandler = (): void => {
+    if (!allDatePeriodsSelected) {
+      const allDatePeriods = [...normalDatePeriods, ...exceptions];
+      addDatePeriods(allDatePeriods);
+    } else {
+      clearDatePeriods();
+    }
+  };
+
+  // used to add the type to the datePeriods
+  const filterDatePeriodsAndAddType = useCallback(
+    (datePeriods: DatePeriod[], type: DatePeriodType): DatePeriod[] => {
+      return datePeriods
+        .filter((dp) => selectedDatePeriods.some((d) => d.id === dp.id))
+        .map((dp) => ({ ...dp, type }));
+    },
+    [selectedDatePeriods]
+  );
+
+  // this is the ONLY place where we still have the information about the datePeriod type!
+  useEffect(() => {
+    const selectedNormalDatePeriods = filterDatePeriodsAndAddType(
+      normalDatePeriods,
+      DatePeriodType.NORMAL
+    );
+    const selectedExceptionDatePeriods = filterDatePeriodsAndAddType(
+      exceptionDatePeriods,
+      DatePeriodType.EXCEPTION
+    );
+    const selectedHolidaynDatePeriods = filterDatePeriodsAndAddType(
+      holidayDatePeriods,
+      DatePeriodType.HOLIDAY
+    );
+
+    const joinedData: DatePeriod[] = [
+      ...selectedNormalDatePeriods,
+      ...selectedExceptionDatePeriods,
+      ...selectedHolidaynDatePeriods,
+    ];
+
+    updateSelectedDatePeriods(joinedData);
+  }, [
+    exceptionDatePeriods,
+    filterDatePeriodsAndAddType,
+    holidayDatePeriods,
+    normalDatePeriods,
+    selectedDatePeriods,
+    updateSelectedDatePeriods,
+  ]);
+
   if (error) {
     return (
       <>
@@ -95,6 +160,13 @@ const ResourceOpeningHours = ({
 
   return (
     <>
+      {datePeriodSelectState === DatePeriodSelectState.ACTIVE && (
+        <PrimaryButton
+          onClick={onChangeHandler}
+          style={{ marginBottom: 'var(--spacing-m)' }}>
+          {allDatePeriodsSelected ? 'Poista valinnat' : 'Valitse kaikki'}
+        </PrimaryButton>
+      )}
       <OpeningPeriodsList
         id="resource-opening-periods-list"
         addDatePeriodButtonText="Lisää aukioloaika +"
@@ -141,23 +213,22 @@ const ResourceOpeningHours = ({
             : `/resource/${resourceId}/exception/${datePeriod.id}`
         }
       />
-      <OpeningPeriodsSection
-        addNewOpeningPeriodButtonDataTest="edit-holidays-button"
+      <OpeningPeriodsList
+        id="resource-holiday-opening-periods-list"
         addDatePeriodButtonText="Muokkaa juhlapyhiä"
+        addNewOpeningPeriodButtonDataTest="edit-holidays-button"
+        datePeriodConfig={datePeriodConfig}
         datePeriods={holidayDatePeriods}
+        deletePeriod={deletePeriod}
         isLoading={isLoading}
+        language={language}
+        emptyState="Ei juhlapyhiä."
+        theme="LIGHT"
+        title="Juhlapyhät"
         newUrl={`/resource/${
           parentId ? `${parentId}/child/${resourceId}` : resourceId
         }/holidays`}
-        title="Juhlapyhät"
-        theme="LIGHT">
-        <HolidaysTable
-          datePeriodConfig={datePeriodConfig}
-          datePeriods={holidayDatePeriods}
-          holidays={holidays}
-          initiallyOpen={holidaysTableInitiallyOpen}
-        />
-      </OpeningPeriodsSection>
+      />
     </>
   );
 };
