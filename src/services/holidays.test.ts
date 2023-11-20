@@ -166,11 +166,19 @@ describe('holidays', () => {
             },
           },
           Object {
-            "date": "2023-12-06",
+            "date": "2023-12-05",
             "name": Object {
               "en": "Independence Day Eve",
               "fi": "Itsenäisyyspäivän aatto",
               "sv": "Dagen före Självständighetsdagen",
+            },
+          },
+          Object {
+            "date": "2023-12-06",
+            "name": Object {
+              "en": "Independence Day",
+              "fi": "Itsenäisyyspäivä",
+              "sv": "Självständighetsdagen",
             },
           },
           Object {
@@ -201,7 +209,7 @@ describe('holidays', () => {
             "date": "2023-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "Tapaninpäivä",
+              "fi": "Tapaninpäivä (toinen joulupäivä)",
               "sv": "Annandag jul",
             },
           },
@@ -386,11 +394,19 @@ describe('holidays', () => {
             },
           },
           Object {
-            "date": "2024-12-06",
+            "date": "2024-12-05",
             "name": Object {
               "en": "Independence Day Eve",
               "fi": "Itsenäisyyspäivän aatto",
               "sv": "Dagen före Självständighetsdagen",
+            },
+          },
+          Object {
+            "date": "2024-12-06",
+            "name": Object {
+              "en": "Independence Day",
+              "fi": "Itsenäisyyspäivä",
+              "sv": "Självständighetsdagen",
             },
           },
           Object {
@@ -421,7 +437,7 @@ describe('holidays', () => {
             "date": "2024-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "Tapaninpäivä",
+              "fi": "Tapaninpäivä (toinen joulupäivä)",
               "sv": "Annandag jul",
             },
           },
@@ -606,11 +622,19 @@ describe('holidays', () => {
             },
           },
           Object {
-            "date": "2025-12-06",
+            "date": "2025-12-05",
             "name": Object {
               "en": "Independence Day Eve",
               "fi": "Itsenäisyyspäivän aatto",
               "sv": "Dagen före Självständighetsdagen",
+            },
+          },
+          Object {
+            "date": "2025-12-06",
+            "name": Object {
+              "en": "Independence Day",
+              "fi": "Itsenäisyyspäivä",
+              "sv": "Självständighetsdagen",
             },
           },
           Object {
@@ -641,7 +665,7 @@ describe('holidays', () => {
             "date": "2025-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "Tapaninpäivä",
+              "fi": "Tapaninpäivä (toinen joulupäivä)",
               "sv": "Annandag jul",
             },
           },
@@ -826,11 +850,19 @@ describe('holidays', () => {
             },
           },
           Object {
-            "date": "2026-12-06",
+            "date": "2026-12-05",
             "name": Object {
               "en": "Independence Day Eve",
               "fi": "Itsenäisyyspäivän aatto",
               "sv": "Dagen före Självständighetsdagen",
+            },
+          },
+          Object {
+            "date": "2026-12-06",
+            "name": Object {
+              "en": "Independence Day",
+              "fi": "Itsenäisyyspäivä",
+              "sv": "Självständighetsdagen",
             },
           },
           Object {
@@ -861,7 +893,7 @@ describe('holidays', () => {
             "date": "2026-12-26",
             "name": Object {
               "en": "Boxing Day",
-              "fi": "Tapaninpäivä",
+              "fi": "Tapaninpäivä (toinen joulupäivä)",
               "sv": "Annandag jul",
             },
           },
