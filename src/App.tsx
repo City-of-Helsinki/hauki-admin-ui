@@ -29,6 +29,7 @@ import EditNormalOpeningHoursPage from './pages/EditNormalOpeningHoursPage';
 import EditHolidaysPage from './pages/EditHolidaysPage';
 import AddExceptionOpeningHoursPage from './pages/AddExceptionOpeningHoursPage';
 import EditExceptionOpeningHoursPage from './pages/EditExceptionOpeningHoursPage';
+import { SelectedDatePeriodsProvider } from './common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 type OptionalAuthTokens = AuthTokens | undefined;
 
@@ -142,11 +143,13 @@ const App = (): JSX.Element => {
                     id && (
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <ResourcePage
-                            mainResourceId={id}
-                            childId={childId}
-                            targetResourcesString={targetResourcesStr}
-                          />
+                          <SelectedDatePeriodsProvider>
+                            <ResourcePage
+                              mainResourceId={id}
+                              childId={childId}
+                              targetResourcesString={targetResourcesStr}
+                            />
+                          </SelectedDatePeriodsProvider>
                         </Main>
                       </NavigationAndFooterWrapper>
                     )
@@ -168,10 +171,12 @@ const App = (): JSX.Element => {
                     id && (
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <ResourceBatchUpdatePage
-                            mainResourceId={id}
-                            targetResourcesString={targetResourcesStr}
-                          />
+                          <SelectedDatePeriodsProvider>
+                            <ResourceBatchUpdatePage
+                              mainResourceId={id}
+                              targetResourcesString={targetResourcesStr}
+                            />
+                          </SelectedDatePeriodsProvider>
                         </Main>
                       </NavigationAndFooterWrapper>
                     )

@@ -253,6 +253,12 @@ export type OpeningHours = {
   timeSpanGroups: TimeSpanGroup[];
 };
 
+export enum DatePeriodType {
+  NORMAL = 'NORMAL',
+  EXCEPTION = 'EXCEPTION',
+  HOLIDAY = 'HOLIDAY',
+}
+
 export type DatePeriod = {
   id?: number;
   endDate: string | null;
@@ -262,11 +268,9 @@ export type DatePeriod = {
   startDate: string | null;
   override: boolean;
   resourceState?: ResourceState;
+  type?: DatePeriodType;
+  isActive?: boolean;
 };
-
-export type ActiveDatePeriod = {
-  isActive: boolean;
-} & DatePeriod;
 
 export type PreviewOpeningHours = {
   timeSpans: TimeSpan[];

@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
@@ -9,11 +11,13 @@ import {
   ResourceState,
   ResourceType,
   UiDatePeriodConfig,
+  // DatePeriod,
 } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import * as datePeriodConfigService from '../services/datePeriodFormConfig';
 import ResourcePage from './ResourcePage';
 import * as holidays from '../services/holidays';
+import { SelectedDatePeriodsProvider } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 const testResource: Resource = {
   id: 1186,
@@ -110,6 +114,127 @@ const testDatePeriod: ApiDatePeriod = {
 
 const testDatePeriodOptions: UiDatePeriodConfig = datePeriodOptions;
 
+const testDatePeriodWithTimeSpans: ApiDatePeriod[] = [
+  {
+    id: 155,
+    resource: 7108,
+    name: {
+      fi: 'oma syntymäpäivä',
+      sv: null,
+      en: null,
+    },
+    description: {
+      fi: null,
+      sv: null,
+      en: null,
+    },
+    start_date: '2023-11-09',
+    end_date: null,
+    resource_state: undefined,
+    override: false,
+    created: '2023-11-09T12:03:47.039454+02:00',
+    modified: '2023-11-09T12:03:47.039454+02:00',
+    time_span_groups: [
+      {
+        id: 81,
+        period: 155,
+        time_spans: [
+          {
+            id: 124,
+            group: 81,
+            name: {
+              fi: null,
+              sv: null,
+              en: null,
+            },
+            description: {
+              fi: null,
+              sv: null,
+              en: null,
+            },
+            start_time: '11:11:00',
+            end_time: '12:12:00',
+            end_time_on_next_day: false,
+            full_day: false,
+            weekdays: [1, 2, 3, 4, 5],
+            resource_state: ResourceState.OPEN,
+            created: '2023-11-09T12:03:47.069756+02:00',
+            modified: '2023-11-09T12:03:47.069756+02:00',
+          },
+          {
+            id: 125,
+            group: 81,
+            name: {
+              fi: null,
+              sv: null,
+              en: null,
+            },
+            description: {
+              fi: null,
+              sv: null,
+              en: null,
+            },
+            start_time: null,
+            end_time: null,
+            end_time_on_next_day: false,
+            full_day: false,
+            weekdays: [6, 7],
+            resource_state: ResourceState.CLOSED,
+            created: '2023-11-09T12:03:47.087391+02:00',
+            modified: '2023-11-09T12:03:47.087391+02:00',
+          },
+        ],
+        rules: [],
+      },
+    ],
+  },
+  {
+    id: 150,
+    resource: 7108,
+    name: {
+      fi: 'Isänpäivä',
+      sv: 'Fars dag',
+      en: "Father's Day",
+    },
+    description: {
+      fi: null,
+      sv: null,
+      en: null,
+    },
+    start_date: '2023-11-12',
+    end_date: '2023-11-12',
+    resource_state: ResourceState.CLOSED,
+    override: true,
+    created: '2023-11-09T10:58:21.111692+02:00',
+    modified: '2023-11-09T10:58:21.111692+02:00',
+    time_span_groups: [],
+  },
+  {
+    id: 172,
+    resource: 7108,
+    name: {
+      fi: '2. joulupäivä',
+      sv: 'Annandag jul',
+      en: 'Boxing Day',
+    },
+    description: {
+      fi: null,
+      sv: null,
+      en: null,
+    },
+    start_date: '2023-12-26',
+    end_date: '2023-12-26',
+    resource_state: ResourceState.CLOSED,
+    override: true,
+    created: '2023-11-13T10:40:50.286343+02:00',
+    modified: '2023-11-13T10:40:50.286343+02:00',
+    time_span_groups: [],
+  },
+];
+
+// Mock for using useGoToResourceBatchUpdatePage hook
+const mockUseGoToResourceBatchUpdatePage = jest.fn();
+
 describe(`<ResourcePage />`, () => {
   beforeEach(() => {
     jest
@@ -143,6 +268,10 @@ describe(`<ResourcePage />`, () => {
         official: true,
       },
     ]);
+
+    jest
+      .spyOn(require('../hooks/useGoToResourceBatchUpdatePage'), 'default')
+      .mockImplementation(() => mockUseGoToResourceBatchUpdatePage);
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -156,7 +285,9 @@ describe(`<ResourcePage />`, () => {
 
     render(
       <Router>
-        <ResourcePage mainResourceId="tprek:8100" />
+        <SelectedDatePeriodsProvider>
+          <ResourcePage mainResourceId="tprek:8100" />
+        </SelectedDatePeriodsProvider>
       </Router>
     );
 
@@ -177,7 +308,9 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <SelectedDatePeriodsProvider>
+            <ResourcePage mainResourceId="tprek:8100" />
+          </SelectedDatePeriodsProvider>
         </Router>
       );
     });
@@ -197,7 +330,9 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <SelectedDatePeriodsProvider>
+            <ResourcePage mainResourceId="tprek:8100" />
+          </SelectedDatePeriodsProvider>
         </Router>
       );
     });
@@ -214,7 +349,9 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       container = render(
         <Router>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <SelectedDatePeriodsProvider>
+            <ResourcePage mainResourceId="tprek:8100" />
+          </SelectedDatePeriodsProvider>
         </Router>
       ).container;
     });
@@ -239,7 +376,9 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       container = render(
         <Router>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <SelectedDatePeriodsProvider>
+            <ResourcePage mainResourceId="tprek:8100" />
+          </SelectedDatePeriodsProvider>
         </Router>
       ).container;
     });
@@ -255,7 +394,9 @@ describe(`<ResourcePage />`, () => {
     await act(async () => {
       render(
         <Router>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <SelectedDatePeriodsProvider>
+            <ResourcePage mainResourceId="tprek:8100" />
+          </SelectedDatePeriodsProvider>
         </Router>
       );
     });
@@ -269,5 +410,112 @@ describe(`<ResourcePage />`, () => {
         testResource.name.fi
       );
     });
+  });
+
+  it('Should show copying info when targets exist', async () => {
+    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+      return Promise.resolve(testDatePeriodWithTimeSpans);
+    });
+
+    await act(async () => {
+      render(
+        <Router>
+          <SelectedDatePeriodsProvider>
+            <ResourcePage
+              mainResourceId="tprek:8100"
+              targetResourcesString="tprek:8101"
+            />
+          </SelectedDatePeriodsProvider>
+        </Router>
+      );
+    });
+
+    expect(
+      screen.getAllByText('joukkopäivitys', { exact: false })
+    ).not.toBeNull();
+  });
+
+  it('Should show advance to batch copy page and an error if no datePeriods are selected', async () => {
+    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+      return Promise.resolve(testDatePeriodWithTimeSpans);
+    });
+
+    await act(async () => {
+      render(
+        <Router>
+          <SelectedDatePeriodsProvider>
+            <ResourcePage
+              mainResourceId="tprek:8100"
+              targetResourcesString="tprek:8101"
+            />
+          </SelectedDatePeriodsProvider>
+        </Router>
+      );
+    });
+
+    const button = screen.queryByText('Jatka joukkopäivitykseen');
+    expect(button).toBeInTheDocument();
+    button?.click();
+
+    // now we have an error since no datePeriods are chosen
+    expect(
+      screen.getByTestId('gotoBatchUpdateErrorNotification')
+    ).toBeInTheDocument();
+
+    // expect function mockUseGoToResourceBatchUpdatePage to not have been called
+    expect(mockUseGoToResourceBatchUpdatePage).toHaveBeenCalledTimes(0);
+  });
+
+  it('Should show resource copying opening periods with checkboxes and state change according to interaction and forward navigation', async () => {
+    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+      return Promise.resolve(testDatePeriodWithTimeSpans);
+    });
+
+    await act(async () => {
+      render(
+        <Router>
+          <SelectedDatePeriodsProvider>
+            <ResourcePage
+              mainResourceId="tprek:8100"
+              targetResourcesString="tprek:8101"
+            />
+          </SelectedDatePeriodsProvider>
+        </Router>
+      );
+    });
+
+    // get all datePeriods checkboxes
+    const periodCheckboxes = screen
+      .getAllByRole('checkbox')
+      .filter((checkbox) => checkbox.id.includes('period-checkbox'));
+
+    // click all datePeriods checkboxes
+    periodCheckboxes.forEach((checkbox) => {
+      checkbox.click();
+    });
+
+    // expect all datePeriods checkboxes to be checked, showing only "Poista valinnat" button
+    expect(screen.queryByText('Valitse kaikki')).not.toBeInTheDocument();
+    expect(screen.queryByText('Poista valinnat')).toBeInTheDocument();
+
+    // also check if all non-disabled all-periods-checkboxes are checked
+    const allPeriodsCheckboxes = screen
+      .getAllByRole('checkbox')
+      .filter(
+        (checkbox) =>
+          checkbox.id.includes('all-periods') &&
+          checkbox.getAttribute('disabled') === null
+      );
+
+    allPeriodsCheckboxes.forEach((checkbox) => {
+      expect(checkbox).toBeChecked();
+    });
+
+    // and now when button click should hide the error (mock disables navigating any further)
+    const button = screen.queryByText('Jatka joukkopäivitykseen');
+    button?.click();
+
+    // expect function mockUseGoToResourceBatchUpdatePage to have been called now
+    expect(mockUseGoToResourceBatchUpdatePage).toHaveBeenCalledTimes(1);
   });
 });

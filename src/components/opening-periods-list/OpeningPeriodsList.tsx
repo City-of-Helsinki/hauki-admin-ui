@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ActiveDatePeriod,
   DatePeriod,
   Language,
   UiDatePeriodConfig,
@@ -33,7 +32,7 @@ const OpeningPeriodsList = ({
   addNewOpeningPeriodButtonDataTest: string;
   addDatePeriodButtonText: string;
   title: string;
-  datePeriods: ActiveDatePeriod[];
+  datePeriods: DatePeriod[];
   datePeriodConfig?: UiDatePeriodConfig;
   theme: PeriodsListTheme;
   emptyState: string;
@@ -41,7 +40,7 @@ const OpeningPeriodsList = ({
   language: Language;
   isLoading: boolean;
   newUrl: string;
-  editUrl: (datePeriod: DatePeriod) => string;
+  editUrl?: (datePeriod: DatePeriod) => string;
 }): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
@@ -61,7 +60,7 @@ const OpeningPeriodsList = ({
           <OpeningPeriod
             key={datePeriod.id}
             datePeriodConfig={datePeriodConfig}
-            editUrl={editUrl(datePeriod)}
+            editUrl={editUrl && editUrl(datePeriod)}
             datePeriod={datePeriod}
             language={language}
             deletePeriod={async (datePeriodId) => {

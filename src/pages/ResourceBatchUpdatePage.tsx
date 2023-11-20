@@ -21,11 +21,17 @@ import {
   NotificationModal,
   useModal,
 } from '../components/modal/NotificationModal';
-import { Language, Resource } from '../common/lib/types';
+import { DatePeriodType, Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
+import {
+  DatePeriodSelectState,
+  useSelectedDatePeriodsContext,
+} from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
+import OpeningPeriod from '../components/opening-period/OpeningPeriod';
+import OpeningPeriodsSection from '../components/opening-periods-section/OpeningPeriodsSection';
 
 export type ResourceBatchUpdatePageProps = {
   mainResourceId: string;
@@ -70,6 +76,11 @@ const ResourceBatchUpdatePage = ({
     TargetResourcesProps | undefined
   >(undefined);
   const ReturnToResourcePage = useReturnToResourcePage();
+  const {
+    selectedDatePeriods,
+    setDatePeriodSelectState,
+    datePeriodSelectState,
+  } = useSelectedDatePeriodsContext();
 
   // page constants
   const pageSize = 10;
@@ -115,22 +126,27 @@ const ResourceBatchUpdatePage = ({
     if (hasOpenerWindow && closeAppWindow) closeAppWindow();
   };
   const onConfirm = () => {
+    const datePeriodIds = selectedDatePeriods.map(
+      (dp) => dp.id?.toString() || ''
+    );
     if (
       !mainResourceId ||
       !targetResourceData ||
       !targetResourceData?.targetResources ||
-      targetResourceData?.targetResources.length === 0
+      targetResourceData?.targetResources.length === 0 ||
+      datePeriodIds.length === 0
     ) {
       return;
     }
 
     setLoading(true);
     api
-      .copyDatePeriods(
+      .batchCopyDatePeriods(
         resource?.id || 0,
         targetResourceData?.targetResources
           .filter((item) => item.id !== mainResourceId)
           .map((item) => item.id),
+        datePeriodIds,
         selectedRadioItem === 'update'
       )
       .then(async () => {
@@ -202,6 +218,12 @@ const ResourceBatchUpdatePage = ({
       remove: res.id,
     })),
   };
+
+  useEffect(() => {
+    if (datePeriodSelectState !== DatePeriodSelectState.INACTIVE) {
+      setDatePeriodSelectState(DatePeriodSelectState.INACTIVE);
+    }
+  }, [datePeriodSelectState, setDatePeriodSelectState]);
 
   // get data of target resources
   useEffect(() => {
@@ -321,6 +343,19 @@ const ResourceBatchUpdatePage = ({
     );
   }
 
+  // we need to separate date periods by type to display them in different sections
+  const normalSelectedDatePeriods = selectedDatePeriods.filter(
+    (dp) => dp.type === DatePeriodType.NORMAL
+  );
+
+  const exceptionSelectedDatePeriods = selectedDatePeriods.filter(
+    (dp) => dp.type === DatePeriodType.EXCEPTION
+  );
+
+  const holidaySelectedDatePeriods = selectedDatePeriods.filter(
+    (dp) => dp.type === DatePeriodType.HOLIDAY
+  );
+
   return (
     <div className="resource-batch-update-page">
       <section className="section-title">
@@ -335,7 +370,67 @@ const ResourceBatchUpdatePage = ({
       <section className="section-spans">
         <h2>Joukkopäivitykseen valitut aukiolot</h2>
         <p>Olet valinnut joukkopäivitykseen alla olevat aukioloajat.</p>
-        {/* this block will be implemented later */}
+
+        {normalSelectedDatePeriods.length > 0 && (
+          <OpeningPeriodsSection
+            datePeriods={normalSelectedDatePeriods}
+            isLoading={false}
+            newUrl=""
+            theme="DEFAULT"
+            title="Aukioloajat"
+            addDatePeriodButtonText=""
+            addNewOpeningPeriodButtonDataTest="">
+            {normalSelectedDatePeriods.map((dp) => (
+              <OpeningPeriod
+                key={dp.id}
+                datePeriod={dp}
+                language={language}
+                initiallyOpen={false}
+                editUrl=""
+              />
+            ))}
+          </OpeningPeriodsSection>
+        )}
+        {exceptionSelectedDatePeriods.length > 0 && (
+          <OpeningPeriodsSection
+            datePeriods={exceptionSelectedDatePeriods}
+            isLoading={false}
+            newUrl=""
+            theme="LIGHT"
+            title="Poikkeavat päivät"
+            addDatePeriodButtonText=""
+            addNewOpeningPeriodButtonDataTest="">
+            {exceptionSelectedDatePeriods.map((dp) => (
+              <OpeningPeriod
+                key={dp.id}
+                datePeriod={dp}
+                language={language}
+                initiallyOpen={false}
+                editUrl=""
+              />
+            ))}
+          </OpeningPeriodsSection>
+        )}
+        {holidaySelectedDatePeriods.length > 0 && (
+          <OpeningPeriodsSection
+            datePeriods={holidaySelectedDatePeriods}
+            isLoading={false}
+            newUrl=""
+            theme="LIGHT"
+            title="Juhlapyhät"
+            addDatePeriodButtonText=""
+            addNewOpeningPeriodButtonDataTest="">
+            {holidaySelectedDatePeriods.map((dp) => (
+              <OpeningPeriod
+                key={dp.id}
+                datePeriod={dp}
+                language={language}
+                initiallyOpen={false}
+                editUrl=""
+              />
+            ))}
+          </OpeningPeriodsSection>
+        )}
       </section>
 
       <div className="section-resource-update">

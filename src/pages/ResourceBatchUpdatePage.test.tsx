@@ -12,9 +12,18 @@ import ResourceBatchUpdatePage, {
   ResourceBatchUpdatePageProps,
   ResourceWithOrigins,
 } from './ResourceBatchUpdatePage';
-import { ResourceType } from '../common/lib/types';
+import {
+  ResourceType,
+  DatePeriod,
+  ResourceState,
+  DatePeriodType,
+} from '../common/lib/types';
 import api from '../common/utils/api/api';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
+import {
+  DatePeriodSelectState,
+  SelectedDatePeriodsProvider,
+} from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 const testResourceBatchUpdatePagePros: ResourceBatchUpdatePageProps = {
   mainResourceId: 'tprek:10',
@@ -156,12 +165,92 @@ const testTargetAfterRemove: TargetResourcesProps = {
   ],
 };
 
-const renderPage = () =>
-  render(
+// mock selectedDatePeriods
+const mockSelectedDatePeriods: DatePeriod[] = [
+  {
+    name: { fi: 'Kekkosen synttärit!', sv: null, en: null },
+    endDate: null,
+    fixed: false,
+    startDate: '14.11.2023',
+    openingHours: [
+      {
+        weekdays: [1, 2, 3, 4, 5],
+        timeSpanGroups: [
+          {
+            rule: { group: 92, type: 'week_every' },
+            timeSpans: [
+              {
+                id: 146,
+                description: { fi: null, sv: null, en: null },
+                end_time: '22:11',
+                full_day: false,
+                resource_state: ResourceState.OPEN,
+                start_time: '11:22',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        weekdays: [6, 7],
+        timeSpanGroups: [
+          {
+            rule: { group: 92, type: 'week_every' },
+            timeSpans: [
+              {
+                id: 147,
+                description: { fi: null, sv: null, en: null },
+                end_time: null,
+                full_day: false,
+                resource_state: ResourceState.CLOSED,
+                start_time: null,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    id: 179,
+    resourceState: undefined,
+    override: false,
+    isActive: false,
+    type: DatePeriodType.NORMAL,
+  },
+  {
+    name: { fi: 'testipoikkeus', sv: '', en: '' },
+    endDate: '15.11.2023',
+    fixed: true,
+    startDate: '15.11.2023',
+    openingHours: [],
+    id: 186,
+    resourceState: ResourceState.CLOSED,
+    override: true,
+    isActive: true,
+    type: DatePeriodType.EXCEPTION,
+  },
+  {
+    name: { fi: '2. joulupäivä', sv: 'Annandag jul', en: 'Boxing Day' },
+    endDate: '26.12.2023',
+    fixed: true,
+    startDate: '26.12.2023',
+    openingHours: [],
+    id: 172,
+    resourceState: ResourceState.CLOSED,
+    override: true,
+    isActive: false,
+    type: DatePeriodType.HOLIDAY,
+  },
+];
+
+const renderPage = () => {
+  return render(
     <Router>
-      <ResourceBatchUpdatePage {...testResourceBatchUpdatePagePros} />
+      <SelectedDatePeriodsProvider>
+        <ResourceBatchUpdatePage {...testResourceBatchUpdatePagePros} />
+      </SelectedDatePeriodsProvider>
     </Router>
   );
+};
 
 describe(`<ResourceBatchUpdatePage />`, () => {
   beforeEach(() => {
@@ -306,5 +395,50 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     expect(getByTestId(container, 'resource-0')).toHaveTextContent(res0.name);
     expect(getByTestId(container, 'id-1')).toHaveTextContent(res1.id);
     expect(getByTestId(container, 'resource-1')).toHaveTextContent(res1.name);
+  });
+
+  it('Should display all selectedDatePeriods from SelectedDatePeriodContext', async () => {
+    const mockUseSelectedDatePeriodsContext = jest.fn(() => {
+      return {
+        datePeriodSelectState: DatePeriodSelectState.INACTIVE,
+        selectedDatePeriods: mockSelectedDatePeriods,
+      };
+    });
+
+    jest
+      .spyOn(
+        // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+        require('../common/selectedDatePeriodsContext/SelectedDatePeriodsContext'),
+        'useSelectedDatePeriodsContext'
+      )
+      .mockImplementation(() => mockUseSelectedDatePeriodsContext());
+
+    jest
+      .spyOn(api, 'getResource')
+      .mockImplementation(() => Promise.resolve(testGetResourceResponse));
+
+    jest
+      .spyOn(api, 'getResources')
+      .mockImplementation(() => Promise.resolve(testGetResourcesResponse));
+
+    const datePeriodsInMockData = mockSelectedDatePeriods.map(
+      (sdp) => sdp.name.fi || 'empty'
+    );
+
+    const { container } = renderPage();
+
+    const sectionElements = container.getElementsByClassName(
+      'opening-periods-section'
+    );
+
+    expect(
+      await screen.findByText('Joukkopäivitykseen valitut aukiolot')
+    ).toBeDefined();
+
+    expect(sectionElements.length === datePeriodsInMockData.length).toBe(true);
+
+    datePeriodsInMockData.forEach((datePeriodName) => {
+      expect(screen.getByText(datePeriodName)).toBeDefined();
+    });
   });
 });
