@@ -141,13 +141,13 @@ const ResourceBatchUpdatePage = ({
 
     setLoading(true);
     api
-      .batchCopyDatePeriods(
+      .copyDatePeriods(
         resource?.id || 0,
         targetResourceData?.targetResources
           .filter((item) => item.id !== mainResourceId)
           .map((item) => item.id),
-        datePeriodIds,
-        selectedRadioItem === 'update'
+        selectedRadioItem === 'update',
+        datePeriodIds
       )
       .then(async () => {
         setLoading(false);

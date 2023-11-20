@@ -362,30 +362,15 @@ export default {
   copyDatePeriods: async (
     resourceId: number,
     targetResources: string[],
-    replace: boolean
+    replace: boolean,
+    datePeriodIds?: string[]
   ): Promise<boolean> => {
     const permission = await apiPost<PermissionResponse>({
       path: `${resourceBasePath}/${resourceId}/copy_date_periods`,
       parameters: {
         replace,
         target_resources: targetResources.join(','),
-      },
-    });
-    return permission.has_permission;
-  },
-
-  batchCopyDatePeriods: async (
-    resourceId: number,
-    targetResources: string[],
-    datePeriodIds: string[],
-    replace: boolean
-  ): Promise<boolean> => {
-    const permission = await apiPost<PermissionResponse>({
-      path: `${resourceBasePath}/${resourceId}/copy_date_periods`,
-      parameters: {
-        replace,
-        target_resources: targetResources.join(','),
-        date_period_ids: datePeriodIds.join(','),
+        date_period_ids: datePeriodIds?.join(','),
       },
     });
     return permission.has_permission;
