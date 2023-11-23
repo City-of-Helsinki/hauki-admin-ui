@@ -11,7 +11,6 @@ import {
   ResourceState,
   ResourceType,
   UiDatePeriodConfig,
-  // DatePeriod,
 } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import * as datePeriodConfigService from '../services/datePeriodFormConfig';

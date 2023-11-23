@@ -84,19 +84,25 @@ const ResourceBatchUpdatePage = ({
 
   // page constants
   const pageSize = 10;
-  const resourceCount = targetResourceData?.targetResources?.length || 0;
+  const resourceCount = targetResourceData?.targetResources?.length ?? 0;
   const pageCount = Math.ceil(resourceCount / pageSize);
   const mainResourceName = targetResourceData?.mainResourceName;
-  const language = contextLanguage || Language.FI;
+  const language = contextLanguage ?? Language.FI;
   const targetResourcesStorageKey = 'targetResources';
+  // forms a nice string from feedback emails env variable
+  const feedbackEmailsString = window?.ENV?.FEEDBACK_EMAILS?.replace(/\s/g, '')
+    .replace(/,(?=[^,]*$)/, ' ja ')
+    .replace(/,/g, ', ');
 
-  const showErrorNotification = (text: string): void =>
+  const showErrorNotification = (label: string, text?: string): void =>
     toast.error({
-      label: text,
+      label,
+      text,
     });
-  const showSuccessNotification = (text: string): void =>
+  const showSuccessNotification = (label: string, text?: string): void =>
     toast.success({
-      label: text,
+      label,
+      text,
     });
   const signOut = async (): Promise<void> => {
     try {
@@ -111,7 +117,8 @@ const ResourceBatchUpdatePage = ({
       }
     } catch (e) {
       showErrorNotification(
-        `Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ${e}`
+        'Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan.',
+        `Virhe: ${e}`
       );
     }
   };
@@ -142,7 +149,7 @@ const ResourceBatchUpdatePage = ({
     setLoading(true);
     api
       .copyDatePeriods(
-        resource?.id || 0,
+        resource?.id ?? 0,
         targetResourceData?.targetResources
           .filter((item) => item.id !== mainResourceId)
           .map((item) => item.id),
@@ -155,11 +162,13 @@ const ResourceBatchUpdatePage = ({
       })
       .catch((e: Error) => {
         setLoading(false);
-        setError(e);
         showErrorNotification(
-          `Aukioloaikojen ${
-            selectedRadioItem === 'update' ? 'kopioiminen' : 'korvaaminen'
-          } epäonnistui. Virhe: ${e}`
+          'Joukkopäivitys epäonnistui',
+          `Virhe: ${e}. ${
+            feedbackEmailsString.length > 0
+              ? `Lähetä virheilmoituksesta ruutukaappaus sähköpostitse ${feedbackEmailsString}.`
+              : ''
+          }`
         );
       });
   };
@@ -278,7 +287,8 @@ const ResourceBatchUpdatePage = ({
             setLoading(false);
             setError(e);
             showErrorNotification(
-              `Toimipisteiden tietoja ei saatu ladattua. Virhe: ${e}`
+              'Toimipisteiden tietoja ei saatu ladattua.',
+              `Virhe: ${e}`
             );
           });
       } else {
@@ -315,7 +325,8 @@ const ResourceBatchUpdatePage = ({
         setLoading(false);
         setError(e);
         showErrorNotification(
-          `Toimipisteen tietoja ei saatu ladattua. Virhe: ${e}`
+          'Toimipisteen tietoja ei saatu ladattua.',
+          `Virhe: ${e}`
         );
       });
 
@@ -337,9 +348,7 @@ const ResourceBatchUpdatePage = ({
 
   if (isLoading && (!resource || !targetResourceData || !mainResourceId)) {
     return (
-      <>
-        <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
-      </>
+      <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
     );
   }
 
