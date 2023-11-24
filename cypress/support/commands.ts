@@ -222,3 +222,12 @@ Cypress.Commands.add(
     cy.get(`#${id}-minutes`).type(minutes);
   }
 );
+
+Cypress.Commands.add('acceptAllCookies', () => {
+  const cookieConsentModal = cy.get('#cookie-consent-content');
+  const acceptAllButton = cookieConsentModal.get(
+    'button[data-testid="cookie-consent-approve-button"]'
+  );
+
+  acceptAllButton.click();
+});

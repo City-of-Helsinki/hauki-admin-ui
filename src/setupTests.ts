@@ -18,3 +18,16 @@ console.error = (msg: any, ...optionalParams: any[]) => {
     originalError(msg, ...optionalParams)
   );
 };
+
+window.ENV = {
+  REACT_APP_VERSION: '',
+  API_URL: '',
+  USE_AXE: '',
+  SENTRY_DSN: '',
+  SENTRY_ENV: '',
+  FEEDBACK_EMAILS: '',
+  MATOMO_SRC_URL: '',
+  MATOMO_URL_BASE: 'test',
+  MATOMO_SITE_ID: 'test123',
+  MATOMO_ENABLED: false,
+};

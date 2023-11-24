@@ -5,6 +5,7 @@
 describe('Open aukiolot app', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
+    cy.acceptAllCookies();
   });
 
   it('Contains correct page title', () => {
