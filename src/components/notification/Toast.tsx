@@ -11,6 +11,7 @@ type ToastProps = {
   text?: string;
   onClose?: () => void;
   dataTestId?: string;
+  dismissible?: boolean;
 };
 
 const removeContainer = (container: HTMLDivElement): void => {
@@ -28,6 +29,7 @@ const renderToast = ({
   onClose,
   dataTestId,
   position = 'top-right',
+  dismissible = false,
 }: ToastProps & {
   position?: NotificationPosition;
   type: NotificationType;
@@ -39,7 +41,8 @@ const renderToast = ({
     <Notification
       position={position}
       displayAutoCloseProgress={false}
-      autoClose
+      autoClose={!dismissible}
+      dismissible={dismissible}
       label={label}
       type={type}
       onClose={(): void => {
@@ -48,6 +51,7 @@ const renderToast = ({
         }
         removeContainer(containerDomNode);
       }}
+      closeButtonLabelText="Sulje ilmoitus"
       {...(dataTestId ? { dataTestId } : {})}>
       {text}
     </Notification>,
@@ -76,14 +80,24 @@ const errorToast = ({
   dataTestId,
   onClose,
   position,
+  dismissible,
 }: {
   label: string;
   dataTestId?: string;
   onClose?: () => void;
   position?: NotificationPosition;
   text?: string;
+  dismissible?: boolean;
 }): void =>
-  renderToast({ type: 'error', label, text, onClose, dataTestId, position });
+  renderToast({
+    type: 'error',
+    label,
+    text,
+    onClose,
+    dataTestId,
+    position,
+    dismissible,
+  });
 
 const infoToast = ({
   label,

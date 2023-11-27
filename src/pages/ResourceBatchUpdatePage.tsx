@@ -98,6 +98,7 @@ const ResourceBatchUpdatePage = ({
     toast.error({
       label,
       text,
+      dismissible: true,
     });
   const showSuccessNotification = (label: string, text?: string): void =>
     toast.success({
