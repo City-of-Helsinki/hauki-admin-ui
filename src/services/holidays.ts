@@ -80,7 +80,7 @@ const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
     },
   ],
   [
-    '12-06',
+    '12-05',
     {
       name: {
         fi: 'Itsenäisyyspäivän aatto',
@@ -105,7 +105,7 @@ const customHolidays: [string, HolidaysTypes.HolidayOptions][] = [
     '12-26',
     {
       name: {
-        fi: 'Tapaninpäivä',
+        fi: 'Tapaninpäivä (toinen joulupäivä)',
         sv: 'Annandag jul',
         en: 'Boxing Day',
       },
