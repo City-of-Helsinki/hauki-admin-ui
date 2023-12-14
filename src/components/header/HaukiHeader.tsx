@@ -9,6 +9,7 @@ import {
   Logo,
   Link,
 } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 import api from '../../common/utils/api/api';
 import { useAppContext } from '../../App-context';
 import { AuthContextProps, TokenKeys, useAuth } from '../../auth/auth-context';
@@ -20,6 +21,7 @@ import { languageOptions } from '../../constants';
 const HaukiHeader = (): JSX.Element => {
   const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
+  const { i18n } = useTranslation();
   const { authTokens, clearAuth } = authProps;
   const history = useHistory();
   const isAuthenticated = !!authTokens;
@@ -71,6 +73,7 @@ const HaukiHeader = (): JSX.Element => {
       className="header"
       languages={languageOptions}
       onDidChangeLanguage={(language) => {
+        i18n.changeLanguage(language);
         if (setLanguage) {
           const newLanguage =
             Language[language.toUpperCase() as keyof typeof Language];

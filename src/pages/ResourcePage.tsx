@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Accordion, Notification, IconArrowRight, Card } from 'hds-react';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
@@ -74,6 +75,7 @@ const ResourcePage = ({
     setDatePeriodSelectState,
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
+  const { t } = useTranslation();
 
   const hasTargetResources =
     targetResourceData?.mainResourceId === resource?.id &&
@@ -160,9 +162,13 @@ const ResourcePage = ({
   if (error) {
     return (
       <>
-        <h1 className="resource-info-title">Virhe</h1>
-        <Notification label="Toimipistettä ei saatu ladattua." type="error">
-          Tarkista toimipiste-id.
+        <h1 className="resource-info-title">
+          {t('ResourcePage.Notifications.Error')}
+        </h1>
+        <Notification
+          label={t('ResourcePage.Notifications.ErrorLoadingResource')}
+          type="error">
+          {t('ResourcePage.Notifications.CheckResourceId')}
         </Notification>
       </>
     );
@@ -171,7 +177,9 @@ const ResourcePage = ({
   if (isLoading || !resource) {
     return (
       <>
-        <h1 className="resource-info-title">Toimipisteen tietojen haku</h1>
+        <h1 className="resource-info-title">
+          {t('ResourcePage.Notifications.IsLoading')}
+        </h1>
       </>
     );
   }
@@ -181,37 +189,40 @@ const ResourcePage = ({
       <ResourceTitle resource={resource} language={language} />
       {childResources.length > 0 && (
         <p className="resource-child-resources-description">
-          Tällä toimipisteellä on {childResources.length} alakohdetta. Niiden
-          aukioloajat löytyvät alempana tällä sivulla.
+          {t('ResourcePage.Main.Description', {
+            childResourceCount: childResources.length,
+          })}
         </p>
       )}
       {hasTargetResources && (
         <Card
           border
-          heading={`Joukkopäivitys: ${targetResourceData?.targetResources?.length} toimipistettä valittu`}
+          heading={t('ResourcePage.Main.BatchTitle', {
+            targetResourceCount: targetResourceData?.targetResources?.length,
+          })}
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
           }}
-          text="Kun olet muokannut ja valinnut aukioloajat, voit jatkaa joukkopäivitykseen. Joukkopäivityksellä voit päivittää aukioloaikoja kaikille valituille toimipisteille samanaikaisesti.">
+          text={t('ResourcePage.Main.BatchDescription')}>
           <PrimaryButton
             dataTest="gotoBatchUpdateButton"
             iconRight={<IconArrowRight aria-hidden />}
             onClick={gotoBatchUpdatePage}>
-            Jatka joukkopäivitykseen
+            {t('ResourcePage.Main.BatchContinueButton')}
           </PrimaryButton>
           {errorWhenNothingSelected && (
             <div>
               <Notification
                 dataTestId="gotoBatchUpdateErrorNotification"
-                label="Valitse aukioloajat joukkopäivitystä varten."
+                label={t('ResourcePage.Notifications.ErrorNothingSelected')}
                 type="error"
                 size="small"
                 style={{
                   marginTop: 'var(--spacing-m)',
                 }}>
-                Valitse aukioloajat joukkopäivitystä varten.
+                {t('ErrorNothingSelected')}
               </Notification>
             </div>
           )}
@@ -220,11 +231,11 @@ const ResourcePage = ({
       {!hasTargetResources && parentResources?.length > 0 && (
         <ResourceDetailsSection
           id="parent-resource-description"
-          title="Toimipisteet">
+          title={t('ResourcePage.Main.Resources')}>
           <p
             data-test="parent-resource-description"
             className="resource-description-text">
-            Tämä alakohde sijaitsee seuraavissa toimipisteissä.
+            {t('ResourcePage.Main.ParentResourceDescription')}
           </p>
           {parentResources?.map((parentResource, index) => (
             <div className="related-resource-list-item" key={parentResource.id}>
@@ -251,12 +262,13 @@ const ResourcePage = ({
       {!hasTargetResources && childResources?.length > 0 && (
         <>
           <section>
-            <h2 className="child-resources-title">Toimipisteen alakohteet</h2>
+            <h2 className="child-resources-title">
+              {t('ResourcePage.Main.ChildTitle')}
+            </h2>
             <p
               data-test="child-resource-description"
               className="resource-description-text">
-              Täällä voit määritellä toimipisteen alakohteiden aukioloaikoja.
-              Alakohteet luodaan toimipisterekisterissä.
+              {t('ResourcePage.Main.ChildDescription')}
             </p>
           </section>
           <section>
@@ -264,6 +276,7 @@ const ResourcePage = ({
               <Accordion
                 key={childResource.id}
                 initiallyOpen={childId === `${childResource.id}`}
+                language={language}
                 heading={
                   childResource?.name[language] ||
                   displayLangVersionNotFound({
