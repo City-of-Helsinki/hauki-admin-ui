@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { partition } from 'lodash';
 import { Notification } from 'hds-react';
 import {
@@ -47,6 +48,7 @@ const ResourceOpeningHours = ({
     selectedDatePeriods,
     updateSelectedDatePeriods,
   } = useSelectedDatePeriodsContext();
+  const { t } = useTranslation();
 
   const fetchDatePeriods = async (id: number): Promise<void> => {
     setLoading(true);
@@ -148,11 +150,13 @@ const ResourceOpeningHours = ({
   if (error) {
     return (
       <>
-        <h1 className="resource-info-title">Virhe</h1>
+        <h1 className="resource-info-title">
+          {t('ResourcePage.Notifications.Error')}
+        </h1>
         <Notification
-          label="Toimipisteen aukiolojaksoja ei saatu ladattua."
+          label={t('ResourcePage.Notifications.ErrorLoadingPeriods')}
           type="error">
-          Tarkista toimipiste-id.
+          {t('ResourcePage.Notifications.CheckResourceId')}
         </Notification>
       </>
     );
@@ -164,18 +168,22 @@ const ResourceOpeningHours = ({
         <PrimaryButton
           onClick={onChangeHandler}
           style={{ marginBottom: 'var(--spacing-m)' }}>
-          {allDatePeriodsSelected ? 'Poista valinnat' : 'Valitse kaikki'}
+          {allDatePeriodsSelected
+            ? t('ResourcePage.OpeningPeriodsSection.SelectNone')
+            : t('ResourcePage.OpeningPeriodsSection.SelectAll')}
         </PrimaryButton>
       )}
       <OpeningPeriodsList
         id="resource-opening-periods-list"
-        addDatePeriodButtonText="Lisää aukioloaika +"
+        addDatePeriodButtonText={t(
+          'ResourcePage.OpeningPeriodsSection.NormalModifyButton'
+        )}
         addNewOpeningPeriodButtonDataTest="add-new-opening-period-button"
-        title="Aukioloajat"
+        title={t('ResourcePage.OpeningPeriodsSection.NormalTitle')}
         datePeriods={normalDatePeriods}
         datePeriodConfig={datePeriodConfig}
         theme="DEFAULT"
-        emptyState="Ei määriteltyjä aukioloaikoja. Aloita painamalla “Lisää aukioloaika” -painiketta."
+        emptyState={t('ResourcePage.OpeningPeriodsSection.NormalEmptyState')}
         deletePeriod={deletePeriod}
         language={language}
         isLoading={isLoading}
@@ -192,16 +200,18 @@ const ResourceOpeningHours = ({
       />
       <OpeningPeriodsList
         id="resource-exception-opening-periods-list"
-        addDatePeriodButtonText="Lisää poikkeava päivä +"
+        addDatePeriodButtonText={t(
+          'ResourcePage.OpeningPeriodsSection.ExceptionModifyButton'
+        )}
         addNewOpeningPeriodButtonDataTest="add-new-exception-opening-period-button"
         datePeriodConfig={datePeriodConfig}
         datePeriods={exceptionDatePeriods}
         deletePeriod={deletePeriod}
         isLoading={isLoading}
         language={language}
-        emptyState="Ei poikkeavia päiviä. Voit lisätä poikkeavan päivän painamalla “Lisää poikkeava päivä“ -painiketta."
+        emptyState={t('ResourcePage.OpeningPeriodsSection.ExceptionEmptyState')}
         theme="LIGHT"
-        title="Poikkeavat päivät"
+        title={t('ResourcePage.OpeningPeriodsSection.ExceptionTitle')}
         newUrl={
           parentId
             ? `/resource/${parentId}/child/${resourceId}/exception/new`
@@ -215,16 +225,18 @@ const ResourceOpeningHours = ({
       />
       <OpeningPeriodsList
         id="resource-holiday-opening-periods-list"
-        addDatePeriodButtonText="Muokkaa juhlapyhiä"
+        addDatePeriodButtonText={t(
+          'ResourcePage.OpeningPeriodsSection.HolidayModifyButton'
+        )}
         addNewOpeningPeriodButtonDataTest="edit-holidays-button"
         datePeriodConfig={datePeriodConfig}
         datePeriods={holidayDatePeriods}
         deletePeriod={deletePeriod}
         isLoading={isLoading}
         language={language}
-        emptyState="Ei juhlapyhiä."
+        emptyState={t('ResourcePage.OpeningPeriodsSection.HolidayEmptyState')}
         theme="LIGHT"
-        title="Juhlapyhät"
+        title={t('ResourcePage.OpeningPeriodsSection.HolidayTitle')}
         newUrl={`/resource/${
           parentId ? `${parentId}/child/${resourceId}` : resourceId
         }/holidays`}

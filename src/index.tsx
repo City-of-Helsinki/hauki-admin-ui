@@ -6,6 +6,7 @@ import './index.scss';
 import axe from 'react-axe';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import './i18n';
 
 Sentry.init({
   dsn: window.ENV.SENTRY_DSN,

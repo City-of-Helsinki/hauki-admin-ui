@@ -9,6 +9,7 @@ import {
   useAccordion,
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
@@ -18,27 +19,6 @@ import {
   DatePeriodSelectState,
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
-
-type DeleteModalTextProps = {
-  dateRange?: ReactNode | null;
-  periodName?: string | null;
-};
-
-const DeleteModalText = ({
-  dateRange,
-  periodName,
-}: DeleteModalTextProps): JSX.Element => (
-  <>
-    <p>Olet poistamassa aukiolojakson</p>
-    <p>
-      <b>
-        {periodName}
-        <br />
-        {dateRange}
-      </b>
-    </p>
-  </>
-);
 
 type AccordionIconProps = {
   isOpen: boolean;
@@ -62,6 +42,7 @@ const OpeningPeriodActionsMenu = React.forwardRef<
   });
   const actionsMenuRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(actionsMenuRef, closeAccordion);
+  const { t } = useTranslation();
 
   return (
     <div ref={actionsMenuRef} className="opening-period-actions-menu">
@@ -71,18 +52,30 @@ const OpeningPeriodActionsMenu = React.forwardRef<
         type="button"
         {...buttonProps}>
         <IconMenuDots aria-hidden="true" />
-        <span className="visually-hidden">{`Avaa ${
-          periodName || 'nimetön'
-        } aukiolojakson muokkaa ja poista valikko`}</span>
+        <span className="visually-hidden">
+          {periodName
+            ? t('ResourcePage.OpeningPeriodsSection.OpenPeriodEditMenu', {
+                periodName,
+              })
+            : t(
+                'ResourcePage.OpeningPeriodsSection.OpenUntitledPeriodEditMenu'
+              )}
+        </span>
       </button>
       {isOpen && (
         <div className="opening-period-actions-menu-items">
           {editUrl && (
             <Link className="opening-period-actions-menu-item" to={editUrl}>
-              Muokkaa
-              <span className="visually-hidden">{`Muokkaa ${
-                periodName || 'nimettömän'
-              } aukiolojakson tietoja`}</span>
+              {t('ResourcePage.OpeningPeriodsSection.Modify')}
+              <span className="visually-hidden">
+                {periodName
+                  ? t('ResourcePage.OpeningPeriodsSection.ModifyPeriod', {
+                      periodName,
+                    })
+                  : t(
+                      'ResourcePage.OpeningPeriodsSection.ModifyUntitledPeriod'
+                    )}
+              </span>
             </Link>
           )}
           {onDelete && (
@@ -93,10 +86,16 @@ const OpeningPeriodActionsMenu = React.forwardRef<
                 onDelete();
               }}
               type="button">
-              Poista
-              <span className="visually-hidden">{`Poista ${
-                periodName || 'nimetön'
-              } aukiolojakso`}</span>
+              {t('ResourcePage.OpeningPeriodsSection.Remove')}
+              <span className="visually-hidden">
+                {periodName
+                  ? t('ResourcePage.OpeningPeriodsSection.RemovePeriod', {
+                      periodName,
+                    })
+                  : t(
+                      'ResourcePage.OpeningPeriodsSection.RemoveUntitledPeriod'
+                    )}
+              </span>
             </button>
           )}
         </div>
@@ -130,7 +129,10 @@ const OpeningPeriodAccordion = ({
   toggleChecked,
   checked,
 }: Props): JSX.Element => {
-  const deleteModalTitle = 'Oletko varma että haluat poistaa aukiolojakson?';
+  const { t } = useTranslation();
+  const deleteModalTitle = t(
+    'ResourcePage.OpeningPeriodsSection.DeleteModalTitle'
+  );
   const { isModalOpen, openModal, closeModal } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
@@ -169,9 +171,11 @@ const OpeningPeriodAccordion = ({
           {isActive && (
             <StatusLabel
               className="opening-period-active"
-              aria-label="Voimassa nyt"
+              aria-label={t(
+                'ResourcePage.OpeningPeriodsSection.StatusLabelActive'
+              )}
               type="info">
-              Voimassa nyt
+              {t('ResourcePage.OpeningPeriodsSection.StatusLabelActive')}
             </StatusLabel>
           )}
         </div>
@@ -185,9 +189,15 @@ const OpeningPeriodAccordion = ({
                     data-test={`openingPeriodEditLink${dataTestPostFix}`}
                     to={editUrl}>
                     <IconPenLine aria-hidden="true" />
-                    <span className="visually-hidden">{`Muokkaa ${
-                      periodName || 'nimettömän'
-                    } aukiolojakson tietoja`}</span>
+                    <span className="visually-hidden">
+                      {periodName
+                        ? t('ResourcePage.OpeningPeriodsSection.ModifyPeriod', {
+                            periodName,
+                          })
+                        : t(
+                            'ResourcePage.OpeningPeriodsSection.ModifyUntitledPeriod'
+                          )}
+                    </span>
                   </Link>
                 )}
                 {onDelete && (
@@ -198,9 +208,15 @@ const OpeningPeriodAccordion = ({
                     type="button"
                     onClick={openModal}>
                     <IconTrash aria-hidden="true" />
-                    <span className="visually-hidden">{`Poista ${
-                      periodName || 'nimetön'
-                    } aukiolojakso`}</span>
+                    <span className="visually-hidden">
+                      {periodName
+                        ? t('ResourcePage.OpeningPeriodsSection.RemovePeriod', {
+                            periodName,
+                          })
+                        : t(
+                            'ResourcePage.OpeningPeriodsSection.RemoveUntitledPeriod'
+                          )}
+                    </span>
                   </button>
                 )}
               </>
@@ -223,9 +239,13 @@ const OpeningPeriodAccordion = ({
             type="button"
             {...buttonProps}>
             <AccordionIcon isOpen={isOpen} />
-            <span className="visually-hidden">{`Näytä ${
-              periodName || 'nimetön'
-            }`}</span>
+            <span className="visually-hidden">
+              {periodName
+                ? t('ResourcePage.OpeningPeriodsSection.ShowPediod', {
+                    periodName,
+                  })
+                : t('ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod')}
+            </span>
           </button>
         </div>
         <ConfirmationModal
@@ -236,29 +256,41 @@ const OpeningPeriodAccordion = ({
                 await onDelete();
                 setDeleting(false);
                 toast.success({
-                  label: `Aukiolo "${periodName}" poistettu onnistuneesti.`,
+                  label: t('ResourcePage.Notifications.PeriodRemoveSuccess', {
+                    periodName,
+                  }),
                   dataTestId: 'date-period-delete-success',
                 });
               } catch (_) {
                 toast.error({
-                  label:
-                    'Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen.',
+                  label: t('ResourcePage.Notifications.PeriodRemoveFailed', {
+                    periodName,
+                  }),
                 });
               }
             }
           }}
           isLoading={isDeleting}
-          loadingText="Poistetaan aukiolojaksoa"
+          loadingText={t('ResourcePage.OpeningPeriodsSection.RemovingPeriod')}
           title={deleteModalTitle}
           text={
-            <DeleteModalText periodName={periodName} dateRange={dateRange} />
+            <>
+              <p>{t('ResourcePage.OpeningPeriodsSection.RemoveModalText')}</p>
+              <p>
+                <b>
+                  {periodName}
+                  <br />
+                  {dateRange}
+                </b>
+              </p>
+            </>
           }
           isOpen={isModalOpen}
           onClose={() => {
             closeModal();
             deleteRef.current?.focus();
           }}
-          confirmText="Poista"
+          confirmText={t('ResourcePage.OpeningPeriodsSection.Remove')}
         />
       </div>
       {isOpen && children}

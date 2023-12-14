@@ -1,5 +1,6 @@
 import { Checkbox, LoadingSpinner } from 'hds-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
@@ -41,6 +42,7 @@ const OpeningPeriodsSection = ({
     addDatePeriods,
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
+  const { t } = useTranslation();
   const openingPeriodsHeaderClassName =
     theme === 'LIGHT'
       ? 'opening-periods-header-light'
@@ -103,7 +105,9 @@ const OpeningPeriodsSection = ({
         </h2>
         <p className="opening-periods-period-count">
           {datePeriods.length}{' '}
-          {datePeriods.length === 1 ? 'aukioloaika' : 'aukioloaikaa'}
+          {datePeriods.length === 1
+            ? t('ResourcePage.OpeningPeriodsSection.CountSingular')
+            : t('ResourcePage.OpeningPeriodsSection.CountPlural')}
         </p>
         {datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
           <Button
@@ -121,7 +125,10 @@ const OpeningPeriodsSection = ({
       </header>
       {isLoading ? (
         <div className="opening-period-loading-spinner-container">
-          <LoadingSpinner loadingText="Haetaan aukioloja" small />
+          <LoadingSpinner
+            loadingText={t('ResourcePage.OpeningPeriodsSection.LoadingText')}
+            small
+          />
         </div>
       ) : (
         <ul className="opening-periods-list" data-test={id}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Language,
   UiDatePeriodConfig,
@@ -36,6 +37,7 @@ const OpeningPeriod = ({
     removeDatePeriods,
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
+  const { t } = useTranslation();
 
   const toggleChecked =
     datePeriodSelectState === DatePeriodSelectState.ACTIVE
@@ -66,7 +68,7 @@ const OpeningPeriod = ({
       isActive={datePeriod.isActive}>
       <div className="date-period-details-container">
         {datePeriod.resourceState === ResourceState.CLOSED ? (
-          'Suljettu'
+          t('ResourcePage.OpeningPeriodsSection.StateClosed')
         ) : (
           <OpeningHoursPreview
             openingHours={datePeriod.openingHours}
