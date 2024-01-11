@@ -1,0 +1,11 @@
+{
+  "bootstrap-sha": "430da81fb1d9695b9b68c079e6de754c9162f88f",
+  "sequential-calls": true,
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "hauki-admin-ui"
+    }
+  },
+  "plugins": ["sentence-case"]
+}
