@@ -38,6 +38,7 @@ resources:
     # Azure DevOps repository
     - repository: hauki-pipelines
       type: git
+      ref: refs/heads/e2e_tests
       # Azure DevOps project/repository
       name: hauki/hauki-pipelines
 
