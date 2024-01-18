@@ -320,7 +320,9 @@ describe(`<ResourcePage />`, () => {
       );
 
       expect(
-        await screen.findByText('ResourcePage.Notifications.ErrorLoadingResource')
+        await screen.findByText(
+          'ResourcePage.Notifications.ErrorLoadingResource'
+        )
       ).toBeInTheDocument();
     });
   });
@@ -356,7 +358,9 @@ describe(`<ResourcePage />`, () => {
     });
 
     await act(async () => {
-      expect(screen.getByText('ResourcePage.Main.Resources')).toBeInTheDocument();
+      expect(
+        screen.getByText('ResourcePage.Main.Resources')
+      ).toBeInTheDocument();
 
       expect(
         await container.querySelector(
@@ -429,9 +433,7 @@ describe(`<ResourcePage />`, () => {
       );
     });
 
-    expect(
-      screen.getAllByText('BatchTitle', { exact: false })
-    ).not.toBeNull();
+    expect(screen.getAllByText('BatchTitle', { exact: false })).not.toBeNull();
   });
 
   it('Should show advance to batch copy page and an error if no datePeriods are selected', async () => {
@@ -494,8 +496,12 @@ describe(`<ResourcePage />`, () => {
     });
 
     // expect all datePeriods checkboxes to be checked, showing only "Poista valinnat" button
-    expect(screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectAll')).not.toBeInTheDocument();
-    expect(screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectNone')).toBeInTheDocument();
+    expect(
+      screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectAll')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectNone')
+    ).toBeInTheDocument();
 
     // also check if all non-disabled all-periods-checkboxes are checked
     const allPeriodsCheckboxes = screen
