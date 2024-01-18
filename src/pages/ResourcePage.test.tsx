@@ -292,7 +292,7 @@ describe(`<ResourcePage />`, () => {
 
     await act(async () => {
       expect(await screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Toimipisteen tietojen haku'
+        'ResourcePage.Notifications.IsLoading'
       );
     });
   });
@@ -316,11 +316,11 @@ describe(`<ResourcePage />`, () => {
 
     await act(async () => {
       expect(await screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Virhe'
+        'ResourcePage.Notifications.Error'
       );
 
       expect(
-        await screen.findByText('Toimipistettä ei saatu ladattua.')
+        await screen.findByText('ResourcePage.Notifications.ErrorLoadingResource')
       ).toBeInTheDocument();
     });
   });
@@ -356,7 +356,7 @@ describe(`<ResourcePage />`, () => {
     });
 
     await act(async () => {
-      expect(screen.getByText('Toimipisteet')).toBeInTheDocument();
+      expect(screen.getByText('ResourcePage.Main.Resources')).toBeInTheDocument();
 
       expect(
         await container.querySelector(
@@ -430,7 +430,7 @@ describe(`<ResourcePage />`, () => {
     });
 
     expect(
-      screen.getAllByText('joukkopäivitys', { exact: false })
+      screen.getAllByText('BatchTitle', { exact: false })
     ).not.toBeNull();
   });
 
@@ -452,7 +452,7 @@ describe(`<ResourcePage />`, () => {
       );
     });
 
-    const button = screen.queryByText('Jatka joukkopäivitykseen');
+    const button = screen.queryByText('ResourcePage.Main.BatchContinueButton');
     expect(button).toBeInTheDocument();
     button?.click();
 
@@ -494,8 +494,8 @@ describe(`<ResourcePage />`, () => {
     });
 
     // expect all datePeriods checkboxes to be checked, showing only "Poista valinnat" button
-    expect(screen.queryByText('Valitse kaikki')).not.toBeInTheDocument();
-    expect(screen.queryByText('Poista valinnat')).toBeInTheDocument();
+    expect(screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectAll')).not.toBeInTheDocument();
+    expect(screen.queryByText('ResourcePage.OpeningPeriodsSection.SelectNone')).toBeInTheDocument();
 
     // also check if all non-disabled all-periods-checkboxes are checked
     const allPeriodsCheckboxes = screen
@@ -511,7 +511,7 @@ describe(`<ResourcePage />`, () => {
     });
 
     // and now when button click should hide the error (mock disables navigating any further)
-    const button = screen.queryByText('Jatka joukkopäivitykseen');
+    const button = screen.queryByText('ResourcePage.Main.BatchContinueButton');
     button?.click();
 
     // expect function mockUseGoToResourceBatchUpdatePage to have been called now
