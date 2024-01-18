@@ -31,7 +31,7 @@
     "hds-core": "^3.1.0",
     "hds-design-tokens": "^3.1.0",
     "hds-react": "^3.1.0",
-    "i18next": "^23.7.8",
+    "i18next": "23.7.11",
     "lodash": "^4.17.21",
     "prettier": "^2.1.1",
     "react": "^17.0.1",
