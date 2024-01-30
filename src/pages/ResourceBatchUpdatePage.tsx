@@ -321,7 +321,7 @@ const ResourceBatchUpdatePage = ({
     return () => {
       isMounted = false;
     };
-  }, [language, resource, targetResourcesString, t]);
+  }, [language, resource, targetResourcesString]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // get main resource
   useEffect(() => {
@@ -348,7 +348,7 @@ const ResourceBatchUpdatePage = ({
     return () => {
       isMounted = false;
     };
-  }, [mainResourceId, t]);
+  }, [mainResourceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) {
     return (

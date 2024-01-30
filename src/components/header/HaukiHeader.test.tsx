@@ -7,6 +7,24 @@ import { AppContext } from '../../App-context';
 import { AuthContext } from '../../auth/auth-context';
 import HaukiHeader from './HaukiHeader';
 
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str: string) => str,
+      i18n: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        changeLanguage: () => new Promise(() => {}),
+      },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    init: () => {},
+  },
+}));
+
 describe('<HaukiHeader>', () => {
   afterEach(() => {
     jest.clearAllMocks();

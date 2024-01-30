@@ -11,6 +11,24 @@ import {
 import OpeningPeriod from './OpeningPeriod';
 import { SelectedDatePeriodsProvider } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str: string) => str,
+      i18n: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        changeLanguage: () => new Promise(() => {}),
+      },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    init: () => {},
+  },
+}));
+
 const testDatePeriod: DatePeriod = { ...datePeriod, isActive: false };
 const testDatePeriodOptions: UiDatePeriodConfig = datePeriodOptions;
 
@@ -35,4 +53,6 @@ describe(`<OpeningPeriod />`, () => {
       await container.querySelector('div[data-test="openingPeriod-1"]')
     ).toBeInTheDocument();
   });
+
+  jest.clearAllMocks();
 });

@@ -25,7 +25,7 @@ import {
   SelectedDatePeriodsProvider,
 } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-const testResourceBatchUpdatePagePros: ResourceBatchUpdatePageProps = {
+const testResourceBatchUpdatePageProps: ResourceBatchUpdatePageProps = {
   mainResourceId: 'tprek:10',
   targetResourcesString: 'tprek:11,tprek:12,tprek:13,tprek:14',
 };
@@ -242,11 +242,29 @@ const mockSelectedDatePeriods: DatePeriod[] = [
   },
 ];
 
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str: string) => str,
+      i18n: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        changeLanguage: () => new Promise(() => {}),
+      },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    init: () => {},
+  },
+}));
+
 const renderPage = () => {
   return render(
     <Router>
       <SelectedDatePeriodsProvider>
-        <ResourceBatchUpdatePage {...testResourceBatchUpdatePagePros} />
+        <ResourceBatchUpdatePage {...testResourceBatchUpdatePageProps} />
       </SelectedDatePeriodsProvider>
     </Router>
   );
@@ -284,7 +302,7 @@ describe(`<ResourceBatchUpdatePage />`, () => {
 
     await act(async () => {
       expect(await screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Toimipisteiden tietojen haku'
+        'ResourcePage.Notifications.IsLoadingResources'
       );
     });
   });
@@ -302,11 +320,15 @@ describe(`<ResourceBatchUpdatePage />`, () => {
 
     await act(async () => {
       expect(await screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Virhe'
+        'ResourcePage.Notifications.Error'
       );
 
       expect(
-        await screen.findByText('Toimipisteitä ei saatu ladattua.')
+        (
+          await screen.findAllByText(
+            'ResourcePage.Notifications.ErrorLoadingResource'
+          )
+        )[0]
       ).toBeInTheDocument();
     });
   });
@@ -314,31 +336,29 @@ describe(`<ResourceBatchUpdatePage />`, () => {
   it('should call get resource api correctly', async () => {
     const apiGetResourceSpy = jest
       .spyOn(api, 'getResource')
-      .mockImplementation(() => Promise.resolve(testGetResourceResponse));
+      .mockResolvedValue(testGetResourceResponse);
 
     renderPage();
 
     await waitFor(async () => {
       expect(apiGetResourceSpy).toHaveBeenCalledWith(
-        testResourceBatchUpdatePagePros.mainResourceId
+        testResourceBatchUpdatePageProps.mainResourceId
       );
     });
   });
 
   it('should call get resources api correctly', async () => {
-    jest
-      .spyOn(api, 'getResource')
-      .mockImplementation(() => Promise.resolve(testGetResourceResponse));
+    jest.spyOn(api, 'getResource').mockResolvedValue(testGetResourceResponse);
 
     const apiGetResourcesSpy = jest
       .spyOn(api, 'getResources')
-      .mockImplementation(() => Promise.resolve(testGetResourcesResponse));
+      .mockResolvedValue(testGetResourcesResponse);
 
     renderPage();
 
     await waitFor(async () => {
       expect(apiGetResourcesSpy).toHaveBeenCalledWith(
-        testResourceBatchUpdatePagePros.targetResourcesString?.split(',')
+        testResourceBatchUpdatePageProps.targetResourcesString?.split(',')
       );
     });
   });
@@ -432,7 +452,7 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     );
 
     expect(
-      await screen.findByText('Joukkopäivitykseen valitut aukiolot')
+      await screen.findByText('ResourcePage.OpeningPeriodsSection.BatchTitle')
     ).toBeDefined();
 
     expect(sectionElements.length === datePeriodsInMockData.length).toBe(true);

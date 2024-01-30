@@ -234,6 +234,24 @@ const testDatePeriodWithTimeSpans: ApiDatePeriod[] = [
 // Mock for using useGoToResourceBatchUpdatePage hook
 const mockUseGoToResourceBatchUpdatePage = jest.fn();
 
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str: string) => str,
+      i18n: {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        changeLanguage: () => new Promise(() => {}),
+      },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    init: () => {},
+  },
+}));
+
 describe(`<ResourcePage />`, () => {
   beforeEach(() => {
     jest
