@@ -22,3 +22,4 @@
 !.eslintrc.js
 !tsconfig.eslint.json
 !.prettierrc.json
+!.eslintignore

@@ -8,6 +8,7 @@ import {
   SelectionGroup,
   IconTrash,
 } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -81,6 +82,7 @@ const ResourceBatchUpdatePage = ({
     setDatePeriodSelectState,
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
+  const { t, i18n } = useTranslation();
 
   // page constants
   const pageSize = 10;
@@ -114,12 +116,12 @@ const ResourceBatchUpdatePage = ({
         }
         history.push('/');
       } else {
-        showErrorNotification('Uloskirjautuminen hylättiin.');
+        showErrorNotification(t('ResourcePage.Notifications.SignOutFailed'));
       }
     } catch (e) {
       showErrorNotification(
-        'Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan.',
-        `Virhe: ${e}`
+        t('ResourcePage.Notifications.SignOutError'),
+        t('ResourcePage.Notifications.Error') + e
       );
     }
   };
@@ -164,10 +166,12 @@ const ResourceBatchUpdatePage = ({
       .catch((e: Error) => {
         setLoading(false);
         showErrorNotification(
-          'Joukkopäivitys epäonnistui',
-          `Virhe: ${e}. ${
+          t('ResourcePage.Notifications.UpdateFailed'),
+          `${t('ResourcePage.Notifications.Error')} ${e}. ${
             feedbackEmailsString.length > 0
-              ? `Lähetä virheilmoituksesta ruutukaappaus sähköpostitse ${feedbackEmailsString}.`
+              ? t('ResourcePage.Notifications.SendErrorScreenshot', {
+                  feedbackEmailsString,
+                })
               : ''
           }`
         );
@@ -189,7 +193,11 @@ const ResourceBatchUpdatePage = ({
         key: targetResourcesStorageKey,
         value: newData,
       });
-      showSuccessNotification(`Toimipiste ${resourceName} on poistettu.`);
+      showSuccessNotification(
+        t('ResourcePage.Notifications.RemoveSuccess', {
+          resourceName,
+        })
+      );
     }
   };
 
@@ -201,7 +209,11 @@ const ResourceBatchUpdatePage = ({
         headerName: 'ID',
         isSortable: true,
       },
-      { key: 'resource', headerName: 'Toimipiste', isSortable: true },
+      {
+        key: 'resource',
+        headerName: t('ResourcePage.ResourcesSection.ResourceColumn'),
+        isSortable: true,
+      },
       {
         key: 'remove',
         headerName: '',
@@ -213,7 +225,9 @@ const ResourceBatchUpdatePage = ({
                 onClick={() => onRemove(item.remove)}>
                 <IconTrash
                   size="xs"
-                  aria-label="Poista"
+                  aria-label={t(
+                    'ResourcePage.ResourcesSection.RemoveAriaLabel'
+                  )}
                   color="var(--color-error)"
                 />
               </SupplementaryButton>
@@ -288,8 +302,8 @@ const ResourceBatchUpdatePage = ({
             setLoading(false);
             setError(e);
             showErrorNotification(
-              'Toimipisteiden tietoja ei saatu ladattua.',
-              `Virhe: ${e}`
+              t('ResourcePage.Notifications.ErrorLoadingResources'),
+              t('ResourcePage.Notifications.Error2') + e
             );
           });
       } else {
@@ -307,7 +321,7 @@ const ResourceBatchUpdatePage = ({
     return () => {
       isMounted = false;
     };
-  }, [language, resource, targetResourcesString]);
+  }, [language, resource, targetResourcesString]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // get main resource
   useEffect(() => {
@@ -326,22 +340,26 @@ const ResourceBatchUpdatePage = ({
         setLoading(false);
         setError(e);
         showErrorNotification(
-          'Toimipisteen tietoja ei saatu ladattua.',
-          `Virhe: ${e}`
+          t('ResourcePage.Notifications.ErrorLoadingResource'),
+          t('ResourcePage.Notifications.Error2') + e
         );
       });
 
     return () => {
       isMounted = false;
     };
-  }, [mainResourceId]);
+  }, [mainResourceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) {
     return (
       <>
-        <h1 className="resource-info-title">Virhe</h1>
-        <Notification label="Toimipisteitä ei saatu ladattua." type="error">
-          Tarkista toimipisteiden id:t.
+        <h1 className="resource-info-title">
+          {t('ResourcePage.Notifications.Error')}
+        </h1>
+        <Notification
+          label={t('ResourcePage.Notifications.ErrorLoadingResource')}
+          type="error">
+          {t('ResourcePage.Notifications.CheckResourceIds')}
         </Notification>
       </>
     );
@@ -349,7 +367,9 @@ const ResourceBatchUpdatePage = ({
 
   if (isLoading && (!resource || !targetResourceData || !mainResourceId)) {
     return (
-      <h1 className="resource-info-title">Toimipisteiden tietojen haku</h1>
+      <h1 className="resource-info-title">
+        {t('ResourcePage.Notifications.IsLoadingResources')}
+      </h1>
     );
   }
 
@@ -372,14 +392,14 @@ const ResourceBatchUpdatePage = ({
         <h1>{mainResourceName}</h1>
         <div className="button-close">
           <SecondaryButton size="small" onClick={ReturnToResourcePage}>
-            Palaa etusivulle
+            {t('ResourcePage.Main.ReturnToMainPageButton')}
           </SecondaryButton>
         </div>
       </section>
 
       <section className="section-spans">
-        <h2>Joukkopäivitykseen valitut aukiolot</h2>
-        <p>Olet valinnut joukkopäivitykseen alla olevat aukioloajat.</p>
+        <h2>{t('ResourcePage.OpeningPeriodsSection.BatchTitle')}</h2>
+        <p>{t('ResourcePage.OpeningPeriodsSection.Description')}</p>
 
         {normalSelectedDatePeriods.length > 0 && (
           <OpeningPeriodsSection
@@ -387,7 +407,7 @@ const ResourceBatchUpdatePage = ({
             isLoading={false}
             newUrl=""
             theme="DEFAULT"
-            title="Aukioloajat"
+            title={t('ResourcePage.OpeningPeriodsSection.NormalTitle')}
             addDatePeriodButtonText=""
             addNewOpeningPeriodButtonDataTest="">
             {normalSelectedDatePeriods.map((dp) => (
@@ -407,7 +427,7 @@ const ResourceBatchUpdatePage = ({
             isLoading={false}
             newUrl=""
             theme="LIGHT"
-            title="Poikkeavat päivät"
+            title={t('ResourcePage.OpeningPeriodsSection.ExceptionPeriods')}
             addDatePeriodButtonText=""
             addNewOpeningPeriodButtonDataTest="">
             {exceptionSelectedDatePeriods.map((dp) => (
@@ -427,7 +447,7 @@ const ResourceBatchUpdatePage = ({
             isLoading={false}
             newUrl=""
             theme="LIGHT"
-            title="Juhlapyhät"
+            title={t('ResourcePage.OpeningPeriodsSection.HolidayPeriods')}
             addDatePeriodButtonText=""
             addNewOpeningPeriodButtonDataTest="">
             {holidaySelectedDatePeriods.map((dp) => (
@@ -445,11 +465,11 @@ const ResourceBatchUpdatePage = ({
 
       <div className="section-resource-update">
         <section className="section-resources">
-          <h2>Valitut toimipisteet</h2>
+          <h2>{t('ResourcePage.ResourcesSection.Title')}</h2>
           <p>
-            Olet valinnut {resourceCount} toimipistettä joukkopäivitykseen. Alta
-            näet valitsemasi toimipisteet ja voit tarvittaessa poistaa
-            yksittäisiä toimipisteitä listalta.
+            {t('ResourcePage.ResourcesSection.Description', {
+              resourceCount,
+            })}
           </p>
           {tableDef.rows && (
             <Table
@@ -464,7 +484,7 @@ const ResourceBatchUpdatePage = ({
             />
           )}
           <Pagination
-            language="en"
+            language={i18n.language as Language}
             onChange={(event, index) => {
               event.preventDefault();
               setPageIndex(index);
@@ -472,34 +492,32 @@ const ResourceBatchUpdatePage = ({
             pageCount={pageCount}
             pageHref={() => '#'}
             pageIndex={pageIndex}
-            paginationAriaLabel="Pagination"
+            paginationAriaLabel={t(
+              'ResourcePage.ResourcesSection.PaginationAriaLabel'
+            )}
             siblingCount={2}
           />
         </section>
 
         <section className="section-update">
-          <h2>Päivitä aukioloajat</h2>
+          <h2>{t('ResourcePage.UpdateSection.Title')}</h2>
           <div>
-            Voit valita seuraavat toimet:
+            {t('ResourcePage.UpdateSection.Description')}
             <ul className="list-options">
               <li>
-                Korvaa valittujen toimipisteiden aukiolotiedot. Tämä päivittää
-                tiedot vastaamaan toimipisteen {`${mainResourceName} `}
-                aukiolotietoja.
+                {t('ResourcePage.UpdateSection.Bullet1', {
+                  mainResourceName,
+                })}
               </li>
-              <li>
-                Kopioi ja lisää aukiolotiedot valittuihin toimipisteisiin. Tämä
-                lisää uudet tiedot ilman, että olemassaolevia aukiolotietoja
-                muutetaan.
-              </li>
+              <li>{t('ResourcePage.UpdateSection.Bullet2')}</li>
             </ul>
           </div>
-          <SelectionGroup label="Valitse toiminto">
+          <SelectionGroup label={t('ResourcePage.UpdateSection.Select')}>
             <RadioButton
               id="radio-update"
               name="radio-update"
               value="update"
-              label="Korvaa aukioloajat"
+              label={t('ResourcePage.UpdateSection.Option1')}
               checked={selectedRadioItem === 'update'}
               onChange={onChangeRadio}
             />
@@ -507,7 +525,7 @@ const ResourceBatchUpdatePage = ({
               id="radio-copy"
               name="radio-copy"
               value="copy"
-              label="Kopioi ja lisää aukioloajat"
+              label={t('ResourcePage.UpdateSection.Option2')}
               checked={selectedRadioItem === 'copy'}
               onChange={onChangeRadio}
             />
@@ -515,24 +533,24 @@ const ResourceBatchUpdatePage = ({
           <div className="button-confirm">
             <PrimaryButton
               onClick={onConfirm}
-              loadingText="Päivitetään aukiolotietoja"
+              loadingText={t('ResourcePage.UpdateSection.LoadingText')}
               isLoading={isLoading}>
-              Vahvista
+              {t('ResourcePage.UpdateSection.ConfirmButton')}
             </PrimaryButton>
           </div>
         </section>
       </div>
 
       <NotificationModal
-        title="Aukiolotiedot päivitetty"
+        title={t('ResourcePage.Notifications.Title')}
         text={
           <span>
-            Toimipisteiden aukiolotiedot on päivitetty onnistuneesti
+            {t('ResourcePage.Notifications.Success')}
             <br />
-            Aukiolosovellus sulkeutuu painikkeesta.
+            {t('ResourcePage.Notifications.CloseText')}
           </span>
         }
-        buttonText="Sulje aukiolosovellus"
+        buttonText={t('ResourcePage.Notifications.CloseButton')}
         isOpen={isModalOpen}
         onClose={onClose}
       />
