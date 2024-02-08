@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.1.0...hauki-admin-ui-v1.2.0) (2024-02-08)
+
+
+### Features
+
+* Add multi language support HAUKI-610 ([b28af57](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b28af57a3e7069cfd69117b8f5353f8013279970))
+* Add multi language support HAUKI-610 ([2e23094](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2e23094ad83ae567fc3b829acf53769fc6c1bed7))
+* Add multi language support HAUKI-610 ([298edcf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/298edcfb9297c1563066ec717d0945fcdb81ccf2))
+* Add multi language support HAUKI-610 ([0201350](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0201350c0634926edd865299f1a1d3cc1c627a35))
+* Add multi language support HAUKI-610 ([7117bfb](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/7117bfb0b979926447246c9f91e9b3eb5ffe25fd))
+* Add multi language support HAUKI-610 ([7b1d39a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/7b1d39aaae880dc99447609a7cc82205ef4ce2dd))
+* Add multi language support HAUKI-610 ([6e8f3dc](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/6e8f3dc77f53223b4165f3aa8a6eb1f76dea1548))
+* Add multi language support HAUKI-610 ([3ebf300](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3ebf3000cdbda615a8dbc37578daede01179de82))
+* Add multi language support HAUKI-610 ([b4e4abc](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b4e4abcec7f9dbe3f5431bcea0c3b2e0abcb7080))
+
 ## [1.1.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.0.0...hauki-admin-ui-v1.1.0) (2024-01-12)
 
 ### Features
