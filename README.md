@@ -8,7 +8,7 @@ UI for managing opening hours in Hauki.
 
 ### Prerequisites
 
-- Node 16.x (`nvm use`)
+- Node 18.x (`nvm use`)
 - Yarn
 - Git
 - Docker

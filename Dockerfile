@@ -20,13 +20,11 @@ ENV NODE_ENV $NODE_ENV
 ENV YARN_VERSION 1.19.1
 RUN yarn policies set-version $YARN_VERSION
 
-# USER root
-# RUN apt-install.sh build-essential
-
 # Install dependencies
 COPY package.json yarn.lock /app/
 RUN chown -R default:root /app
 
+# Use non-root user
 USER default
 
 RUN yarn && yarn cache clean --force
@@ -36,9 +34,6 @@ COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.eslint.json .prettierrc.j
 COPY ./src /app/src
 COPY ./test /app/test
 COPY ./public /app/public
-
-# Use non-root user
-# USER appuser
 
 # Build application
 RUN yarn build
