@@ -79,6 +79,14 @@ docker build . -t hauki-admin-ui
 docker run -p 3000:8000 -e API_URL=<api-url-here> -e USE_AXE=<true|false> hauki-admin-ui
 ```
 
+## Commit message format
+
+New commit messages must adhere to the [Conventional Commits](https://www.conventionalcommits.org/)
+specification, and line length is limited to 72 characters.
+
+[commitlint](https://github.com/conventional-changelog/commitlint) checks every new commit for the correct format.
+
+
 ## RELEASE
 
 ### Release to Test environment

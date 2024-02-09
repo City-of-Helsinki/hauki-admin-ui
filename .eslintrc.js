@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         selector: 'property',
-        format: ['camelCase', 'snake_case', 'PascalCase', 'UPPER_CASE'],
+        format: null,
       },
       {
         selector: 'typeLike',

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './index.scss';
-import axe from 'react-axe';
+import axe from '@axe-core/react';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './i18n';
