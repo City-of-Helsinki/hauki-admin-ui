@@ -19,7 +19,8 @@ import { Language } from '../../common/lib/types';
 import { languageOptions } from '../../constants';
 
 const HaukiHeader = (): JSX.Element => {
-  const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
+  const { hasOpenerWindow, closeAppWindow, language, setLanguage } =
+    useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
   const { i18n } = useTranslation();
   const { authTokens, clearAuth } = authProps;
@@ -72,13 +73,22 @@ const HaukiHeader = (): JSX.Element => {
       }}
       className="header"
       languages={languageOptions}
-      onDidChangeLanguage={(language) => {
-        i18n.changeLanguage(language);
+      defaultLanguage={language}
+      onDidChangeLanguage={(lang) => {
+        i18n.changeLanguage(lang);
         if (setLanguage) {
           const newLanguage =
-            Language[language.toUpperCase() as keyof typeof Language];
+            Language[lang.toUpperCase() as keyof typeof Language];
 
           setLanguage(newLanguage);
+
+          const urlSearchParams = new URLSearchParams(window.location.search);
+          urlSearchParams.set('lang', newLanguage);
+
+          history.push({
+            pathname: window.location.pathname,
+            search: urlSearchParams.toString(),
+          });
         }
       }}>
       <Header.SkipLink skipTo="#main" label="Siirry pääsisältöön" />
