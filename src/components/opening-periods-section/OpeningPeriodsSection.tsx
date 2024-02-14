@@ -94,6 +94,7 @@ const OpeningPeriodsSection = ({
             onChange={onChangeHandler}
             disabled={datePeriods.length === 0}
             style={customCheckboxStyle as React.CSSProperties}
+            className="opening-periods-header-checkbox"
           />
         )}
         <h2 className="opening-periods-header-title">
