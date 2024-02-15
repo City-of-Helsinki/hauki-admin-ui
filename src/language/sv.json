@@ -46,7 +46,12 @@
       "RemoveModalText": "Du håller på att ta bort öppettiderna",
       "StateClosed": "Stängt",
       "Modify": "Redigera",
-      "Remove": "Ta bort"
+      "Remove": "Ta bort",
+      "ValidUntilFurtherNotice": "Gäller tills vidare",
+      "ValidOnDate": "Gäller {{startDate}}",
+      "ValidFromDate": "Gäller from {{startDate}}",
+      "ValidUntilDate": "Gäller till {{endDate}}",
+      "ValidBetweenDates": "Gäller from {{startDate}} till {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Valda verksamhetsställena",

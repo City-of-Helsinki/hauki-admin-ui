@@ -45,7 +45,12 @@
       "RemoveModalText": "You are about to remove an opening period",
       "StateClosed": "Closed",
       "Modify": "Edit",
-      "Remove": "Remove"
+      "Remove": "Remove",
+      "ValidUntilFurtherNotice": "Valid until further notice",
+      "ValidOnDate": "Valid on {{startDate}}",
+      "ValidFromDate": "Valid from {{startDate}}",
+      "ValidUntilDate": "Valid until {{endDate}}",
+      "ValidBetweenDates": "Valid between {{startDate}} - {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Selected service points",

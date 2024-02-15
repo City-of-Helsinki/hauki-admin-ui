@@ -46,7 +46,12 @@
       "RemoveModalText": "Olet poistamassa aukiolojakson",
       "StateClosed": "Suljettu",
       "Modify": "Muokkaa",
-      "Remove": "Poista"
+      "Remove": "Poista",
+      "ValidUntilFurtherNotice": "Voimassa toistaiseksi",
+      "ValidOnDate": "Voimassa {{startDate}}",
+      "ValidFromDate": "Voimassa {{startDate}} alkaen",
+      "ValidUntilDate": "Voimassa {{endDate}} asti",
+      "ValidBetweenDates": "Voimassa {{startDate}} - {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Valitut toimipisteet",

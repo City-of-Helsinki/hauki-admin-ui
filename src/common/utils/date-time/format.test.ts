@@ -3,36 +3,37 @@
 import { Language } from '../../lib/types';
 import { formatDateRange, createWeekdaysStringFromIndices } from './format';
 
+jest.clearAllMocks();
+jest.mock('i18next', () => ({ t: (str: string) => str }));
+
 describe('format', () => {
   describe('formatDateRange', () => {
     it('should return formatted date range', () => {
       expect(
         formatDateRange({ startDate: '18.12.2020', endDate: '31.12.2020' })
-      ).toEqual('Voimassa 18.12.2020 - 31.12.2020');
+      ).toEqual('ResourcePage.OpeningPeriodsSection.ValidBetweenDates');
     });
 
     it('should return formatted startDate when endDate is missing', () => {
       expect(
         formatDateRange({ startDate: '18.12.2020', endDate: null })
-      ).toEqual('Voimassa 18.12.2020 alkaen');
+      ).toEqual('ResourcePage.OpeningPeriodsSection.ValidFromDate');
     });
 
     it('should return formatted endDate when startDate is missing', () => {
       expect(
         formatDateRange({ startDate: null, endDate: '31.12.2020' })
-      ).toEqual('Voimassa 31.12.2020 asti');
+      ).toEqual('ResourcePage.OpeningPeriodsSection.ValidUntilDate');
     });
-
     it('should return valid under further notice when both endDate and startDate are missing', () => {
       expect(formatDateRange({ startDate: null, endDate: null })).toEqual(
-        'Voimassa toistaiseksi'
+        'ResourcePage.OpeningPeriodsSection.ValidUntilFurtherNotice'
       );
     });
-
     it('should return formatted start date when startDate is same as endDate', () => {
       expect(
         formatDateRange({ startDate: '31.12.2020', endDate: '31.12.2020' })
-      ).toEqual('Voimassa 31.12.2020');
+      ).toEqual('ResourcePage.OpeningPeriodsSection.ValidOnDate');
     });
   });
 
