@@ -93,5 +93,16 @@
       "PeriodRemoveSuccess": "Aukiolo {{periodName}} poistettu onnistuneesti.",
       "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen."
     }
+  },
+  "Header": {
+    "Help": "Ohje",
+    "LogoAlt": "Helsingin kaupunki",
+    "FrontPage": "Etusivu",
+    "Menu": "Valikko",
+    "Title": "Aukiolot",
+    "SkipLink": "Siirry pääsisältöön",
+    "SignOutFailed": "Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ",
+    "SignOutRejected": "Uloskirjautuminen hylättiin.",
+    "Close": "Sulje"
   }
 }

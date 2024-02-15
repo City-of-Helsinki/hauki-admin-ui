@@ -48,10 +48,10 @@
       "Modify": "Redigera",
       "Remove": "Ta bort",
       "ValidUntilFurtherNotice": "Gäller tills vidare",
-      "ValidOnDate": "Gäller {{startDate}}",
-      "ValidFromDate": "Gäller from {{startDate}}",
+      "ValidOnDate": "Gäller den {{startDate}}",
+      "ValidFromDate": "Gäller från {{startDate}}",
       "ValidUntilDate": "Gäller till {{endDate}}",
-      "ValidBetweenDates": "Gäller from {{startDate}} till {{endDate}}"
+      "ValidBetweenDates": "Gäller från {{startDate}} till {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Valda verksamhetsställena",
@@ -93,5 +93,16 @@
       "PeriodRemoveSuccess": "Öppettider {{periodName}} framgångsrikt borttagen.",
       "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare."
     }
+  },
+  "Header": {
+    "Help": "Anvisning",
+    "LogoAlt": "Helsingfors stad",
+    "FrontPage": "Framsida",
+    "Menu": "Meny",
+    "Title": "Aukiolot",
+    "SkipLink": "Hoppa till innehåll",
+    "SignOutFailed": "Det gick inte att logga ut. Vänligen försök igen senare. Fel: ",
+    "SignOutRejected": "Logga ut avvisades.",
+    "Close": "Stäng"
   }
 }

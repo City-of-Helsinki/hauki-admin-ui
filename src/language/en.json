@@ -92,5 +92,17 @@
       "PeriodRemoveSuccess": "Opening hours {{periodName}} successfully deleted.",
       "PeriodRemoveFailed": "Failed to remove opening hours. Try again later."
     }
+  },
+  "Header": {
+    "Help": "Guide",
+    "LogoAlt": "City of Helsinki",
+    "FrontPage": "Front page",
+    "Menu": "Menu",
+    "Title": "Aukiolot",
+    "SkipLink": "Skip to content",
+    "SignOutFailed": "Logout failed. Please try again later. Error: ",
+    "SignOutRejected": "Logout was rejected.",
+    "Close": "Close"
   }
+
 }
