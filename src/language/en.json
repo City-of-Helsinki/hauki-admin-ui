@@ -103,6 +103,13 @@
     "SignOutFailed": "Logout failed. Please try again later. Error: ",
     "SignOutRejected": "Logout was rejected.",
     "Close": "Close"
+  },
+  "Footer": {
+    "CopyrightHolder": "City of Helsinki",
+    "CopyrightText": "All rights reserved.",
+    "LogoAlt": "City of Helsinki",
+    "BackToTopLabel": "Back to top",
+    "AccessibilityStatementLink": "Accessibility statement",
+    "ContentLicenseLink": "Content license CC BY 4.0"
   }
-
 }

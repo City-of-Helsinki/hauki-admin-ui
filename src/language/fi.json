@@ -104,5 +104,13 @@
     "SignOutFailed": "Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ",
     "SignOutRejected": "Uloskirjautuminen hylättiin.",
     "Close": "Sulje"
+  },
+  "Footer": {
+    "CopyrightHolder": "Helsingin Kaupunki",
+    "CopyrightText": "Kaikki oikeudet pidätetään.",
+    "LogoAlt": "Helsingin kaupunki",
+    "BackToTopLabel": "Takaisin ylös",
+    "AccessibilityStatementLink": "Saavutettavuusseloste",
+    "ContentLicenseLink": "Sisältölisenssi CC BY 4.0"
   }
 }

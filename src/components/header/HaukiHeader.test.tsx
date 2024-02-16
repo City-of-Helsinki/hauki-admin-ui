@@ -61,7 +61,9 @@ describe('<HaukiHeader>', () => {
 
     userEvent.click(authButton);
 
-    const closeButton = await screen.findByRole('link', { name: 'Sulje' });
+    const closeButton = await screen.findByRole('link', {
+      name: 'Header.Close',
+    });
 
     userEvent.click(closeButton);
 

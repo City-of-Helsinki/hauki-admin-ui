@@ -104,5 +104,13 @@
     "SignOutFailed": "Det gick inte att logga ut. Vänligen försök igen senare. Fel: ",
     "SignOutRejected": "Logga ut avvisades.",
     "Close": "Stäng"
+  },
+  "Footer": {
+    "CopyrightHolder": "Helsingfors stad",
+    "CopyrightText": "Alla rättigheter förbehållna.",
+    "LogoAlt": "Helsingfors stad",
+    "BackToTopLabel": "Tillbaka till toppen",
+    "AccessibilityStatementLink": "Tillgänglighetsutlåtande",
+    "ContentLicenseLink": "Innehållslicens CC BY 4.0"
   }
 }
