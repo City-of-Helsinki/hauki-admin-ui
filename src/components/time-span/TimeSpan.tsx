@@ -172,6 +172,7 @@ const TimeSpan = ({
                       required
                       ref={field.ref}
                       value={field.value ?? ''}
+                      crossOrigin={undefined}
                     />
                   )}
                   rules={timeInputRules}
@@ -195,6 +196,7 @@ const TimeSpan = ({
                       ref={field.ref}
                       required
                       value={field.value ?? ''}
+                      crossOrigin={undefined}
                     />
                   )}
                   rules={timeInputRules}
