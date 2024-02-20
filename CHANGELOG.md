@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.2.0...hauki-admin-ui-v1.3.0) (2024-02-20)
+
+
+### Features
+
+* Translate footer ([4a433f2](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/4a433f2c0f3f634605ac67db69d47524d3592975))
+* Translate header ([788be72](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/788be72764b2de5c3f6928f53bb091cf14d5b3c9))
+
+
+### Bug Fixes
+
+* Accessibility statement link for all languages ([d70d803](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/d70d8033dbfa357cda23dbe4b486bdb373374fd3))
+* Checkbox width bug ([926b55e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/926b55ef3fe6ef3da227d71022f509cea12946b8))
+* Header layout ([3d0d215](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3d0d21552bacc9600c546b6054a1c495e9b9a4f8))
+* Show language selection on header. Select language from query param ([9817909](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/981790928e134f17f55bde2fe46a39f56c3de0c3))
+* Translate format functions and fix test mocks ([205d616](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/205d616d9c07224eddeb12af5a3a354722f7600a))
+* Updated to hds 3.5.0 and fixed some typescript problems that came with it ([8a6219d](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8a6219d5b2fdbbcd162c59d28b8cc20cdd97c909))
+
 ## [1.2.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.1.0...hauki-admin-ui-v1.2.0) (2024-02-08)
 
 
