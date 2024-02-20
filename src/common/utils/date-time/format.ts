@@ -1,6 +1,7 @@
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import { getDay } from 'date-fns';
+import { t as _t } from 'i18next';
 import { Language, Weekdays, WeekdayTypes } from '../../lib/types';
 
 export const dateApiFormat = 'yyyy-MM-dd';
@@ -23,22 +24,31 @@ export const formatDateRange = ({
   endDate: string | null;
 }): string => {
   if (!startDate && !endDate) {
-    return 'Voimassa toistaiseksi';
+    return _t('ResourcePage.OpeningPeriodsSection.ValidUntilFurtherNotice');
   }
 
   if (startDate === endDate) {
-    return `Voimassa ${startDate}`;
+    return _t('ResourcePage.OpeningPeriodsSection.ValidOnDate', {
+      startDate,
+    });
   }
 
   if (!endDate) {
-    return `Voimassa ${startDate} alkaen`;
+    return _t('ResourcePage.OpeningPeriodsSection.ValidFromDate', {
+      startDate,
+    });
   }
 
   if (!startDate) {
-    return `Voimassa ${endDate} asti`;
+    return _t('ResourcePage.OpeningPeriodsSection.ValidUntilDate', {
+      endDate,
+    });
   }
 
-  return `Voimassa ${startDate} - ${endDate}`;
+  return _t('ResourcePage.OpeningPeriodsSection.ValidBetweenDates', {
+    startDate,
+    endDate,
+  });
 };
 
 export const transformDateToApiFormat = (formDate: string): string =>

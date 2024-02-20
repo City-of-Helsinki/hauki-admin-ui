@@ -46,7 +46,12 @@
       "RemoveModalText": "Olet poistamassa aukiolojakson",
       "StateClosed": "Suljettu",
       "Modify": "Muokkaa",
-      "Remove": "Poista"
+      "Remove": "Poista",
+      "ValidUntilFurtherNotice": "Voimassa toistaiseksi",
+      "ValidOnDate": "Voimassa {{startDate}}",
+      "ValidFromDate": "Voimassa {{startDate}} alkaen",
+      "ValidUntilDate": "Voimassa {{endDate}} asti",
+      "ValidBetweenDates": "Voimassa {{startDate}} - {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Valitut toimipisteet",
@@ -88,5 +93,25 @@
       "PeriodRemoveSuccess": "Aukiolo {{periodName}} poistettu onnistuneesti.",
       "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen."
     }
+  },
+  "Header": {
+    "Help": "Ohje",
+    "LogoAlt": "Helsingin kaupunki",
+    "FrontPage": "Etusivu",
+    "Menu": "Valikko",
+    "Title": "Aukiolot",
+    "SkipLink": "Siirry pääsisältöön",
+    "SignOutFailed": "Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ",
+    "SignOutRejected": "Uloskirjautuminen hylättiin.",
+    "Close": "Sulje"
+  },
+  "Footer": {
+    "CopyrightHolder": "Helsingin Kaupunki",
+    "CopyrightText": "Kaikki oikeudet pidätetään.",
+    "LogoAlt": "Helsingin kaupunki",
+    "BackToTopLabel": "Takaisin ylös",
+    "AccessibilityStatementLink": "Saavutettavuusseloste",
+    "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/saavutettavuusseloste",
+    "ContentLicenseLink": "Sisältölisenssi CC BY 4.0"
   }
 }

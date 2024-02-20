@@ -141,6 +141,7 @@ const HolidaysTable = ({
                         onChange={() => {
                           toggleChecked(holidayDatePeriod);
                         }}
+                        className="holidays-table-checkbox"
                       />
                     )}
                   {datePeriodSelectState === DatePeriodSelectState.ACTIVE ? (

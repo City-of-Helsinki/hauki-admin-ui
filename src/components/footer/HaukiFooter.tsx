@@ -1,34 +1,47 @@
 import React from 'react';
-import { Footer, logoFi, Logo } from 'hds-react';
+import { Footer, logoFi, logoSv, Logo } from 'hds-react';
+import { useTranslation } from 'react-i18next';
+import { useAppContext } from '../../App-context';
 import './HaukiFooter.scss';
 
-const HaukiFooter = (): JSX.Element => (
-  <>
-    <div className="footer-top-padding" />
-    <Footer
-      className="page-footer"
-      title="Aukiolot"
-      theme={{
-        '--footer-background': 'var(--hauki-footer-background-color)',
-      }}>
-      <Footer.Base
-        copyrightHolder="Helsingin Kaupunki"
-        copyrightText="Kaikki oikeudet pidätetään."
-        logo={<Logo src={logoFi} size="medium" alt="Helsingin kaupunki" />}
-        backToTopLabel="Takaisin ylös">
-        <Footer.Link
-          href="https://kaupunkialustana.hel.fi/aukiolosovelluksen-saavutettavuusseloste/"
-          target="_blank"
-          label="Saavutettavuusseloste"
-        />
-        <Footer.Link
-          href="/content-license.txt"
-          target="_blank"
-          label="Sisältölisenssi CC BY 4.0"
-        />
-      </Footer.Base>
-    </Footer>
-  </>
-);
+const HaukiFooter = (): JSX.Element => {
+  const { language } = useAppContext();
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <div className="footer-top-padding" />
+      <Footer
+        className="page-footer"
+        title="Aukiolot"
+        theme={{
+          '--footer-background': 'var(--hauki-footer-background-color)',
+        }}>
+        <Footer.Base
+          copyrightHolder={t('Footer.CopyrightHolder')}
+          copyrightText={t('Footer.CopyrightText')}
+          logo={
+            <Logo
+              src={language === 'sv' ? logoSv : logoFi}
+              size="medium"
+              alt={t('Footer.LogoAlt')}
+            />
+          }
+          backToTopLabel={t('Footer.BackToTopLabel')}>
+          <Footer.Link
+            href={t('Footer.AccessibilityStatementLinkUrl')}
+            target="_blank"
+            label={t('Footer.AccessibilityStatementLink')}
+          />
+          <Footer.Link
+            href="/content-license.txt"
+            target="_blank"
+            label={t('Footer.ContentLicenseLink')}
+          />
+        </Footer.Base>
+      </Footer>
+    </>
+  );
+};
 
 export default HaukiFooter;

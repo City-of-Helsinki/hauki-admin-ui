@@ -46,7 +46,12 @@
       "RemoveModalText": "Du håller på att ta bort öppettiderna",
       "StateClosed": "Stängt",
       "Modify": "Redigera",
-      "Remove": "Ta bort"
+      "Remove": "Ta bort",
+      "ValidUntilFurtherNotice": "Gäller tills vidare",
+      "ValidOnDate": "Gäller den {{startDate}}",
+      "ValidFromDate": "Gäller från {{startDate}}",
+      "ValidUntilDate": "Gäller till {{endDate}}",
+      "ValidBetweenDates": "Gäller från {{startDate}} till {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Valda verksamhetsställena",
@@ -88,5 +93,25 @@
       "PeriodRemoveSuccess": "Öppettider {{periodName}} framgångsrikt borttagen.",
       "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare."
     }
+  },
+  "Header": {
+    "Help": "Anvisning",
+    "LogoAlt": "Helsingfors stad",
+    "FrontPage": "Framsida",
+    "Menu": "Meny",
+    "Title": "Aukiolot",
+    "SkipLink": "Hoppa till innehåll",
+    "SignOutFailed": "Det gick inte att logga ut. Vänligen försök igen senare. Fel: ",
+    "SignOutRejected": "Logga ut avvisades.",
+    "Close": "Stäng"
+  },
+  "Footer": {
+    "CopyrightHolder": "Helsingfors stad",
+    "CopyrightText": "Alla rättigheter förbehållna.",
+    "LogoAlt": "Helsingfors stad",
+    "BackToTopLabel": "Tillbaka till toppen",
+    "AccessibilityStatementLink": "Tillgänglighetsutlåtande",
+    "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/tillganglighetsutlatande",
+    "ContentLicenseLink": "Innehållslicens CC BY 4.0"
   }
 }

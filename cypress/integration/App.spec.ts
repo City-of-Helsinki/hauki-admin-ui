@@ -16,15 +16,12 @@ describe('Open aukiolot app', () => {
     cy.get('[data-test=resource-info]', { timeout: 5000 }).should('be.visible');
 
     cy.wait(1000); // Wait for HDS spinner cleanup.
-    cy.checkA11y(
-      {},
-      {
-        rules: {
-          'duplicate-id-aria': { enabled: false }, // TODO: HAUKI-185
-          'duplicate-id': { enabled: false },
-        },
-      }
-    );
+    cy.checkA11y(undefined, {
+      rules: {
+        'duplicate-id-aria': { enabled: false }, // TODO: HAUKI-185
+        'duplicate-id': { enabled: false },
+      },
+    });
   });
 
   it('Has no detectable a11y violations on add new opening period page', () => {
@@ -38,14 +35,11 @@ describe('Open aukiolot app', () => {
     }).should('be.visible');
 
     cy.wait(1000); // Wait for HDS spinner cleanup.
-    cy.checkA11y(
-      {},
-      {
-        rules: {
-          'duplicate-id-aria': { enabled: false }, // TODO: HAUKI-185
-          'duplicate-id': { enabled: false },
-        },
-      }
-    );
+    cy.checkA11y(undefined, {
+      rules: {
+        'duplicate-id-aria': { enabled: false }, // TODO: HAUKI-185
+        'duplicate-id': { enabled: false },
+      },
+    });
   });
 });

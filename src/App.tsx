@@ -73,7 +73,13 @@ const App = (): JSX.Element => {
     removeTokens();
   }, [setAuthTokens]);
 
-  const [language, setLanguage] = useState(Language.FI);
+  const langStringFromUrl = searchParams?.lang as string;
+  const langFromUrl =
+    langStringFromUrl && langStringFromUrl.toUpperCase() in Language
+      ? (langStringFromUrl.toLowerCase() as Language)
+      : Language.FI;
+
+  const [language, setLanguage] = useState(langFromUrl);
   const appContextValue = useMemo(
     () => ({
       hasOpenerWindow,

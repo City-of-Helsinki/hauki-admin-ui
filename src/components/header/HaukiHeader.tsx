@@ -6,6 +6,7 @@ import {
   IconUser,
   Header,
   logoFiDark,
+  logoSvDark,
   Logo,
   Link,
 } from 'hds-react';
@@ -19,9 +20,10 @@ import { Language } from '../../common/lib/types';
 import { languageOptions } from '../../constants';
 
 const HaukiHeader = (): JSX.Element => {
-  const { hasOpenerWindow, closeAppWindow, setLanguage } = useAppContext();
+  const { hasOpenerWindow, closeAppWindow, language, setLanguage } =
+    useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { authTokens, clearAuth } = authProps;
   const history = useHistory();
   const isAuthenticated = !!authTokens;
@@ -41,14 +43,12 @@ const HaukiHeader = (): JSX.Element => {
         }
         history.push('/');
       } else {
-        showSignOutErrorNotification('Uloskirjautuminen hylättiin.');
+        showSignOutErrorNotification(t('Header.SignOutRejected'));
       }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error('Sign out failed:', (e as Error).message);
-      showSignOutErrorNotification(
-        `Uloskirjautuminen epäonnistui. Yritä myöhemmin uudestaan. Virhe: ${e}`
-      );
+      showSignOutErrorNotification(t('Header.SignOutFailed') + e);
     }
   };
 
@@ -72,42 +72,57 @@ const HaukiHeader = (): JSX.Element => {
       }}
       className="header"
       languages={languageOptions}
-      onDidChangeLanguage={(language) => {
-        i18n.changeLanguage(language);
+      defaultLanguage={language}
+      onDidChangeLanguage={(lang) => {
+        i18n.changeLanguage(lang);
         if (setLanguage) {
           const newLanguage =
-            Language[language.toUpperCase() as keyof typeof Language];
+            Language[lang.toUpperCase() as keyof typeof Language];
 
           setLanguage(newLanguage);
+
+          const urlSearchParams = new URLSearchParams(window.location.search);
+          urlSearchParams.set('lang', newLanguage);
+
+          history.push({
+            pathname: window.location.pathname,
+            search: urlSearchParams.toString(),
+          });
         }
       }}>
-      <Header.SkipLink skipTo="#main" label="Siirry pääsisältöön" />
+      <Header.SkipLink skipTo="#main" label={t('Header.SkipLink')} />
       <Header.ActionBar
-        title="Aukiolot"
+        title={t('Header.Title')}
         titleHref={`/resource/${id}`}
-        frontPageLabel="Etusivu"
-        menuButtonAriaLabel="Menu"
-        logo={<Logo src={logoFiDark} alt="Helsingin kaupunki" />}>
+        frontPageLabel={t('Header.FrontPage')}
+        menuButtonAriaLabel={t('Header.Menu')}
+        logo={
+          <Logo
+            src={language === 'sv' ? logoSvDark : logoFiDark}
+            alt={t('Header.LogoAlt')}
+          />
+        }>
         <Header.LanguageSelector />
         {isAuthenticated && (
           <Header.ActionBarItem
             fixedRightPosition
             id="action-bar-user"
             label={authTokens?.[TokenKeys.usernameKey]}
+            closeLabel={t('Header.Close')}
             icon={<IconUser aria-hidden />}>
             <Link
               className="closeLink"
               data-testid="close-app-button"
               href="#"
               onClick={onCloseButtonClick}>
-              <IconCrossCircleFill aria-hidden /> Sulje
+              <IconCrossCircleFill aria-hidden /> {t('Header.Close')}
             </Link>
           </Header.ActionBarItem>
         )}
       </Header.ActionBar>
       <Header.NavigationMenu>
         <Header.Link
-          label="Ohje"
+          label={t('Header.Help')}
           href="https://kaupunkialustana.hel.fi/aukiolosovellus-ohje/"
           target="_blank"
           rel="noreferrer"

@@ -1,6 +1,8 @@
 @import '~hds-design-tokens/lib/all.scss';
 
 .header {
+  flex-shrink: 0;
+
   --nav-link-font-color: var(--color-black-90) !important;
 
   @media screen and (max-width: $breakpoint-l) {

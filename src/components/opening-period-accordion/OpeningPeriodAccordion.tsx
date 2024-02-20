@@ -155,6 +155,7 @@ const OpeningPeriodAccordion = ({
               value={id}
               checked={checked}
               onChange={toggleChecked}
+              className="opening-period-header-checkbox"
             />
           )}
         <h3 className="opening-period-title opening-period-header-column">

@@ -61,6 +61,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                   openButtonAriaLabel="Valitse alkupäivämäärä"
                   required
                   value={value}
+                  crossOrigin={undefined}
                 />
               )}
               rules={{
@@ -91,6 +92,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                   openButtonAriaLabel="Valitse loppupäivämäärä"
                   required
                   value={value}
+                  crossOrigin={undefined}
                 />
               )}
               rules={{

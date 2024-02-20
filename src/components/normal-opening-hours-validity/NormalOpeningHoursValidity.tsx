@@ -72,6 +72,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                     openButtonAriaLabel="Valitse alkupäivämäärä"
                     required
                     value={startDateField.value}
+                    crossOrigin={undefined}
                   />
                 )}
               />
@@ -107,6 +108,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                       openButtonAriaLabel="Valitse loppupäivämäärä"
                       required
                       value={endDateField.value}
+                      crossOrigin={undefined}
                     />
                   )}
                 />

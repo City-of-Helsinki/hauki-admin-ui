@@ -64,6 +64,10 @@
   text-align: right;
 }
 
+.holidays-table-checkbox {
+  width: $spacing-m;
+}
+
 @media screen and (min-width: $breakpoint-m) {
   .holidays-table__cell--date {
     text-align: left;

@@ -45,7 +45,12 @@
       "RemoveModalText": "You are about to remove an opening period",
       "StateClosed": "Closed",
       "Modify": "Edit",
-      "Remove": "Remove"
+      "Remove": "Remove",
+      "ValidUntilFurtherNotice": "Valid until further notice",
+      "ValidOnDate": "Valid on {{startDate}}",
+      "ValidFromDate": "Valid from {{startDate}}",
+      "ValidUntilDate": "Valid until {{endDate}}",
+      "ValidBetweenDates": "Valid between {{startDate}} - {{endDate}}"
     },
     "ResourcesSection": {
       "Title": "Selected service points",
@@ -87,5 +92,25 @@
       "PeriodRemoveSuccess": "Opening hours {{periodName}} successfully deleted.",
       "PeriodRemoveFailed": "Failed to remove opening hours. Try again later."
     }
+  },
+  "Header": {
+    "Help": "Guide",
+    "LogoAlt": "City of Helsinki",
+    "FrontPage": "Front page",
+    "Menu": "Menu",
+    "Title": "Aukiolot",
+    "SkipLink": "Skip to content",
+    "SignOutFailed": "Logout failed. Please try again later. Error: ",
+    "SignOutRejected": "Logout was rejected.",
+    "Close": "Close"
+  },
+  "Footer": {
+    "CopyrightHolder": "City of Helsinki",
+    "CopyrightText": "All rights reserved.",
+    "LogoAlt": "City of Helsinki",
+    "BackToTopLabel": "Back to top",
+    "AccessibilityStatementLink": "Accessibility statement",
+    "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/accessibility-statement",
+    "ContentLicenseLink": "Content license CC BY 4.0"
   }
 }
