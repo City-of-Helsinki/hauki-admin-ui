@@ -111,6 +111,7 @@
     "LogoAlt": "Helsingfors stad",
     "BackToTopLabel": "Tillbaka till toppen",
     "AccessibilityStatementLink": "Tillgänglighetsutlåtande",
+    "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/tillganglighetsutlatande",
     "ContentLicenseLink": "Innehållslicens CC BY 4.0"
   }
 }

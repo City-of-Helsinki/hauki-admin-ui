@@ -29,7 +29,7 @@ const HaukiFooter = (): JSX.Element => {
           }
           backToTopLabel={t('Footer.BackToTopLabel')}>
           <Footer.Link
-            href="https://kaupunkialustana.hel.fi/aukiolosovelluksen-saavutettavuusseloste/"
+            href={t('Footer.AccessibilityStatementLinkUrl')}
             target="_blank"
             label={t('Footer.AccessibilityStatementLink')}
           />
