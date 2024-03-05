@@ -3,6 +3,7 @@
 describe('User adds a new exception date period', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
+    cy.acceptAllCookies();
   });
 
   it('Users successfully adds a new exception opening hours', () => {

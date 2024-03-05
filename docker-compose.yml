@@ -1,8 +1,12 @@
-version: "3.7"
+version: '3.7'
 services:
   app:
+    platform: linux/amd64
     container_name: hauki-admin-ui
     build:
       context: .
+    env_file:
+      - .env
+      - .env.local
     ports:
       - '3000:8000'

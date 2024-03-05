@@ -3,6 +3,7 @@
 describe('Unauthenticated user', () => {
   beforeEach(() => {
     cy.visitResourcePageAsUnauthenticatedUser(Cypress.env('resourceId'));
+    cy.acceptAllCookies();
   });
 
   it('Is redirected to unauthenticated page', () => {
@@ -13,6 +14,7 @@ describe('Unauthenticated user', () => {
 describe('Authenticated user', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
+    cy.acceptAllCookies();
   });
 
   it('should logout permanently on application close', () => {

@@ -41,5 +41,6 @@ declare namespace Cypress {
       hours: string;
       minutes: string;
     }) => Chainable;
+    acceptAllCookies(): void;
   }
 }

@@ -4,6 +4,7 @@ describe('User adds a new holiday opening period', () => {
   beforeEach(() => {
     cy.visitResourcePageAsAuthenticatedUser(Cypress.env('resourceId'));
     cy.intercept('POST', '/v1/date_period/').as('saveHoliday');
+    cy.acceptAllCookies();
   });
 
   it('Users successfully adds a new holiday opening hours', () => {

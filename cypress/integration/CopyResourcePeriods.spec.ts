@@ -8,6 +8,8 @@ describe('User visits resource page with target resource', () => {
       Cypress.env('resourceId'),
       Cypress.env('targetResourceId')
     );
+
+    cy.acceptAllCookies();
   });
 
   it('Contains copy section title and copy button', () => {

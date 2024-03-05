@@ -112,6 +112,7 @@
     "BackToTopLabel": "Takaisin ylös",
     "AccessibilityStatementLink": "Saavutettavuusseloste",
     "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/saavutettavuusseloste",
-    "ContentLicenseLink": "Sisältölisenssi CC BY 4.0"
+    "ContentLicenseLink": "Sisältölisenssi CC BY 4.0",
+    "CookiesLink": "Evästeasetukset"
   }
 }
