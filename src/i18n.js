@@ -16,10 +16,10 @@ i18n
       escapeValue: false,
     },
     resources: {
-      fi: {translation: fi},
-      en: {translation: en},
-      sv: {translation: sv}
-    }
+      fi: { translation: fi },
+      en: { translation: en },
+      sv: { translation: sv },
+    },
   });
 
 export default i18n;

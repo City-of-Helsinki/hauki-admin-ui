@@ -1,6 +1,12 @@
 # ===============================================
-FROM helsinkitest/node:16-slim AS staticbuilder
+FROM registry.access.redhat.com/ubi8/nodejs-18 AS staticbuilder
 # ===============================================
+
+WORKDIR /app
+
+USER root
+RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+RUN yum -y install yarn
 
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
 ENV NPM_CONFIG_LOGLEVEL warn
@@ -14,24 +20,26 @@ ENV NODE_ENV $NODE_ENV
 ENV YARN_VERSION 1.19.1
 RUN yarn policies set-version $YARN_VERSION
 
-USER root
-RUN apt-install.sh build-essential
+# Install dependencies
+COPY package.json yarn.lock /app/
+RUN chown -R default:root /app
 
 # Use non-root user
-USER appuser
+USER default
 
-# Install dependencies
-COPY --chown=appuser:appuser package.json yarn.lock /app/
 RUN yarn && yarn cache clean --force
 
 # Copy all files
-COPY --chown=appuser:appuser . .
+COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.eslint.json .prettierrc.json .env* /app/
+COPY ./src /app/src
+COPY ./test /app/test
+COPY ./public /app/public
 
 # Build application
 RUN yarn build
 
 # =============================
-FROM registry.access.redhat.com/ubi8/nginx-118 as production
+FROM registry.access.redhat.com/ubi8/nginx-120 as production
 # =============================
 
 USER root

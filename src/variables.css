@@ -15,15 +15,25 @@
   --opening-periods-header-background-color: var(--color-coat-of-arms);
   --add-new-opening-period-button-color: white;
   --opening-periods-header-color: white;
-  --opening-periods-header-light-background-color: var(--color-coat-of-arms-light);
+  --opening-periods-header-light-background-color: var(
+    --color-coat-of-arms-light
+  );
   --opening-periods-header-light-color: var(--hauki-content-text-color);
   --opening-periods-header-light-button-color: var(--color-coat-of-arms-dark);
-  --opening-periods-header-light-button-border-color: var(--color-coat-of-arms-dark);
-  --opening-periods-header-light-button-focus-color: var(--color-coat-of-arms-dark);
-  --opening-periods-header-light-button-hover-background-color: var(--color-coat-of-arms-dark);
+  --opening-periods-header-light-button-border-color: var(
+    --color-coat-of-arms-dark
+  );
+  --opening-periods-header-light-button-focus-color: var(
+    --color-coat-of-arms-dark
+  );
+  --opening-periods-header-light-button-hover-background-color: var(
+    --color-coat-of-arms-dark
+  );
   --opening-periods-header-light-button-hover-color: white;
   --collapse-header-color: var(--color-coat-of-arms);
-  --opening-period-listing-button-hover-background-color: var(--color-coat-of-arms-light);
+  --opening-period-listing-button-hover-background-color: var(
+    --color-coat-of-arms-light
+  );
   --opening-period-listing-button-focus-border-color: var(--color-coat-of-arms);
   --form-section-background-color: white;
   --modal-backdrop-background-color: rgba(0, 0, 0, 0.2);
