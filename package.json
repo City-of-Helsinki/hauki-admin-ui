@@ -25,7 +25,7 @@
     "@types/testing-library__dom": "7.5.0",
     "@typescript-eslint/parser": "^6.20.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
-    "axios": "^0.21.2",
+    "axios": "^0.28.0",
     "babel-eslint": "^10.1.0",
     "cypress-axe": "^0.12.1",
     "date-fns": "2.29.3",
