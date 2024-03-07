@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.3.0...hauki-admin-ui-v1.4.0) (2024-03-07)
+
+
+### Features
+
+* Add HDS CookieModal and Matomo tracking HAUKI-483 ([24cc3a6](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/24cc3a65f09f668dbbeedcbd9866f7247e2fea2f))
+* Install commitlint and husky hooks HAUKI-603 ([83084e0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/83084e09d18669e28e602bc45b5e25c0128dcc72))
+
+
+### Bug Fixes
+
+* Fixing app build, unit tests HAUKI-603 ([8b70f67](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8b70f6765f77830b17d5cb2db64e5d1e88609d9b))
+* Tsconfig.json types HAUKI-603 ([15425f8](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/15425f8cf764bc01c4759cea9c98b069a84769f9))
+
 ## [1.3.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.2.0...hauki-admin-ui-v1.3.0) (2024-02-20)
 
 
