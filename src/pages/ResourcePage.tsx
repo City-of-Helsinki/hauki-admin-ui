@@ -222,7 +222,7 @@ const ResourcePage = ({
                 style={{
                   marginTop: 'var(--spacing-m)',
                 }}>
-                {t('ErrorNothingSelected')}
+                {t('ResourcePage.Notifications.ErrorNothingSelected')}
               </Notification>
             </div>
           )}
