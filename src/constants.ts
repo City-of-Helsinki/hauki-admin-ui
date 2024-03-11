@@ -11,16 +11,20 @@ import {
 export const uiRuleLabels: {
   [key in RuleType]: { [x in Language]: string };
 } = {
-  week_every: { fi: 'Joka viikko', sv: 'Joka viikko', en: 'Joka viikko' },
+  week_every: {
+    fi: 'Joka viikko',
+    sv: 'Varje vecka',
+    en: 'Every week',
+  },
   week_even: {
     fi: 'Parilliset viikot',
-    sv: 'Parilliset viikot',
-    en: 'Parilliset viikot',
+    sv: 'Jämna veckor',
+    en: 'Even weeks ',
   },
   week_odd: {
     fi: 'Parittomat viikot',
-    sv: 'Parittomat viikot',
-    en: 'Parittomat viikot',
+    sv: 'Udda veckor',
+    en: 'Odd weeks',
   },
 };
 
