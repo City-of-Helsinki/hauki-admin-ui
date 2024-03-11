@@ -25,6 +25,7 @@ const ResourceTitle = ({
   const title = useRef<HTMLHeadingElement>(null);
   const name =
     resource?.name[language] ||
+    resource?.name?.fi ||
     displayLangVersionNotFound({
       language,
       label: `${

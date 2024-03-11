@@ -274,12 +274,12 @@ const ResourceBatchUpdatePage = ({
             .filter((r) => r.resource)
             .map((r) => ({
               id: r.id,
-              name: r?.resource?.name[language],
+              name: r?.resource?.name[language] || r?.resource?.name?.fi,
             }));
 
           const newData = {
             mainResourceId: resource.id,
-            mainResourceName: resource?.name[language],
+            mainResourceName: resource?.name[language] || resource?.name.fi,
             targetResources,
           };
 
