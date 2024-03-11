@@ -97,7 +97,7 @@ const ResourcePage = ({
         const targetResourceIDs = targetResourcesString.split(',');
         const newData = {
           mainResourceId: resource.id,
-          mainResourceName: resource?.name[language],
+          mainResourceName: resource?.name[language] || resource?.name?.fi,
           targetResources: targetResourceIDs.map((id) => ({
             id,
             name: '',
@@ -244,6 +244,7 @@ const ResourcePage = ({
                 href={`/resource/${parentResource.id}`}
                 text={
                   parentResource?.name[language] ||
+                  parentResource?.name?.fi ||
                   displayLangVersionNotFound({
                     language,
                     label: 'toimipisteen nimi',
@@ -279,6 +280,7 @@ const ResourcePage = ({
                 language={language}
                 heading={
                   childResource?.name[language] ||
+                  childResource?.name?.fi ||
                   displayLangVersionNotFound({
                     language,
                     label: 'alakohteen nimi',
