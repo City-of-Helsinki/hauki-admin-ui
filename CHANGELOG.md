@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.0...hauki-admin-ui-v1.4.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* Language string bug ([55c9e4e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/55c9e4ea48dfb16dc2c7efa4155b0f1cb9766b1a))
+* Translations ([4157bd1](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/4157bd13bb5780df6c5b81e05773d3d7059a154f))
+* Try Finnish resource name if the desired language is not available ([3cfaf7e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3cfaf7eb8510a816c24502d656cd5cb974add3ad))
+
 ## [1.4.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.3.0...hauki-admin-ui-v1.4.0) (2024-03-07)
 
 
