@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.1...hauki-admin-ui-v1.4.2) (2024-03-13)
+
+
+### Bug Fixes
+
+* Missing date period config ([86c5ba2](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/86c5ba286e732b6d68df547a1df2881115210b9b))
+
 ## [1.4.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.0...hauki-admin-ui-v1.4.1) (2024-03-11)
 
 
