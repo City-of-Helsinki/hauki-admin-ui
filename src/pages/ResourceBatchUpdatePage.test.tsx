@@ -260,6 +260,11 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
+jest.mock('../services/useDatePeriodConfig', () => ({
+  __esModule: true,
+  default: jest.fn(() => [false, jest.fn()]),
+}));
+
 const renderPage = () => {
   return render(
     <Router>

@@ -26,6 +26,7 @@ import { DatePeriodType, Language, Resource } from '../common/lib/types';
 import sessionStorage from '../common/utils/storage/sessionStorage';
 import './ResourceBatchUpdatePage.scss';
 import { TargetResourcesProps } from '../components/resource-opening-hours/ResourcePeriodsCopyFieldset';
+import useDatePeriodConfig from '../services/useDatePeriodConfig';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import {
   DatePeriodSelectState,
@@ -82,6 +83,7 @@ const ResourceBatchUpdatePage = ({
     setDatePeriodSelectState,
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
+  const datePeriodConfig = useDatePeriodConfig();
   const { t, i18n } = useTranslation();
 
   // page constants
@@ -417,6 +419,7 @@ const ResourceBatchUpdatePage = ({
                 language={language}
                 initiallyOpen={false}
                 editUrl=""
+                datePeriodConfig={datePeriodConfig}
               />
             ))}
           </OpeningPeriodsSection>
@@ -437,6 +440,7 @@ const ResourceBatchUpdatePage = ({
                 language={language}
                 initiallyOpen={false}
                 editUrl=""
+                datePeriodConfig={datePeriodConfig}
               />
             ))}
           </OpeningPeriodsSection>
@@ -457,6 +461,7 @@ const ResourceBatchUpdatePage = ({
                 language={language}
                 initiallyOpen={false}
                 editUrl=""
+                datePeriodConfig={datePeriodConfig}
               />
             ))}
           </OpeningPeriodsSection>
