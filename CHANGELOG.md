@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.2...hauki-admin-ui-v1.4.3) (2024-03-14)
+
+
+### Bug Fixes
+
+* Env variable MATOMO_ENABLED should be string ([c06b579](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c06b5791919957e3da610fd966b82c971e1c710b))
+
 ## [1.4.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.1...hauki-admin-ui-v1.4.2) (2024-03-13)
 
 
