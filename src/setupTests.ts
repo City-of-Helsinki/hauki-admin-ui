@@ -29,5 +29,5 @@ window.ENV = {
   MATOMO_SRC_URL: '',
   MATOMO_URL_BASE: 'test',
   MATOMO_SITE_ID: 'test123',
-  MATOMO_ENABLED: false,
+  MATOMO_ENABLED: 'false',
 };

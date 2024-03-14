@@ -104,7 +104,7 @@ const App = (): JSX.Element => {
         urlBase: window?.ENV?.MATOMO_URL_BASE,
         siteId: window?.ENV?.MATOMO_SITE_ID,
         srcUrl: window?.ENV?.MATOMO_SRC_URL,
-        enabled: window?.ENV?.MATOMO_ENABLED,
+        enabled: window?.ENV?.MATOMO_ENABLED === 'true',
         configurations: {
           setDoNotTrack: true,
         },
