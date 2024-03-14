@@ -9,7 +9,7 @@ interface Window {
     MATOMO_SRC_URL: string;
     MATOMO_URL_BASE: string;
     MATOMO_SITE_ID: string;
-    MATOMO_ENABLED: boolean;
+    MATOMO_ENABLED: string;
   };
   // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any
   _paq: [string, ...any[]][];
