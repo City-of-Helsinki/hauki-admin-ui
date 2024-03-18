@@ -91,7 +91,11 @@ specification, and line length is limited to 72 characters.
 
 ### Publish to Dev environment
 
-!!! Note Use [semver](https://semver.org/) versioning.
+#### Review environment
+
+New commit to PR will trigger review pipeline. Review pipeline builds application and deploys a dynamic environment to the Openshift dev. The review environment can be used to verify PR.
+
+#### Dev environment
 
 Release to dev environment <https://hauki-admin-ui.dev.hel.ninja> is handled automatically from master branch. Updates to master branch triggers
 azure pipeline that will run tests, build and deploy to dev environment hosted by red hat openshift.
