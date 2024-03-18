@@ -89,13 +89,27 @@ specification, and line length is limited to 72 characters.
 
 ## RELEASE
 
-### Release to Test environment
+### Publish to Dev environment
 
-**Note**: Remember to update the package.json version number before releasing something new. Use [semver](https://semver.org/) versioning.
+#### Review environment
 
-Release to test environment <https://hauki-admin-ui.dev.hel.ninja> is handled automatically from master branch. Updates to master branch triggers
-azure pipeline that will run tests, build and push image to dockerhub, and finally release it to test environment hosted by red hat openshift.
+New commit to PR will trigger review pipeline. Review pipeline builds application and deploys a dynamic environment to the Openshift dev. The review environment can be used to verify PR.
+
+#### Dev environment
+
+Release to dev environment <https://hauki-admin-ui.dev.hel.ninja> is handled automatically from master branch. Updates to master branch triggers
+azure pipeline that will run tests, build and deploy to dev environment hosted by red hat openshift.
 Currently azure-pipeline is configured directly from version control, but red hat openshift configuration resides in openshift cluster.
+
+### Release to Test, Stage and Production environments
+
+Release is done by [release-please](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/DD/pages/8278966368/Releases+with+release-please).
+It creates release PR based on commits messages. Merge of the PR will trigger a release pipeline that build and deploys to stage and test environments automatically.
+
+Release-please update the package.json version number automatically and it is included to release PR.
+
+#### Publish to production environments
+Publishing to production requires manual approval in the DevOps release pipeline.
 
 ## OTHER AVAILABLE SCRIPTS
 
