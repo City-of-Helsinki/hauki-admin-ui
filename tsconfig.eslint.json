@@ -3,6 +3,8 @@
   "include": [
     "src",
     "cypress",
-    "test"
+    "test",
+    "e2e",
+    "playwright.config.ts"
   ]
 }
