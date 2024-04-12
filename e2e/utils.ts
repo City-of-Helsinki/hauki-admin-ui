@@ -26,8 +26,11 @@ export const getResourceUrl = async () => {
 };
 
 export const getResource = async (): Promise<Resource> => {
+  const authParams = await getAuthParams();
   const haukiResource = process.env.HAUKI_RESOURCE || '?';
-  const response = await fetch(`${apiUrl}/v1/resource/${haukiResource}`);
+
+  const url = `${apiUrl}/v1/resource/${haukiResource}?${authParams}`;
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch resource: ${response.statusText}`);
