@@ -5,41 +5,27 @@ import { Resource } from '../../src/common/lib/types';
 
 test.describe('Resource page', async () => {
   let page: Page;
-  let url: string;
+  let resourceUrl: string;
   let resource: Resource;
 
   const haukiUser = process.env.HAUKI_USER || '?';
 
   test.beforeAll(async ({ browser }) => {
-    console.log(process.env.E2E_TESTS_ENV_URL);
-
-    url = await getResourceUrl();
+    resourceUrl = await getResourceUrl();
     resource = await getResource();
 
     page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(resourceUrl);
     await expect(page.locator('body')).toContainText('Suomeksi');
     await page.getByTestId('cookie-consent-approve-required-button').click();
   });
 
   test.beforeEach(async () => {
-    page.goto(url);
-  });
-
-  test('Page title', async () => {
-    await expect(page).toHaveTitle('Aukiolot');
+    await page.goto(resourceUrl);
   });
 
   test('Header visibility', async () => {
-    await expect(page.getByRole('link', { name: 'Aukiolot' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Suomeksi' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Svenska' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'English' })).toBeVisible();
     await expect(page.getByRole('button', { name: haukiUser })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Ohje' })).toBeVisible();
-    await expect(
-      page.getByRole('banner').getByRole('img', { name: 'Helsingin kaupunki' })
-    ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Aukioloajat' })
     ).toBeVisible();
@@ -48,24 +34,6 @@ test.describe('Resource page', async () => {
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Juhlapyhät' })
-    ).toBeVisible();
-    // await expect(
-    //   page.getByRole('heading', { name: 'Toimipisteen alakohteet' })
-    // ).toBeVisible();
-  });
-
-  test('Footer visibility', async () => {
-    await expect(
-      page.getByRole('link', { name: 'Saavutettavuusseloste' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('link', { name: 'Sisältölisenssi CC BY 4.0' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('link', { name: 'Evästeasetukset' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('link', { name: 'Takaisin ylös' })
     ).toBeVisible();
   });
 

@@ -22,7 +22,7 @@ export const getResourceUrl = async () => {
   const authParams = await getAuthParams();
   const haukiResource = process.env.HAUKI_RESOURCE || '?';
 
-  return `resource/${haukiResource}?${authParams}`;
+  return `/resource/${haukiResource}?${authParams}`;
 };
 
 export const getResource = async (): Promise<Resource> => {
