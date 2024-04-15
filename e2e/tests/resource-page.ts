@@ -11,6 +11,8 @@ test.describe('Resource page', async () => {
   const haukiUser = process.env.HAUKI_USER || '?';
 
   test.beforeAll(async ({ browser }) => {
+    console.log(process.env.E2E_TESTS_ENV_URL);
+
     url = await getResourceUrl();
     resource = await getResource();
 
