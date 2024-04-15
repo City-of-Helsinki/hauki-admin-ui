@@ -53,4 +53,5 @@ export default defineConfig({
       testMatch: [/tests/],
     },
   ],
+  globalTeardown: require.resolve('./e2e/tests/global.teardown.ts'),
 });
