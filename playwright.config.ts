@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from '@playwright/test';
+import { e2eTestUrl } from './e2e/constants';
 
 export default defineConfig({
   testDir: './e2e/tests',
@@ -24,8 +25,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL:
-      process.env.E2E_TESTS_ENV_URL ?? 'https://hauki-admin-ui.dev.hel.ninja',
+    baseURL: e2eTestUrl,
 
     ignoreHTTPSErrors: true,
 

@@ -1,15 +1,20 @@
 import { promisify } from 'util';
 import { exec } from 'child_process';
 import { DatePeriod, Resource } from '../src/common/lib/types';
-
-const apiUrl = process.env.API_URL || 'http://localhost:8000';
-const haukiResource = process.env.HAUKI_RESOURCE || 'test:1';
+import { apiUrl, testData } from './constants';
 
 const getAuthParams = async () => {
   const execAsync = promisify(exec);
 
   const { stdout, stderr } = await execAsync(
-    'node ./scripts/generate-auth-params.js'
+    'node ./scripts/generate-auth-params.js',
+    {
+      env: {
+        ...process.env,
+        ...testData,
+        API_URL: apiUrl,
+      },
+    }
   );
 
   if (stderr) {
@@ -22,13 +27,13 @@ const getAuthParams = async () => {
 export const getResourceUrl = async () => {
   const authParams = await getAuthParams();
 
-  return `/resource/${haukiResource}?${authParams}`;
+  return `/resource/${testData.HAUKI_RESOURCE}?${authParams}`;
 };
 
 export const getResource = async (): Promise<Resource> => {
   const authParams = await getAuthParams();
 
-  const url = `${apiUrl}/v1/resource/${haukiResource}?${authParams}`;
+  const url = `${apiUrl}/v1/resource/${testData.HAUKI_RESOURCE}?${authParams}`;
   const response = await fetch(url);
 
   if (!response.ok) {

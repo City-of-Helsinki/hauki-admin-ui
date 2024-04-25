@@ -2,13 +2,12 @@
 import { Page, expect, test } from '@playwright/test';
 import { getResource, getResourceUrl } from '../utils';
 import { Resource } from '../../src/common/lib/types';
+import { testData } from '../constants';
 
 test.describe('Resource page', async () => {
   let page: Page;
   let resourceUrl: string;
   let resource: Resource;
-
-  const haukiUser = process.env.HAUKI_USER || '?';
 
   test.beforeAll(async ({ browser }) => {
     resourceUrl = await getResourceUrl();
@@ -25,7 +24,9 @@ test.describe('Resource page', async () => {
   });
 
   test('Header visibility', async () => {
-    await expect(page.getByRole('button', { name: haukiUser })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: testData.HAUKI_USER })
+    ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Aukioloajat' })
     ).toBeVisible();
