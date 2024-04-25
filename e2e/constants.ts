@@ -1,4 +1,4 @@
-export const apiUrl = process.env.API_URL || 'http://localhost:8000';
+export const apiUrl = process.env.API_URL || 'https://hauki-api.dev.hel.ninja';
 
 export const e2eTestUrl =
   process.env.E2E_TESTS_ENV_URL ?? 'http://localhost:3000';
