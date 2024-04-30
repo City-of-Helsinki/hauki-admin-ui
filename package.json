@@ -73,9 +73,8 @@
     "cypress-run-chrome": "cypress run --browser chrome",
     "cypress-run-chrome-headless": "cypress run --headless --browser chrome",
     "test:e2e:install": "yarn playwright install",
-    "test:e2e:ci": "npx playwright test",
-    "test:e2e:start": "npx playwright test",
-    "test:e2e:record": "npx playwright codegen https://hauki-admin-ui.dev.hel.ninja/",
+    "test:e2e:ci": "yarn playwright test",
+    "test:e2e:start": "yarn playwright test",
     "postinstall": "if test \"$NODE_ENV\" != \"production\" ; then husky install ; fi"
   },
   "browserslist": {
@@ -98,7 +97,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
-    "@playwright/test": "^1.40.1",
+    "@playwright/test": "^1.42.1",
     "cypress": "^6.5.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",

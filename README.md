@@ -120,6 +120,10 @@ In the project directory, you can run:
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `test:e2e:start`
+
+Runs Playwright (e2e) tests locally. Requires the same set of HAUKI env variables as running service locally.
+
 ### `yarn test-cypress`
 
 Runs cypress (e2e) tests locally. Requires the same set of HAUKI env variables as running service locally.
