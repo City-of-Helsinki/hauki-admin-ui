@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
@@ -94,7 +95,10 @@ const ResourceBatchUpdatePage = ({
   const language = contextLanguage ?? Language.FI;
   const targetResourcesStorageKey = 'targetResources';
   // forms a nice string from feedback emails env variable
-  const feedbackEmailsString = window?.ENV?.FEEDBACK_EMAILS?.replace(/\s/g, '')
+  const feedbackEmailsString = window?._env_?.FEEDBACK_EMAILS?.replace(
+    /\s/g,
+    ''
+  )
     .replace(/,(?=[^,]*$)/, ' ja ')
     .replace(/,/g, ', ');
 

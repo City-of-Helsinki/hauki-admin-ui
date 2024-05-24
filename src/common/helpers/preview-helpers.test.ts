@@ -72,13 +72,13 @@ describe('preview-helpers', () => {
 
   it('should return opening hours grouped correctly', () => {
     expect(openingHoursToPreviewRows(openingHours)).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "openingHours": Array [
-            Object {
-              "timeSpans": Array [
-                Object {
-                  "description": Object {
+      [
+        {
+          "openingHours": [
+            {
+              "timeSpans": [
+                {
+                  "description": {
                     "en": null,
                     "fi": null,
                     "sv": null,
@@ -88,8 +88,8 @@ describe('preview-helpers', () => {
                   "resource_state": "open",
                   "start_time": "08:00",
                 },
-                Object {
-                  "description": Object {
+                {
+                  "description": {
                     "en": null,
                     "fi": null,
                     "sv": null,
@@ -100,7 +100,7 @@ describe('preview-helpers', () => {
                   "start_time": "16:00",
                 },
               ],
-              "weekdays": Array [
+              "weekdays": [
                 1,
                 2,
                 3,
@@ -108,10 +108,10 @@ describe('preview-helpers', () => {
                 5,
               ],
             },
-            Object {
-              "timeSpans": Array [
-                Object {
-                  "description": Object {
+            {
+              "timeSpans": [
+                {
+                  "description": {
                     "en": null,
                     "fi": null,
                     "sv": null,
@@ -121,8 +121,8 @@ describe('preview-helpers', () => {
                   "resource_state": "open",
                   "start_time": "10:00",
                 },
-                Object {
-                  "description": Object {
+                {
+                  "description": {
                     "en": null,
                     "fi": null,
                     "sv": null,
@@ -133,14 +133,14 @@ describe('preview-helpers', () => {
                   "start_time": "17:00",
                 },
               ],
-              "weekdays": Array [
+              "weekdays": [
                 6,
               ],
             },
-            Object {
-              "timeSpans": Array [
-                Object {
-                  "description": Object {
+            {
+              "timeSpans": [
+                {
+                  "description": {
                     "en": null,
                     "fi": null,
                     "sv": null,
@@ -151,12 +151,12 @@ describe('preview-helpers', () => {
                   "start_time": null,
                 },
               ],
-              "weekdays": Array [
+              "weekdays": [
                 7,
               ],
             },
           ],
-          "rule": Object {
+          "rule": {
             "group": 1,
             "id": undefined,
             "type": "week_every",

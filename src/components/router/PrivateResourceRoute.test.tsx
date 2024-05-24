@@ -56,7 +56,7 @@ const mockContext = (
     tokens: testTokens,
   }
 ): void => {
-  jest.spyOn(AuthContext, 'useAuth').mockImplementation(
+  vi.spyOn(AuthContext, 'useAuth').mockImplementation(
     () =>
       ({
         authTokens: tokens,
@@ -66,14 +66,14 @@ const mockContext = (
 };
 
 const mockPermissionsApi = (hasPermission: boolean): void => {
-  jest
-    .spyOn(api, 'testResourcePostPermission')
-    .mockImplementation(() => Promise.resolve(hasPermission));
+  vi.spyOn(api, 'testResourcePostPermission').mockImplementation(() =>
+    Promise.resolve(hasPermission)
+  );
 };
 
 describe(`<PrivateResourceRoute />`, () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should show loading indicator', async () => {
@@ -151,9 +151,9 @@ describe(`<PrivateResourceRoute />`, () => {
       },
     };
 
-    jest
-      .spyOn(api, 'testResourcePostPermission')
-      .mockImplementation(() => Promise.reject(resourceNotFoundError));
+    vi.spyOn(api, 'testResourcePostPermission').mockImplementation(() =>
+      Promise.reject(resourceNotFoundError)
+    );
 
     const renderedComponent = renderRoutesWithPrivateRoute();
 

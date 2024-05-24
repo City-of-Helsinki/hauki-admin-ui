@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
@@ -17,6 +15,7 @@ import * as datePeriodConfigService from '../services/datePeriodFormConfig';
 import ResourcePage from './ResourcePage';
 import * as holidays from '../services/holidays';
 import { SelectedDatePeriodsProvider } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
+import * as useGotToResourceBatchUpdataPage from '../hooks/useGoToResourceBatchUpdatePage';
 
 const testResource: Resource = {
   id: 1186,
@@ -232,9 +231,9 @@ const testDatePeriodWithTimeSpans: ApiDatePeriod[] = [
 ];
 
 // Mock for using useGoToResourceBatchUpdatePage hook
-const mockUseGoToResourceBatchUpdatePage = jest.fn();
+const mockUseGoToResourceBatchUpdatePage = vi.fn();
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -254,27 +253,28 @@ jest.mock('react-i18next', () => ({
 
 describe(`<ResourcePage />`, () => {
   beforeEach(() => {
-    jest
-      .spyOn(api, 'getResource')
-      .mockImplementation(() => Promise.resolve(testResource));
+    vi.spyOn(api, 'getResource').mockImplementation(() =>
+      Promise.resolve(testResource)
+    );
 
-    jest
-      .spyOn(api, 'getDatePeriods')
-      .mockImplementation(() => Promise.resolve([testDatePeriod]));
+    vi.spyOn(api, 'getDatePeriods').mockImplementation(() =>
+      Promise.resolve([testDatePeriod])
+    );
 
-    jest
-      .spyOn(datePeriodConfigService, 'getDatePeriodFormConfig')
-      .mockImplementation(() => Promise.resolve(testDatePeriodOptions));
+    vi.spyOn(
+      datePeriodConfigService,
+      'getDatePeriodFormConfig'
+    ).mockImplementation(() => Promise.resolve(testDatePeriodOptions));
 
-    jest
-      .spyOn(api, 'getChildResourcesByParentId')
-      .mockImplementation(() => Promise.resolve([testChildResource]));
+    vi.spyOn(api, 'getChildResourcesByParentId').mockImplementation(() =>
+      Promise.resolve([testChildResource])
+    );
 
-    jest
-      .spyOn(api, 'getParentResourcesByChildId')
-      .mockImplementation(() => Promise.resolve([testParentResource]));
+    vi.spyOn(api, 'getParentResourcesByChildId').mockImplementation(() =>
+      Promise.resolve([testParentResource])
+    );
 
-    jest.spyOn(holidays, 'getHolidays').mockImplementation(() => [
+    vi.spyOn(holidays, 'getHolidays').mockImplementation(() => [
       {
         name: {
           fi: 'Juhannusaatto',
@@ -286,17 +286,16 @@ describe(`<ResourcePage />`, () => {
       },
     ]);
 
-    jest
-      .spyOn(require('../hooks/useGoToResourceBatchUpdatePage'), 'default')
-      .mockImplementation(() => mockUseGoToResourceBatchUpdatePage);
+    vi.spyOn(useGotToResourceBatchUpdataPage, 'default').mockImplementation(
+      () => mockUseGoToResourceBatchUpdatePage
+    );
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should show loading indicator', async () => {
-    jest
-      .spyOn(api, 'getResource')
+    vi.spyOn(api, 'getResource')
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       .mockImplementation(() => new Promise(() => {}));
 
@@ -316,11 +315,9 @@ describe(`<ResourcePage />`, () => {
   });
 
   it('should show error notification', async () => {
-    jest
-      .spyOn(api, 'getResource')
-      .mockImplementation(() =>
-        Promise.reject(new Error('Failed to load a resource'))
-      );
+    vi.spyOn(api, 'getResource').mockImplementation(() =>
+      Promise.reject(new Error('Failed to load a resource'))
+    );
 
     await act(async () => {
       render(
@@ -422,9 +419,9 @@ describe(`<ResourcePage />`, () => {
       );
     });
 
-    jest
-      .spyOn(api, 'getDatePeriods')
-      .mockImplementation(() => Promise.resolve([]));
+    vi.spyOn(api, 'getDatePeriods').mockImplementation(() =>
+      Promise.resolve([])
+    );
 
     await act(async () => {
       expect(await screen.getByRole('heading', { level: 1 })).toHaveTextContent(
@@ -434,7 +431,7 @@ describe(`<ResourcePage />`, () => {
   });
 
   it('Should show copying info when targets exist', async () => {
-    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+    vi.spyOn(api, 'getDatePeriods').mockImplementation(() => {
       return Promise.resolve(testDatePeriodWithTimeSpans);
     });
 
@@ -455,7 +452,7 @@ describe(`<ResourcePage />`, () => {
   });
 
   it('Should show advance to batch copy page and an error if no datePeriods are selected', async () => {
-    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+    vi.spyOn(api, 'getDatePeriods').mockImplementation(() => {
       return Promise.resolve(testDatePeriodWithTimeSpans);
     });
 
@@ -486,7 +483,7 @@ describe(`<ResourcePage />`, () => {
   });
 
   it('Should show resource copying opening periods with checkboxes and state change according to interaction and forward navigation', async () => {
-    jest.spyOn(api, 'getDatePeriods').mockImplementation(() => {
+    vi.spyOn(api, 'getDatePeriods').mockImplementation(() => {
       return Promise.resolve(testDatePeriodWithTimeSpans);
     });
 

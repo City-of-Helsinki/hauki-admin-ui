@@ -27,7 +27,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # temporary env files
-/public/env-config.js
+public/env-config.js
+public/test-env-config.js
 env-config.js
 
 # load tests

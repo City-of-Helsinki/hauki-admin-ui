@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import toast from './Toast';
 
 describe(`toast`, () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
   it('should render success toast in the dom', async () => {
     const props = {
@@ -40,7 +40,7 @@ describe(`toast`, () => {
   //   });
 
   //   act(() => {
-  //     jest.advanceTimersByTime(20000);
+  //     vi.advanceTimersByTime(20000);
   //     expect(
   //       document.body.querySelectorAll(`[data-testId="${props.dataTestId}"]`)
   //         .length

@@ -11,7 +11,7 @@ import {
 import OpeningPeriod from './OpeningPeriod';
 import { SelectedDatePeriodsProvider } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -54,5 +54,5 @@ describe(`<OpeningPeriod />`, () => {
     ).toBeInTheDocument();
   });
 
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });

@@ -2,12 +2,13 @@ import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Mock } from 'vitest';
 import api from '../../common/utils/api/api';
 import { AppContext } from '../../App-context';
 import { AuthContext } from '../../auth/auth-context';
 import HaukiHeader from './HaukiHeader';
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -25,23 +26,30 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
+vi.mock('react-router-dom', async (importOriginal) => {
+  const mod = await importOriginal();
+
+  return {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    /* @ts-ignore */
+    ...mod,
+    useHistory: (): { push: Mock } => ({
+      push: vi.fn(),
+    }),
+  };
+});
+
 describe('<HaukiHeader>', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('Should logout and close window when user clicks close button', async () => {
-    const closeAppWindow = jest.fn();
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useHistory: (): { push: jest.Mock } => ({
-        push: jest.fn(),
-      }),
-    }));
+    const closeAppWindow = vi.fn();
 
-    jest
-      .spyOn(api, 'invalidateAuth')
-      .mockImplementation(() => Promise.resolve(true));
+    vi.spyOn(api, 'invalidateAuth').mockImplementation(() =>
+      Promise.resolve(true)
+    );
 
     render(
       <Router>
@@ -49,7 +57,7 @@ describe('<HaukiHeader>', () => {
           <AuthContext.Provider
             value={{
               authTokens: { hsa_username: 'tester' },
-              clearAuth: jest.fn(),
+              clearAuth: vi.fn(),
             }}>
             <HaukiHeader />
           </AuthContext.Provider>
@@ -73,23 +81,17 @@ describe('<HaukiHeader>', () => {
   });
 
   it('should show selected language', () => {
-    const closeAppWindow = jest.fn();
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useHistory: (): { push: jest.Mock } => ({
-        push: jest.fn(),
-      }),
-    }));
+    const closeAppWindow = vi.fn();
 
-    jest
-      .spyOn(api, 'invalidateAuth')
-      .mockImplementation(() => Promise.resolve(true));
+    vi.spyOn(api, 'invalidateAuth').mockImplementation(() =>
+      Promise.resolve(true)
+    );
 
     render(
       <Router>
         <AppContext.Provider value={{ hasOpenerWindow: true, closeAppWindow }}>
           <AuthContext.Provider
-            value={{ authTokens: { name: 'tester' }, clearAuth: jest.fn() }}>
+            value={{ authTokens: { name: 'tester' }, clearAuth: vi.fn() }}>
             <HaukiHeader />
           </AuthContext.Provider>
         </AppContext.Provider>

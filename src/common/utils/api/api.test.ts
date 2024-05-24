@@ -1,17 +1,14 @@
-/// <reference types="jest" />
-
 import axios from 'axios';
 import api from './api';
 import * as auth from '../../../auth/auth-context';
 import { AuthTokens } from '../../../auth/auth-context';
 import { Resource, ResourceState, ResourceType } from '../../lib/types';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
 
 describe('apiRequest', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('request', () => {
@@ -26,33 +23,34 @@ describe('apiRequest', () => {
       };
       const mockTokens = queryTokens as AuthTokens;
 
-      jest.spyOn(auth, 'getTokens').mockImplementationOnce(() => mockTokens);
+      vi.spyOn(auth, 'getTokens').mockImplementationOnce(() => mockTokens);
 
-      mockedAxios.request.mockResolvedValue({ data: 'ok' });
+      const requestSpy = vi
+        .spyOn(axios, 'request')
+        .mockImplementation(() => Promise.resolve({ data: 'ok' }));
 
       await api.testResourcePostPermission(resourceId);
 
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
-
-      expect(mockedAxios.request).toHaveBeenCalledWith(
-        expect.objectContaining({
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `haukisigned hsa_username=${encodeURIComponent(
-              queryTokens.hsa_username
-            )}&hsa_created_at=${encodeURIComponent(
-              queryTokens.hsa_created_at
-            )}&hsa_valid_until=${encodeURIComponent(
-              queryTokens.hsa_valid_until
-            )}&hsa_source=${encodeURIComponent(
-              queryTokens.hsa_source
-            )}&hsa_signature=123456`,
-          },
-          method: 'post',
-          url: 'http://localhost:8000/v1/resource/tprek:8100/permission_check/',
-          data: {},
-        })
-      );
+      expect(requestSpy).toHaveBeenCalledTimes(1);
+      expect(requestSpy).toHaveBeenCalledWith({
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `haukisigned hsa_username=${encodeURIComponent(
+            queryTokens.hsa_username
+          )}&hsa_created_at=${encodeURIComponent(
+            queryTokens.hsa_created_at
+          )}&hsa_valid_until=${encodeURIComponent(
+            queryTokens.hsa_valid_until
+          )}&hsa_source=${encodeURIComponent(
+            queryTokens.hsa_source
+          )}&hsa_signature=123456`,
+        },
+        method: 'post',
+        url: 'http://localhost:8000/v1/resource/tprek:8100/permission_check/',
+        data: {},
+        params: undefined,
+        validateStatus: expect.anything(),
+      });
     });
   });
 
@@ -84,13 +82,15 @@ describe('apiRequest', () => {
         resource_type: ResourceType.UNIT,
       };
 
-      mockedAxios.request.mockResolvedValue({ data: mockResource });
+      const requestSpy = vi
+        .spyOn(axios, 'request')
+        .mockImplementation(() => Promise.resolve({ data: mockResource }));
 
       const response = await api.getResource('tprek:8100');
 
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
+      expect(requestSpy).toHaveBeenCalledTimes(1);
 
-      expect(mockedAxios.request).toHaveBeenCalledWith({
+      expect(requestSpy).toHaveBeenCalledWith({
         headers: { 'Content-Type': 'application/json' },
         method: 'get',
         params: { format: 'json' },
@@ -122,12 +122,17 @@ describe('apiRequest', () => {
         time_span_groups: [],
       };
 
-      mockedAxios.request.mockResolvedValue({ ...periodTobeCreated, id: 100 });
+      const requestSpy = vi
+        .spyOn(axios, 'request')
+        .mockImplementation(() =>
+          Promise.resolve({ data: { ...periodTobeCreated, id: 100 } })
+        );
 
       await api.postDatePeriod(periodTobeCreated);
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
 
-      expect(mockedAxios.request).toHaveBeenCalledWith({
+      expect(requestSpy).toHaveBeenCalledTimes(1);
+
+      expect(requestSpy).toHaveBeenCalledWith({
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         url: 'http://localhost:8000/v1/date_period/',
@@ -212,7 +217,10 @@ describe('apiRequest', () => {
         },
       };
 
-      mockedAxios.request.mockResolvedValue({ data: datePeriodOptions });
+      vi.spyOn(axios, 'request').mockImplementation(() =>
+        Promise.resolve({ data: datePeriodOptions })
+      );
+
       const response = await api.getDatePeriodFormConfig();
       expect(response).toEqual({
         name: { max_length: 255 },

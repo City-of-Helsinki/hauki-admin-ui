@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useCallback, useMemo, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -101,10 +102,10 @@ const App = (): JSX.Element => {
   const matomoTracker = useMemo(
     () =>
       new MatomoTracker({
-        urlBase: window?.ENV?.MATOMO_URL_BASE,
-        siteId: window?.ENV?.MATOMO_SITE_ID,
-        srcUrl: window?.ENV?.MATOMO_SRC_URL,
-        enabled: window?.ENV?.MATOMO_ENABLED === 'true',
+        urlBase: window?._env_?.MATOMO_URL_BASE,
+        siteId: window?._env_?.MATOMO_SITE_ID,
+        srcUrl: window?._env_?.MATOMO_SRC_URL,
+        enabled: window?._env_?.MATOMO_ENABLED === 'true',
         configurations: {
           setDoNotTrack: true,
         },
