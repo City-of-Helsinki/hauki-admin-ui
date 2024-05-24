@@ -6,9 +6,19 @@ module.exports = {
     "stylelint-value-no-unknown-custom-properties"
   ],
   rules: {
+    "selector-class-pattern": null,
+    "import-notation": "string",
+    "media-query-no-invalid": null,
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
     'at-rule-no-unknown': [true, {
       ignoreAtRules: ["extend", "include", "mixin"]
     }],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-no-shorthand-property-overrides": null,
+    "shorthand-property-no-redundant-values": null,
+    "no-invalid-double-slash-comments": null,
+    "font-family-name-quotes": "always-where-recommended",
     'csstools/value-no-unknown-custom-properties': [
       true,
       {
