@@ -2,7 +2,6 @@
   "extends": "./tsconfig.json",
   "include": [
     "src",
-    "cypress",
     "test",
     "e2e",
     "playwright.config.ts"
