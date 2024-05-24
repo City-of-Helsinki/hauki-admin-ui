@@ -9,13 +9,13 @@ import MatomoTracker from '../matomo/MatomoTracker';
 
 describe('CookieConsent', () => {
   it('should render cookie modal', async () => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
+    global.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
     }));
 
-    const setLanguageMock = jest.fn();
+    const setLanguageMock = vi.fn();
     const mockMatomoTracker = new MatomoTracker({
       urlBase: 'https://www.test.fi/',
       siteId: 'test123',

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "noImplicitAny": true,
+    "outDir": "./build",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "types": [
+      "vite/client",
+    ]
+  },
+  "include": [
+    "*"
+  ],
+}

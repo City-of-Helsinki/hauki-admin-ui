@@ -16,9 +16,9 @@ describe('useMatomo', () => {
   };
 
   it('should trackPageView', () => {
-    const trackPageViewMock = jest.fn();
+    const trackPageViewMock = vi.fn();
 
-    jest.spyOn(MatomoTracker, 'default').mockImplementation(
+    vi.spyOn(MatomoTracker, 'default').mockImplementation(
       () =>
         ({
           trackPageView: trackPageViewMock,

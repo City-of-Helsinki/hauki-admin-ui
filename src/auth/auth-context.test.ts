@@ -1,5 +1,3 @@
-/// <reference types="jest" />
-
 import { parseAuthParams } from './auth-context';
 
 describe('Auth Context', () => {

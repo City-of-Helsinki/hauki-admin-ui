@@ -1,5 +1,3 @@
-/// <reference types="jest" />
-
 import {
   defaultNoOpeningHoursTimeSpanGroup,
   defaultTimeSpanGroup,
@@ -697,18 +695,18 @@ describe('opening-hours-helpers', () => {
   describe('datePeriodToRules', () => {
     it('should return correct rules ', () => {
       expect(datePeriodToRules(datePeriod)).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "group": 1,
             "id": undefined,
             "type": "week_every",
           },
-          Object {
+          {
             "group": 2,
             "id": 1,
             "type": "week_even",
           },
-          Object {
+          {
             "group": 3,
             "id": 1,
             "type": "week_odd",

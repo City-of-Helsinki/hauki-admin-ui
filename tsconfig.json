@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -19,13 +19,21 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "types": []
+    "types": [
+      "vite/client",
+      "vite-plugin-svgr/client",
+      "vitest/globals",
+    ],
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    }
   },
   "include": [
     "src",
-    "test"
+    "test",
+    "e2e",
+    "playwright.config.ts"
   ],
-  "globals": {
-    "ENV": true
-  }
 }

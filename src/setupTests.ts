@@ -1,8 +1,11 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import testSetup from './testSetup';
+
+// Load generated runtime configuration to be available in tests
+// eslint-disable-next-line import/extensions, import/no-unresolved
+require('../public/test-env-config.js');
 
 configure({ adapter: new Adapter() });
 testSetup();
@@ -17,17 +20,4 @@ console.error = (msg: any, ...optionalParams: any[]) => {
     !msgStr.includes('Could not parse CSS stylesheet') &&
     originalError(msg, ...optionalParams)
   );
-};
-
-window.ENV = {
-  REACT_APP_VERSION: '',
-  API_URL: '',
-  USE_AXE: '',
-  SENTRY_DSN: '',
-  SENTRY_ENV: '',
-  FEEDBACK_EMAILS: '',
-  MATOMO_SRC_URL: '',
-  MATOMO_URL_BASE: 'test',
-  MATOMO_SITE_ID: 'test123',
-  MATOMO_ENABLED: 'false',
 };

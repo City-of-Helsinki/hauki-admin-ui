@@ -1,10 +1,12 @@
 module.exports = {
-  extends: ['airbnb-typescript-prettier', 'plugin:jsx-a11y/recommended'],
+  extends: [
+    'airbnb-typescript-prettier',
+    'plugin:jsx-a11y/recommended',
+    'plugin:vitest-globals/recommended'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.eslint.json',
-    tsconfigRootDir: __dirname,
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
   overrides: [
     {
@@ -15,8 +17,8 @@ module.exports = {
   ],
   env: {
     browser: true,
-    jest: true,
     node: true,
+    "vitest-globals/env": true
   },
   rules: {
     'react/no-array-index-key': 0,
@@ -89,4 +91,19 @@ module.exports = {
     cy: true,
   },
   plugins: ['jsx-a11y'],
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        paths: [
+          "src"
+        ]
+      }
+    }
+  }
 };

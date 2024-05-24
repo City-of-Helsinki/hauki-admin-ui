@@ -1,10 +1,8 @@
-/// <reference types="jest" />
-
 import { Language } from '../../lib/types';
 import { formatDateRange, createWeekdaysStringFromIndices } from './format';
 
-jest.clearAllMocks();
-jest.mock('i18next', () => ({ t: (str: string) => str }));
+vi.clearAllMocks();
+vi.mock('i18next', () => ({ t: (str: string) => str }));
 
 describe('format', () => {
   describe('formatDateRange', () => {
