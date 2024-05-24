@@ -124,10 +124,6 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 Runs Playwright (e2e) tests locally. Requires the same set of HAUKI env variables as running service locally.
 
-### `yarn test-cypress`
-
-Runs cypress (e2e) tests locally. Requires the same set of HAUKI env variables as running service locally.
-
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
