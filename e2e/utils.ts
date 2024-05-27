@@ -7,7 +7,7 @@ const getAuthParams = async () => {
   const execAsync = promisify(exec);
 
   const { stdout, stderr } = await execAsync(
-    'node ./scripts/generate-auth-params.js',
+    'node ./scripts/generate-auth-params.mjs',
     {
       env: {
         ...process.env,

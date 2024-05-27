@@ -1,19 +1,9 @@
-// eslint-disable-next-line
 import crypto from 'crypto';
-import dotenv from 'dotenv';
 
-/* @ts-ignore */
-import.meta.env = {};
-
-dotenv.config({
-  processEnv: import.meta.env,
-  path: ['.env', '.env.local'],
-  override: true,
-});
 // __ENV is for k6
 // eslint-disable-next-line no-undef
 // eslint-disable-next-line dot-notation
-const env = import.meta.env;
+const env = global['__ENV'] || process.env;
 
 const key = env.HAUKI_KEY;
 const username = env.HAUKI_USER || 'admin@hel.fi';

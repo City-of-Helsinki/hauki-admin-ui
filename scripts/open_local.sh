@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PARAMS=$(node ./scripts/generate-auth-params.js)
+PARAMS=$(node ./scripts/generate-auth-params.mjs)
 
 URL="http://localhost:3000/resource/$HAUKI_RESOURCE?$PARAMS"
 

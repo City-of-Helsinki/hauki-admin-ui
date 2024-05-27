@@ -54,7 +54,7 @@ Alternatively
 4. Generate query-parameters:
 
    ```shell
-   node scripts/generate-auth-params.js
+   node scripts/generate-auth-params.mjs
    ```
 
 5. Copy generated query-parameters to clipboard.
