@@ -1,5 +1,5 @@
 # ===============================================
-FROM registry.access.redhat.com/ubi8/nodejs-18 AS staticbuilder
+FROM registry.access.redhat.com/ubi9/nodejs-18 AS staticbuilder
 # ===============================================
 
 WORKDIR /app
@@ -22,6 +22,9 @@ RUN yarn policies set-version $YARN_VERSION
 
 # Install dependencies
 COPY package.json yarn.lock /app/
+COPY ./scripts /app/scripts
+COPY ./public /app/public
+
 RUN chown -R default:root /app
 
 # Use non-root user
@@ -30,16 +33,15 @@ USER default
 RUN yarn && yarn cache clean --force
 
 # Copy all files
-COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.eslint.json .prettierrc.json .env* /app/
+COPY .eslintrc.js .eslintignore tsconfig.json index.html vite.config.ts .prettierrc.json .env* /app/
 COPY ./src /app/src
 COPY ./test /app/test
-COPY ./public /app/public
 
 # Build application
 RUN yarn build
 
 # =============================
-FROM registry.access.redhat.com/ubi8/nginx-120 as production
+FROM registry.access.redhat.com/ubi9/nginx-120 as production
 # =============================
 
 USER root
@@ -52,11 +54,17 @@ COPY --from=staticbuilder /app/build /usr/share/nginx/html
 
 # Copy nginx config
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+RUN mkdir /etc/nginx/env
+COPY ./nginx/nginx_env.conf  /etc/nginx/env/
 
 # Env-script and .env file
 WORKDIR /usr/share/nginx/html
+
 COPY ./scripts/env.sh .
 COPY .env .
+
+# Copy package.json so env.sh can read it
+COPY package.json .
 
 # Make script executable
 RUN chmod +x env.sh
