@@ -23,3 +23,5 @@
 !.eslintrc.js
 !.prettierrc.json
 !.eslintignore
+!index.html
+!vite.config.ts
