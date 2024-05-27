@@ -1,10 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import Collapse from './Collapse';
 
-describe(`<Collapse />`, () => {
+describe('<Collapse />', () => {
   it('should hide content', () => {
-    const collapse = mount(
+    const { getByText } = render(
       <Collapse
         isOpen={false}
         collapseContentId="test-content"
@@ -13,14 +13,12 @@ describe(`<Collapse />`, () => {
       </Collapse>
     );
 
-    expect(collapse.find('h3').text()).toEqual('Test Title');
-    expect(collapse.find('#test-content').getDOMNode()).toHaveClass(
-      'visually-hidden'
-    );
+    expect(getByText('Test Title')).toBeInTheDocument();
+    expect(getByText('Test content')).not.toBeVisible();
   });
 
-  it('should show content when clicked', () => {
-    const collapse = mount(
+  it('should show content when clicked', async () => {
+    const { getByText } = render(
       <Collapse
         isOpen={false}
         collapseContentId="test-content"
@@ -29,10 +27,8 @@ describe(`<Collapse />`, () => {
       </Collapse>
     );
 
-    collapse.find('button').simulate('click');
+    fireEvent.click(getByText('Test Title'));
 
-    expect(collapse.find('#test-content').getDOMNode()).not.toHaveClass(
-      'visually-hidden'
-    );
+    expect(getByText('Test content')).toBeVisible();
   });
 });

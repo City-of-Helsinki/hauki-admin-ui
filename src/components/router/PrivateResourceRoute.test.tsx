@@ -1,11 +1,10 @@
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import {
   BrowserRouter as Router,
   Route,
   RouteComponentProps,
 } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import api from '../../common/utils/api/api';
 import * as AuthContext from '../../auth/auth-context';
 import PrivateResourceRoute from './PrivateResourceRoute';
@@ -22,13 +21,14 @@ const testTokens: AuthTokens = {
   hsa_has_organization_rights: 'true',
 };
 
-const renderRoutesWithPrivateRoute = (): ReactWrapper => {
+const renderRoutesWithPrivateRoute = () => {
   window.history.pushState(
     {},
     'Test page',
     `/resource/${testTokens.hsa_resource}`
   );
-  return mount(
+
+  return render(
     <Router>
       <Route exact path="/not_found">
         <h1>Test not found</h1>
@@ -80,31 +80,21 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext();
     mockPermissionsApi(true);
 
-    const renderedComponent = renderRoutesWithPrivateRoute();
+    const { getByText } = renderRoutesWithPrivateRoute();
 
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    expect(renderedComponent.find('h1').text()).toEqual('Sivua alustetaan..');
+    expect(getByText('Sivua alustetaan..')).toBeInTheDocument();
   });
 
   it('should show content', async () => {
     mockContext();
     mockPermissionsApi(true);
 
-    const renderedComponent = renderRoutesWithPrivateRoute();
+    renderRoutesWithPrivateRoute();
 
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    expect(renderedComponent.find('h1').text()).toEqual(
-      testTokens.hsa_resource
+    await waitFor(async () =>
+      expect(
+        await screen.findByText(testTokens.hsa_resource)
+      ).toBeInTheDocument()
     );
   });
 
@@ -112,34 +102,24 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext();
     mockPermissionsApi(false);
 
-    const renderedComponent = renderRoutesWithPrivateRoute();
+    renderRoutesWithPrivateRoute();
 
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    expect(renderedComponent.find('h1').text()).toEqual('Test unauthorized');
+    await waitFor(async () =>
+      expect(await screen.findByText('Test unauthorized')).toBeInTheDocument()
+    );
   });
 
   it('should redirect to /unauthenticated', async () => {
     mockContext({ tokens: undefined });
     mockPermissionsApi(false);
 
-    const renderedComponent = renderRoutesWithPrivateRoute();
+    renderRoutesWithPrivateRoute();
 
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    expect(renderedComponent.find('h1').text()).toEqual('Test unauthenticated');
+    await waitFor(async () =>
+      expect(
+        await screen.findByText('Test unauthenticated')
+      ).toBeInTheDocument()
+    );
   });
 
   it('should redirect to /not_found', async () => {
@@ -155,16 +135,10 @@ describe(`<PrivateResourceRoute />`, () => {
       Promise.reject(resourceNotFoundError)
     );
 
-    const renderedComponent = renderRoutesWithPrivateRoute();
+    renderRoutesWithPrivateRoute();
 
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    await act(async () => {
-      renderedComponent.update();
-    });
-
-    expect(renderedComponent.find('h1').text()).toEqual('Test not found');
+    await waitFor(async () =>
+      expect(await screen.findByText('Test not found')).toBeInTheDocument()
+    );
   });
 });
