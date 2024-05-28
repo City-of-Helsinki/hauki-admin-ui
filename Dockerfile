@@ -59,7 +59,6 @@ COPY ./nginx/nginx_env.conf  /etc/nginx/env/
 
 # Env-script and .env file
 WORKDIR /usr/share/nginx/html
-
 COPY ./scripts/env.sh .
 COPY .env .
 
