@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.4.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.3...hauki-admin-ui-v1.4.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* Generate-auth-params revert HAUKI-639 ([ce15ab2](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/ce15ab29f6ce40ed994cd81e2a4b190c384f0ba9))
+* Vite Dockerfile fixes HAUKI-639 ([2bbba1e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2bbba1e6b07f4ea95d8013eb4f1119a545741fc6))
+* Vite.config.mts HAUKI-639 ([11c9f30](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/11c9f30a0d150bcca577b672dd0c3fb28b1cbf62))
+
+
+### Dependencies
+
+* Bump ejs to 3.1.10 HAUKI-639 ([bf9205d](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/bf9205d21bff1afa1471dbbe4796d29bcfead138))
+* Bump express to 4.19.2 HAUKI-639 ([4332ac8](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/4332ac838245408baf36a647ef6994ed4e9bcbf0))
+* Bump follow-redirects to 1.15.6 HAUKI-639 ([f2cb000](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f2cb000e96cd5e9e4ee72bff15bb4d181123cee0))
+* Bump webpack-dev-middleware to 5.3.4 HAUKI-639 ([97c0c05](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/97c0c055303d9cc48780b34edb105691d3f9215d))
+* Patch braces to 3.0.3 HAUKI-639 ([dda9cbf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/dda9cbf5854fcc30ccfaf94f371cfee3284348f3))
+* Patch micromatch to 4.0.6 HAUKI-639 ([17c0c10](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/17c0c103550ee6de172eeb97ddbf2c9c0135db54))
+* Remove enzyme HAUKI-639 ([f99672b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f99672b4a38e3e404be4d17d92bb4731fbc9c848))
+* Replace CRA with Vite and Vitest HAUKI-639 ([2f03e24](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2f03e24625e56d94c73d8a0ce11c92d171e4a2b6))
+* Upgrade axios to 1.7.2 ([579e404](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/579e4048ce2c7a70c6ea865a9a948e16599b349b))
+* Upgrade hds-react hds-core hds-design-tokens to 3.8.0 HAUKI-639 ([a7b6061](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a7b6061fed27a88711be7182559c18b32bea42ea))
+* Upgrade stylelint dependencies HAUKI-639 ([2f0c216](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2f0c2162571f5a128433b39a5f2008d825c2a40b))
+
 ## [1.4.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.2...hauki-admin-ui-v1.4.3) (2024-03-14)
 
 
