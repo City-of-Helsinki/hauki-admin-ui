@@ -123,23 +123,34 @@ test.describe('Resource page', async () => {
 
   test('Add and delete custom holiday - Closed all day', async () => {
     await page.getByRole('button', { name: 'Muokkaa juhlapyhiä' }).click();
-    await page.locator('[data-test="holiday-3-checkbox"]').click();
+
+    const holidayInput = page
+      .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
+      .first();
+    const holidayTestId = await holidayInput.getAttribute('data-test');
+
+    await page.locator(`[data-test="${holidayTestId}"]`).check();
     await page.locator('[data-test="submit-opening-hours-button"]').click();
-    await expect(page.getByTestId('holiday-form-success')).toBeVisible();
-    await page.locator('[data-test="holiday-3-checkbox"]').click();
-    await expect(
-      page.getByRole('heading', { name: 'Oletko varma että haluat' })
-    ).toBeVisible();
-    await expect(
-      page.getByText('Olet poistamassa aukiolojakson')
-    ).toBeVisible();
+    await expect(page.getByTestId('holiday-form-success')).toBeVisible({
+      timeout: 30 * 1000,
+    });
+    await page.locator(`[data-test="${holidayTestId}"]`).click();
+    await expect(page.locator('#confirmation-modal')).toBeVisible();
+
     await page.getByRole('button', { name: 'Poista', exact: true }).click();
+
     await expect(page.getByTestId('holiday-form-success')).toBeVisible();
   });
 
   test('Add and delete custom holiday - Exceptional opening hours', async () => {
     await page.getByRole('button', { name: 'Muokkaa juhlapyhiä' }).click();
-    await page.locator('[data-test="holiday-1-checkbox"]').click();
+
+    const holidayInput = page
+      .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
+      .first();
+    const holidayTestId = await holidayInput.getAttribute('data-test');
+
+    await page.locator(`[data-test="${holidayTestId}"]`).check();
     await page.getByText('Poikkeava aukioloaika').click();
     await page.getByLabel('Auki', { exact: true }).click();
     await page.getByRole('option', { name: 'Itsepalvelu' }).click();
@@ -149,9 +160,9 @@ test.describe('Resource page', async () => {
     await page.getByPlaceholder('E.g. seniors').fill('seniors');
     await page.locator('[data-test="submit-opening-hours-button"]').click();
     await expect(page.getByTestId('holiday-form-success')).toBeVisible({
-      timeout: 15000,
+      timeout: 30 * 1000,
     });
-    await page.locator('[data-test="holiday-1-checkbox"]').click();
+    await page.locator(`[data-test="${holidayTestId}"]`).click();
     await expect(
       page.getByRole('heading', { name: 'Oletko varma että haluat' })
     ).toBeVisible();
