@@ -5,6 +5,7 @@ import {
   NotificationType,
 } from 'hds-react';
 import ReactDOM from 'react-dom';
+import i18n from '../../i18n';
 
 type ToastProps = {
   label: string;
@@ -51,7 +52,7 @@ const renderToast = ({
         }
         removeContainer(containerDomNode);
       }}
-      closeButtonLabelText="Sulje ilmoitus"
+      closeButtonLabelText={i18n.t('Common.CloseNotification')}
       {...(dataTestId ? { dataTestId } : {})}>
       {text}
     </Notification>,

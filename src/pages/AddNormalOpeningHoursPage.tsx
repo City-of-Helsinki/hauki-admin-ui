@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ApiDatePeriod } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
@@ -10,11 +11,12 @@ const AddNormalOpeningHoursPage = ({
 }: {
   resourceId: string;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const resource = useResource(resourceId);
   const datePeriodConfig = useDatePeriodConfig();
 
   if (!resource || !datePeriodConfig) {
-    return <h1>Ladataan...</h1>;
+    return <h1>{t('Common.IsLoading')}</h1>;
   }
 
   const submitFn = (data: ApiDatePeriod): Promise<ApiDatePeriod> =>

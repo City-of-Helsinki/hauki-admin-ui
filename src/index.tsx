@@ -7,7 +7,6 @@ import './index.scss';
 import axe from '@axe-core/react';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import './i18n';
 
 declare global {
   interface Window {

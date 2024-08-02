@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,
   ResourceState,
@@ -15,11 +16,12 @@ const HolidayOpeningHours = ({
   datePeriod,
   datePeriodConfig,
 }: Props): JSX.Element => {
+  const { t } = useTranslation();
   if (datePeriod) {
     return (
       <div>
         {datePeriod.resourceState === ResourceState.CLOSED
-          ? 'Suljettu'
+          ? t('ResourcePage.OpeningPeriodsSection.StateClosed')
           : datePeriod.openingHours.map((openingHours) =>
               openingHours.timeSpanGroups.map((timeSpanGroup) =>
                 timeSpanGroup.timeSpans.map((timeSpan, timeSpanIdx) => (
@@ -38,7 +40,7 @@ const HolidayOpeningHours = ({
     );
   }
 
-  return <>Ei poikkeavia aukioloja</>;
+  return <>{t('OpeningHours.NoExceptions')}</>;
 };
 
 export default HolidayOpeningHours;

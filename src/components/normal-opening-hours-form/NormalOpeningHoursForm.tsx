@@ -6,6 +6,7 @@ import OpeningHoursForm, {
   FormConfig,
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
+import i18n from '../../i18n';
 
 const config: FormConfig = {
   exception: false,
@@ -43,15 +44,15 @@ const config: FormConfig = {
   texts: {
     submit: {
       notifications: {
-        success: 'Aukiolon tallennus onnistui',
-        error: 'Aukiolon tallennus epäonnistui',
+        success: i18n.t('OpeningHours.SubmitSuccessNotification'),
+        error: i18n.t('OpeningHours.SubmitErrorNotification'),
       },
     },
     title: {
       placeholders: {
-        fi: 'Esim. kesäkausi',
-        sv: 'T.ex. sommartid',
-        en: 'E.g. summertime',
+        fi: i18n.t('TitlePlaceholderInFinnish'),
+        sv: i18n.t('TitlePlaceholderInSwedish'),
+        en: i18n.t('TitlePlaceholderInEnglish'),
       },
     },
   },

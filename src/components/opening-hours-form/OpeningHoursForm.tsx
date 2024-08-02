@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IconSort } from 'hds-react';
 import {
@@ -71,6 +72,7 @@ const OpeningHoursForm = ({
   submitFn: (values: ApiDatePeriod) => Promise<ApiDatePeriod>;
   resource: Resource;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const defaultValues: DatePeriod = datePeriod
     ? apiDatePeriodToDatePeriod(datePeriod)
@@ -116,7 +118,7 @@ const OpeningHoursForm = ({
   const sortOpeningHours = () => {
     setValue('openingHours', [...formValues.openingHours].sort(byWeekdays));
     toast.info({
-      label: 'Päiväryhmät järjestetty viikonpäivien mukaan',
+      label: t('OpeningHours.GroupsSortedNotification'),
       position: 'bottom-right',
     });
   };
@@ -156,7 +158,7 @@ const OpeningHoursForm = ({
             <section className="opening-hours-form__content">
               <div className="card">
                 <p className="required-fields-text">
-                  Tähdellä (*) merkityt kohdat ovat pakollisia.
+                  {t('OpeningHours.RequiredFieldsText')}
                 </p>
               </div>
               <OpeningHoursTitles
@@ -189,7 +191,7 @@ const OpeningHoursForm = ({
                       <SupplementaryButton
                         iconLeft={<IconSort />}
                         onClick={sortOpeningHours}>
-                        Järjestä päiväryhmät viikonpäivien mukaan
+                        {t('OpeningHours.SortWeekdaysContainer')}
                       </SupplementaryButton>
                     </div>
                   </div>
@@ -200,7 +202,7 @@ const OpeningHoursForm = ({
           <OpeningHoursFormActions isSaving={isSaving} />
         </form>
       </FormProvider>
-    )) || <h1>Ladataan...</h1>
+    )) || <h1>{t('Common.IsLoading')}</h1>
   );
 };
 

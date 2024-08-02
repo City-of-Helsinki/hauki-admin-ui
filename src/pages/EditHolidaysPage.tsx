@@ -1,4 +1,5 @@
 import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Checkbox, IconPenLine, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -77,6 +78,7 @@ const HolidayForm = ({
   actions: FormActions;
   onClose: () => void;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState(false);
   const valueToUse = value || getDefaultFormValues({ name, holidayDate });
@@ -148,15 +150,15 @@ const HolidayForm = ({
           <PrimaryButton
             dataTest="submit-opening-hours-button"
             isLoading={isSaving}
-            loadingText="Tallentaa poikkeusaukioloa"
+            loadingText={t('OpeningHours.IsSubmittingExceptional')}
             type="submit">
-            Tallenna
+            {t('Common.Submit')}
           </PrimaryButton>
           <SecondaryButton
             dataTest="cancel-opening-hours-button"
             onClick={onClose}
             type="button">
-            Peruuta
+            {t('Common.Cancel')}
           </SecondaryButton>
         </div>
       </form>
@@ -177,6 +179,7 @@ const HolidayListItem = ({
   datePeriodConfig: UiDatePeriodConfig;
   actions: FormActions;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const [checked, setChecked] = useState<boolean>(!!value);
   const [willBeRemoved, setWillBeRemoved] = useState<boolean>(false);
@@ -215,13 +218,13 @@ const HolidayListItem = ({
                 setWillBeRemoved(true);
                 await actions.delete(value);
               }}
-              title="Oletko varma että haluat poistaa aukiolojakson?"
+              title={t('OpeningHours.RemoveHolidaySpanConfirmTitle')}
               text={
                 <>
-                  <p>Olet poistamassa aukiolojakson</p>
+                  <p>{t('OpeningHours.RemoveHolidaySpanConfirmText')}</p>
                   <p>
                     <b>
-                      {value.name.fi}
+                      {value.name[language]}
                       <br />
                       {value.startDate}
                     </b>
@@ -229,10 +232,10 @@ const HolidayListItem = ({
                 </>
               }
               isLoading={willBeRemoved}
-              loadingText="Poistetaan aukiolojaksoa"
+              loadingText={t('OpeningHours.RemoveHolidaySpanLoading')}
               isOpen={isModalOpen}
               onClose={closeModal}
-              confirmText="Poista"
+              confirmText={t('OpeningHours.RemoveHolidaySpanConfirm')}
             />
           </>
         ) : (
@@ -248,7 +251,7 @@ const HolidayListItem = ({
       {willBeRemoved ? (
         <div className="holidays-list-item-column">
           <LoadingSpinner small />
-          Poistetaan aukiolojaksoa..
+          {t('OpeningHours.RemoveHolidaySpanSpinner')}
         </div>
       ) : (
         <React.Fragment key={holiday.date}>
@@ -283,7 +286,9 @@ const HolidayListItem = ({
                     onClick={() => setIsEditing(true)}
                     type="button">
                     <IconPenLine aria-hidden="true" />
-                    <span className="visually-hidden">{`Muokkaa ${holiday} aukiolojakson tietoja`}</span>
+                    <span className="visually-hidden">
+                      {t('OpeningHours.EditHolidaySpan', { holiday })}
+                    </span>
                   </button>
                 )}
               </>
@@ -299,6 +304,7 @@ const EditHolidaysPage = ({
 }: {
   resourceId: string;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const [resource, setResource] = useState<Resource>();
   const [holidayValues, setHolidayValues] = useState<
     DatePeriod[] | undefined
@@ -351,7 +357,9 @@ const EditHolidaysPage = ({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          label: `${values.name.fi} aukiolon lisääminen onnistui`,
+          label: t('OpeningHours.HolidayCreateSuccess', {
+            holidayName: values.name[language],
+          }),
         });
 
         return fetchValues(resource.id);
@@ -359,7 +367,9 @@ const EditHolidaysPage = ({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-error',
-          label: `${values.name.fi} aukiolon lisääminen epäonnistui`,
+          label: t('OpeningHours.HolidayCreateError', {
+            holidayName: values.name[language],
+          }),
         });
       });
   };
@@ -374,7 +384,9 @@ const EditHolidaysPage = ({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          label: `${values.name.fi} aukiolon tallennus onnistui`,
+          label: t('OpeningHours.HolidayUpdateSuccess', {
+            holidayName: values.name[language],
+          }),
         });
 
         return fetchValues(resource.id);
@@ -382,7 +394,9 @@ const EditHolidaysPage = ({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-success-error',
-          label: `${values.name.fi} aukiolon tallennus epäonnistui`,
+          label: t('OpeningHours.HolidayUpdateError', {
+            holidayName: values.name[language],
+          }),
         });
       });
   };
@@ -401,7 +415,9 @@ const EditHolidaysPage = ({
       .then(() => {
         toast.success({
           dataTestId: 'holiday-form-success',
-          label: `${values.name.fi} aukiolon poisto onnistui`,
+          label: t('OpeningHours.HolidayDeleteSuccess', {
+            holidayName: values.name[language],
+          }),
         });
 
         return fetchValues(resource.id);
@@ -409,7 +425,9 @@ const EditHolidaysPage = ({
       .catch(() => {
         toast.error({
           dataTestId: 'holiday-form-success-error',
-          label: `${values.name.fi} aukiolon poisto epäonnistui`,
+          label: t('OpeningHours.HolidayDeleteError', {
+            holidayName: values.name[language],
+          }),
         });
       });
   };
@@ -436,7 +454,7 @@ const EditHolidaysPage = ({
   }, [fetchValues, holidays, resource]);
 
   if (!resource || !datePeriodConfig || !holidayValues) {
-    return <h1>Ladataan...</h1>;
+    return <h1>{t('Common.IsLoading')}</h1>;
   }
 
   return (
@@ -445,12 +463,12 @@ const EditHolidaysPage = ({
         <SecondaryButton
           onClick={returnToResourcePage}
           size={isMobile ? 'small' : 'default'}>
-          Palaa etusivulle
+          {t('ResourcePage.Main.ReturnToMainPageButton')}
         </SecondaryButton>
       </ResourceTitle>
       <div className="holidays-page card">
         <div className="holidays-page-title">
-          <h3>Juhlapyhien aukioloajat</h3>
+          <h3>{t('OpeningHours.HolidaysTitle')}</h3>
           {holidays.length > 0 && (
             <UpcomingHolidayNotification
               datePeriodConfig={datePeriodConfig}
@@ -459,19 +477,18 @@ const EditHolidaysPage = ({
             />
           )}
         </div>
-        <p>
-          Jos lisäät listassa olevalle juhlapyhälle poikkeavan aukioloajan, se
-          on voimassa toistaiseksi. Muista tarkistaa vuosittain, että tieto
-          pitää yhä paikkansa.
-        </p>
+        <p>{t('OpeningHours.HolidaysHelperText')}</p>
         <div className="holiday-list-header">
-          <h3 className="holiday-column">Juhlapyhä</h3>
+          <h3 className="holiday-column">
+            {t('OpeningHours.HolidaysListHeader')}
+          </h3>
         </div>
         <ul className="holidays-list">
           {holidays.map((holiday, idx) => {
             const value: DatePeriod | undefined = holidayValues
               ? holidayValues.find(
-                  (holidayValue) => holidayValue.name.fi === holiday.name.fi
+                  (holidayValue) =>
+                    holidayValue.name[language] === holiday.name[language]
                 )
               : undefined;
 

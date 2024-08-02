@@ -1,6 +1,7 @@
 import { IconPlusCircle } from 'hds-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   areStartAndEndTimesAllowed,
   isDescriptionAllowed,
@@ -35,6 +36,7 @@ const TimeSpans = ({
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const namePrefix =
     `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans` as const;
   const { control, getValues, setValue, watch } = useFormContext<DatePeriod>();
@@ -96,7 +98,9 @@ const TimeSpans = ({
           openingHoursIdx={openingHoursIdx}
           timeSpanGroupIdx={timeSpanGroupIdx}
           i={i}
-          groupLabel={`Aukioloaika ${i + 1}`}
+          groupLabel={t('OpeningHours.TimeSpanAriaLabel', {
+            timeSpanIndex: i + 1,
+          })}
           item={field}
           resourceStates={resourceStates}
           onDelete={
@@ -120,7 +124,7 @@ const TimeSpans = ({
               setTimeSpansChanged(true);
             }}
             type="button">
-            Lisää aukiolomääritys
+            {t('OpeningHours.AddTimeSpanButton')}
           </SupplementaryButton>
         </div>
       )}

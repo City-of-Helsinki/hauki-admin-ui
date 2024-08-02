@@ -1,5 +1,6 @@
 import { DateInput, RadioButton, SelectionGroup } from 'hds-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
 import { Language, DatePeriod } from '../../common/lib/types';
@@ -10,6 +11,7 @@ import {
 import './NormalOpeningHoursValidity.scss';
 
 const NormalOpeningHoursValidity = (): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { control, getValues, watch } = useFormContext<DatePeriod>();
   const [startDate, endDate, fixed] = watch(['startDate', 'endDate', 'fixed']);
@@ -23,13 +25,13 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
           <>
             <SelectionGroup
               className="opening-hours-validity__title"
-              label="Aukiolon voimassaoloaika"
+              label={t('OpeningHours.ValidityTitle')}
               required>
               <RadioButton
                 id="opening-hours-validity-recurring"
                 checked={!value}
                 name={name}
-                label="Toistaiseksi voimassa"
+                label={t('OpeningHours.ValidityRecurring')}
                 value="recurring"
                 onChange={(): void => onChange(false)}
               />
@@ -38,7 +40,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                 id="opening-hours-validity-fixed"
                 checked={value}
                 name={name}
-                label="Voimassa tietyn ajan"
+                label={t('OpeningHours.ValidityFixed')}
                 value="fixed"
                 onChange={(): void => onChange(true)}
               />
@@ -48,7 +50,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                 defaultValue={startDate ?? ''}
                 name="startDate"
                 rules={{
-                  required: 'Pakollinen',
+                  required: t('Common.Mandatory'),
                   validate: isValidDate,
                 }}
                 render={({
@@ -64,12 +66,12 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                     initialMonth={new Date()}
                     errorText={fieldState.error?.message}
                     invalid={!!fieldState.error}
-                    label="Astuu voimaan"
+                    label={t('OpeningHours.PeriodBeginDate')}
                     language={language}
                     name={startDateField.name}
                     onBlur={startDateField.onBlur}
                     onChange={startDateField.onChange}
-                    openButtonAriaLabel="Valitse alkupäivämäärä"
+                    openButtonAriaLabel={t('OpeningHours.PeriodBeginDateAria')}
                     required
                     value={startDateField.value}
                     crossOrigin={undefined}
@@ -81,7 +83,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                   defaultValue={endDate ?? ''}
                   name="endDate"
                   rules={{
-                    required: 'Pakollinen',
+                    required: t('Common.Mandatory'),
                     validate: {
                       validDate: isValidDate,
                       endDateAfterStartDate: endDateAfterStartDate(getValues),
@@ -100,12 +102,12 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                       initialMonth={new Date()}
                       errorText={fieldState.error?.message}
                       invalid={!!fieldState.error}
-                      label="Päättyy"
+                      label={t('OpeningHours.PeriodEndDateAria')}
                       language={language}
                       name={endDateField.name}
                       onBlur={endDateField.onBlur}
                       onChange={endDateField.onChange}
-                      openButtonAriaLabel="Valitse loppupäivämäärä"
+                      openButtonAriaLabel={t('OpeningHours.PeriodEndDateAria')}
                       required
                       value={endDateField.value}
                       crossOrigin={undefined}
