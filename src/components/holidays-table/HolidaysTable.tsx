@@ -30,6 +30,7 @@ export const UpcomingHolidayNotification = ({
   datePeriods: DatePeriod[];
   holidays: Holiday[];
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const nextHoliday = holidays.find(isHoliday);
 
@@ -42,7 +43,8 @@ export const UpcomingHolidayNotification = ({
   return (
     <div className="upcoming-holidays">
       <span>
-        Seuraava juhlapyhä: <strong>{nextHoliday.name[language]}</strong>
+        {t('OpeningHours.NextHoliday')}
+        <strong>{nextHoliday.name[language]}</strong>
       </span>
       <span className="upcoming-holidays-divider">—</span>
       <HolidayOpeningHours

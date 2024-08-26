@@ -1,5 +1,6 @@
 import { IconAngleDown, IconAngleUp, useAccordion } from 'hds-react';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,
   Language,
@@ -27,6 +28,7 @@ const OpeningHoursFormPreviewMobile = ({
   const mobilePreview = useRef<HTMLDivElement>(null);
   useOnClickOutside(mobilePreview, closeAccordion);
   const isMobile = useMobile();
+  const { t } = useTranslation();
 
   return (
     <div className="mobile-preview-container">
@@ -38,7 +40,7 @@ const OpeningHoursFormPreviewMobile = ({
           }
           size={isMobile ? 'small' : 'default'}
           {...buttonProps}>
-          Esikatselu
+          {t('OpeningHours.OpeningHoursFormPreview')}
         </SupplementaryButton>
         <div
           aria-hidden={!isOpen}

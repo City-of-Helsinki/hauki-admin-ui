@@ -147,6 +147,8 @@
     "ExceptionStateClosed": "Suljettu",
     "ExceptionStateClosedWholeDay": "Suljettu koko päivän",
     "ExceptionStateOpen": "Poikkeava aukioloaika",
+    "ExceptionPeriodSubmitSuccess": "Poikkeavan päivän aukiolon lisääminen onnistui",
+    "ExceptionPeriodSubmitError": "Poikkeavan päivän aukiolon lisääminen epäonnistui",
     "NoExceptions": "Ei poikkeavia aukioloja",
     "HolidaysTitle": "Juhlapyhien aukioloajat",
     "HolidaysHelperText": "Jos lisäät listassa olevalle juhlapyhälle poikkeavan aukioloajan, se on voimassa toistaiseksi. Muista tarkistaa vuosittain, että tieto pitää yhä paikkansa.",
@@ -168,7 +170,9 @@
     "HolidaysTableHolidayColumn": "Juhlapyhä",
     "HolidaysTableDateColumn": "Päivämäärä",
     "HolidaysTableOpeningHoursColumn": "Aukiolo",
-    "RemoveTimeSpanButton": "Poista rivi"
+    "RemoveTimeSpanButton": "Poista rivi",
+    "NextHoliday": "Seuraava juhlapyhä: ",
+    "OpeningHoursFormPreview": "Esikatselu"
   },
   "Common": {
     "IsLoading": "Ladataan...",

@@ -118,7 +118,7 @@ const OpeningHoursWeekdays = ({
   const removedDayLabel = removedDay
     ? getWeekdayLongNameByIndexAndLang({
         weekdayIndex: removedDay,
-        language: Language.FI,
+        language,
       })
     : '';
 
