@@ -379,12 +379,12 @@ describe(`<ResourcePage />`, () => {
 
       expect(
         await container.querySelector(
-          'p[data-test="parent-resource-description"]'
+          'p[data-testid="parent-resource-description"]'
         )
       ).toBeInTheDocument();
 
       expect(
-        await container.querySelector('a[data-test="parent-resource-name-0"]')
+        await container.querySelector('a[data-testid="parent-resource-name-0"]')
       ).toHaveTextContent(testParentResource.name.fi);
     });
   });
@@ -403,7 +403,7 @@ describe(`<ResourcePage />`, () => {
 
     await act(async () => {
       expect(
-        await container.querySelector('div[data-test="openingPeriod-1"]')
+        await container.querySelector('div[data-testid="openingPeriod-1"]')
       ).toBeInTheDocument();
     });
   });

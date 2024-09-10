@@ -50,7 +50,7 @@ describe(`<OpeningPeriod />`, () => {
     );
 
     expect(
-      await container.querySelector('div[data-test="openingPeriod-1"]')
+      await container.querySelector('div[data-testid="openingPeriod-1"]')
     ).toBeInTheDocument();
   });
 

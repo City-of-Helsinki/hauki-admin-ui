@@ -146,7 +146,7 @@ const OpeningPeriodAccordion = ({
   return (
     <div
       className="opening-period"
-      data-test={`openingPeriod${dataTestPostFix}`}>
+      data-testid={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
         {toggleChecked !== undefined &&
           datePeriodSelectState === DatePeriodSelectState.ACTIVE && (
@@ -187,7 +187,7 @@ const OpeningPeriodAccordion = ({
                 {editUrl && (
                   <Link
                     className="button-icon opening-period-action-edit"
-                    data-test={`openingPeriodEditLink${dataTestPostFix}`}
+                    data-testid={`openingPeriodEditLink${dataTestPostFix}`}
                     to={editUrl}>
                     <IconPenLine aria-hidden="true" />
                     <span className="visually-hidden">
@@ -205,7 +205,7 @@ const OpeningPeriodAccordion = ({
                   <button
                     ref={deleteRef}
                     className="button-icon opening-period-action-delete"
-                    data-test={`openingPeriodDeleteLink${dataTestPostFix}`}
+                    data-testid={`openingPeriodDeleteLink${dataTestPostFix}`}
                     type="button"
                     onClick={openModal}>
                     <IconTrash aria-hidden="true" />
@@ -236,7 +236,7 @@ const OpeningPeriodAccordion = ({
             )}
           <button
             className="button-icon"
-            data-test={`openingPeriodAccordionButton${dataTestPostFix}`}
+            data-testid={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
             {...buttonProps}>
             <AccordionIcon isOpen={isOpen} />

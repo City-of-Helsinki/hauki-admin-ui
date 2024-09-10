@@ -31,7 +31,7 @@ const ExceptionOpeningHoursStateToggle = ({
         className="exception-opening-hours-resource-state-toggle"
         label="">
         <RadioButton
-          data-test="closed-state-checkbox"
+          data-testid="closed-state-checkbox"
           id={`${id}-closed-state-checkbox`}
           name={`${id}-closed-state-checkbox`}
           checked={!isOpen}
@@ -46,7 +46,7 @@ const ExceptionOpeningHoursStateToggle = ({
           }}
         />
         <RadioButton
-          data-test="open-state-checkbox"
+          data-testid="open-state-checkbox"
           id={`${id}-open-state-checkbox`}
           name={`${id}-open-state-checkbox`}
           checked={isOpen}

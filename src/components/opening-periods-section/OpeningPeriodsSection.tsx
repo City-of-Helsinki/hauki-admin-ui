@@ -132,7 +132,7 @@ const OpeningPeriodsSection = ({
           />
         </div>
       ) : (
-        <ul className="opening-periods-list" data-test={id}>
+        <ul className="opening-periods-list" data-testid={id}>
           {React.Children.map(children, (child) => (
             <li>{child}</li>
           ))}

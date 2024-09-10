@@ -31,7 +31,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           }): JSX.Element => (
             <TextInput
               aria-describedby="title-fi-helper-text"
-              data-test="opening-period-title-fi"
+              data-testid="opening-period-title-fi"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
               id="title-fi"
@@ -54,7 +54,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
             fieldState: { error },
           }): JSX.Element => (
             <TextInput
-              data-test="opening-period-title-sv"
+              data-testid="opening-period-title-sv"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
               id="title-sv"
@@ -77,7 +77,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
             fieldState: { error },
           }): JSX.Element => (
             <TextInput
-              data-test="opening-period-title-en"
+              data-testid="opening-period-title-en"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
               id="title-en"

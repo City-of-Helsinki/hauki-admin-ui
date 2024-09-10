@@ -36,7 +36,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                 onChange={(): void => onChange(false)}
               />
               <RadioButton
-                data-test="opening-hours-validity-fixed-option"
+                data-testid="opening-hours-validity-fixed-option"
                 id="opening-hours-validity-fixed"
                 checked={value}
                 name={name}
@@ -60,7 +60,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                   <DateInput
                     ref={startDateField.ref}
                     className="opening-hours-validity__date"
-                    data-test="opening-period-begin-date"
+                    data-testid="opening-period-begin-date"
                     disableConfirmation
                     id="opening-hours-start-date"
                     initialMonth={new Date()}
@@ -96,7 +96,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                     <DateInput
                       ref={endDateField.ref}
                       className="opening-hours-validity__date"
-                      data-test="opening-period-end-date"
+                      data-testid="opening-period-end-date"
                       disableConfirmation
                       id="opening-hours-end-date"
                       initialMonth={new Date()}

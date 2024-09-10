@@ -142,7 +142,7 @@ const OpeningHoursForm = ({
     (resource && datePeriodConfig && (
       <FormProvider {...form}>
         <form
-          data-test="opening-period-form"
+          data-testid="opening-period-form"
           onSubmit={form.handleSubmit(onSubmit)}>
           <div className="opening-hours-form">
             <ResourceTitle

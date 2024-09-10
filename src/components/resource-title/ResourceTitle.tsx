@@ -74,7 +74,7 @@ const ResourceTitle = ({
       <h1
         ref={ref}
         id={resourceTitleId}
-        data-test="resource-info"
+        data-testid="resource-info"
         className={`resource-info-title ${
           titleIsOnTop ? 'resource-info-title--on-top' : ''
         }`}>

@@ -24,7 +24,7 @@ const DayCheckbox = ({
   return (
     <label htmlFor={id} className="day-label">
       <input
-        data-test={id}
+        data-testid={id}
         disabled={disabled}
         id={id}
         type="checkbox"

@@ -41,7 +41,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                 <DateInput
                   id="exception-start-date"
                   className="exception-date"
-                  data-test="exception-start-date"
+                  data-testid="exception-start-date"
                   disableConfirmation
                   ref={ref}
                   errorText={fieldState.error?.message}
@@ -81,7 +81,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                 <DateInput
                   id="exception-end-date"
                   className="exception-date"
-                  data-test="exception-end-date"
+                  data-testid="exception-end-date"
                   disableConfirmation
                   ref={ref}
                   errorText={fieldState.error?.message}

@@ -233,7 +233,7 @@ const ResourcePage = ({
           id="parent-resource-description"
           title={t('ResourcePage.Main.Resources')}>
           <p
-            data-test="parent-resource-description"
+            data-testid="parent-resource-description"
             className="resource-description-text">
             {t('ResourcePage.Main.ParentResourceDescription')}
           </p>
@@ -267,7 +267,7 @@ const ResourcePage = ({
               {t('ResourcePage.Main.ChildTitle')}
             </h2>
             <p
-              data-test="child-resource-description"
+              data-testid="child-resource-description"
               className="resource-description-text">
               {t('ResourcePage.Main.ChildDescription')}
             </p>
