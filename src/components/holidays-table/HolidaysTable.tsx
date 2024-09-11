@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'hds-react';
 import { useAppContext } from '../../App-context';
 import { isHolidayOrEve } from '../../common/helpers/opening-hours-helpers';
@@ -29,6 +30,7 @@ export const UpcomingHolidayNotification = ({
   datePeriods: DatePeriod[];
   holidays: Holiday[];
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const nextHoliday = holidays.find(isHoliday);
 
@@ -41,7 +43,8 @@ export const UpcomingHolidayNotification = ({
   return (
     <div className="upcoming-holidays">
       <span>
-        Seuraava juhlapyhä: <strong>{nextHoliday.name[language]}</strong>
+        {t('OpeningHours.NextHoliday')}
+        <strong>{nextHoliday.name[language]}</strong>
       </span>
       <span className="upcoming-holidays-divider">—</span>
       <HolidayOpeningHours
@@ -63,6 +66,7 @@ const HolidaysTable = ({
   holidays: Holiday[];
   initiallyOpen: boolean;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { selectedDatePeriods, toggleDatePeriod, datePeriodSelectState } =
     useSelectedDatePeriodsContext();
@@ -85,11 +89,10 @@ const HolidaysTable = ({
       }>
       <div className="holidays-container">
         <h4 id="holidays-title" className="holidays-title">
-          Seuraavat juhlapyhät
+          {t('ResourcePage.HolidaysTableTitle')}
         </h4>
         <p id="holidays-description" className="holidays-description">
-          Muista tarkistaa juhlapyhien aikataulut vuosittain – esimerkiksi
-          pääsiäisen juhlapyhien ajankohta vaihtelee.
+          {t('ResourcePage.HolidaysTableDescription')}
         </p>
       </div>
       <div
@@ -102,17 +105,17 @@ const HolidaysTable = ({
             className="holidays-table__header holidays-table__row"
             role="row">
             <div className="holidays-table__header-cell" role="columnheader">
-              Juhlapyhä
+              {t('ResourcePage.HolidaysTableHolidayColumn')}
             </div>
             <div
               className="holidays-table__header-cell holidays-table__cell--date"
               role="columnheader">
-              Päivämäärä
+              {t('ResourcePage.HolidaysTableDateColumn')}
             </div>
             <div
               className="holidays-table__header-cell holidays-table__header-cell--opening-hours"
               role="columnheader">
-              Aukiolo
+              {t('ResourcePage.HolidaysTableOpeningHoursColumn')}
             </div>
           </div>
         </div>

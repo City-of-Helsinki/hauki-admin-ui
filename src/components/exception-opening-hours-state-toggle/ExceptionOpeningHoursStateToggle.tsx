@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { useFormContext } from 'react-hook-form';
 import { DatePeriod } from '../../common/lib/types';
@@ -18,6 +19,7 @@ const ExceptionOpeningHoursStateToggle = ({
   onClose: () => void;
   onOpen: () => void;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState<boolean>(initiallyOpen);
   const { watch } = useFormContext<DatePeriod>();
   const [startDate, endDate] = watch(['startDate', 'endDate']);
@@ -29,22 +31,26 @@ const ExceptionOpeningHoursStateToggle = ({
         className="exception-opening-hours-resource-state-toggle"
         label="">
         <RadioButton
-          data-test="closed-state-checkbox"
+          data-testid="closed-state-checkbox"
           id={`${id}-closed-state-checkbox`}
           name={`${id}-closed-state-checkbox`}
           checked={!isOpen}
-          label={differenceInDays > 0 ? 'Suljettu' : 'Suljettu koko päivän'}
+          label={
+            differenceInDays > 0
+              ? t('OpeningHours.ExceptionStateClosed')
+              : t('OpeningHours.ExceptionStateClosedWholeDay')
+          }
           onChange={(): void => {
             setOpen(false);
             onClose();
           }}
         />
         <RadioButton
-          data-test="open-state-checkbox"
+          data-testid="open-state-checkbox"
           id={`${id}-open-state-checkbox`}
           name={`${id}-open-state-checkbox`}
           checked={isOpen}
-          label="Poikkeava aukioloaika"
+          label={t('OpeningHours.ExceptionStateOpen')}
           onChange={(): void => {
             setOpen(true);
             onOpen();

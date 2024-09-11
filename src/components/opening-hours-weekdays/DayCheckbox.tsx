@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAppContext } from '../../App-context';
 import { Language } from '../../common/lib/types';
 import { getWeekdayShortNameByIndexAndLang } from '../../common/utils/date-time/format';
 import { getUiId } from '../../common/utils/form/form';
@@ -17,12 +18,13 @@ const DayCheckbox = ({
   onChange: (checked: boolean) => void;
   checked?: boolean;
 }): JSX.Element => {
+  const { language } = useAppContext();
   const id = getUiId([namePrefix, 'weekdays', currentDay]);
 
   return (
     <label htmlFor={id} className="day-label">
       <input
-        data-test={id}
+        data-testid={id}
         disabled={disabled}
         id={id}
         type="checkbox"
@@ -35,7 +37,7 @@ const DayCheckbox = ({
       <span className="day-option">
         {getWeekdayShortNameByIndexAndLang({
           weekdayIndex: currentDay,
-          language: Language.FI,
+          language: language || Language.FI,
         })}
       </span>
     </label>

@@ -61,7 +61,7 @@ export const SecondaryButton = React.forwardRef<
         } ${className}`}
         theme={light ? 'default' : 'coat'}
         size={size}
-        data-test={dataTest}
+        data-testid={dataTest}
         disabled={disabled}
         variant="secondary"
         onClick={onClick}
@@ -100,7 +100,7 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <HDSButton
         aria-expanded={ariaExpanded}
         ref={ref}
-        data-test={dataTest}
+        data-testid={dataTest}
         className={`button-common primary-button ${
           disabled && 'primary-button--is-disabled'
         } ${isLoading && 'primary-button--is-loading'} ${className}`}
@@ -147,7 +147,7 @@ export const SupplementaryButton = React.forwardRef<
         aria-expanded={ariaExpanded}
         ref={ref}
         type={type}
-        data-test={dataTest}
+        data-testid={dataTest}
         className={`button-common supplementary-button ${className}`}
         variant="supplementary"
         onClick={onClick}

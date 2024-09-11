@@ -11,7 +11,7 @@ export function Link({
   dataTest?: string;
 }): JSX.Element {
   return (
-    <a data-test={dataTest} href={href} className="custom-link">
+    <a data-testid={dataTest} href={href} className="custom-link">
       {text}
     </a>
   );

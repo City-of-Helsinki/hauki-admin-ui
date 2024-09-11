@@ -1,4 +1,5 @@
 import { DateInput, SelectionGroup } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
@@ -13,6 +14,7 @@ import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-t
 import './ExceptionOpeningHoursValidity.scss';
 
 const ExceptionOpeningHoursValidity = (): JSX.Element => {
+  const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { getValues, setValue, watch } = useFormContext<DatePeriod>();
   const [startDate, endDate, resourceState] = watch([
@@ -26,7 +28,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
       <div className="exception-opening-hours-validity">
         <SelectionGroup
           className="exception-opening-hours-validity__title"
-          label="Poikkeavan aukiolon voimassaoloaika"
+          label={t('OpeningHours.ExceptionOpeningHoursValidity')}
           required>
           <div className="exception-opening-hours-validity__dates">
             <Controller
@@ -39,12 +41,12 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                 <DateInput
                   id="exception-start-date"
                   className="exception-date"
-                  data-test="exception-start-date"
+                  data-testid="exception-start-date"
                   disableConfirmation
                   ref={ref}
                   errorText={fieldState.error?.message}
                   initialMonth={new Date()}
-                  label="Alkaa"
+                  label={t('OpeningHours.ExceptionStartDate')}
                   language={language}
                   name={name}
                   onChange={(newStartDate) => {
@@ -58,14 +60,14 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                     }
                   }}
                   onBlur={onBlur}
-                  openButtonAriaLabel="Valitse alkupäivämäärä"
+                  openButtonAriaLabel={t('OpeningHours.ExceptionStartDateAria')}
                   required
                   value={value}
                   crossOrigin={undefined}
                 />
               )}
               rules={{
-                required: 'Pakollinen',
+                required: t('Common.Mandatory'),
                 validate: isValidDate,
               }}
             />
@@ -79,24 +81,24 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
                 <DateInput
                   id="exception-end-date"
                   className="exception-date"
-                  data-test="exception-end-date"
+                  data-testid="exception-end-date"
                   disableConfirmation
                   ref={ref}
                   errorText={fieldState.error?.message}
                   initialMonth={new Date()}
-                  label="Päättyy"
+                  label={t('OpeningHours.ExceptionEndDate')}
                   language={language}
                   name={name}
                   onChange={onChange}
                   onBlur={onBlur}
-                  openButtonAriaLabel="Valitse loppupäivämäärä"
+                  openButtonAriaLabel={t('OpeningHours.ExceptionEndDateAria')}
                   required
                   value={value}
                   crossOrigin={undefined}
                 />
               )}
               rules={{
-                required: 'Pakollinen',
+                required: t('Common.Mandatory'),
                 validate: {
                   validDate: isValidDate,
                   endDateAfterStartDate: endDateAfterStartDate(getValues),

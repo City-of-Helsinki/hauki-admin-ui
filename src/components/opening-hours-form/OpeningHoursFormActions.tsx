@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import useMobile from '../../hooks/useMobile';
 import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
@@ -9,6 +10,7 @@ type Props = {
 };
 
 const OpeningHoursFormActions = ({ isSaving }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const isMobile = useMobile();
   const returnToResourcePage = useReturnToResourcePage();
 
@@ -18,15 +20,15 @@ const OpeningHoursFormActions = ({ isSaving }: Props): JSX.Element => {
         <PrimaryButton
           dataTest="submit-opening-hours-button"
           isLoading={isSaving}
-          loadingText="Tallentaa aukioloaikoja"
+          loadingText={t('OpeningHours.IsSubmitting')}
           type="submit"
           size={isMobile ? 'small' : 'default'}>
-          Tallenna
+          {t('Common.Submit')}
         </PrimaryButton>
         <SecondaryButton
           onClick={returnToResourcePage}
           size={isMobile ? 'small' : 'default'}>
-          Peruuta
+          {t('Common.Cancel')}
         </SecondaryButton>
       </div>
     </div>

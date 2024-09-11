@@ -2,6 +2,7 @@ import { Notification, Select } from 'hds-react';
 import { upperFirst } from 'lodash';
 import React, { Fragment, useEffect, useRef } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Language,
   TranslatedApiChoice,
@@ -63,6 +64,7 @@ const OpeningHoursWeekdays = ({
   rules: Rule[];
   onDayChange: (day: number, checked: boolean, offsetTop: number) => void;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const namePrefix = `openingHours.${openingHoursIdx}` as const;
   const { language = Language.FI } = useAppContext();
   const { control, getValues, setValue, watch } = useFormContext<DatePeriod>();
@@ -116,7 +118,7 @@ const OpeningHoursWeekdays = ({
   const removedDayLabel = removedDay
     ? getWeekdayLongNameByIndexAndLang({
         weekdayIndex: removedDay,
-        language: Language.FI,
+        language,
       })
     : '';
 
@@ -148,18 +150,21 @@ const OpeningHoursWeekdays = ({
   };
 
   const weekdayGroup = upperFirst(
-    item.weekdays.length === 1
-      ? `${resolveDayTranslation(item.weekdays[0], true)} aukioloajat`
-      : `${groupWeekdays(item.weekdays)
-          .map((group) =>
-            group.length === 1
-              ? resolveDayTranslation(group[0], false)
-              : `${resolveDayTranslation(
-                  group[0],
-                  false
-                )}-${resolveDayTranslation(group[group.length - 1], false)}`
-          )
-          .join(', ')} aukioloajat`
+    t('OpeningHours.WeekdayGroupOpeningHoursAria', {
+      weekDayLabels:
+        item.weekdays.length === 1
+          ? resolveDayTranslation(item.weekdays[0], true)
+          : groupWeekdays(item.weekdays)
+              .map((group) =>
+                group.length === 1
+                  ? resolveDayTranslation(group[0], false)
+                  : `${resolveDayTranslation(
+                      group[0],
+                      false
+                    )}-${resolveDayTranslation(group[group.length - 1], false)}`
+              )
+              .join(', '),
+    })
   );
 
   const handleRuleChange =
@@ -189,14 +194,16 @@ const OpeningHoursWeekdays = ({
     <div
       style={{ zIndex: isMoving ? 1 : undefined }}
       role="group"
-      aria-label={`Aukiolomääritys ${openingHoursIdx + 1}`}>
+      aria-label={t('OpeningHours.WeekdayGroupAria', {
+        openingHoursIdx: openingHoursIdx + 1,
+      })}>
       <div ref={ref} className="card opening-hours-container">
         <div>
           <div className="weekdays-header">
             <div
               id={getUiId([namePrefix, 'weekdays'])}
               className="weekdays-label">
-              Päivä tai päiväryhmä
+              {t('OpeningHours.WeekdaysLabel')}
             </div>
             <div>{formatDateRange({ startDate, endDate })}</div>
           </div>
@@ -207,17 +214,19 @@ const OpeningHoursWeekdays = ({
             {removedDay && (
               <Notification
                 key={removedDay}
-                label={`${upperFirst(
-                  removedDayLabel
-                )}-päivä siirretty omaksi riviksi`}
+                label={upperFirst(
+                  t('OpeningHours.RemovedDayNotificationLabel', {
+                    removedDayLabel,
+                  })
+                )}
                 position="bottom-right"
                 dismissible
                 autoClose
                 displayAutoCloseProgress={false}
-                closeButtonLabelText="Sulje ilmoitus"
+                closeButtonLabelText={t('Common.CloseNotification')}
                 onClose={(): void => setRemovedDay(null)}
                 style={{ zIndex: 100 }}>
-                {`Juuri poistettu ${removedDayLabel} siirrettiin omaksi rivikseen.`}
+                {t('OpeningHours.RemovedDayNotification', { removedDayLabel })}
               </Notification>
             )}
             <Controller
@@ -263,7 +272,7 @@ const OpeningHoursWeekdays = ({
                 name={`${namePrefix}.timeSpanGroups.${i}.rule`}
                 control={control}
                 rules={{
-                  required: 'Pakollinen',
+                  required: t('Common.Mandatory'),
                 }}
                 render={({ field: { value } }): JSX.Element => (
                   <>
@@ -271,10 +280,10 @@ const OpeningHoursWeekdays = ({
                       <Select<InputOption<RuleType>>
                         className="rule-select"
                         defaultValue={rules[0]}
-                        label="Toistuvuus"
+                        label={t('OpeningHours.RuleSelectLabel')}
                         onChange={handleRuleChange(i)}
                         options={rules}
-                        placeholder="Valitse"
+                        placeholder={t('OpeningHours.RuleSelectPlaceholder')}
                         required
                         value={rules.find((rule) => rule.value === value.type)}
                       />

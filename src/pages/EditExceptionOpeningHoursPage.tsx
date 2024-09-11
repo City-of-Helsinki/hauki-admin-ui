@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../common/utils/api/api';
 import { ApiDatePeriod } from '../common/lib/types';
 import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';
@@ -13,6 +14,7 @@ const EditExceptionOpeningHoursPage = ({
   resourceId: string;
   datePeriodId: string;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const resource = useResource(resourceId);
   const datePeriodConfig = useDatePeriodConfig();
   const datePeriod = useDatePeriod(datePeriodId);
@@ -21,7 +23,7 @@ const EditExceptionOpeningHoursPage = ({
     api.patchDatePeriod(updatedDatePeriod);
 
   if (!resource || !datePeriodConfig || !datePeriod) {
-    return <h1>Ladataan...</h1>;
+    return <h1>{t('Common.IsLoading')}</h1>;
   }
 
   return (

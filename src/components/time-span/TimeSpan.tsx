@@ -1,6 +1,7 @@
 import { Checkbox, IconTrash, Select, TextInput, TimeInput } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
 import React, { MutableRefObject, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   InputOption,
   Language,
@@ -21,26 +22,6 @@ import {
   areStartAndEndTimesAllowed,
   isDescriptionAllowed,
 } from '../../common/helpers/opening-hours-helpers';
-
-const validateTime = (value: string | null) => {
-  const re = /\d{2}:\d{2}/;
-
-  return value && re.test(value) ? undefined : 'Tarkista';
-};
-
-const descriptionMaxLength = 100;
-
-const descriptionRules = {
-  maxLength: {
-    value: descriptionMaxLength,
-    message: 'Tarkista',
-  },
-};
-
-const timeInputRules = {
-  required: 'Pakollinen',
-  validate: validateTime,
-};
 
 type Props = {
   disabled?: boolean;
@@ -65,6 +46,7 @@ const TimeSpan = ({
   resourceStates,
   timeSpanGroupIdx,
 }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const namePrefix =
     `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
   const { language = Language.FI } = useAppContext();
@@ -83,6 +65,23 @@ const TimeSpan = ({
       return true;
     })
     .map(choiceToOption(language));
+
+  const descriptionMaxLength = 100;
+
+  const descriptionRules = {
+    maxLength: {
+      value: descriptionMaxLength,
+      message: t('OpeningHours.Validate'),
+    },
+  };
+
+  const validateTime = (value: string | null) =>
+    value && /\d{2}:\d{2}/.test(value) ? undefined : t('OpeningHours.Validate');
+
+  const timeInputRules = {
+    required: t('Common.Mandatory'),
+    validate: validateTime,
+  };
 
   const displayStartAndEndTimes =
     resourceState && areStartAndEndTimesAllowed(i, resourceState);
@@ -110,17 +109,17 @@ const TimeSpan = ({
         name={resourceStateName}
         control={control}
         rules={{
-          required: 'Pakollinen',
+          required: t('Common.Mandatory'),
         }}
         render={({ field: { onChange, value } }): JSX.Element => (
           <Select<InputOption>
             disabled={disabled}
             id={resourceStateId}
-            label="Aukiolon tyyppi"
+            label={t('OpeningHours.TimeSpanState')}
             options={sanitizedResourceStateOptions}
             className="time-span__resource-state-select"
             onChange={(option: InputOption): void => onChange(option.value)}
-            placeholder="Valitse"
+            placeholder={t('OpeningHours.TimeSpanStatePlaceholder')}
             required
             value={sanitizedResourceStateOptions.find(
               (option) => option.value === value
@@ -139,7 +138,7 @@ const TimeSpan = ({
                   disabled={disabled}
                   id={getUiId([namePrefix, 'full-day'])}
                   name={`${namePrefix}.full_day`}
-                  label="24 h"
+                  label={t('OpeningHours.TimeSpan24h')}
                   onChange={(e): void => {
                     field.onChange(e.target.checked);
                   }}
@@ -161,11 +160,11 @@ const TimeSpan = ({
                     <TimeInput
                       disabled={disabled}
                       errorText={fieldState.error?.message}
-                      hoursLabel="tunnit"
+                      hoursLabel={t('OpeningHours.TimeSpanHoursLabel')}
                       id={getUiId([namePrefix, 'start-time'])}
                       invalid={!!fieldState.error?.message}
-                      label="Alkaa klo"
-                      minutesLabel="minuutit"
+                      label={t('OpeningHours.TimeSpanBegins')}
+                      minutesLabel={t('OpeningHours.TimeSpanMinutesLabel')}
                       name={field.name}
                       onBlur={field.onBlur}
                       onChange={field.onChange}
@@ -185,11 +184,11 @@ const TimeSpan = ({
                     <TimeInput
                       disabled={disabled}
                       errorText={fieldState.error?.message}
-                      hoursLabel="tunnit"
+                      hoursLabel={t('OpeningHours.TimeSpanHoursLabel')}
                       id={getUiId([namePrefix, 'end-time'])}
                       invalid={!!fieldState.error?.message}
-                      label="Päättyy klo"
-                      minutesLabel="minuutit"
+                      label={t('OpeningHours.TimeSpanEnds')}
+                      minutesLabel={t('OpeningHours.TimeSpanMinutesLabel')}
                       name={field.name}
                       onBlur={field.onBlur}
                       onChange={field.onChange}
@@ -222,11 +221,13 @@ const TimeSpan = ({
                   helperText={toCharCount(descriptionMaxLength, value)}
                   id={getUiId([name])}
                   invalid={!!error}
-                  label="Kuvaus suomeksi"
+                  label={t('OpeningHours.DescriptionInFinnish')}
                   name={name}
                   onBlur={onBlur}
                   onChange={onChange}
-                  placeholder="Esim. seniorit"
+                  placeholder={t(
+                    'OpeningHours.DescriptionPlaceholderInFinnish'
+                  )}
                   value={value || ''}
                 />
               )}
@@ -244,11 +245,13 @@ const TimeSpan = ({
                   helperText={toCharCount(descriptionMaxLength, value)}
                   id={getUiId([name])}
                   invalid={!!error}
-                  label="Kuvaus ruotsiksi"
+                  label={t('OpeningHours.DescriptionInSwedish')}
                   name={name}
                   onBlur={onBlur}
                   onChange={onChange}
-                  placeholder="T.ex. seniorer"
+                  placeholder={t(
+                    'OpeningHours.DescriptionPlaceholderInSwedish'
+                  )}
                   value={value || ''}
                 />
               )}
@@ -266,11 +269,13 @@ const TimeSpan = ({
                   helperText={toCharCount(descriptionMaxLength, value)}
                   id={getUiId([name])}
                   invalid={!!error}
-                  label="Kuvaus englanniksi"
+                  label={t('OpeningHours.DescriptionInEnglish')}
                   name={name}
                   onBlur={onBlur}
                   onChange={onChange}
-                  placeholder="E.g. seniors"
+                  placeholder={t(
+                    'OpeningHours.DescriptionPlaceholderInEnglish'
+                  )}
                   value={value || ''}
                 />
               )}
@@ -281,7 +286,8 @@ const TimeSpan = ({
       <div className="remove-time-span-button">
         {onDelete && (
           <SupplementaryButton iconLeft={<IconTrash />} onClick={onDelete}>
-            Poista rivi<span className="visually-hidden">{groupLabel}</span>
+            {t('OpeningHours.RemoveTimeSpanButton')}
+            <span className="visually-hidden">{groupLabel}</span>
           </SupplementaryButton>
         )}
       </div>

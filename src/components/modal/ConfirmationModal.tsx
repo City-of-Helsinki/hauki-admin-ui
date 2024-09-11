@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, IconQuestionCircle } from 'hds-react';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
 
@@ -38,6 +39,7 @@ export function ConfirmationModal({
   text: string | ReactNode;
   title: string;
 }): JSX.Element | null {
+  const { t } = useTranslation();
   const titleId = 'confirmation-modal-title';
 
   return (
@@ -55,7 +57,9 @@ export function ConfirmationModal({
           onClick={onConfirm}>
           {confirmText}
         </PrimaryButton>
-        <SecondaryButton onClick={onClose}>Peruuta</SecondaryButton>
+        <SecondaryButton onClick={onClose}>
+          {t('Common.Cancel')}
+        </SecondaryButton>
       </Dialog.ActionButtons>
     </Dialog>
   );

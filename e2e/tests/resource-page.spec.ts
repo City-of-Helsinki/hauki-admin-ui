@@ -47,12 +47,12 @@ test.describe('Resource page', async () => {
     const titleFi = 'e2e test title';
 
     await page.getByRole('button', { name: 'Lisää aukioloaika +' }).click();
-    await page.locator('[data-test="opening-period-title-fi"]').fill(titleFi);
+    await page.locator('[data-testid="opening-period-title-fi"]').fill(titleFi);
     await page
-      .locator('[data-test="opening-period-title-sv"]')
+      .locator('[data-testid="opening-period-title-sv"]')
       .fill('sommartid');
     await page
-      .locator('[data-test="opening-period-title-en"]')
+      .locator('[data-testid="opening-period-title-en"]')
       .fill('summertime');
     await page
       .getByLabel('Maanantai-Perjantai')
@@ -67,12 +67,12 @@ test.describe('Resource page', async () => {
       .getByPlaceholder('E.g. seniors')
       .fill('seniors');
     await page.getByText('24 h').click();
-    await page.locator('[data-test="submit-opening-hours-button"]').click();
+    await page.locator('[data-testid="submit-opening-hours-button"]').click();
     await expect(page.getByRole('heading', { name: titleFi })).toBeVisible();
 
     const removeButton = page
       .locator(
-        '[data-test="resource-opening-periods-list"] .opening-period-action-delete'
+        '[data-testid="resource-opening-periods-list"] .opening-period-action-delete'
       )
       .last();
     await removeButton.click();
@@ -92,20 +92,20 @@ test.describe('Resource page', async () => {
     const titleFi = 'e2e test title';
 
     await page.getByRole('button', { name: 'Lisää poikkeava päivä +' }).click();
-    await page.locator('[data-test="opening-period-title-fi"]').fill(titleFi);
+    await page.locator('[data-testid="opening-period-title-fi"]').fill(titleFi);
     await page
-      .locator('[data-test="opening-period-title-sv"]')
+      .locator('[data-testid="opening-period-title-sv"]')
       .fill('utbildngingstad');
     await page
-      .locator('[data-test="opening-period-title-en"]')
+      .locator('[data-testid="opening-period-title-en"]')
       .fill('training day');
-    await page.locator('[data-test="submit-opening-hours-button"]').click();
+    await page.locator('[data-testid="submit-opening-hours-button"]').click();
 
     await expect(page.getByTestId('opening-period-form-success')).toBeVisible();
 
     const removeButton = page
       .locator(
-        '[data-test="resource-exception-opening-periods-list"] .opening-period-action-delete'
+        '[data-testid="resource-exception-opening-periods-list"] .opening-period-action-delete'
       )
       .last();
     await removeButton.click();
@@ -129,12 +129,12 @@ test.describe('Resource page', async () => {
       .first();
     const holidayTestId = await holidayInput.getAttribute('data-test');
 
-    await page.locator(`[data-test="${holidayTestId}"]`).check();
-    await page.locator('[data-test="submit-opening-hours-button"]').click();
+    await page.locator(`[data-testid="${holidayTestId}"]`).check();
+    await page.locator('[data-testid="submit-opening-hours-button"]').click();
     await expect(page.getByTestId('holiday-form-success')).toBeVisible({
       timeout: 30 * 1000,
     });
-    await page.locator(`[data-test="${holidayTestId}"]`).click();
+    await page.locator(`[data-testid="${holidayTestId}"]`).click();
     await expect(page.locator('#confirmation-modal')).toBeVisible();
 
     await page.getByRole('button', { name: 'Poista', exact: true }).click();
@@ -150,7 +150,7 @@ test.describe('Resource page', async () => {
       .first();
     const holidayTestId = await holidayInput.getAttribute('data-test');
 
-    await page.locator(`[data-test="${holidayTestId}"]`).check();
+    await page.locator(`[data-testid="${holidayTestId}"]`).check();
     await page.getByText('Poikkeava aukioloaika').click();
     await page.getByLabel('Auki', { exact: true }).click();
     await page.getByRole('option', { name: 'Itsepalvelu' }).click();
@@ -158,11 +158,11 @@ test.describe('Resource page', async () => {
     await page.getByPlaceholder('Esim. seniorit').fill('seniorit');
     await page.getByPlaceholder('T.ex. seniorer').fill('seniorer');
     await page.getByPlaceholder('E.g. seniors').fill('seniors');
-    await page.locator('[data-test="submit-opening-hours-button"]').click();
+    await page.locator('[data-testid="submit-opening-hours-button"]').click();
     await expect(page.getByTestId('holiday-form-success')).toBeVisible({
       timeout: 30 * 1000,
     });
-    await page.locator(`[data-test="${holidayTestId}"]`).click();
+    await page.locator(`[data-testid="${holidayTestId}"]`).click();
     await expect(
       page.getByRole('heading', { name: 'Oletko varma että haluat' })
     ).toBeVisible();
