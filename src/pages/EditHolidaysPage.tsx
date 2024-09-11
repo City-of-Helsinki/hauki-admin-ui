@@ -187,7 +187,7 @@ const HolidayListItem = ({
   const checkboxId = `${id}-checkbox`;
   const commonCheckBoxProps = {
     id: checkboxId,
-    'data-test': checkboxId,
+    'data-testid': checkboxId,
     label: `${name[language]}   ${formatDate(date)}`,
     checked,
     style: {
