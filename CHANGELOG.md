@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.4...hauki-admin-ui-v1.5.0) (2024-09-11)
+
+
+### Features
+
+* Add language support in all missing places ([#402](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/402)) ([ae290c1](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/ae290c10ead4ebe59e3185297bf8368eff6949aa))
+
+
+### Bug Fixes
+
+* Missing data-testid ([#405](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/405)) ([55001ae](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/55001ae0738c2bba6b2fefb760e3ac1963092738))
+* Missing data-testid ([#406](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/406)) ([9c56ae7](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/9c56ae7d9987b200383664989e6ace429ee6fe71))
+
 ## [1.4.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.4.3...hauki-admin-ui-v1.4.4) (2024-05-31)
 
 
