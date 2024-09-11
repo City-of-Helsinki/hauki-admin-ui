@@ -127,7 +127,7 @@ test.describe('Resource page', async () => {
     const holidayInput = page
       .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
       .first();
-    const holidayTestId = await holidayInput.getAttribute('data-test');
+    const holidayTestId = await holidayInput.getAttribute('data-testid');
 
     await page.locator(`[data-testid="${holidayTestId}"]`).check();
     await page.locator('[data-testid="submit-opening-hours-button"]').click();
@@ -148,7 +148,7 @@ test.describe('Resource page', async () => {
     const holidayInput = page
       .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
       .first();
-    const holidayTestId = await holidayInput.getAttribute('data-test');
+    const holidayTestId = await holidayInput.getAttribute('data-testid');
 
     await page.locator(`[data-testid="${holidayTestId}"]`).check();
     await page.getByText('Poikkeava aukioloaika').click();
