@@ -125,7 +125,7 @@ test.describe('Resource page', async () => {
     await page.getByRole('button', { name: 'Muokkaa juhlapyhiä' }).click();
 
     const holidayInput = page
-      .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
+      .locator('input[data-testid*="holiday-"]:not(:checked):not(:disabled)')
       .first();
     const holidayTestId = await holidayInput.getAttribute('data-testid');
 
@@ -146,7 +146,7 @@ test.describe('Resource page', async () => {
     await page.getByRole('button', { name: 'Muokkaa juhlapyhiä' }).click();
 
     const holidayInput = page
-      .locator('input[data-test*="holiday-"]:not(:checked):not(:disabled)')
+      .locator('input[data-testid*="holiday-"]:not(:checked):not(:disabled)')
       .first();
     const holidayTestId = await holidayInput.getAttribute('data-testid');
 
