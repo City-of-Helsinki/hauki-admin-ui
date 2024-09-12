@@ -55,9 +55,9 @@ const NormalOpeningHoursForm = (
       },
       title: {
         placeholders: {
-          fi: t('TitlePlaceholderInFinnish'),
-          sv: t('TitlePlaceholderInSwedish'),
-          en: t('TitlePlaceholderInEnglish'),
+          fi: t('OpeningHours.TitlePlaceholderInFinnish'),
+          sv: t('OpeningHours.TitlePlaceholderInSwedish'),
+          en: t('OpeningHours.TitlePlaceholderInEnglish'),
         },
       },
     },
