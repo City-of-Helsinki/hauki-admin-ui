@@ -123,12 +123,16 @@ const ResourcePage = ({
     }
   }, [language, resource, targetResourcesString]);
 
-  useEffect((): void => {
+  useEffect(() => {
+    let isMounted = true;
+
     // UseEffect's callbacks are synchronous to prevent a race condition.
     // We can not use an async function as an useEffect's callback because it would return Promise<void>
     api
       .getResource(mainResourceId)
       .then(async (r: Resource) => {
+        if (!isMounted) return;
+
         setResource(r);
         const resourceHasChildren = r.children.length > 0;
         const resourceHasParents = r.parents.length > 0;
@@ -149,6 +153,10 @@ const ResourcePage = ({
         setError(e);
         setLoading(false);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [mainResourceId]);
 
   const gotoBatchUpdatePage = (): void => {
