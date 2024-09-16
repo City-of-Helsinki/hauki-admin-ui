@@ -97,7 +97,7 @@ New commit to PR will trigger review pipeline. Review pipeline builds applicatio
 
 #### Dev environment
 
-Release to dev environment <https://hauki-admin-ui.dev.hel.ninja> is handled automatically from master branch. Updates to master branch triggers
+Release to dev environment <https://hauki-admin-ui.dev.hel.ninja> is handled automatically from main branch. Updates to main branch triggers
 azure pipeline that will run tests, build and deploy to dev environment hosted by red hat openshift.
 Currently azure-pipeline is configured directly from version control, but red hat openshift configuration resides in openshift cluster.
 
