@@ -28,7 +28,7 @@
     "date-fns": "2.29.3",
     "date-holidays": "^3.16.1",
     "dotenv": "^16.4.5",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
     "esrun": "^3.2.26",
@@ -56,8 +56,8 @@
     "start": "yarn clear-babel-cache && yarn update-runtime-env && vite",
     "build": "yarn ts-check && vite build",
     "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
-    "test": "cross-env NODE_ENV=test yarn update-runtime-env && vitest",
-    "test:cov": "cross-env CI=true yarn test --coverage",
+    "test": "NODE_ENV=test yarn update-runtime-env && vitest",
+    "test:cov": "CI=true yarn test --coverage",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint:css": "stylelint 'src/**/*.scss'",
     "lint": "yarn lint:css && yarn ts-check && eslint --ext js,ts,tsx src",
@@ -91,7 +91,6 @@
     "@commitlint/config-conventional": "^18.4.3",
     "@playwright/test": "^1.42.1",
     "@vitest/coverage-istanbul": "^1.6.0",
-    "cross-env": "^7.0.3",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "husky": "^8.0.3",
     "jsdom": "^25.0.1",
@@ -100,8 +99,8 @@
     "stylelint-value-no-unknown-custom-properties": "^6.0.1"
   },
   "resolutions": {
-    "react-error-overlay": "6.0.9",
     "braces": "3.0.3",
-    "micromatch": "4.0.6"
+    "micromatch": "4.0.6",
+    "react-error-overlay": "6.0.9"
   }
 }
