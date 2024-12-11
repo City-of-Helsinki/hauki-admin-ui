@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   IconCrossCircleFill,
   IconUser,
@@ -25,7 +25,7 @@ const HaukiHeader = (): JSX.Element => {
   const authProps: Partial<AuthContextProps> = useAuth();
   const { i18n, t } = useTranslation();
   const { authTokens, clearAuth } = authProps;
-  const history = useHistory();
+  const navigate = useNavigate();
   const isAuthenticated = !!authTokens;
   const { id } = useParams<{ id: string }>();
 
@@ -41,7 +41,7 @@ const HaukiHeader = (): JSX.Element => {
         if (clearAuth) {
           clearAuth();
         }
-        history.push('/');
+        navigate('/');
       } else {
         showSignOutErrorNotification(t('Header.SignOutRejected'));
       }
@@ -84,7 +84,7 @@ const HaukiHeader = (): JSX.Element => {
           const urlSearchParams = new URLSearchParams(window.location.search);
           urlSearchParams.set('lang', newLanguage);
 
-          history.push({
+          navigate({
             pathname: window.location.pathname,
             search: urlSearchParams.toString(),
           });

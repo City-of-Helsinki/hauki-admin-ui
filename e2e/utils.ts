@@ -1,7 +1,10 @@
 import { promisify } from 'util';
 import { exec } from 'child_process';
+import dns from 'node:dns';
 import { DatePeriod, Resource } from '../src/common/lib/types';
 import { apiUrl, testData } from './constants';
+
+dns.setDefaultResultOrder('ipv4first');
 
 const getAuthParams = async () => {
   const execAsync = promisify(exec);

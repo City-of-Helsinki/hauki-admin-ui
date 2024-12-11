@@ -1,7 +1,7 @@
 import { Checkbox, LoadingSpinner } from 'hds-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
 import './OpeningPeriodsSection.scss';
@@ -35,7 +35,7 @@ const OpeningPeriodsSection = ({
   title,
   theme,
 }: Props): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     selectedDatePeriods,
     removeDatePeriods,
@@ -117,7 +117,7 @@ const OpeningPeriodsSection = ({
             dataTest={addNewOpeningPeriodButtonDataTest}
             light
             onClick={(): void => {
-              history.push(newUrl);
+              navigate(newUrl);
             }}
             size="small">
             {addDatePeriodButtonText}

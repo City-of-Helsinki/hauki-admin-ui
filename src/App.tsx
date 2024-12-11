@@ -1,11 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  RouteComponentProps,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'hds-core';
 import { AppContext } from './App-context';
 import urlUtils, { SearchParameters } from './common/utils/url/url';
@@ -22,7 +17,7 @@ import NavigationAndFooterWrapper from './components/navigation-and-footer-wrapp
 import HaukiHeader from './components/header/HaukiHeader';
 import './App.scss';
 import { Language } from './common/lib/types';
-import PrivateResourceRoute from './components/router/PrivateResourceRoute';
+import PermissionResolver from './components/router/PermissionResolver';
 import ResourcePage from './pages/ResourcePage';
 import ResourceBatchUpdatePage from './pages/ResourceBatchUpdatePage';
 import AddNormalOpeningHoursPage from './pages/AddNormalOpeningHoursPage';
@@ -121,240 +116,234 @@ const App = (): JSX.Element => {
 
           <AuthContext.Provider value={authContextValue}>
             <Router>
-              <Switch>
-                <Route exact path="/">
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <h1>Etusivu</h1>
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                </Route>
-                <Route exact path="/not_found">
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <h1>Kohdetta ei löydy</h1>
-                      <p>
-                        Kohdetta ei löytynyt. Yritä myöhemmin uudestaan.
-                        Ongelman toistuessa ota yhteys sivuston ylläpitoon.
-                        Teidät on automaattisesti kirjattu ulos.
-                      </p>
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                </Route>
-                <Route exact path="/unauthorized">
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <h1>Puutteelliset tunnukset</h1>
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                </Route>
-                <Route exact path="/unauthenticated">
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <h1>Puuttuvat tunnukset</h1>
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                </Route>
-                <Route path="/cookies">
-                  <NavigationAndFooterWrapper>
-                    <Main id="main">
-                      <CookieManagement />
-                    </Main>
-                  </NavigationAndFooterWrapper>
-                </Route>
-                <PrivateResourceRoute
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <NavigationAndFooterWrapper>
+                      <Main id="main">
+                        <h1>Etusivu</h1>
+                      </Main>
+                    </NavigationAndFooterWrapper>
+                  }
+                />
+                <Route
+                  path="/not_found"
+                  element={
+                    <NavigationAndFooterWrapper>
+                      <Main id="main">
+                        <h1>Kohdetta ei löydy</h1>
+                        <p>
+                          Kohdetta ei löytynyt. Yritä myöhemmin uudestaan.
+                          Ongelman toistuessa ota yhteys sivuston ylläpitoon.
+                          Teidät on automaattisesti kirjattu ulos.
+                        </p>
+                      </Main>
+                    </NavigationAndFooterWrapper>
+                  }
+                />
+                <Route
+                  path="/unauthorized"
+                  element={
+                    <NavigationAndFooterWrapper>
+                      <Main id="main">
+                        <h1>Puutteelliset tunnukset</h1>
+                      </Main>
+                    </NavigationAndFooterWrapper>
+                  }
+                />
+                <Route
+                  path="/unauthenticated"
+                  element={
+                    <NavigationAndFooterWrapper>
+                      <Main id="main">
+                        <h1>Puuttuvat tunnukset</h1>
+                      </Main>
+                    </NavigationAndFooterWrapper>
+                  }
+                />
+                <Route
+                  path="/cookies"
+                  element={
+                    <NavigationAndFooterWrapper>
+                      <Main id="main">
+                        <CookieManagement />
+                      </Main>
+                    </NavigationAndFooterWrapper>
+                  }
+                />
+                <Route
                   id="resource-route"
-                  exact
-                  path={['/resource/:id', '/resource/:id/child/:childId']}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                    childId?: string;
-                  }>) => {
-                    const { id, childId } = match.params;
-
-                    return (
-                      id && (
-                        <NavigationAndFooterWrapper>
-                          <Main id="main">
-                            <SelectedDatePeriodsProvider>
-                              <ResourcePage
-                                mainResourceId={id}
-                                childId={childId}
-                                targetResourcesString={targetResourcesStr}
-                              />
-                            </SelectedDatePeriodsProvider>
-                          </Main>
-                        </NavigationAndFooterWrapper>
-                      )
-                    );
-                  }}
+                  path="/resource/:id"
+                  element={
+                    <PermissionResolver>
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <SelectedDatePeriodsProvider>
+                            <ResourcePage
+                              targetResourcesString={targetResourcesStr}
+                            />
+                          </SelectedDatePeriodsProvider>
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
+                <Route
+                  id="resource-route-child"
+                  path="/resource/:id/child/:childId"
+                  element={
+                    <PermissionResolver>
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <SelectedDatePeriodsProvider>
+                            <ResourcePage
+                              targetResourcesString={targetResourcesStr}
+                            />
+                          </SelectedDatePeriodsProvider>
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
                   id="resource-batch-update-route"
-                  exact
-                  path={['/resource/:id/batch']}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                  }>) => {
-                    const { id } = match.params;
-
-                    return (
-                      id && (
-                        <NavigationAndFooterWrapper>
-                          <Main id="main">
-                            <SelectedDatePeriodsProvider>
-                              <ResourceBatchUpdatePage
-                                mainResourceId={id}
-                                targetResourcesString={targetResourcesStr}
-                              />
-                            </SelectedDatePeriodsProvider>
-                          </Main>
-                        </NavigationAndFooterWrapper>
-                      )
-                    );
-                  }}
+                  path="/resource/:id/batch"
+                  element={
+                    <PermissionResolver>
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <SelectedDatePeriodsProvider>
+                            <ResourceBatchUpdatePage
+                              targetResourcesString={targetResourcesStr}
+                            />
+                          </SelectedDatePeriodsProvider>
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
+                <Route
+                  id="create-new-opening-period-route-child"
+                  path="/resource/:parentId/child/:id/period/new"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <AddNormalOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
                   id="create-new-opening-period-route"
-                  exact
-                  path={[
-                    '/resource/:parentId/child/:id/period/new/',
-                    '/resource/:id/period/new',
-                  ]}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                  }>) => {
-                    const { id } = match.params;
-
-                    return (
-                      id && (
-                        <>
-                          <HaukiHeader />
-                          <Main id="main">
-                            <AddNormalOpeningHoursPage resourceId={id} />
-                          </Main>
-                        </>
-                      )
-                    );
-                  }}
+                  path="/resource/:id/period/new"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <AddNormalOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
+                <Route
+                  id="edit-opening-period-route-child"
+                  path="/resource/:parentId/child/:id/period/:datePeriodId"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditNormalOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
                   id="edit-opening-period-route"
-                  path={[
-                    '/resource/:parentId/child/:id/period/:datePeriodId',
-                    '/resource/:id/period/:datePeriodId',
-                  ]}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                    datePeriodId?: string;
-                  }>) => {
-                    const { id, datePeriodId } = match.params;
-
-                    return (
-                      id &&
-                      datePeriodId && (
-                        <>
-                          <HaukiHeader />
-                          <Main id="main">
-                            <EditNormalOpeningHoursPage
-                              resourceId={id}
-                              datePeriodId={datePeriodId}
-                            />
-                          </Main>
-                        </>
-                      )
-                    );
-                  }}
+                  path="/resource/:id/period/:datePeriodId"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditNormalOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
+                <Route
+                  id="edit-holidays-route-child"
+                  path="/resource/:parentId/child/:id/holidays"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditHolidaysPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
                   id="edit-holidays-route"
-                  path={[
-                    '/resource/:parentId/child/:id/holidays',
-                    '/resource/:id/holidays',
-                  ]}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                  }>) => {
-                    const { id } = match.params;
-
-                    return (
-                      id && (
-                        <>
-                          <HaukiHeader />
-                          <Main id="main">
-                            <EditHolidaysPage resourceId={id} />
-                          </Main>
-                        </>
-                      )
-                    );
-                  }}
+                  path="/resource/:id/holidays"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditHolidaysPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
+                <Route
+                  id="add-exception-route-child"
+                  path="/resource/:parentId/child/:id/exception/new"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <AddExceptionOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
                   id="add-exception-route"
-                  path={[
-                    '/resource/:parentId/child/:id/exception/new/',
-                    '/resource/:id/exception/new/',
-                  ]}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                  }>) => {
-                    const { id } = match.params;
-
-                    return (
-                      id && (
-                        <>
-                          <HaukiHeader />
-                          <Main id="main">
-                            <AddExceptionOpeningHoursPage resourceId={id} />
-                          </Main>
-                        </>
-                      )
-                    );
-                  }}
+                  path="/resource/:id/exception/new/"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <AddExceptionOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
                 />
-                <PrivateResourceRoute
-                  id="add-exception-route"
-                  path={[
-                    '/resource/:parentId/child/:id/exception/:datePeriodId',
-                    '/resource/:id/exception/:datePeriodId',
-                  ]}
-                  render={({
-                    match,
-                  }: RouteComponentProps<{
-                    id?: string;
-                    datePeriodId?: string;
-                  }>) => {
-                    const { id, datePeriodId } = match.params;
-
-                    return (
-                      id &&
-                      datePeriodId && (
-                        <>
-                          <HaukiHeader />
-                          <Main id="main">
-                            <EditExceptionOpeningHoursPage
-                              datePeriodId={datePeriodId}
-                              resourceId={id}
-                            />
-                          </Main>
-                        </>
-                      )
-                    );
-                  }}
+                <Route
+                  id="edit-exception-route-child"
+                  path="/resource/:parentId/child/:id/exception/:datePeriodId"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditExceptionOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
                 />
-              </Switch>
+                <Route
+                  id="edit-exception-route"
+                  path="/resource/:id/exception/:datePeriodId"
+                  element={
+                    <PermissionResolver>
+                      <HaukiHeader />
+                      <Main id="main">
+                        <EditExceptionOpeningHoursPage />
+                      </Main>
+                    </PermissionResolver>
+                  }
+                />
+              </Routes>
             </Router>
           </AuthContext.Provider>
         </MatomoContext.Provider>

@@ -251,6 +251,17 @@ vi.mock('react-i18next', () => ({
   },
 }));
 
+vi.mock('react-router-dom', async () => {
+  const mod = await vi.importActual('react-router-dom');
+
+  return {
+    ...mod,
+    useParams: () => ({
+      id: 'tprek:8100',
+    }),
+  };
+});
+
 describe(`<ResourcePage />`, () => {
   beforeEach(() => {
     vi.spyOn(api, 'getResource').mockImplementation(() =>
@@ -302,7 +313,7 @@ describe(`<ResourcePage />`, () => {
     render(
       <Router>
         <SelectedDatePeriodsProvider>
-          <ResourcePage mainResourceId="tprek:8100" />
+          <ResourcePage />
         </SelectedDatePeriodsProvider>
       </Router>
     );
@@ -323,7 +334,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage mainResourceId="tprek:8100" />
+            <ResourcePage />
           </SelectedDatePeriodsProvider>
         </Router>
       );
@@ -347,7 +358,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage mainResourceId="tprek:8100" />
+            <ResourcePage />
           </SelectedDatePeriodsProvider>
         </Router>
       );
@@ -366,7 +377,7 @@ describe(`<ResourcePage />`, () => {
       container = render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage mainResourceId="tprek:8100" />
+            <ResourcePage />
           </SelectedDatePeriodsProvider>
         </Router>
       ).container;
@@ -395,7 +406,7 @@ describe(`<ResourcePage />`, () => {
       container = render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage mainResourceId="tprek:8100" />
+            <ResourcePage />
           </SelectedDatePeriodsProvider>
         </Router>
       ).container;
@@ -413,7 +424,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage mainResourceId="tprek:8100" />
+            <ResourcePage />
           </SelectedDatePeriodsProvider>
         </Router>
       );
@@ -439,10 +450,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage
-              mainResourceId="tprek:8100"
-              targetResourcesString="tprek:8101"
-            />
+            <ResourcePage targetResourcesString="tprek:8101" />
           </SelectedDatePeriodsProvider>
         </Router>
       );
@@ -460,10 +468,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage
-              mainResourceId="tprek:8100"
-              targetResourcesString="tprek:8101"
-            />
+            <ResourcePage targetResourcesString="tprek:8101" />
           </SelectedDatePeriodsProvider>
         </Router>
       );
@@ -491,10 +496,7 @@ describe(`<ResourcePage />`, () => {
       render(
         <Router>
           <SelectedDatePeriodsProvider>
-            <ResourcePage
-              mainResourceId="tprek:8100"
-              targetResourcesString="tprek:8101"
-            />
+            <ResourcePage targetResourcesString="tprek:8101" />
           </SelectedDatePeriodsProvider>
         </Router>
       );

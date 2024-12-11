@@ -18,7 +18,6 @@ import { TargetResourcesProps } from '../components/resource-opening-hours/Resou
 import { SelectedDatePeriodsProvider } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
 const testResourceBatchUpdatePageProps: ResourceBatchUpdatePageProps = {
-  mainResourceId: 'tprek:10',
   targetResourcesString: 'tprek:11,tprek:12,tprek:13,tprek:14',
 };
 
@@ -185,6 +184,17 @@ vi.mock('../services/useDatePeriodConfig', () => ({
   })),
 }));
 
+vi.mock('react-router-dom', async () => {
+  const mod = await vi.importActual('react-router-dom');
+
+  return {
+    ...mod,
+    useParams: () => ({
+      id: 'tprek:10',
+    }),
+  };
+});
+
 const renderPage = () => {
   return render(
     <Router>
@@ -263,9 +273,7 @@ describe(`<ResourceBatchUpdatePage />`, () => {
     renderPage();
 
     await waitFor(async () => {
-      expect(apiGetResourceSpy).toHaveBeenCalledWith(
-        testResourceBatchUpdatePageProps.mainResourceId
-      );
+      expect(apiGetResourceSpy).toHaveBeenCalledWith('tprek:10');
     });
   });
 

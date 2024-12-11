@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, Notification, IconArrowRight, Card } from 'hds-react';
+import { useParams } from 'react-router-dom';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';
@@ -48,12 +49,8 @@ const ResourceDetailsSection = ({
 );
 
 const ResourcePage = ({
-  childId,
-  mainResourceId,
   targetResourcesString,
 }: {
-  childId?: string;
-  mainResourceId: string;
   targetResourcesString?: string;
 }): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
@@ -68,6 +65,12 @@ const ResourcePage = ({
   >(undefined);
   const [errorWhenNothingSelected, setErrorWhenNothingSelected] =
     useState<boolean>(false);
+
+  const { id: mainResourceId, childId } = useParams<{
+    id: string;
+    childId?: string;
+  }>();
+
   const targetResourcesStorageKey = 'targetResources';
   const goToResourceBatchUpdatePage = useGoToResourceBatchUpdatePage();
   const {
@@ -128,31 +131,33 @@ const ResourcePage = ({
 
     // UseEffect's callbacks are synchronous to prevent a race condition.
     // We can not use an async function as an useEffect's callback because it would return Promise<void>
-    api
-      .getResource(mainResourceId)
-      .then(async (r: Resource) => {
-        if (!isMounted) return;
+    if (mainResourceId) {
+      api
+        .getResource(mainResourceId)
+        .then(async (r: Resource) => {
+          if (!isMounted) return;
 
-        setResource(r);
-        const resourceHasChildren = r.children.length > 0;
-        const resourceHasParents = r.parents.length > 0;
+          setResource(r);
+          const resourceHasChildren = r.children.length > 0;
+          const resourceHasParents = r.parents.length > 0;
 
-        if (resourceHasChildren || resourceHasParents) {
-          // fetch children and parents
-          const [childR, parentR] = await Promise.all([
-            resourceHasChildren ? api.getChildResourcesByParentId(r.id) : [],
-            resourceHasParents ? api.getParentResourcesByChildId(r.id) : [],
-          ]);
+          if (resourceHasChildren || resourceHasParents) {
+            // fetch children and parents
+            const [childR, parentR] = await Promise.all([
+              resourceHasChildren ? api.getChildResourcesByParentId(r.id) : [],
+              resourceHasParents ? api.getParentResourcesByChildId(r.id) : [],
+            ]);
 
-          setChildResources(childR);
-          setParentResources(parentR);
-        }
-        setLoading(false);
-      })
-      .catch((e: Error) => {
-        setError(e);
-        setLoading(false);
-      });
+            setChildResources(childR);
+            setParentResources(parentR);
+          }
+          setLoading(false);
+        })
+        .catch((e: Error) => {
+          setError(e);
+          setLoading(false);
+        });
+    }
 
     return () => {
       isMounted = false;

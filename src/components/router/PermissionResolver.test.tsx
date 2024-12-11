@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  RouteComponentProps,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import api from '../../common/utils/api/api';
 import * as AuthContext from '../../auth/auth-context';
-import PrivateResourceRoute from './PrivateResourceRoute';
+import PermissionResolver from './PermissionResolver';
 import { AuthTokens } from '../../auth/auth-context';
 
 const testTokens: AuthTokens = {
@@ -21,7 +17,18 @@ const testTokens: AuthTokens = {
   hsa_has_organization_rights: 'true',
 };
 
-const renderRoutesWithPrivateRoute = () => {
+vi.mock('react-router-dom', async () => {
+  const mod = await vi.importActual('react-router-dom');
+
+  return {
+    ...mod,
+    useParams: () => ({
+      id: 'tprek:8100',
+    }),
+  };
+});
+
+const renderRoutesWithPermissionResolver = () => {
   window.history.pushState(
     {},
     'Test page',
@@ -30,23 +37,24 @@ const renderRoutesWithPrivateRoute = () => {
 
   return render(
     <Router>
-      <Route exact path="/not_found">
-        <h1>Test not found</h1>
-      </Route>
-      <Route exact path="/unauthenticated">
-        <h1>Test unauthenticated</h1>
-      </Route>
-      <Route exact path="/unauthorized">
-        <h1>Test unauthorized</h1>
-      </Route>
-      <PrivateResourceRoute
-        id="resource-route"
-        exact
-        path="/resource/:id"
-        render={({ match }: RouteComponentProps<{ id?: string }>) => (
-          <h1>{match.params.id}</h1>
-        )}
-      />
+      <Routes>
+        <Route path="/not_found" element={<h1>Test not found</h1>} />
+        <Route
+          path="/unauthenticated"
+          element={<h1>Test unauthenticated</h1>}
+        />
+
+        <Route path="/unauthorized" element={<h1>Test unauthorized</h1>} />
+        <Route
+          id="resource-route"
+          path="/resource/:id"
+          element={
+            <PermissionResolver>
+              <h1>{testTokens.hsa_resource}</h1>
+            </PermissionResolver>
+          }
+        />
+      </Routes>
     </Router>
   );
 };
@@ -71,7 +79,7 @@ const mockPermissionsApi = (hasPermission: boolean): void => {
   );
 };
 
-describe(`<PrivateResourceRoute />`, () => {
+describe(`<PermissionResolver />`, () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -80,7 +88,7 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext();
     mockPermissionsApi(true);
 
-    const { getByText } = renderRoutesWithPrivateRoute();
+    const { getByText } = renderRoutesWithPermissionResolver();
 
     expect(getByText('Sivua alustetaan..')).toBeInTheDocument();
   });
@@ -89,7 +97,7 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext();
     mockPermissionsApi(true);
 
-    renderRoutesWithPrivateRoute();
+    renderRoutesWithPermissionResolver();
 
     await waitFor(async () =>
       expect(
@@ -102,7 +110,7 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext();
     mockPermissionsApi(false);
 
-    renderRoutesWithPrivateRoute();
+    renderRoutesWithPermissionResolver();
 
     await waitFor(async () =>
       expect(await screen.findByText('Test unauthorized')).toBeInTheDocument()
@@ -113,7 +121,7 @@ describe(`<PrivateResourceRoute />`, () => {
     mockContext({ tokens: undefined });
     mockPermissionsApi(false);
 
-    renderRoutesWithPrivateRoute();
+    renderRoutesWithPermissionResolver();
 
     await waitFor(async () =>
       expect(
@@ -135,7 +143,7 @@ describe(`<PrivateResourceRoute />`, () => {
       Promise.reject(resourceNotFoundError)
     );
 
-    renderRoutesWithPrivateRoute();
+    renderRoutesWithPermissionResolver();
 
     await waitFor(async () =>
       expect(await screen.findByText('Test not found')).toBeInTheDocument()

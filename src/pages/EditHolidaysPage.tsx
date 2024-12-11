@@ -2,6 +2,7 @@ import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, IconPenLine, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import {
   ApiDatePeriod,
   Language,
@@ -299,11 +300,7 @@ const HolidayListItem = ({
   );
 };
 
-const EditHolidaysPage = ({
-  resourceId,
-}: {
-  resourceId: string;
-}): JSX.Element => {
+const EditHolidaysPage = (): JSX.Element => {
   const { t } = useTranslation();
   const [resource, setResource] = useState<Resource>();
   const [holidayValues, setHolidayValues] = useState<
@@ -311,19 +308,26 @@ const EditHolidaysPage = ({
   >();
   const [datePeriodConfig, setDatePeriodConfig] =
     useState<UiDatePeriodConfig>();
+
+  const { id: resourceId } = useParams<{
+    id?: string;
+  }>();
+
   const { language = Language.FI } = useAppContext();
   const [holidays, setHolidays] = useState<Holiday[]>([]);
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
       try {
-        const [apiResource, uiDatePeriodOptions] = await Promise.all([
-          api.getResource(resourceId),
-          getDatePeriodFormConfig(),
-        ]);
-        setHolidays(getHolidays());
-        setResource(apiResource);
-        setDatePeriodConfig(uiDatePeriodOptions);
+        if (resourceId) {
+          const [apiResource, uiDatePeriodOptions] = await Promise.all([
+            api.getResource(resourceId),
+            getDatePeriodFormConfig(),
+          ]);
+          setHolidays(getHolidays());
+          setResource(apiResource);
+          setDatePeriodConfig(uiDatePeriodOptions);
+        }
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('Fetching data failed in holidays page:', e);
