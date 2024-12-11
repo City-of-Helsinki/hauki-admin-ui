@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import { e2eTestUrl } from './e2e/constants';
 
 export default defineConfig({
@@ -10,6 +10,9 @@ export default defineConfig({
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+
+  /* The maximum number of retry attempts given to failed tests */
+  retries: process.env.CI ? 1 : undefined,
 
   // Timeout for each test in milliseconds
   timeout: 60 * 1000,
@@ -49,8 +52,12 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'Tests',
-      testMatch: [/tests/],
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
     },
   ],
   globalTeardown: require.resolve('./e2e/tests/global.teardown.ts'),

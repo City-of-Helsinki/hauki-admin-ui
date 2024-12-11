@@ -1,11 +1,9 @@
 import { useCallback } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const useGotToResourceBatchUpdataPage = (): (() => void) => {
-  const history = useHistory();
-  const {
-    params: { parentId, id: resourceId },
-  } = useRouteMatch<{
+  const navigate = useNavigate();
+  const { parentId, id: resourceId } = useParams<{
     parentId?: string;
     id?: string;
   }>();
@@ -19,8 +17,8 @@ const useGotToResourceBatchUpdataPage = (): (() => void) => {
       ? `${parentId}/child/${resourceId}`
       : resourceId;
 
-    history.push(`/resource/${resourcePath}/batch`);
-  }, [history, parentId, resourceId]);
+    navigate(`/resource/${resourcePath}/batch`);
+  }, [navigate, parentId, resourceId]);
 };
 
 export default useGotToResourceBatchUpdataPage;
