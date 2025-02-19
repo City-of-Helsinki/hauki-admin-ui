@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.3...hauki-admin-ui-v1.5.4) (2025-02-19)
+
+
+### Dependencies
+
+* Bump vite from 5.2.11 to 6.1.0 ([b936ab0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b936ab04565e4b2649f84bfcde1d20379dabf9d2))
+* Bump vite to 6.1.0 ([97ddf4a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/97ddf4a58717922389f850204bb666ec642c9758))
+
 ## [1.5.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.2...hauki-admin-ui-v1.5.3) (2025-02-18)
 
 
