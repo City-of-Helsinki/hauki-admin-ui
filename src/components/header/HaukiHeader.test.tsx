@@ -2,7 +2,6 @@ import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Mock } from 'vitest';
 import api from '../../common/utils/api/api';
 import { AppContext } from '../../App-context';
 import { AuthContext } from '../../auth/auth-context';
@@ -33,9 +32,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     /* @ts-ignore */
     ...mod,
-    useHistory: (): { push: Mock } => ({
-      push: vi.fn(),
-    }),
+    useNavigate: vi.fn(),
   };
 });
 

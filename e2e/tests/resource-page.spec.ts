@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Page, expect, test } from '@playwright/test';
-import { getResource, getResourceUrl } from '../utils';
-import { Resource } from '../../src/common/lib/types';
+import { getResourceUrl, getResource } from '../utils';
+
 import { testData } from '../constants';
+import { Resource } from '../../src/common/lib/types';
 
 test.describe('Resource page', async () => {
   let page: Page;
@@ -10,8 +11,8 @@ test.describe('Resource page', async () => {
   let resource: Resource;
 
   test.beforeAll(async ({ browser }) => {
-    resourceUrl = await getResourceUrl();
     resource = await getResource();
+    resourceUrl = await getResourceUrl();
 
     page = await browser.newPage();
     await page.goto(resourceUrl);
@@ -40,6 +41,7 @@ test.describe('Resource page', async () => {
 
   test('Location name', async () => {
     const resourceTitle = resource.name.fi;
+
     await expect(page.getByText(resourceTitle)).toBeVisible();
   });
 
@@ -174,10 +176,7 @@ test.describe('Resource page', async () => {
   });
 
   test('Dates - day selection', async () => {
-    const createNewPeriodUrl = `/resource/${resource.id}/period/new`;
-
     await page.getByRole('button', { name: 'Lisää aukioloaika +' }).click();
-    await page.goto(createNewPeriodUrl);
 
     await page
       .getByLabel('Aukiolomääritys 1')

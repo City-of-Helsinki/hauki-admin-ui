@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Notification,
   Table,
@@ -37,7 +37,6 @@ import OpeningPeriod from '../components/opening-period/OpeningPeriod';
 import OpeningPeriodsSection from '../components/opening-periods-section/OpeningPeriodsSection';
 
 export type ResourceBatchUpdatePageProps = {
-  mainResourceId: string;
   targetResourcesString?: string;
 };
 
@@ -57,7 +56,6 @@ export type ResourceWithOrigins = Resource & {
 };
 
 const ResourceBatchUpdatePage = ({
-  mainResourceId,
   targetResourcesString,
 }: ResourceBatchUpdatePageProps): JSX.Element => {
   const {
@@ -67,7 +65,7 @@ const ResourceBatchUpdatePage = ({
   } = useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();
   const { authTokens, clearAuth } = authProps;
-  const history = useHistory();
+  const navigate = useNavigate();
   const isAuthenticated = !!authTokens;
   const { isModalOpen, openModal } = useModal();
   const [resource, setResource] = useState<Resource | undefined>(undefined);
@@ -78,6 +76,11 @@ const ResourceBatchUpdatePage = ({
   const [targetResourceData, setTargetResourceData] = useState<
     TargetResourcesProps | undefined
   >(undefined);
+
+  const { id: mainResourceId } = useParams<{
+    id?: string;
+  }>();
+
   const ReturnToResourcePage = useReturnToResourcePage();
   const {
     selectedDatePeriods,
@@ -120,7 +123,7 @@ const ResourceBatchUpdatePage = ({
         if (clearAuth) {
           clearAuth();
         }
-        history.push('/');
+        navigate('/');
       } else {
         showErrorNotification(t('ResourcePage.Notifications.SignOutFailed'));
       }
@@ -334,22 +337,25 @@ const ResourceBatchUpdatePage = ({
     let isMounted = true;
 
     setLoading(true);
-    api
-      .getResource(mainResourceId)
-      .then(async (r: Resource) => {
-        if (!isMounted) return;
 
-        setResource(r);
-        setLoading(false);
-      })
-      .catch((e: Error) => {
-        setLoading(false);
-        setError(e);
-        showErrorNotification(
-          t('ResourcePage.Notifications.ErrorLoadingResource'),
-          t('ResourcePage.Notifications.Error2') + e
-        );
-      });
+    if (mainResourceId) {
+      api
+        .getResource(mainResourceId)
+        .then(async (r: Resource) => {
+          if (!isMounted) return;
+
+          setResource(r);
+          setLoading(false);
+        })
+        .catch((e: Error) => {
+          setLoading(false);
+          setError(e);
+          showErrorNotification(
+            t('ResourcePage.Notifications.ErrorLoadingResource'),
+            t('ResourcePage.Notifications.Error2') + e
+          );
+        });
+    }
 
     return () => {
       isMounted = false;

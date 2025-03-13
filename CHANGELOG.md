@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.5.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.3...hauki-admin-ui-v1.5.4) (2025-02-19)
+
+
+### Dependencies
+
+* Bump vite from 5.2.11 to 6.1.0 ([b936ab0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b936ab04565e4b2649f84bfcde1d20379dabf9d2))
+* Bump vite to 6.1.0 ([97ddf4a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/97ddf4a58717922389f850204bb666ec642c9758))
+
+## [1.5.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.2...hauki-admin-ui-v1.5.3) (2025-02-18)
+
+
+### Dependencies
+
+* Bump vite from 6.0.3 to 6.0.9 ([f486f58](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f486f58ecf8aa05f7c097bf3129fec93ff9a8edd))
+* Bump vitest and coverage-istanbul to 2.1.9 ([caa56a2](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/caa56a24f8bff11b49f3649c2ef5ea9a250fe58e))
+
+## [1.5.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.1...hauki-admin-ui-v1.5.2) (2024-12-18)
+
+
+### Dependencies
+
+* Bump axios from 1.7.2 to 1.7.4 ([1a015ff](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/1a015ff26ba975bb4a680d93e79421135284bb5a))
+* Bump jsdom to 25.0.1 ([2afd49b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2afd49bea3b50cbfc5f927ea41ea85dd89416750))
+* Bump react-router-dom to 6.28.0 HAUKI-672 ([d40927f](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/d40927fe245826e04358fc1713acec2c87cf8a53))
+* Bump ws from 8.17.0 to 8.18.0 ([de6aaa5](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/de6aaa5c512f6a55e4bb23738eb6d7567caaa706))
+* Remove cross-env, upgrade eslint HAUKI-672 ([b721a64](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b721a641df4c24e57f742be58058c49e0a56cfb0))
+* Upgrade vite, rollup resolution HAUKI-672 ([cfbb37a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/cfbb37ac78b037e58425800cf69ff33dfcdd38d7))
+
 ## [1.5.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.0...hauki-admin-ui-v1.5.1) (2024-09-12)
 
 
