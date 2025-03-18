@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.5.5](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.4...hauki-admin-ui-v1.5.5) (2025-03-18)
+
+
+### Bug Fixes
+
+* Incorrect title sv and end translation HAUKi-676 ([#422](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/422)) ([b2e515a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b2e515a7aab96192c63eade9e37d7f0d665c1676))
+
+
+### Dependencies
+
+* Bump @babel/helpers from 7.24.5 to 7.26.10 ([#427](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/427)) ([1291cbb](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/1291cbbfa16b2031705079c40a2674597d4e8d22))
+* Bump @babel/runtime-corejs3 from 7.24.0 to 7.26.10 ([#428](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/428)) ([3eb14c0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3eb14c08840b7bb2f9c12c649fe968dfdc44195b))
+* Bump axios from 1.7.4 to 1.8.2 ([#430](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/430)) ([a587421](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a5874217248d170357946e52a4e9a6d607b693a4))
+* Bump nanoid from 3.3.7 to 3.3.8 ([#419](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/419)) ([c89b7f1](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c89b7f1d2d805efce41f41e12257dad25c2efdb6))
+* Bump path-to-regexp from 1.8.0 to 1.9.0 ([#408](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/408)) ([fed0de6](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/fed0de616755d073ea1666256429b3a482afbf4c))
+
 ## [1.5.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.3...hauki-admin-ui-v1.5.4) (2025-02-19)
 
 
