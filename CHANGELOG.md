@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.5...hauki-admin-ui-v1.6.0) (2025-05-06)
+
+
+### Features
+
+* Upgrade node to v22 HAUKI-673 ([59f715a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/59f715a0282c8eb1ab3c7f4986b8e57b30dac026))
+
+
+### Dependencies
+
+* Bump vite from 5.4.14 to 6.2.4 ([#433](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/433)) ([f7ff1c7](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f7ff1c77f59941805574ecd77c1ac486a1e42abe))
+* Bump vite from 5.4.16 to 6.2.5 ([#435](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/435)) ([6415ff3](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/6415ff33f672604c57eba377f4a832c15b31334e))
+* Bump vite from 5.4.17 to 6.3.0 ([#437](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/437)) ([e64ea59](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/e64ea59d2cb21c72436c2e9fa687a078e776300e))
+* Bump vite from 5.4.18 to 6.3.5 ([#440](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/440)) ([78497d3](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/78497d3f3db99f7be6d6bc20e2718923b91a203a))
+* Bump vite from 6.2.2 to 6.2.4 ([#431](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/431)) ([54dc3b4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/54dc3b4ddfee63cfe45fea252f263a65e1a6be5f))
+* Bump vite from 6.2.4 to 6.2.5 ([#434](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/434)) ([41de4d8](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/41de4d8380933841b20878e4107980bfdf1585d4))
+* Bump vite from 6.2.5 to 6.2.6 ([#436](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/436)) ([e945813](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/e945813ce37bb840683806e198b3bb91a6c8eac0))
+* Bump vite from 6.3.0 to 6.3.4 ([#439](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/439)) ([f2f13f4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f2f13f472da1c8d3dc9222294882c152555f347e))
+
 ## [1.5.5](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.4...hauki-admin-ui-v1.5.5) (2025-03-18)
 
 

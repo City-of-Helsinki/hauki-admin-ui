@@ -1,6 +1,6 @@
 {
   "name": "hauki-admin-ui",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "license": "MIT",
   "engines": {
     "node": ">=22.13.1"
