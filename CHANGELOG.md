@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.6.0...hauki-admin-ui-v1.7.0) (2025-08-02)
+
+
+### Features
+
+* Common CI workflow HAUKI-690 ([#442](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/442)) ([b6f936e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b6f936eb4849c8aeaddc916ef50f0c68fb55d13e))
+
 ## [1.6.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.5...hauki-admin-ui-v1.6.0) (2025-05-06)
 
 
