@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.6.0...hauki-admin-ui-v1.7.0) (2025-08-08)
+
+
+### Features
+
+* Common CI workflow HAUKI-690 ([#442](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/442)) ([b6f936e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b6f936eb4849c8aeaddc916ef50f0c68fb55d13e))
+
+
+### Dependencies
+
+* Bump form-data from 4.0.2 to 4.0.4 ([00b1340](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/00b1340464fc673ea5c4024d2cdadc51064d3704))
+* Upgrade axios and jsdom HAUKI-672 ([b20dd63](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b20dd63262c9bfe0f827b9b86a90d563e48ee33d))
+
 ## [1.6.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.5.5...hauki-admin-ui-v1.6.0) (2025-05-06)
 
 
