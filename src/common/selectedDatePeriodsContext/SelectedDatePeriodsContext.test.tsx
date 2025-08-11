@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useContext } from 'react';
+import { renderHook } from '@testing-library/react';
+import { act, useContext } from 'react';
 import {
   SelectedDatePeriodsProvider,
   SelectedDatePeriodsContext,

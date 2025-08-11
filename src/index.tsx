@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './index.scss';
@@ -29,7 +30,12 @@ if (window._env_?.USE_AXE === 'true') {
   axe(React, ReactDOM, 1000);
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('Root element not found');
+}
+const root = createRoot(container);
+root.render(<App />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
