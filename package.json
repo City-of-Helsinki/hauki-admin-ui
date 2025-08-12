@@ -51,7 +51,7 @@
     "build": "yarn ts-check:build && vite build",
     "preview": "yarn clear-babel-cache && yarn update-runtime-env && vite preview",
     "test": "NODE_ENV=test yarn update-runtime-env && vitest --config vitest.config.ts",
-    "test:cov": "CI=true yarn test --coverage",
+    "test:coverage": "CI=true yarn test --coverage",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.build.json",
     "ts-check:build": "tsc --skipLibCheck --noEmit --project tsconfig.build.json",
     "ts-check:test": "tsc --skipLibCheck --noEmit --project tsconfig.test.json",
