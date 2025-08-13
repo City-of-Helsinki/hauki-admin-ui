@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import eslint from 'vite-plugin-eslint';
 
-export default defineConfig(() => ({
+export default defineConfig({
   base: '/',
   envPrefix: 'REACT_APP_',
-  plugins: [react(), eslint()].filter(Boolean),
+  plugins: [react(), eslint()],
   build: {
     outDir: './build',
     emptyOutDir: true,
@@ -18,4 +18,4 @@ export default defineConfig(() => ({
   preview: {
     port: 3000,
   },
-}));
+});

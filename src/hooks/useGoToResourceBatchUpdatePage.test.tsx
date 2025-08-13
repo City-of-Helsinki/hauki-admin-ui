@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import * as routerMock from 'react-router-dom';
 import useGoToResourceBatchUpdatePage from './useGoToResourceBatchUpdatePage';
@@ -24,7 +24,7 @@ describe('useGoToResourceBatchUpdatePage', () => {
     });
 
     const { result } = renderHook(() => useGoToResourceBatchUpdatePage(), {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: { children: React.ReactNode }) => (
         <MemoryRouter initialEntries={['/somepath']}>
           <Routes>
             <Route path="*" element={children} />
@@ -44,7 +44,7 @@ describe('useGoToResourceBatchUpdatePage', () => {
     vi.spyOn(routerMock, 'useParams').mockReturnValueOnce({ id: 'resource1' });
 
     const { result } = renderHook(() => useGoToResourceBatchUpdatePage(), {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: { children: React.ReactNode }) => (
         <MemoryRouter initialEntries={['/somepath']}>
           <Routes>
             <Route path="*" element={children} />
@@ -62,7 +62,7 @@ describe('useGoToResourceBatchUpdatePage', () => {
     vi.spyOn(routerMock, 'useParams').mockReturnValueOnce({});
 
     const { result } = renderHook(() => useGoToResourceBatchUpdatePage(), {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: { children: React.ReactNode }) => (
         <MemoryRouter initialEntries={['/somepath']}>
           <Routes>
             <Route path="*" element={children} />

@@ -33,7 +33,7 @@ USER default
 RUN yarn && yarn cache clean --force
 
 # Copy all files
-COPY .eslintrc.js .eslintignore tsconfig.json index.html vite.config.mts .prettierrc.json .env* /app/
+COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.build.json index.html vite.config.mts .prettierrc.json .env* /app/
 COPY ./src /app/src
 COPY ./test /app/test
 
