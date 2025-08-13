@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import eslint from 'vite-plugin-eslint';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   base: '/',
   envPrefix: 'REACT_APP_',
-  plugins: [react(), mode !== 'test' && eslint()].filter(Boolean),
+  plugins: [react(), eslint()].filter(Boolean),
   build: {
     outDir: './build',
     emptyOutDir: true,
