@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "vite/client",
+      "vite-plugin-svgr/client"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "test",
+    "e2e",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/testSetup.ts",
+    "**/setupTests.ts"
+  ]
+}

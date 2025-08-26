@@ -23,6 +23,8 @@ describe('CookieConsent', () => {
       enabled: true,
     });
 
+    const user = userEvent.setup();
+
     render(
       <AppContext.Provider
         value={{ language: Language.FI, setLanguage: setLanguageMock }}>
@@ -35,11 +37,11 @@ describe('CookieConsent', () => {
     const buttons = await screen.findAllByRole('button');
     const changeLanguageButton = buttons[0];
 
-    userEvent.click(changeLanguageButton);
+    await user.click(changeLanguageButton);
 
     const enOption = await screen.findByRole('link', { name: 'English (EN)' });
 
-    userEvent.click(enOption);
+    await user.click(enOption);
 
     expect(setLanguageMock).toHaveBeenCalled();
   });

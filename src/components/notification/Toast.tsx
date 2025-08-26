@@ -4,7 +4,7 @@ import {
   NotificationPosition,
   NotificationType,
 } from 'hds-react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import i18n from '../../i18n';
 
 type ToastProps = {
@@ -38,7 +38,8 @@ const renderToast = ({
   const containerDomNode = document.createElement('div');
   document.body.appendChild(containerDomNode);
 
-  ReactDOM.render(
+  const root = createRoot(containerDomNode);
+  root.render(
     <Notification
       position={position}
       displayAutoCloseProgress={false}
@@ -55,8 +56,7 @@ const renderToast = ({
       closeButtonLabelText={i18n.t('Common.CloseNotification')}
       {...(dataTestId ? { dataTestId } : {})}>
       {text}
-    </Notification>,
-    containerDomNode
+    </Notification>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { datePeriodOptions } from '../../test/fixtures/api-options';
 import {
@@ -479,9 +479,11 @@ describe(`<ResourcePage />`, () => {
     button?.click();
 
     // now we have an error since no datePeriods are chosen
-    expect(
-      screen.getByTestId('gotoBatchUpdateErrorNotification')
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('gotoBatchUpdateErrorNotification')
+      ).toBeInTheDocument();
+    });
 
     // expect function mockUseGoToResourceBatchUpdatePage to not have been called
     expect(mockUseGoToResourceBatchUpdatePage).toHaveBeenCalledTimes(0);

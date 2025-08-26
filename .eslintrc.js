@@ -14,6 +14,26 @@ module.exports = {
       parser: 'babel-eslint',
       rules: {},
     },
+    {
+      files: [
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '**/*.spec.ts',
+        '**/*.spec.tsx',
+        '**/setupTests.ts',
+        '**/testSetup.ts'
+      ],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          {
+            devDependencies: true,
+            optionalDependencies: false,
+            peerDependencies: false
+          }
+        ]
+      }
+    }
   ],
   env: {
     browser: true,
