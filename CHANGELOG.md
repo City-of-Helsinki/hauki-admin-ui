@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.0...hauki-admin-ui-v1.7.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* Upgrade to react 18, refactor deps ([#445](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/445)) ([f95a268](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f95a2689248e27d634e176432f6b84b592b8d670))
+
 ## [1.7.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.6.0...hauki-admin-ui-v1.7.0) (2025-08-08)
 
 
