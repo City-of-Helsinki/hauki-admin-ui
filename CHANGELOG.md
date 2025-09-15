@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.3...hauki-admin-ui-v1.7.4) (2025-09-15)
+
+
+### Dependencies
+
+* Bump axios from 1.11.0 to 1.12.0 ([a3545a4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a3545a4bebb673647998237598eb5a3fc2a13734))
+
 ## [1.7.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.2...hauki-admin-ui-v1.7.3) (2025-09-10)
 
 
