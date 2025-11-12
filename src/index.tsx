@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import './index.scss';
 import axe from '@axe-core/react';
 import App from './App';
@@ -18,12 +17,20 @@ declare global {
 
 Sentry.init({
   dsn: window._env_.SENTRY_DSN,
-  integrations: [new Integrations.BrowserTracing()],
-  environment: window._env_.SENTRY_ENV,
-  sampleRate: window._env_.SENTRY_ENV === 'local' ? 0.0 : 1.0, // We do not wish to trace in local env by default
+  environment: window._env_.SENTRY_ENVIRONMENT,
+  release: window._env_.SENTRY_RELEASE,
+  tracesSampleRate:
+    window._env_.SENTRY_ENV === 'local'
+      ? 0
+      : window._env_.SENTRY_TRACES_SAMPLE_RATE,
+  tracePropagationTargets: window._env_.SENTRY_TRACE_PROPAGATION_TARGETS,
+  replaysSessionSampleRate: window._env_.SENTRY_REPLAYS_SESSION_SAMPLE_RATE,
+  replaysOnErrorSampleRate: window._env_.SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE,
   ignoreErrors: [
     'ResizeObserver loop completed with undelivered notifications',
+    'ResizeObserver loop limit exceeded',
   ],
+  integrations: [Sentry.browserTracingIntegration()],
 });
 
 if (window._env_?.USE_AXE === 'true') {
