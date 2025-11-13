@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.6](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.5...hauki-admin-ui-v1.7.6) (2025-11-13)
+
+
+### Bug Fixes
+
+* Enable cloud sentry ([#455](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/455)) ([dcd8c9c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/dcd8c9c298f0551afd8a5628c93b942c72a2058d))
+
 ## [1.7.5](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.4...hauki-admin-ui-v1.7.5) (2025-11-05)
 
 
