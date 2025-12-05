@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.7](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.6...hauki-admin-ui-v1.7.7) (2025-12-05)
+
+
+### Dependencies
+
+* Bump js-yaml from 4.1.0 to 4.1.1 ([#457](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/457)) ([5b9c32a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/5b9c32acd9ce88d8bc79df8016e5bb85dc086938))
+
 ## [1.7.6](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.5...hauki-admin-ui-v1.7.6) (2025-11-13)
 
 
