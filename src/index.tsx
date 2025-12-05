@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-if (!window._env_?.SENTRY_DSN) {
+if (window._env_?.SENTRY_DSN) {
   Sentry.init({
     dsn: window._env_.SENTRY_DSN,
     environment: window._env_.SENTRY_ENVIRONMENT,
