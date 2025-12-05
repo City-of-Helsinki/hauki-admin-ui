@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.8](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.7...hauki-admin-ui-v1.7.8) (2025-12-05)
+
+
+### Bug Fixes
+
+* Sentry init Ref: HAUKI-728 ([fe4915c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/fe4915c1aa0d60c5f9ed97a410ac3f31ab129783))
+
 ## [1.7.7](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.6...hauki-admin-ui-v1.7.7) (2025-12-05)
 
 
