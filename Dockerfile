@@ -30,7 +30,8 @@ RUN chown -R default:root /app
 # Use non-root user
 USER default
 
-RUN yarn && yarn cache clean --force
+RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
+RUN yarn update-runtime-env
 
 # Copy all files
 COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.build.json index.html vite.config.mts .prettierrc.json .env* /app/
