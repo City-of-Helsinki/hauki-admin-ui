@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.8...hauki-admin-ui-v1.8.0) (2026-01-12)
+
+
+### Features
+
+* Hardening yarn install RATY-280 ([30364d9](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/30364d901a1bed5ad7598e6c6b19968b89150f53))
+
 ## [1.7.8](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.7...hauki-admin-ui-v1.7.8) (2025-12-05)
 
 
