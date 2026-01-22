@@ -31,7 +31,7 @@
     "hds-design-tokens": "^3.8.0",
     "hds-react": "^3.8.0",
     "i18next": "23.7.11",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "prettier": "^2.1.1",
     "querystring": "^0.2.1",
     "react": "^18.2.0",
