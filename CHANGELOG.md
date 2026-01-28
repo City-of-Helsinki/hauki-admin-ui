@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.8.0...hauki-admin-ui-v1.8.1) (2026-01-28)
+
+
+### Dependencies
+
+* Bump lodash from 4.17.21 to 4.17.23 ([0d8bccf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0d8bccf134a17695cdfc4846a68aba7edd6fb54b))
+
 ## [1.8.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.7.8...hauki-admin-ui-v1.8.0) (2026-01-12)
 
 
