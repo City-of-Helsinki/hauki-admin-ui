@@ -45,7 +45,7 @@ const OpeningPeriodsSection = ({
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
   const { t } = useTranslation();
-  
+
   let openingPeriodsHeaderClassName = 'opening-periods-header';
   if (showCopyOption) {
     openingPeriodsHeaderClassName = 'opening-periods-header-copy-mode';

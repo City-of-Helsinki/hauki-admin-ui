@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Notification } from 'hds-react';
 import { useParams } from 'react-router-dom';
 import { partition } from 'lodash';
+import { SecondaryButton } from '../components/button/Button';
+import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import {
@@ -30,6 +32,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
   const language = contextLanguage || Language.FI;
   const { t } = useTranslation();
   const { setDatePeriodSelectState } = useSelectedDatePeriodsContext();
+  const returnToResourcePage = useReturnToResourcePage();
   const [resource, setResource] = useState<Resource | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -145,9 +148,16 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
 
   return (
     <div className="resource-past-opening-hours-page">
-      <h1 className="past-opening-hours-title">
-        {resourceName}, {t('ResourcePastOpeningHoursPage.Main.Title')}
-      </h1>
+      <div className="section-title">
+        <h1 className="past-opening-hours-title">
+          {resourceName}, {t('ResourcePastOpeningHoursPage.Main.Title')}
+        </h1>
+        <div className="button-close">
+          <SecondaryButton size="small" onClick={returnToResourcePage}>
+            {t('ResourcePage.Main.ReturnToMainPageButton')}
+          </SecondaryButton>
+        </div>
+      </div>
 
       {normalDatePeriods.length === 0 &&
       exceptionDatePeriods.length === 0 &&

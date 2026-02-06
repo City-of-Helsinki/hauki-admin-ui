@@ -21,3 +21,15 @@
   font-style: italic;
   color: var(--color-black-70);
 }
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.button-close {
+  position: absolute;
+  right: 0;
+}
