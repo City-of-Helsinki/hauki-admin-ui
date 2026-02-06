@@ -27,6 +27,7 @@ const OpeningPeriodsList = ({
   isLoading,
   newUrl,
   editUrl,
+  showCopyOption = false,
 }: {
   id: string;
   addNewOpeningPeriodButtonDataTest: string;
@@ -38,6 +39,7 @@ const OpeningPeriodsList = ({
   emptyState: string;
   deletePeriod: (id: number) => Promise<void>;
   language: Language;
+  showCopyOption?: boolean;
   isLoading: boolean;
   newUrl: string;
   editUrl?: (datePeriod: DatePeriod) => string;
@@ -54,7 +56,8 @@ const OpeningPeriodsList = ({
       isLoading={isLoading}
       newUrl={newUrl}
       theme={theme}
-      title={title}>
+      title={title}
+      showCopyOption={showCopyOption}>
       {datePeriods.length > 0 ? (
         datePeriods.map((datePeriod, index) => (
           <OpeningPeriod
@@ -68,6 +71,7 @@ const OpeningPeriodsList = ({
               ref.current?.focus();
             }}
             initiallyOpen={index <= 10}
+            showCopyOption={showCopyOption}
           />
         ))
       ) : (

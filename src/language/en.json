@@ -105,7 +105,9 @@
       "ExceptionPeriodsTitle": "Past exceptional days",
       "ExceptionPeriodsEmpty": "No past exceptional days.",
       "HolidayPeriodsTitle": "Past holidays",
-      "HolidayPeriodsEmpty": "No past holidays."
+      "HolidayPeriodsEmpty": "No past holidays.",
+      "CopyPeriod": "Copy {{periodName}} opening hours period",
+      "CopyUntitledPeriod": "Copy unnamed opening hours period"
     },
     "Notifications": {
       "Error": "Error",

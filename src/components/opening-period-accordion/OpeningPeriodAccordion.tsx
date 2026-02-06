@@ -2,6 +2,7 @@ import {
   Checkbox,
   IconAngleDown,
   IconAngleUp,
+  IconCopy,
   IconMenuDots,
   IconPenLine,
   IconTrash,
@@ -115,6 +116,7 @@ type Props = {
   isActive?: boolean;
   onDelete?: () => void | Promise<void>;
   periodName?: string | null;
+  showCopyOption?: boolean;
 };
 
 const OpeningPeriodAccordion = ({
@@ -128,6 +130,7 @@ const OpeningPeriodAccordion = ({
   periodName,
   toggleChecked,
   checked,
+  showCopyOption = false,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const deleteModalTitle = t(
@@ -234,6 +237,25 @@ const OpeningPeriodAccordion = ({
                 periodName={periodName}
               />
             )}
+          {showCopyOption && (
+            <button
+              className="button-icon opening-period-action-copy"
+              data-testid={`openingPeriodCopyButton${dataTestPostFix}`}
+              type="button"
+              onClick={() => {
+                // TODO: Implement copy functionality
+                console.log('Copy period:', id);
+              }}>
+              <IconCopy aria-hidden="true" />
+              <span className="visually-hidden">
+                {periodName
+                  ? t('ResourcePastOpeningHoursPage.Main.CopyPeriod', {
+                      periodName,
+                    })
+                  : t('ResourcePastOpeningHoursPage.Main.CopyUntitledPeriod')}
+              </span>
+            </button>
+          )}
           <button
             className="button-icon"
             data-testid={`openingPeriodAccordionButton${dataTestPostFix}`}

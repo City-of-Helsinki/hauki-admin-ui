@@ -105,7 +105,9 @@
       "ExceptionPeriodsTitle": "Tidigare avvikande dagar",
       "ExceptionPeriodsEmpty": "Inga tidigare avvikande dagar.",
       "HolidayPeriodsTitle": "Tidigare helgdagar",
-      "HolidayPeriodsEmpty": "Inga tidigare helgdagar."
+      "HolidayPeriodsEmpty": "Inga tidigare helgdagar.",
+      "CopyPeriod": "Kopiera {{periodName}} öppettidsperiod",
+      "CopyUntitledPeriod": "Kopiera namnlös öppettidsperiod"
     },
     "Notifications": {
       "Error": "Fel",

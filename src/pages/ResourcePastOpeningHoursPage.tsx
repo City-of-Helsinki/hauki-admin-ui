@@ -173,6 +173,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
             language={language}
             isLoading={isLoading}
             newUrl="#"
+            showCopyOption
           />
           <OpeningPeriodsList
             id="past-exception-opening-periods-list"
@@ -189,6 +190,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
             theme="LIGHT"
             title={t('ResourcePastOpeningHoursPage.Main.ExceptionPeriodsTitle')}
             newUrl="#"
+            showCopyOption
           />
           <OpeningPeriodsList
             id="past-holiday-opening-periods-list"
@@ -205,6 +207,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
             theme="LIGHT"
             title={t('ResourcePastOpeningHoursPage.Main.HolidayPeriodsTitle')}
             newUrl="#"
+            showCopyOption
           />
         </>
       )}

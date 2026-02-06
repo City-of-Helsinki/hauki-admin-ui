@@ -105,7 +105,9 @@
       "ExceptionPeriodsTitle": "Menneet poikkeavat päivät",
       "ExceptionPeriodsEmpty": "Ei menneitä poikkeavia päiviä.",
       "HolidayPeriodsTitle": "Menneet juhlapyhät",
-      "HolidayPeriodsEmpty": "Ei menneitä juhlapyhiä."
+      "HolidayPeriodsEmpty": "Ei menneitä juhlapyhiä.",
+      "CopyPeriod": "Kopioi {{periodName}} aukiolojakso",
+      "CopyUntitledPeriod": "Kopioi nimeämätön aukiolojakso"
     },
     "Notifications": {
       "Error": "Virhe",
