@@ -11,7 +11,8 @@ import {
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { DatePeriod } from '../../common/lib/types';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
@@ -117,6 +118,7 @@ type Props = {
   onDelete?: () => void | Promise<void>;
   periodName?: string | null;
   showCopyOption?: boolean;
+  datePeriod?: DatePeriod;
 };
 
 const OpeningPeriodAccordion = ({
@@ -131,8 +133,14 @@ const OpeningPeriodAccordion = ({
   toggleChecked,
   checked,
   showCopyOption = false,
+  datePeriod,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { id: resourceId, parentId } = useParams<{
+    id: string;
+    parentId?: string;
+  }>();
   const deleteModalTitle = t(
     'ResourcePage.OpeningPeriodsSection.DeleteModalTitle'
   );
@@ -243,8 +251,20 @@ const OpeningPeriodAccordion = ({
               data-testid={`openingPeriodCopyButton${dataTestPostFix}`}
               type="button"
               onClick={() => {
-                // TODO: Implement copy functionality
-                console.log('Copy period:', id);
+                if (!datePeriod || !resourceId) return;
+                
+                // Build the path based on whether it's parent or child resource
+                const basePath = parentId
+                  ? `/resource/${parentId}/child/${resourceId}`
+                  : `/resource/${resourceId}`;
+                
+                // Determine the target path based on period type
+                const targetPath = datePeriod.override
+                  ? `${basePath}/exception/new`
+                  : `${basePath}/period/new`;
+                
+                // Navigate with the period data in state
+                navigate(targetPath, { state: { copyFrom: datePeriod } });
               }}>
               <IconCopy aria-hidden="true" />
               <span className="visually-hidden">

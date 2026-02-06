@@ -68,7 +68,8 @@ const OpeningPeriod = ({
       editUrl={editUrl}
       initiallyOpen={initiallyOpen}
       isActive={datePeriod.isActive}
-      showCopyOption={showCopyOption}>
+      showCopyOption={showCopyOption}
+      datePeriod={datePeriod}>
       <div className="date-period-details-container">
         {datePeriod.resourceState === ResourceState.CLOSED ? (
           t('ResourcePage.OpeningPeriodsSection.StateClosed')

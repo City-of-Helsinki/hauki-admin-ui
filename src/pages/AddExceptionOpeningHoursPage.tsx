@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import { DatePeriod } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
@@ -12,6 +13,8 @@ const AddExceptionOpeningHoursPage = (): JSX.Element => {
   }>();
 
   const { t } = useTranslation();
+  const location = useLocation();
+  const copyFrom = location.state?.copyFrom as DatePeriod | undefined;
   const resource = useResource(resourceId);
   const datePeriodConfig = useDatePeriodConfig();
 
@@ -24,6 +27,7 @@ const AddExceptionOpeningHoursPage = (): JSX.Element => {
       datePeriodConfig={datePeriodConfig}
       resource={resource}
       submitFn={api.postDatePeriod}
+      copyFrom={copyFrom}
     />
   );
 };

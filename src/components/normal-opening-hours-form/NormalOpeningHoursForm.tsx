@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ResourceState } from '../../common/lib/types';
+import { DatePeriod, ResourceState } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';
 import { defaultTimeSpan, defaultTimeSpanGroup } from '../../constants';
 import OpeningHoursForm, {
@@ -8,44 +8,56 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
-const NormalOpeningHoursForm = (
-  props: Omit<OpeningHoursFormProps, 'config'>
-): JSX.Element => {
+const NormalOpeningHoursForm = ({
+  copyFrom,
+  ...props
+}: Omit<OpeningHoursFormProps, 'config'> & {
+  copyFrom?: DatePeriod;
+}): JSX.Element => {
   const { t } = useTranslation();
 
   const config: FormConfig = {
     exception: false,
-    defaultValues: {
-      fixed: false,
-      endDate: null,
-      startDate: formatDate(new Date().toISOString()),
-      name: {
-        fi: null,
-        sv: null,
-        en: null,
-      },
-      openingHours: [
-        {
-          weekdays: [1, 2, 3, 4, 5],
-          timeSpanGroups: [defaultTimeSpanGroup],
-        },
-        {
-          weekdays: [6, 7],
-          timeSpanGroups: [
+    defaultValues: copyFrom
+      ? {
+          ...copyFrom,
+          // Clear dates when copying - user will set new dates
+          startDate: formatDate(new Date().toISOString()),
+          endDate: null,
+          // Remove ID so it creates a new period
+          id: undefined,
+        }
+      : {
+          fixed: false,
+          endDate: null,
+          startDate: formatDate(new Date().toISOString()),
+          name: {
+            fi: null,
+            sv: null,
+            en: null,
+          },
+          openingHours: [
             {
-              ...defaultTimeSpanGroup,
-              timeSpans: [
+              weekdays: [1, 2, 3, 4, 5],
+              timeSpanGroups: [defaultTimeSpanGroup],
+            },
+            {
+              weekdays: [6, 7],
+              timeSpanGroups: [
                 {
-                  ...defaultTimeSpan,
-                  resource_state: ResourceState.CLOSED,
+                  ...defaultTimeSpanGroup,
+                  timeSpans: [
+                    {
+                      ...defaultTimeSpan,
+                      resource_state: ResourceState.CLOSED,
+                    },
+                  ],
                 },
               ],
             },
           ],
+          override: false,
         },
-      ],
-      override: false,
-    },
     texts: {
       submit: {
         notifications: {
