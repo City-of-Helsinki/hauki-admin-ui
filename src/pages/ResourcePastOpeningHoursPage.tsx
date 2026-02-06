@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { partition } from 'lodash';
 import { SecondaryButton } from '../components/button/Button';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';
+import ResourceTitle from '../components/resource-title/ResourceTitle';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import {
@@ -13,7 +14,6 @@ import {
   UiDatePeriodConfig,
   DatePeriod,
 } from '../common/lib/types';
-import displayLangVersionNotFound from '../common/utils/language/displayLangVersionNotFound';
 import {
   apiDatePeriodToDatePeriod,
   isHolidayOrEve,
@@ -128,14 +128,6 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
     );
   }
 
-  const resourceName =
-    resource?.name[language] ||
-    resource?.name?.fi ||
-    displayLangVersionNotFound({
-      language,
-      label: 'resurssille',
-    });
-
   const holidays = getHolidays();
   const [holidayDatePeriods, exceptionDatePeriods] = partition(
     exceptions,
@@ -148,16 +140,16 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
 
   return (
     <div className="resource-past-opening-hours-page">
-      <div className="section-title">
-        <h1 className="past-opening-hours-title">
-          {resourceName}, {t('ResourcePastOpeningHoursPage.Main.Title')}
-        </h1>
+      <ResourceTitle
+        resource={resource}
+        language={language}
+        titleAddon={t('ResourcePastOpeningHoursPage.Main.Title')}>
         <div className="button-close">
           <SecondaryButton size="small" onClick={returnToResourcePage}>
             {t('ResourcePage.Main.ReturnToMainPageButton')}
           </SecondaryButton>
         </div>
-      </div>
+      </ResourceTitle>
 
       {normalDatePeriods.length === 0 &&
       exceptionDatePeriods.length === 0 &&
