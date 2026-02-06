@@ -98,7 +98,14 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Past opening hours",
-      "PlaceholderText": "Past opening hours will be displayed here."
+      "PlaceholderText": "Past opening hours will be displayed here.",
+      "EmptyState": "No past opening hours.",
+      "NormalPeriodsTitle": "Past opening hours",
+      "NormalPeriodsEmpty": "No past opening hours.",
+      "ExceptionPeriodsTitle": "Past exceptional days",
+      "ExceptionPeriodsEmpty": "No past exceptional days.",
+      "HolidayPeriodsTitle": "Past holidays",
+      "HolidayPeriodsEmpty": "No past holidays."
     },
     "Notifications": {
       "Error": "Error",

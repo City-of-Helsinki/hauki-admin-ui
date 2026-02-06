@@ -98,7 +98,14 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Tidigare öppettider",
-      "PlaceholderText": "Tidigare öppettider kommer att visas här."
+      "PlaceholderText": "Tidigare öppettider kommer att visas här.",
+      "EmptyState": "Inga tidigare öppettider.",
+      "NormalPeriodsTitle": "Tidigare öppettider",
+      "NormalPeriodsEmpty": "Inga tidigare öppettider.",
+      "ExceptionPeriodsTitle": "Tidigare avvikande dagar",
+      "ExceptionPeriodsEmpty": "Inga tidigare avvikande dagar.",
+      "HolidayPeriodsTitle": "Tidigare helgdagar",
+      "HolidayPeriodsEmpty": "Inga tidigare helgdagar."
     },
     "Notifications": {
       "Error": "Fel",

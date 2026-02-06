@@ -98,7 +98,14 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Menneet aukioloajat",
-      "PlaceholderText": "Menneet aukioloajat näytetään täällä."
+      "PlaceholderText": "Menneet aukioloajat näytetään täällä.",
+      "EmptyState": "Ei menneitä aukioloaikoja.",
+      "NormalPeriodsTitle": "Menneet aukioloajat",
+      "NormalPeriodsEmpty": "Ei menneitä aukioloaikoja.",
+      "ExceptionPeriodsTitle": "Menneet poikkeavat päivät",
+      "ExceptionPeriodsEmpty": "Ei menneitä poikkeavia päiviä.",
+      "HolidayPeriodsTitle": "Menneet juhlapyhät",
+      "HolidayPeriodsEmpty": "Ei menneitä juhlapyhiä."
     },
     "Notifications": {
       "Error": "Virhe",

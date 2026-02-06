@@ -15,3 +15,9 @@
 .past-opening-hours-content {
   margin-top: $spacing-m;
 }
+
+.past-opening-hours-empty {
+  margin-top: $spacing-m;
+  font-style: italic;
+  color: var(--color-black-70);
+}

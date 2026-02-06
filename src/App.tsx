@@ -231,7 +231,9 @@ const App = (): JSX.Element => {
                     <PermissionResolver>
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <ResourcePastOpeningHoursPage />
+                          <SelectedDatePeriodsProvider>
+                            <ResourcePastOpeningHoursPage />
+                          </SelectedDatePeriodsProvider>
                         </Main>
                       </NavigationAndFooterWrapper>
                     </PermissionResolver>
@@ -244,7 +246,9 @@ const App = (): JSX.Element => {
                     <PermissionResolver>
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <ResourcePastOpeningHoursPage />
+                          <SelectedDatePeriodsProvider>
+                            <ResourcePastOpeningHoursPage />
+                          </SelectedDatePeriodsProvider>
                         </Main>
                       </NavigationAndFooterWrapper>
                     </PermissionResolver>
