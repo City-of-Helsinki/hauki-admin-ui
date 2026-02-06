@@ -9,7 +9,8 @@
       "ParentResourceDescription": "This sub-item is located in the following service points.",
       "ChildTitle": "Service point subitems",
       "ChildDescription": "Here you can define the opening hours of the service point sub-items. Subitems are created in the service point register.",
-      "Resources": "Service points"
+      "Resources": "Service points",
+      "ViewPastOpeningHours": "Show past opening hours"
     },
     "OpeningPeriodsSection": {
       "BatchTitle": "Opening hours selected for mass update",
@@ -92,6 +93,18 @@
       "ErrorLoadingPeriods": "The service point's opening hours could not be loaded.",
       "PeriodRemoveSuccess": "Opening hours {{periodName}} successfully deleted.",
       "PeriodRemoveFailed": "Failed to remove opening hours. Try again later."
+    }
+  },
+  "ResourcePastOpeningHoursPage": {
+    "Main": {
+      "Title": "Past opening hours",
+      "PlaceholderText": "Past opening hours will be displayed here."
+    },
+    "Notifications": {
+      "Error": "Error",
+      "ErrorLoadingResource": "The service point could not be loaded.",
+      "CheckResourceId": "Check the servicepointID.",
+      "IsLoading": "Service point information search"
     }
   },
   "OpeningHours": {

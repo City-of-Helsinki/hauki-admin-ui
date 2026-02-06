@@ -9,7 +9,8 @@
       "ParentResourceDescription": "Detta underobjekt finns på följande verksamhetsställena.",
       "ChildTitle": "Verksamhetsställets underobjekts",
       "ChildDescription": "Här kan du ange öppettider för de underobjekten på verksamhetsstället. Underobjekter skapas i verkamhetsställets registret.",
-      "Resources": "Verksamhetsställena"
+      "Resources": "Verksamhetsställena",
+      "ViewPastOpeningHours": "Visa tidigare öppettider"
     },
     "OpeningPeriodsSection": {
       "BatchTitle": "Valda öppettider för massuppdatering",
@@ -92,6 +93,18 @@
       "ErrorLoadingPeriods": "Verksamhetsställets öppettider kunde inte laddas.",
       "PeriodRemoveSuccess": "Öppettider {{periodName}} framgångsrikt borttagen.",
       "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare."
+    }
+  },
+  "ResourcePastOpeningHoursPage": {
+    "Main": {
+      "Title": "Tidigare öppettider",
+      "PlaceholderText": "Tidigare öppettider kommer att visas här."
+    },
+    "Notifications": {
+      "Error": "Fel",
+      "ErrorLoadingResource": "Verksamhetsstället kunde inte laddas.",
+      "CheckResourceId": "Kontrollera verksamhetsställe-id.",
+      "IsLoading": "Sökning av uppgifter om verksamhetsstället"
     }
   },
   "OpeningHours": {

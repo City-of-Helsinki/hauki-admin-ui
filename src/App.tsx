@@ -20,6 +20,7 @@ import { Language } from './common/lib/types';
 import PermissionResolver from './components/router/PermissionResolver';
 import ResourcePage from './pages/ResourcePage';
 import ResourceBatchUpdatePage from './pages/ResourceBatchUpdatePage';
+import ResourcePastOpeningHoursPage from './pages/ResourcePastOpeningHoursPage';
 import AddNormalOpeningHoursPage from './pages/AddNormalOpeningHoursPage';
 import EditNormalOpeningHoursPage from './pages/EditNormalOpeningHoursPage';
 import EditHolidaysPage from './pages/EditHolidaysPage';
@@ -218,6 +219,32 @@ const App = (): JSX.Element => {
                               targetResourcesString={targetResourcesStr}
                             />
                           </SelectedDatePeriodsProvider>
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
+                  id="resource-past-opening-hours-route"
+                  path="/resource/:id/past"
+                  element={
+                    <PermissionResolver>
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <ResourcePastOpeningHoursPage />
+                        </Main>
+                      </NavigationAndFooterWrapper>
+                    </PermissionResolver>
+                  }
+                />
+                <Route
+                  id="resource-past-opening-hours-route-child"
+                  path="/resource/:parentId/child/:id/past"
+                  element={
+                    <PermissionResolver>
+                      <NavigationAndFooterWrapper>
+                        <Main id="main">
+                          <ResourcePastOpeningHoursPage />
                         </Main>
                       </NavigationAndFooterWrapper>
                     </PermissionResolver>

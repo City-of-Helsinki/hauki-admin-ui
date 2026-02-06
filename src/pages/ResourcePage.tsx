@@ -309,6 +309,18 @@ const ResourcePage = ({
           </section>
         </>
       )}
+      <section className="past-opening-hours-link-section">
+        <Link
+          href={`/resource/${
+            mainResourceId && childId
+              ? `${mainResourceId}/child/${childId}`
+              : mainResourceId
+          }/past`}
+          text={t('ResourcePage.Main.ViewPastOpeningHours')}
+          dataTest="view-past-opening-hours-link"
+        />
+        <IconArrowRight aria-hidden className="past-opening-hours-arrow" />
+      </section>
     </div>
   );
 };

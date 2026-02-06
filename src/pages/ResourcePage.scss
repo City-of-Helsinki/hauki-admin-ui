@@ -55,3 +55,16 @@
   margin: 0;
   padding: 0;
 }
+
+.past-opening-hours-link-section {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2-xs;
+  margin-top: $spacing-l;
+  padding-top: $spacing-m;
+  border-top: 1px solid var(--hauki-content-border-color);
+}
+
+.past-opening-hours-arrow {
+  color: var(--color-black);
+}
