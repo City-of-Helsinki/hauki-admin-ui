@@ -263,8 +263,13 @@ const OpeningPeriodAccordion = ({
                   ? `${basePath}/exception/new`
                   : `${basePath}/period/new`;
                 
-                // Navigate with the period data in state
-                navigate(targetPath, { state: { copyFrom: datePeriod } });
+                // Navigate with the period data and return flag in state
+                navigate(targetPath, { 
+                  state: { 
+                    copyFrom: datePeriod,
+                    returnToPastView: true
+                  } 
+                });
               }}>
               <IconCopy aria-hidden="true" />
               <span className="visually-hidden">
