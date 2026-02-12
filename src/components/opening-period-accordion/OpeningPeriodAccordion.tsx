@@ -252,7 +252,7 @@ const OpeningPeriodAccordion = ({
             )}
           {showCopyOption && (
             <button
-              className="opening-period-action-copy"
+              className="button-icon opening-period-action-copy"
               data-testid={`openingPeriodCopyButton${dataTestPostFix}`}
               type="button"
               onClick={() => {
