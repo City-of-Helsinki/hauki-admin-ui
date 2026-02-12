@@ -6,10 +6,6 @@
   gap: $spacing-m;
 }
 
-.resource-details-section {
-  border-bottom: 1px solid var(--hauki-content-border-color);
-}
-
 .resource-info-title-add-on {
   margin-left: auto;
 }
@@ -60,11 +56,9 @@
   display: flex;
   align-items: center;
   gap: $spacing-2-xs;
-  margin-top: $spacing-l;
-  padding-top: $spacing-m;
-  border-top: 1px solid var(--hauki-content-border-color);
+  margin-top: $spacing-m;
 }
 
 .past-opening-hours-arrow {
-  color: var(--color-black);
+  color: var(--color-coat-of-arms);
 }

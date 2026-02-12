@@ -106,8 +106,11 @@
       "ExceptionPeriodsEmpty": "No past exceptional days.",
       "HolidayPeriodsTitle": "Past holidays",
       "HolidayPeriodsEmpty": "No past holidays.",
-      "CopyPeriod": "Copy {{periodName}} opening hours period",
-      "CopyUntitledPeriod": "Copy unnamed opening hours period"
+      "CopyModalTitle": "Copy past opening hours as a template for new",
+      "CopyModalText": "Use past opening hours period as a template for new. By continuing, you can update the period with new information and save it as the facility's opening hours period.",
+      "CopyModalSelectedPeriod": "You have selected the following opening hours period:",
+      "CopyModalConfirm": "Continue",
+      "SelectButton": "Select"
     },
     "Notifications": {
       "Error": "Error",

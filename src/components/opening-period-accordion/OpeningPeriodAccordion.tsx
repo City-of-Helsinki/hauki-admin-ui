@@ -2,12 +2,12 @@ import {
   Checkbox,
   IconAngleDown,
   IconAngleUp,
-  IconCopy,
   IconMenuDots,
   IconPenLine,
   IconTrash,
   StatusLabel,
   useAccordion,
+  IconArrowRight,
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -145,6 +145,11 @@ const OpeningPeriodAccordion = ({
     'ResourcePage.OpeningPeriodsSection.DeleteModalTitle'
   );
   const { isModalOpen, openModal, closeModal } = useModal();
+  const {
+    isModalOpen: isCopyModalOpen,
+    openModal: openCopyModal,
+    closeModal: closeCopyModal,
+  } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
   });
@@ -247,38 +252,14 @@ const OpeningPeriodAccordion = ({
             )}
           {showCopyOption && (
             <button
-              className="button-icon opening-period-action-copy"
+              className="opening-period-action-copy"
               data-testid={`openingPeriodCopyButton${dataTestPostFix}`}
               type="button"
               onClick={() => {
                 if (!datePeriod || !resourceId) return;
-                
-                // Build the path based on whether it's parent or child resource
-                const basePath = parentId
-                  ? `/resource/${parentId}/child/${resourceId}`
-                  : `/resource/${resourceId}`;
-                
-                // Determine the target path based on period type
-                const targetPath = datePeriod.override
-                  ? `${basePath}/exception/new`
-                  : `${basePath}/period/new`;
-                
-                // Navigate with the period data and return flag in state
-                navigate(targetPath, { 
-                  state: { 
-                    copyFrom: datePeriod,
-                    returnToPastView: true
-                  } 
-                });
+                openCopyModal();
               }}>
-              <IconCopy aria-hidden="true" />
-              <span className="visually-hidden">
-                {periodName
-                  ? t('ResourcePastOpeningHoursPage.Main.CopyPeriod', {
-                      periodName,
-                    })
-                  : t('ResourcePastOpeningHoursPage.Main.CopyUntitledPeriod')}
-              </span>
+              {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
             </button>
           )}
           <button
@@ -340,6 +321,53 @@ const OpeningPeriodAccordion = ({
           }}
           confirmText={t('ResourcePage.OpeningPeriodsSection.Remove')}
         />
+        {showCopyOption && datePeriod && (
+          <ConfirmationModal
+            onConfirm={async (): Promise<void> => {
+              // Build the path based on whether it's parent or child resource
+              const basePath = parentId
+                ? `/resource/${parentId}/child/${resourceId}`
+                : `/resource/${resourceId}`;
+
+              // Determine the target path based on period type
+              const targetPath = datePeriod.override
+                ? `${basePath}/exception/new`
+                : `${basePath}/period/new`;
+
+              // Navigate with the period data and return flag in state
+              navigate(targetPath, {
+                state: {
+                  copyFrom: datePeriod,
+                  returnToPastView: true,
+                },
+              });
+            }}
+            title={t('ResourcePastOpeningHoursPage.Main.CopyModalTitle')}
+            text={
+              <>
+                <p>{t('ResourcePastOpeningHoursPage.Main.CopyModalText')}</p>
+                <p>
+                  {t(
+                    'ResourcePastOpeningHoursPage.Main.CopyModalSelectedPeriod'
+                  )}
+                </p>
+                <p>
+                  <b>
+                    {periodName}
+                    <br />
+                    {dateRange}
+                  </b>
+                </p>
+              </>
+            }
+            isOpen={isCopyModalOpen}
+            onClose={closeCopyModal}
+            confirmIcon={<IconArrowRight aria-hidden />}
+            confirmText={t(
+              'ResourcePastOpeningHoursPage.Main.CopyModalConfirm'
+            )}
+          />
+        )}
       </div>
       {isOpen && children}
     </div>
