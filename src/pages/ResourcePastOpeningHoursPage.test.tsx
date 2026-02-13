@@ -312,6 +312,13 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
 
       expect(screen.queryByText('Joulupäivä')).not.toBeInTheDocument();
     });
+
+    expect(holidays.getHolidays).toHaveBeenCalledTimes(1);
+    const [holidayBaseDate] = vi.mocked(holidays.getHolidays).mock.calls[0];
+    expect(holidayBaseDate).toBeInstanceOf(Date);
+    expect(holidayBaseDate?.getFullYear()).toBe(previousYear);
+    expect(holidayBaseDate?.getMonth()).toBe(0);
+    expect(holidayBaseDate?.getDate()).toBe(1);
   });
 
   it('should show normal and exception opening hours and hide holiday periods', async () => {

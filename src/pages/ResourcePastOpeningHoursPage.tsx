@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Notification } from 'hds-react';
 import { useParams } from 'react-router-dom';
@@ -56,6 +56,11 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
   }>();
 
   const resourceId = id;
+  const currentYear = new Date().getFullYear();
+  const holidays = useMemo(
+    () => getHolidays(new Date(currentYear - 1, 0, 1)),
+    [currentYear]
+  );
 
   // Set date period select state to INACTIVE to hide checkboxes and add buttons
   useEffect(() => {
@@ -68,8 +73,8 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
     const fetchData = async () => {
       if (!resourceId) return;
 
-      const currentYear = new Date().getFullYear();
-      const startOfPreviousYear = `${currentYear - 1}-01-01`;
+      const fetchYear = new Date().getFullYear();
+      const startOfPreviousYear = `${fetchYear - 1}-01-01`;
       const today = formatLocalDate(new Date());
 
       setLoading(true);
@@ -149,7 +154,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
   }
 
   const exceptionDatePeriods = exceptions.filter(
-    (datePeriod) => !isHolidayOrEve(datePeriod, getHolidays())
+    (datePeriod) => !isHolidayOrEve(datePeriod, holidays)
   );
 
   const noop = async () => {
