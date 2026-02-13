@@ -128,10 +128,8 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
     );
   }
 
-  const holidays = getHolidays();
-  const [holidayDatePeriods, exceptionDatePeriods] = partition(
-    exceptions,
-    (datePeriod) => isHolidayOrEve(datePeriod, holidays)
+  const exceptionDatePeriods = exceptions.filter(
+    (datePeriod) => !isHolidayOrEve(datePeriod, getHolidays())
   );
 
   const noop = async () => {
@@ -153,7 +151,6 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
 
       {normalDatePeriods.length === 0 &&
       exceptionDatePeriods.length === 0 &&
-      holidayDatePeriods.length === 0 &&
       !isLoading ? (
         <p className="past-opening-hours-empty">
           {t('ResourcePastOpeningHoursPage.Main.EmptyState')}
@@ -191,23 +188,6 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
             )}
             theme="LIGHT"
             title={t('ResourcePastOpeningHoursPage.Main.ExceptionPeriodsTitle')}
-            newUrl="#"
-            showCopyOption
-          />
-          <OpeningPeriodsList
-            id="past-holiday-opening-periods-list"
-            addDatePeriodButtonText=""
-            addNewOpeningPeriodButtonDataTest="past-holiday-periods"
-            datePeriodConfig={datePeriodConfig}
-            datePeriods={holidayDatePeriods}
-            deletePeriod={noop}
-            isLoading={isLoading}
-            language={language}
-            emptyState={t(
-              'ResourcePastOpeningHoursPage.Main.HolidayPeriodsEmpty'
-            )}
-            theme="LIGHT"
-            title={t('ResourcePastOpeningHoursPage.Main.HolidayPeriodsTitle')}
             newUrl="#"
             showCopyOption
           />
