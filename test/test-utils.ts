@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 import { fireEvent } from '@testing-library/react';
 
 export function getElementOrThrow(
