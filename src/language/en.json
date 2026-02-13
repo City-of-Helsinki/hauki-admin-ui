@@ -104,8 +104,6 @@
       "NormalPeriodsEmpty": "No past opening hours.",
       "ExceptionPeriodsTitle": "Past exceptional days",
       "ExceptionPeriodsEmpty": "No past exceptional days.",
-      "HolidayPeriodsTitle": "Past holidays",
-      "HolidayPeriodsEmpty": "No past holidays.",
       "CopyModalTitle": "Copy past opening hours as a template for new",
       "CopyModalText": "Use past opening hours period as a template for new. By continuing, you can update the period with new information and save it as the facility's opening hours period.",
       "CopyModalSelectedPeriod": "You have selected the following opening hours period:",
@@ -115,7 +113,7 @@
     "Notifications": {
       "Error": "Error",
       "ErrorLoadingResource": "The service point could not be loaded.",
-      "CheckResourceId": "Check the servicepointID.",
+      "CheckResourceId": "Check the service point ID.",
       "IsLoading": "Service point information search"
     }
   },

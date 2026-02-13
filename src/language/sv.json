@@ -104,8 +104,6 @@
       "NormalPeriodsEmpty": "Inga tidigare öppettider.",
       "ExceptionPeriodsTitle": "Tidigare avvikande dagar",
       "ExceptionPeriodsEmpty": "Inga tidigare avvikande dagar.",
-      "HolidayPeriodsTitle": "Tidigare helgdagar",
-      "HolidayPeriodsEmpty": "Inga tidigare helgdagar.",
       "CopyModalTitle": "Kopiera tidigare öppettider som mall för ny",
       "CopyModalText": "Använd tidigare öppettidsperiod som mall för ny. Genom att fortsätta kan du uppdatera perioden med ny information och spara den som verksamhetsställets öppettider.",
       "CopyModalSelectedPeriod": "Du har valt följande öppettidsperiod:",

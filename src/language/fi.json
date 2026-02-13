@@ -104,8 +104,6 @@
       "NormalPeriodsEmpty": "Ei menneitä aukioloaikoja.",
       "ExceptionPeriodsTitle": "Menneet poikkeavat päivät",
       "ExceptionPeriodsEmpty": "Ei menneitä poikkeavia päiviä.",
-      "HolidayPeriodsTitle": "Menneet juhlapyhät",
-      "HolidayPeriodsEmpty": "Ei menneitä juhlapyhiä.",
       "CopyModalTitle": "Kopioi mennyt aukiolojakso uuden pohjaksi",
       "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojakoksoksi.",
       "CopyModalSelectedPeriod": "Olet valinnut seuraavan aukiolojakson:",
