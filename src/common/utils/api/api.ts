@@ -263,10 +263,17 @@ export default {
       parameters: { resource: resourceId, end_date_gte: '-1d' },
     }),
 
-  getPastDatePeriods: (resourceId: number): Promise<ApiDatePeriod[]> =>
+  getPastDatePeriods: (
+    resourceId: number,
+    endDateGte?: string
+  ): Promise<ApiDatePeriod[]> =>
     apiGet<ApiDatePeriod[]>({
       path: `${datePeriodBasePath}`,
-      parameters: { resource: resourceId, end_date_lt: '0d' },
+      parameters: {
+        resource: resourceId,
+        end_date_lt: '0d',
+        ...(endDateGte ? { end_date_gte: endDateGte } : {}),
+      },
     }),
 
   getDatePeriod: (datePeriodId: number): Promise<ApiDatePeriod> =>

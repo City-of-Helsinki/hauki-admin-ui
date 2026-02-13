@@ -27,6 +27,14 @@ import {
 } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 import './ResourcePastOpeningHoursPage.scss';
 
+const formatLocalDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+};
+
 const ResourcePastOpeningHoursPage = (): JSX.Element => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
@@ -60,6 +68,10 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
     const fetchData = async () => {
       if (!resourceId) return;
 
+      const currentYear = new Date().getFullYear();
+      const startOfPreviousYear = `${currentYear - 1}-01-01`;
+      const today = formatLocalDate(new Date());
+
       setLoading(true);
       try {
         // First fetch the resource to get the numeric ID
@@ -70,7 +82,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
 
         // Then fetch past date periods and config using the numeric ID
         const [apiDatePeriods, uiDatePeriodOptions] = await Promise.all([
-          api.getPastDatePeriods(resourceData.id),
+          api.getPastDatePeriods(resourceData.id, startOfPreviousYear),
           getDatePeriodFormConfig(),
         ]);
 
@@ -78,7 +90,15 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
 
         setDatePeriodConfig(uiDatePeriodOptions);
 
-        const datePeriods = apiDatePeriods.map(apiDatePeriodToDatePeriod);
+        const filteredApiDatePeriods = apiDatePeriods.filter((datePeriod) => {
+          const endDate = datePeriod.end_date;
+
+          return !!endDate && endDate >= startOfPreviousYear && endDate < today;
+        });
+
+        const datePeriods = filteredApiDatePeriods.map(
+          apiDatePeriodToDatePeriod
+        );
         const datePeriodLists = partition(
           datePeriods,
           (datePeriod) => !datePeriod.override

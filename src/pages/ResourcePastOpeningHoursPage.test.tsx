@@ -15,6 +15,10 @@ import ResourcePastOpeningHoursPage from './ResourcePastOpeningHoursPage';
 import * as holidays from '../services/holidays';
 import { SelectedDatePeriodsProvider } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
+const currentYear = new Date().getFullYear();
+const previousYear = currentYear - 1;
+const twoYearsAgo = currentYear - 2;
+
 const testResource: Resource = {
   id: 1186,
   name: {
@@ -48,8 +52,8 @@ const testPastNormalDatePeriod: ApiDatePeriod = {
   is_removed: false,
   name: { fi: 'Past normal period', sv: null, en: null },
   description: { fi: '', sv: '', en: '' },
-  start_date: '2023-01-01',
-  end_date: '2023-01-31',
+  start_date: `${previousYear}-01-01`,
+  end_date: `${previousYear}-01-31`,
   resource_state: ResourceState.OPEN,
   override: false,
   resource: 1186,
@@ -63,8 +67,8 @@ const testPastExceptionDatePeriod: ApiDatePeriod = {
   is_removed: false,
   name: { fi: 'Past exception period', sv: null, en: null },
   description: { fi: '', sv: '', en: '' },
-  start_date: '2023-02-01',
-  end_date: '2023-02-01',
+  start_date: `${currentYear}-01-01`,
+  end_date: `${currentYear}-01-01`,
   resource_state: ResourceState.CLOSED,
   override: true,
   resource: 1186,
@@ -78,12 +82,20 @@ const testPastHolidayDatePeriod: ApiDatePeriod = {
   is_removed: false,
   name: { fi: 'Joulupäivä', sv: 'Juldagen', en: 'Christmas Day' },
   description: { fi: '', sv: '', en: '' },
-  start_date: '2023-12-25',
-  end_date: '2023-12-25',
+  start_date: `${previousYear}-12-25`,
+  end_date: `${previousYear}-12-25`,
   resource_state: ResourceState.CLOSED,
   override: true,
   resource: 1186,
   time_span_groups: [],
+};
+
+const testTooOldDatePeriod: ApiDatePeriod = {
+  ...testPastNormalDatePeriod,
+  id: 4,
+  name: { fi: 'Too old period', sv: null, en: null },
+  start_date: `${twoYearsAgo}-01-01`,
+  end_date: `${twoYearsAgo}-01-31`,
 };
 
 const testDatePeriodOptions: UiDatePeriodConfig = datePeriodOptions;
@@ -143,7 +155,7 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
           sv: 'Juldagen',
           en: 'Christmas Day',
         },
-        date: '2023-12-25',
+        date: `${previousYear}-12-25`,
         official: true,
       },
     ]);
@@ -243,6 +255,11 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
 
       expect(await screen.findByText('Past normal period')).toBeInTheDocument();
     });
+
+    expect(api.getPastDatePeriods).toHaveBeenCalledWith(
+      testResource.id,
+      `${previousYear}-01-01`
+    );
   });
 
   it('should show past exception opening hours', async () => {
@@ -273,7 +290,7 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
     });
   });
 
-  it('should show past holiday opening hours separately', async () => {
+  it('should not show holidays in exception opening hours', async () => {
     vi.spyOn(api, 'getPastDatePeriods').mockImplementation(() =>
       Promise.resolve([testPastHolidayDatePeriod])
     );
@@ -290,16 +307,14 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
 
     await waitFor(async () => {
       expect(
-        await screen.findByText(
-          'ResourcePastOpeningHoursPage.Main.HolidayPeriodsTitle'
-        )
+        await screen.findByText('ResourcePastOpeningHoursPage.Main.EmptyState')
       ).toBeInTheDocument();
 
-      expect(await screen.findByText('Joulupäivä')).toBeInTheDocument();
+      expect(screen.queryByText('Joulupäivä')).not.toBeInTheDocument();
     });
   });
 
-  it('should show all three types of past opening hours', async () => {
+  it('should show normal and exception opening hours and hide holiday periods', async () => {
     vi.spyOn(api, 'getPastDatePeriods').mockImplementation(() =>
       Promise.resolve([
         testPastNormalDatePeriod,
@@ -331,17 +346,34 @@ describe(`<ResourcePastOpeningHoursPage />`, () => {
         )
       ).toBeInTheDocument();
 
-      expect(
-        await screen.findByText(
-          'ResourcePastOpeningHoursPage.Main.HolidayPeriodsTitle'
-        )
-      ).toBeInTheDocument();
-
       expect(await screen.findByText('Past normal period')).toBeInTheDocument();
       expect(
         await screen.findByText('Past exception period')
       ).toBeInTheDocument();
-      expect(await screen.findByText('Joulupäivä')).toBeInTheDocument();
+      expect(screen.queryByText('Joulupäivä')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should filter out periods older than previous calendar year', async () => {
+    vi.spyOn(api, 'getPastDatePeriods').mockImplementation(() =>
+      Promise.resolve([testTooOldDatePeriod])
+    );
+
+    await act(async () => {
+      render(
+        <Router>
+          <SelectedDatePeriodsProvider>
+            <ResourcePastOpeningHoursPage />
+          </SelectedDatePeriodsProvider>
+        </Router>
+      );
+    });
+
+    await waitFor(async () => {
+      expect(
+        await screen.findByText('ResourcePastOpeningHoursPage.Main.EmptyState')
+      ).toBeInTheDocument();
+      expect(screen.queryByText('Too old period')).not.toBeInTheDocument();
     });
   });
 
