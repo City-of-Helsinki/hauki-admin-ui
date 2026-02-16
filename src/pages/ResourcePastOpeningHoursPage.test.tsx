@@ -15,7 +15,9 @@ import ResourcePastOpeningHoursPage from './ResourcePastOpeningHoursPage';
 import * as holidays from '../services/holidays';
 import { SelectedDatePeriodsProvider } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-const currentYear = new Date().getFullYear();
+// Use a fixed date to avoid time-sensitive test failures on boundary days (e.g. Jan 1)
+const frozenDate = new Date('2026-06-15T12:00:00Z');
+const currentYear = frozenDate.getFullYear();
 const previousYear = currentYear - 1;
 const twoYearsAgo = currentYear - 2;
 
@@ -134,6 +136,15 @@ vi.mock('../hooks/useReturnToResourcePage', () => ({
 }));
 
 describe(`<ResourcePastOpeningHoursPage />`, () => {
+  beforeAll(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(frozenDate);
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
     vi.spyOn(api, 'getResource').mockImplementation(() =>
       Promise.resolve(testResource)
