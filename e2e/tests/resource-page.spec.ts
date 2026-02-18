@@ -215,7 +215,7 @@ test.describe('Resource page', async () => {
 
     await page.getByRole('link', { name: 'Näytä menneet aukioloajat' }).click();
     await expect(
-      page.getByRole('heading', { name: 'Menneet aukioloajat' })
+      page.getByRole('heading', { name: '- Menneet aukioloajat' })
     ).toBeVisible();
 
     await page.getByRole('button', { name: 'Palaa etusivulle' }).click();
