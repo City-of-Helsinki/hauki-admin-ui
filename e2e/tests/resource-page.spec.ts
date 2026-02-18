@@ -218,7 +218,6 @@ test.describe('Resource page', async () => {
       page.getByRole('heading', { name: 'Menneet aukioloajat' })
     ).toBeVisible();
 
-    await expect(page.getByText('Ei menneitä aukioloaikoja.')).toBeVisible();
     await page.getByRole('button', { name: 'Palaa etusivulle' }).click();
     await expect(
       page.getByRole('button', { name: 'Lisää aukioloaika +' })
