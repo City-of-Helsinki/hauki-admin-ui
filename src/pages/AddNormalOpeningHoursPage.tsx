@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { ApiDatePeriod } from '../common/lib/types';
+import { useParams, useLocation } from 'react-router-dom';
+import { ApiDatePeriod, DatePeriod } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import NormalOpeningHoursForm from '../components/normal-opening-hours-form/NormalOpeningHoursForm';
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
@@ -9,6 +9,8 @@ import useResource from '../services/useResource';
 
 const AddNormalOpeningHoursPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const copyFrom = location.state?.copyFrom as DatePeriod | undefined;
 
   const { id: resourceId } = useParams<{
     id: string;
@@ -29,6 +31,7 @@ const AddNormalOpeningHoursPage = (): JSX.Element => {
       datePeriodConfig={datePeriodConfig}
       submitFn={submitFn}
       resource={resource}
+      copyFrom={copyFrom}
     />
   );
 };

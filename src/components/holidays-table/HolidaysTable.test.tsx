@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import HolidaysTable from './HolidaysTable';
 import { Holiday } from '../../services/holidays';
 import { useAppContext } from '../../App-context';
@@ -53,14 +54,16 @@ const mockHolidays: Holiday[] = [
 const renderWithLanguage = (language: Language) => {
   vi.mocked(useAppContext).mockReturnValue({ language });
   render(
-    <SelectedDatePeriodsProvider>
-      <HolidaysTable
-        datePeriodConfig={undefined}
-        datePeriods={[]}
-        holidays={mockHolidays}
-        initiallyOpen
-      />
-    </SelectedDatePeriodsProvider>
+    <MemoryRouter>
+      <SelectedDatePeriodsProvider>
+        <HolidaysTable
+          datePeriodConfig={undefined}
+          datePeriods={[]}
+          holidays={mockHolidays}
+          initiallyOpen
+        />
+      </SelectedDatePeriodsProvider>
+    </MemoryRouter>
   );
 };
 

@@ -29,6 +29,7 @@ export function ConfirmationModal({
   onConfirm,
   text,
   title,
+  confirmIcon,
 }: {
   confirmText: string;
   isLoading?: boolean;
@@ -38,6 +39,7 @@ export function ConfirmationModal({
   onConfirm: () => void;
   text: string | ReactNode;
   title: string;
+  confirmIcon?: string | ReactNode;
 }): JSX.Element | null {
   const { t } = useTranslation();
   const titleId = 'confirmation-modal-title';
@@ -54,7 +56,8 @@ export function ConfirmationModal({
         <PrimaryButton
           isLoading={isLoading}
           loadingText={loadingText}
-          onClick={onConfirm}>
+          onClick={onConfirm}
+          iconRight={confirmIcon}>
           {confirmText}
         </PrimaryButton>
         <SecondaryButton onClick={onClose}>

@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const useReturnToResourcePage = (): (() => void) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { parentId, id: resourceId } = useParams<{
     parentId?: string;
     id?: string;
@@ -17,8 +18,15 @@ const useReturnToResourcePage = (): (() => void) => {
       ? `${parentId}/child/${resourceId}`
       : resourceId;
 
-    navigate(`/resource/${resourcePath}`);
-  }, [navigate, parentId, resourceId]);
+    // Check if user came from past opening hours view
+    const returnToPastView = location.state?.returnToPastView;
+
+    if (returnToPastView) {
+      navigate(`/resource/${resourcePath}/past`);
+    } else {
+      navigate(`/resource/${resourcePath}`);
+    }
+  }, [navigate, parentId, resourceId, location.state]);
 };
 
 export default useReturnToResourcePage;

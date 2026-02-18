@@ -74,6 +74,11 @@
   color: $color-black;
 }
 
+.opening-period-action-copy {
+  color: $color-black;
+  margin-right: $spacing-2-xs;
+}
+
 @media screen and (min-width: $breakpoint-s) {
   .opening-period-action-delete {
     margin-right: $spacing-s;

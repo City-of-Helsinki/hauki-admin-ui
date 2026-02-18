@@ -26,11 +26,7 @@ const ResourceSection = ({
 }: {
   id: string;
   children: ReactNode;
-}): JSX.Element => (
-  <section id={id} className="resource-details-section">
-    {children}
-  </section>
-);
+}): JSX.Element => <section id={id}>{children}</section>;
 
 const ResourceDetailsSection = ({
   id,
@@ -91,6 +87,11 @@ const ResourcePage = ({
       datePeriodSelectState !== DatePeriodSelectState.ACTIVE
     ) {
       setDatePeriodSelectState(DatePeriodSelectState.ACTIVE);
+    } else if (
+      !hasTargetResources &&
+      datePeriodSelectState !== DatePeriodSelectState.DISABLED
+    ) {
+      setDatePeriodSelectState(DatePeriodSelectState.DISABLED);
     }
   }, [hasTargetResources, datePeriodSelectState, setDatePeriodSelectState]);
 
@@ -268,11 +269,20 @@ const ResourcePage = ({
           ))}
         </ResourceDetailsSection>
       )}
+
       <ResourceSection id="resource-opening-hours">
         {resource && (
           <ResourceOpeningHours language={language} resource={resource} />
         )}
       </ResourceSection>
+      <section className="past-opening-hours-link-section">
+        <Link
+          href={`/resource/${mainResourceId}/past`}
+          text={t('ResourcePage.Main.ViewPastOpeningHours')}
+          dataTest="view-past-opening-hours-link"
+        />
+        <IconArrowRight aria-hidden className="past-opening-hours-arrow" />
+      </section>
       {!hasTargetResources && childResources?.length > 0 && (
         <>
           <section>
@@ -287,24 +297,36 @@ const ResourcePage = ({
           </section>
           <section>
             {childResources?.map((childResource) => (
-              <Accordion
-                key={childResource.id}
-                initiallyOpen={childId === `${childResource.id}`}
-                language={language}
-                heading={
-                  childResource?.name[language] ||
-                  childResource?.name?.fi ||
-                  displayLangVersionNotFound({
-                    language,
-                    label: 'alakohteen nimi',
-                  })
-                }>
-                <ResourceOpeningHours
+              <div key={childResource.id}>
+                <Accordion
+                  initiallyOpen={childId === `${childResource.id}`}
                   language={language}
-                  parentId={resource.id}
-                  resource={childResource}
-                />
-              </Accordion>
+                  heading={
+                    childResource?.name[language] ||
+                    childResource?.name?.fi ||
+                    displayLangVersionNotFound({
+                      language,
+                      label: 'alakohteen nimi',
+                    })
+                  }>
+                  <ResourceOpeningHours
+                    language={language}
+                    parentId={resource.id}
+                    resource={childResource}
+                  />
+                  <section className="past-opening-hours-link-section">
+                    <Link
+                      href={`/resource/${mainResourceId}/child/${childResource.id}/past`}
+                      text={t('ResourcePage.Main.ViewPastOpeningHours')}
+                      dataTest={`view-past-opening-hours-link-child-${childResource.id}`}
+                    />
+                    <IconArrowRight
+                      aria-hidden
+                      className="past-opening-hours-arrow"
+                    />
+                  </section>
+                </Accordion>
+              </div>
             ))}
           </section>
         </>

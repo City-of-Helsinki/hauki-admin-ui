@@ -1,0 +1,35 @@
+@import 'hds-design-tokens/lib/all.scss';
+
+.resource-past-opening-hours-page {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-m;
+}
+
+.past-opening-hours-title {
+  color: var(--color-coat-of-arms);
+  font-size: $fontsize-heading-m;
+  margin-top: $spacing-2-xs;
+}
+
+.past-opening-hours-content {
+  margin-top: $spacing-m;
+}
+
+.past-opening-hours-empty {
+  margin-top: $spacing-m;
+  font-style: italic;
+  color: var(--color-black-70);
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.button-close {
+  position: absolute;
+  right: 0;
+}

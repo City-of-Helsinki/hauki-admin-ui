@@ -21,6 +21,7 @@ type Props = {
   newUrl: string;
   theme: 'DEFAULT' | 'LIGHT';
   title: string;
+  showCopyOption?: boolean;
 };
 
 const OpeningPeriodsSection = ({
@@ -34,6 +35,7 @@ const OpeningPeriodsSection = ({
   newUrl,
   title,
   theme,
+  showCopyOption = false,
 }: Props): JSX.Element => {
   const navigate = useNavigate();
   const {
@@ -43,10 +45,13 @@ const OpeningPeriodsSection = ({
     datePeriodSelectState,
   } = useSelectedDatePeriodsContext();
   const { t } = useTranslation();
-  const openingPeriodsHeaderClassName =
-    theme === 'LIGHT'
-      ? 'opening-periods-header-light'
-      : 'opening-periods-header';
+
+  let openingPeriodsHeaderClassName = 'opening-periods-header';
+  if (showCopyOption) {
+    openingPeriodsHeaderClassName = 'opening-periods-header-copy-mode';
+  } else if (theme === 'LIGHT') {
+    openingPeriodsHeaderClassName = 'opening-periods-header-light';
+  }
 
   // custom checkbox style for default style TODO: FINALS?
   const customCheckboxStyle =

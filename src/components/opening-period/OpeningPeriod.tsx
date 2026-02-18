@@ -23,6 +23,7 @@ const OpeningPeriod = ({
   language,
   deletePeriod,
   initiallyOpen = false,
+  showCopyOption = false,
 }: {
   datePeriod: DatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
@@ -30,6 +31,7 @@ const OpeningPeriod = ({
   language: Language;
   deletePeriod?: (id: number) => Promise<void>;
   initiallyOpen: boolean;
+  showCopyOption?: boolean;
 }): JSX.Element => {
   const {
     selectedDatePeriods,
@@ -65,7 +67,9 @@ const OpeningPeriod = ({
       }}
       editUrl={editUrl}
       initiallyOpen={initiallyOpen}
-      isActive={datePeriod.isActive}>
+      isActive={datePeriod.isActive}
+      showCopyOption={showCopyOption}
+      datePeriod={datePeriod}>
       <div className="date-period-details-container">
         {datePeriod.resourceState === ResourceState.CLOSED ? (
           t('ResourcePage.OpeningPeriodsSection.StateClosed')

@@ -6,10 +6,6 @@
   gap: $spacing-m;
 }
 
-.resource-details-section {
-  border-bottom: 1px solid var(--hauki-content-border-color);
-}
-
 .resource-info-title-add-on {
   margin-left: auto;
 }
@@ -54,4 +50,15 @@
 .resource-child-resources-description {
   margin: 0;
   padding: 0;
+}
+
+.past-opening-hours-link-section {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2-xs;
+  margin-top: $spacing-m;
+}
+
+.past-opening-hours-arrow {
+  color: var(--color-coat-of-arms);
 }

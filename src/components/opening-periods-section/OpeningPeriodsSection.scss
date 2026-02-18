@@ -88,3 +88,18 @@
     color: $color-coat-of-arms-dark;
   }
 }
+
+.opening-periods-header-copy-mode {
+  @extend .opening-periods-header;
+
+  background: $color-black-10;
+  color: $color-black-90;
+
+  .opening-periods-header-title {
+    color: $color-black-90;
+  }
+
+  .opening-periods-period-count {
+    color: $color-black-70;
+  }
+}

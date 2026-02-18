@@ -7,10 +7,12 @@ import {
   IconTrash,
   StatusLabel,
   useAccordion,
+  IconArrowRight,
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { DatePeriod } from '../../common/lib/types';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
@@ -115,6 +117,8 @@ type Props = {
   isActive?: boolean;
   onDelete?: () => void | Promise<void>;
   periodName?: string | null;
+  showCopyOption?: boolean;
+  datePeriod?: DatePeriod;
 };
 
 const OpeningPeriodAccordion = ({
@@ -128,12 +132,24 @@ const OpeningPeriodAccordion = ({
   periodName,
   toggleChecked,
   checked,
+  showCopyOption = false,
+  datePeriod,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { id: resourceId, parentId } = useParams<{
+    id: string;
+    parentId?: string;
+  }>();
   const deleteModalTitle = t(
     'ResourcePage.OpeningPeriodsSection.DeleteModalTitle'
   );
   const { isModalOpen, openModal, closeModal } = useModal();
+  const {
+    isModalOpen: isCopyModalOpen,
+    openModal: openCopyModal,
+    closeModal: closeCopyModal,
+  } = useModal();
   const { buttonProps, isOpen } = useAccordion({
     initiallyOpen,
   });
@@ -234,6 +250,18 @@ const OpeningPeriodAccordion = ({
                 periodName={periodName}
               />
             )}
+          {showCopyOption && (
+            <button
+              className="button-icon opening-period-action-copy"
+              data-testid={`openingPeriodCopyButton${dataTestPostFix}`}
+              type="button"
+              onClick={() => {
+                if (!datePeriod || !resourceId) return;
+                openCopyModal();
+              }}>
+              {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
+            </button>
+          )}
           <button
             className="button-icon"
             data-testid={`openingPeriodAccordionButton${dataTestPostFix}`}
@@ -293,6 +321,53 @@ const OpeningPeriodAccordion = ({
           }}
           confirmText={t('ResourcePage.OpeningPeriodsSection.Remove')}
         />
+        {showCopyOption && datePeriod && (
+          <ConfirmationModal
+            onConfirm={async (): Promise<void> => {
+              // Build the path based on whether it's parent or child resource
+              const basePath = parentId
+                ? `/resource/${parentId}/child/${resourceId}`
+                : `/resource/${resourceId}`;
+
+              // Determine the target path based on period type
+              const targetPath = datePeriod.override
+                ? `${basePath}/exception/new`
+                : `${basePath}/period/new`;
+
+              // Navigate with the period data and return flag in state
+              navigate(targetPath, {
+                state: {
+                  copyFrom: datePeriod,
+                  returnToPastView: true,
+                },
+              });
+            }}
+            title={t('ResourcePastOpeningHoursPage.Main.CopyModalTitle')}
+            text={
+              <>
+                <p>{t('ResourcePastOpeningHoursPage.Main.CopyModalText')}</p>
+                <p>
+                  {t(
+                    'ResourcePastOpeningHoursPage.Main.CopyModalSelectedPeriod'
+                  )}
+                </p>
+                <p>
+                  <b>
+                    {periodName}
+                    <br />
+                    {dateRange}
+                  </b>
+                </p>
+              </>
+            }
+            isOpen={isCopyModalOpen}
+            onClose={closeCopyModal}
+            confirmIcon={<IconArrowRight aria-hidden />}
+            confirmText={t(
+              'ResourcePastOpeningHoursPage.Main.CopyModalConfirm'
+            )}
+          />
+        )}
       </div>
       {isOpen && children}
     </div>

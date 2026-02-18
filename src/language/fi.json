@@ -9,7 +9,8 @@
       "ParentResourceDescription": "Tämä alakohde sijaitsee seuraavissa toimipisteissä.",
       "ChildTitle": "Toimipisteen alakohteet",
       "ChildDescription": "Täällä voit määritellä toimipisteen alakohteiden aukioloaikoja. Alakohteet luodaan toimipisterekisterissä.",
-      "Resources": "Toimipisteet"
+      "Resources": "Toimipisteet",
+      "ViewPastOpeningHours": "Näytä menneet aukioloajat"
     },
     "OpeningPeriodsSection": {
       "BatchTitle": "Joukkopäivitykseen valitut aukiolot",
@@ -92,6 +93,28 @@
       "ErrorLoadingPeriods": "Toimipisteen aukiolojaksoja ei saatu ladattua.",
       "PeriodRemoveSuccess": "Aukiolo {{periodName}} poistettu onnistuneesti.",
       "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen."
+    }
+  },
+  "ResourcePastOpeningHoursPage": {
+    "Main": {
+      "Title": "Menneet aukioloajat",
+      "PlaceholderText": "Menneet aukioloajat näytetään täällä.",
+      "EmptyState": "Ei menneitä aukioloaikoja.",
+      "NormalPeriodsTitle": "Menneet aukioloajat",
+      "NormalPeriodsEmpty": "Ei menneitä aukioloaikoja.",
+      "ExceptionPeriodsTitle": "Menneet poikkeavat päivät",
+      "ExceptionPeriodsEmpty": "Ei menneitä poikkeavia päiviä.",
+      "CopyModalTitle": "Kopioi mennyt aukiolojakso uuden pohjaksi",
+      "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojakoksoksi.",
+      "CopyModalSelectedPeriod": "Olet valinnut seuraavan aukiolojakson:",
+      "CopyModalConfirm": "Jatka",
+      "SelectButton": "Valitse"
+    },
+    "Notifications": {
+      "Error": "Virhe",
+      "ErrorLoadingResource": "Toimipistettä ei saatu ladattua.",
+      "CheckResourceId": "Tarkista toimipiste-id.",
+      "IsLoading": "Toimipisteen tietojen haku"
     }
   },
   "OpeningHours": {

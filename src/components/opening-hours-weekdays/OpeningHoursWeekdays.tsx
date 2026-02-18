@@ -110,10 +110,8 @@ const OpeningHoursWeekdays = ({
     return () => animate?.removeEventListener('finish', handleFinish);
   }, [dropIn, offsetTop, onDropFinished, ref, setIsMoving]);
 
-  const weekdays = watch(
-    `openingHours.${openingHoursIdx}.weekdays`,
-    []
-  ) as number[];
+  const weekdays = (watch(`openingHours.${openingHoursIdx}.weekdays`, []) ??
+    []) as number[];
 
   const removedDayLabel = removedDay
     ? getWeekdayLongNameByIndexAndLang({
