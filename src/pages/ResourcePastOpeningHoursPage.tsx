@@ -91,8 +91,6 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
           getDatePeriodFormConfig(),
         ]);
 
-        if (!isMounted) return;
-
         setDatePeriodConfig(uiDatePeriodOptions);
 
         const filteredApiDatePeriods = apiDatePeriods.filter((datePeriod) => {
