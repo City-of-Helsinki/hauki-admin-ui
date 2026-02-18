@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.9.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.8.1...hauki-admin-ui-v1.9.0) (2026-02-18)
+
+
+### Features
+
+* History HAUKI-677 ([#466](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/466)) ([6ad2719](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/6ad2719b1a1d8c4bac14836115a8b7baa25553c6))
+
+
+### Bug Fixes
+
+* E2e test HAUKI-677 ([0ab5d9a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0ab5d9a2fd8bf78fdebfe9d869c8dd425d54778b))
+
+
+### Dependencies
+
+* Bump axios from 1.12.0 to 1.13.5 ([ce6d98b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/ce6d98b0b6449732c8022fa6deaa81565f0b2c3e))
+* Upgrade playwright to 1.58.2 Refs: RATY-299 ([efca56a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/efca56a16ac622999ce4d497479f256f9c5d326e))
+* Upgrade react-router-dom to 6.30.3 Refs: RATY-299 ([c571acf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c571acf5285cca1e8af8d262b6efd2b2f0283d34))
+
 ## [1.8.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.8.0...hauki-admin-ui-v1.8.1) (2026-01-28)
 
 
