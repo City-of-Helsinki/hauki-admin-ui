@@ -38,8 +38,17 @@ COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.build.json index.html vit
 COPY ./src /app/src
 COPY ./test /app/test
 
+ARG REACT_APP_SENTRY_RELEASE
+
+ENV REACT_APP_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
+
 # Build application
 RUN yarn build
+
+# Process nginx configuration with APP_VERSION substitution
+COPY nginx/nginx.conf /app/nginx.conf.template
+RUN export APP_VERSION=$(yarn --silent app:version | tr -d '\n') && \
+    envsubst '${APP_VERSION},${REACT_APP_RELEASE}' < /app/nginx.conf.template > /app/nginx.conf
 
 # =============================
 FROM registry.access.redhat.com/ubi9/nginx-120 as production
@@ -54,7 +63,7 @@ RUN chgrp -R 0 /usr/share/nginx/html && \
 COPY --from=staticbuilder /app/build /usr/share/nginx/html
 
 # Copy nginx config
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=staticbuilder /app/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir /etc/nginx/env
 COPY ./nginx/nginx_env.conf  /etc/nginx/env/
 
