@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.9.0...hauki-admin-ui-v1.10.0) (2026-02-27)
+
+
+### Features
+
+* Readiness endpoint KEH-228 ([9dc8ae0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/9dc8ae066692c7991fb1298be2d64d55f1cb012c))
+
 ## [1.9.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.8.1...hauki-admin-ui-v1.9.0) (2026-02-18)
 
 
