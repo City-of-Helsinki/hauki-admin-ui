@@ -98,7 +98,7 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Past opening hours",
-      "PlaceholderText": "Past opening hours will be displayed here.",
+      "Description": "You can select the previous year's opening hours as a basis.",
       "EmptyState": "No past opening hours.",
       "NormalPeriodsTitle": "Past opening hours",
       "NormalPeriodsEmpty": "No past opening hours.",
