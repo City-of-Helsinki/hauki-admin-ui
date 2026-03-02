@@ -134,6 +134,7 @@ export const datePeriodToApiDatePeriod = (
     fi: null,
     sv: null,
   },
+  order: datePeriod.order ?? null,
   override: datePeriod.override,
   resource,
   start_date: datePeriod.startDate
@@ -267,6 +268,7 @@ export const apiDatePeriodToDatePeriod = (
   startDate: datePeriod.start_date ? formatDate(datePeriod.start_date) : null,
   openingHours: apiTimeSpanGroupsToOpeningHours(datePeriod.time_span_groups),
   id: datePeriod.id,
+  order: datePeriod.order ?? null,
   resourceState: datePeriod.resource_state,
   override: datePeriod.override,
 });

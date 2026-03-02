@@ -186,6 +186,7 @@ export type ApiDatePeriod = {
   description: LanguageStrings;
   start_date: string | null;
   end_date: string | null;
+  order?: number | null;
   resource_state?: ResourceState;
   override: boolean;
   resource: number;
@@ -265,6 +266,7 @@ export type DatePeriod = {
   fixed: boolean;
   name: LanguageStrings;
   openingHours: OpeningHours[];
+  order?: number | null;
   startDate: string | null;
   override: boolean;
   resourceState?: ResourceState;

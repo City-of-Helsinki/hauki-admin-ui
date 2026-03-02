@@ -356,6 +356,15 @@ export default {
       data: datePeriod,
     }),
 
+  patchDatePeriodOrder: (
+    id: number,
+    order: number | null
+  ): Promise<ApiDatePeriod> =>
+    apiPatch<ApiDatePeriod>({
+      path: `${datePeriodBasePath}/${id}`,
+      data: { order },
+    }),
+
   deleteDatePeriod: (id: number): Promise<{ success: boolean }> =>
     apiDelete<{ success: boolean }>({
       path: `${datePeriodBasePath}/${id}`,

@@ -23,6 +23,8 @@ const OpeningPeriod = ({
   language,
   deletePeriod,
   initiallyOpen = false,
+  onMoveDown,
+  onMoveUp,
   showCopyOption = false,
 }: {
   datePeriod: DatePeriod;
@@ -31,6 +33,8 @@ const OpeningPeriod = ({
   language: Language;
   deletePeriod?: (id: number) => Promise<void>;
   initiallyOpen: boolean;
+  onMoveDown?: () => void;
+  onMoveUp?: () => void;
   showCopyOption?: boolean;
 }): JSX.Element => {
   const {
@@ -68,6 +72,8 @@ const OpeningPeriod = ({
       editUrl={editUrl}
       initiallyOpen={initiallyOpen}
       isActive={datePeriod.isActive}
+      onMoveDown={onMoveDown}
+      onMoveUp={onMoveUp}
       showCopyOption={showCopyOption}
       datePeriod={datePeriod}>
       <div className="date-period-details-container">

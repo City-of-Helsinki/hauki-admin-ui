@@ -4,6 +4,7 @@ import {
   Language,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
+import api from '../../common/utils/api/api';
 import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
 import OpeningPeriod from '../opening-period/OpeningPeriod';
 
@@ -46,6 +47,33 @@ const OpeningPeriodsList = ({
 }): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
+  const sortedDatePeriods = [...datePeriods].sort((a, b) => {
+    if (a.order == null && b.order == null) return 0;
+    if (a.order == null) return 1;
+    if (b.order == null) return -1;
+    return a.order - b.order;
+  });
+
+  const movePeriod = async (
+    datePeriod: DatePeriod,
+    direction: 'up' | 'down'
+  ): Promise<void> => {
+    const idx = sortedDatePeriods.findIndex((p) => p.id === datePeriod.id);
+    const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (neighborIdx < 0 || neighborIdx >= sortedDatePeriods.length) return;
+
+    const period = sortedDatePeriods[idx];
+    const neighbor = sortedDatePeriods[neighborIdx];
+
+    const periodNewOrder = neighbor.order ?? neighborIdx;
+    const neighborNewOrder = period.order ?? idx;
+
+    await Promise.all([
+      api.patchDatePeriodOrder(period.id!, periodNewOrder),
+      api.patchDatePeriodOrder(neighbor.id!, neighborNewOrder),
+    ]);
+  };
+
   return (
     <OpeningPeriodsSection
       addDatePeriodButtonRef={ref}
@@ -59,7 +87,7 @@ const OpeningPeriodsList = ({
       title={title}
       showCopyOption={showCopyOption}>
       {datePeriods.length > 0 ? (
-        datePeriods.map((datePeriod, index) => (
+        sortedDatePeriods.map((datePeriod, index) => (
           <OpeningPeriod
             key={datePeriod.id}
             datePeriodConfig={datePeriodConfig}
@@ -70,6 +98,14 @@ const OpeningPeriodsList = ({
               await deletePeriod(datePeriodId);
               ref.current?.focus();
             }}
+            onMoveUp={
+              index > 0 ? () => movePeriod(datePeriod, 'up') : undefined
+            }
+            onMoveDown={
+              index < sortedDatePeriods.length - 1
+                ? () => movePeriod(datePeriod, 'down')
+                : undefined
+            }
             initiallyOpen={index <= 10}
             showCopyOption={showCopyOption}
           />

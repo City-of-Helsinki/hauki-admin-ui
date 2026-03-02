@@ -2,12 +2,14 @@ import {
   Checkbox,
   IconAngleDown,
   IconAngleUp,
+  IconArrowDown,
+  IconArrowRight,
+  IconArrowUp,
   IconMenuDots,
   IconPenLine,
   IconTrash,
   StatusLabel,
   useAccordion,
-  IconArrowRight,
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -116,6 +118,8 @@ type Props = {
   initiallyOpen?: boolean;
   isActive?: boolean;
   onDelete?: () => void | Promise<void>;
+  onMoveDown?: () => void;
+  onMoveUp?: () => void;
   periodName?: string | null;
   showCopyOption?: boolean;
   datePeriod?: DatePeriod;
@@ -129,6 +133,8 @@ const OpeningPeriodAccordion = ({
   initiallyOpen = false,
   isActive = false,
   onDelete,
+  onMoveDown,
+  onMoveUp,
   periodName,
   toggleChecked,
   checked,
@@ -200,6 +206,33 @@ const OpeningPeriodAccordion = ({
           {!isMobile &&
             datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
               <>
+                {datePeriod?.order != null && (
+                  <span
+                    className="opening-period-order"
+                    data-testid={`openingPeriodOrder${dataTestPostFix}`}>
+                    {datePeriod.order}
+                  </span>
+                )}
+                {onMoveUp && (
+                  <button
+                    className="button-icon opening-period-action-move-up"
+                    data-testid={`openingPeriodMoveUpButton${dataTestPostFix}`}
+                    type="button"
+                    onClick={onMoveUp}>
+                    <IconArrowUp aria-hidden="true" />
+                    <span className="visually-hidden">Move up</span>
+                  </button>
+                )}
+                {onMoveDown && (
+                  <button
+                    className="button-icon opening-period-action-move-down"
+                    data-testid={`openingPeriodMoveDownButton${dataTestPostFix}`}
+                    type="button"
+                    onClick={onMoveDown}>
+                    <IconArrowDown aria-hidden="true" />
+                    <span className="visually-hidden">Move down</span>
+                  </button>
+                )}
                 {editUrl && (
                   <Link
                     className="button-icon opening-period-action-edit"
