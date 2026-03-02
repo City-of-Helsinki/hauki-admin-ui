@@ -172,6 +172,10 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
         </div>
       </ResourceTitle>
 
+      <p className="past-opening-hours-description">
+        {t('ResourcePastOpeningHoursPage.Main.Description')}
+      </p>
+
       {normalDatePeriods.length === 0 && exceptionDatePeriods.length === 0 ? (
         <p className="past-opening-hours-empty">
           {t('ResourcePastOpeningHoursPage.Main.EmptyState')}

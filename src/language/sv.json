@@ -98,7 +98,7 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Tidigare öppettider",
-      "PlaceholderText": "Tidigare öppettider kommer att visas här.",
+      "Description": "Du kan välja föregående års öppettider som grund.",
       "EmptyState": "Inga tidigare öppettider.",
       "NormalPeriodsTitle": "Tidigare öppettider",
       "NormalPeriodsEmpty": "Inga tidigare öppettider.",

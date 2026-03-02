@@ -98,7 +98,7 @@
   "ResourcePastOpeningHoursPage": {
     "Main": {
       "Title": "Menneet aukioloajat",
-      "PlaceholderText": "Menneet aukioloajat näytetään täällä.",
+      "Description": "Voit valita pohjaksi edellisen vuoden aukioloaikoja.",
       "EmptyState": "Ei menneitä aukioloaikoja.",
       "NormalPeriodsTitle": "Menneet aukioloajat",
       "NormalPeriodsEmpty": "Ei menneitä aukioloaikoja.",
