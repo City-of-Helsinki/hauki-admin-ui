@@ -105,7 +105,7 @@
       "ExceptionPeriodsTitle": "Menneet poikkeavat päivät",
       "ExceptionPeriodsEmpty": "Ei menneitä poikkeavia päiviä.",
       "CopyModalTitle": "Kopioi mennyt aukiolojakso uuden pohjaksi",
-      "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojakoksoksi.",
+      "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojaksoksi.",
       "CopyModalSelectedPeriod": "Olet valinnut seuraavan aukiolojakson:",
       "CopyModalConfirm": "Jatka",
       "SelectButton": "Valitse"
