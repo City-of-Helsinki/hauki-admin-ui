@@ -185,6 +185,7 @@ const ResourceOpeningHours = ({
         theme="DEFAULT"
         emptyState={t('ResourcePage.OpeningPeriodsSection.NormalEmptyState')}
         deletePeriod={deletePeriod}
+        reloadPeriods={() => fetchDatePeriods(resourceId)}
         language={language}
         isLoading={isLoading}
         newUrl={
@@ -207,6 +208,7 @@ const ResourceOpeningHours = ({
         datePeriodConfig={datePeriodConfig}
         datePeriods={exceptionDatePeriods}
         deletePeriod={deletePeriod}
+        reloadPeriods={() => fetchDatePeriods(resourceId)}
         isLoading={isLoading}
         language={language}
         emptyState={t('ResourcePage.OpeningPeriodsSection.ExceptionEmptyState')}
@@ -232,6 +234,7 @@ const ResourceOpeningHours = ({
         datePeriodConfig={datePeriodConfig}
         datePeriods={holidayDatePeriods}
         deletePeriod={deletePeriod}
+        reloadPeriods={() => fetchDatePeriods(resourceId)}
         isLoading={isLoading}
         language={language}
         emptyState={t('ResourcePage.OpeningPeriodsSection.HolidayEmptyState')}

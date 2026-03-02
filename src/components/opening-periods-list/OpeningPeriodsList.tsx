@@ -24,6 +24,7 @@ const OpeningPeriodsList = ({
   theme,
   emptyState,
   deletePeriod,
+  reloadPeriods,
   language,
   isLoading,
   newUrl,
@@ -39,6 +40,7 @@ const OpeningPeriodsList = ({
   theme: PeriodsListTheme;
   emptyState: string;
   deletePeriod: (id: number) => Promise<void>;
+  reloadPeriods?: () => void;
   language: Language;
   showCopyOption?: boolean;
   isLoading: boolean;
@@ -72,6 +74,7 @@ const OpeningPeriodsList = ({
       api.patchDatePeriodOrder(period.id!, periodNewOrder),
       api.patchDatePeriodOrder(neighbor.id!, neighborNewOrder),
     ]);
+    reloadPeriods?.();
   };
 
   return (
