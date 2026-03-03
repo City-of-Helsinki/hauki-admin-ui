@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.11.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.10.0...hauki-admin-ui-v1.11.0) (2026-03-03)
+
+
+### Features
+
+* Description text ([45b6acf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/45b6acff161f235b69eb7d90b38aadb23aba1ef5))
+
+
+### Bug Fixes
+
+* Typo in localisation text ([af58eb9](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/af58eb954317bb00ec4a57d5ff9af6a90cca8677))
+
 ## [1.10.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.9.0...hauki-admin-ui-v1.10.0) (2026-02-27)
 
 
