@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,
   Language,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
+import toast from '../notification/Toast';
 import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
 import OpeningPeriod from '../opening-period/OpeningPeriod';
 
@@ -47,6 +49,7 @@ const OpeningPeriodsList = ({
   newUrl: string;
   editUrl?: (datePeriod: DatePeriod) => string;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const ref = React.useRef<HTMLButtonElement>(null);
 
   const sortedDatePeriods = [...datePeriods].sort((a, b) => {
@@ -64,17 +67,28 @@ const OpeningPeriodsList = ({
     const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
     if (neighborIdx < 0 || neighborIdx >= sortedDatePeriods.length) return;
 
-    const period = sortedDatePeriods[idx];
-    const neighbor = sortedDatePeriods[neighborIdx];
+    // Normalise to clean 0,1,2,... to prevent gaps/nulls causing duplicates
+    const normalised = sortedDatePeriods.map((p, i) => ({ ...p, order: i }));
 
-    const periodNewOrder = neighbor.order ?? neighborIdx;
-    const neighborNewOrder = period.order ?? idx;
+    const period = normalised[idx];
+    const neighbor = normalised[neighborIdx];
 
-    await Promise.all([
-      api.patchDatePeriodOrder(period.id!, periodNewOrder),
-      api.patchDatePeriodOrder(neighbor.id!, neighborNewOrder),
-    ]);
-    reloadPeriods?.();
+    if (period.id == null || neighbor.id == null) return;
+
+    try {
+      await Promise.all([
+        api.patchDatePeriodOrder(period.id, neighbor.order),
+        api.patchDatePeriodOrder(neighbor.id, period.order),
+      ]);
+      reloadPeriods?.();
+      toast.success({
+        label: t('ResourcePage.Notifications.PeriodMoveSuccess'),
+      });
+    } catch (_) {
+      toast.error({
+        label: t('ResourcePage.Notifications.PeriodMoveFailed'),
+      });
+    }
   };
 
   return (

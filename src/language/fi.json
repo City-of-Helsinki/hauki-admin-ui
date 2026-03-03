@@ -92,7 +92,9 @@
       "ErrorNothingSelected": "Valitse aukioloajat joukkopäivitystä varten.",
       "ErrorLoadingPeriods": "Toimipisteen aukiolojaksoja ei saatu ladattua.",
       "PeriodRemoveSuccess": "Aukiolo {{periodName}} poistettu onnistuneesti.",
-      "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen."
+      "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen.",
+      "PeriodMoveSuccess": "Aukiolojaksojen järjestys päivitetty onnistuneesti.",
+      "PeriodMoveFailed": "Aukiolojaksojen järjestyksen päivitys epäonnistui. Yritä myöhemmin uudelleen."
     }
   },
   "ResourcePastOpeningHoursPage": {

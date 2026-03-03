@@ -92,7 +92,9 @@
       "ErrorNothingSelected": "Välj öppettider för massuppdatering.",
       "ErrorLoadingPeriods": "Verksamhetsställets öppettider kunde inte laddas.",
       "PeriodRemoveSuccess": "Öppettider {{periodName}} framgångsrikt borttagen.",
-      "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare."
+      "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare.",
+      "PeriodMoveSuccess": "Öppettidernas ordning har uppdaterats.",
+      "PeriodMoveFailed": "Det gick inte att uppdatera öppettidernas ordning. Försök igen senare."
     }
   },
   "ResourcePastOpeningHoursPage": {

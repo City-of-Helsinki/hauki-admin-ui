@@ -29,8 +29,8 @@
       "ExceptionEmptyState": "No exceptional opening hours. You can add an exceptional opening hours by pressing the \"Add Exceptional opening hours +\" button.",
       "SelectNone": "Clear the selections",
       "SelectAll": "Choose all",
-      "CountSingular": "Opening hours",
-      "CountPlural": "Searching opening hours",
+      "CountSingular": "opening hours",
+      "CountPlural": "opening hours",
       "LoadingText": "Searching for opening hours",
       "StatusLabelActive": "Valid now",
       "DeleteModalTitle": "Are you sure you want to delete the opening period?",
@@ -92,7 +92,9 @@
       "ErrorNothingSelected": "Select opening hours for mass update.",
       "ErrorLoadingPeriods": "The service point's opening hours could not be loaded.",
       "PeriodRemoveSuccess": "Opening hours {{periodName}} successfully deleted.",
-      "PeriodRemoveFailed": "Failed to remove opening hours. Try again later."
+      "PeriodRemoveFailed": "Failed to remove opening hours. Try again later.",
+      "PeriodMoveSuccess": "Opening hours order updated successfully.",
+      "PeriodMoveFailed": "Failed to update opening hours order. Try again later."
     }
   },
   "ResourcePastOpeningHoursPage": {
