@@ -92,6 +92,7 @@ const OpeningPeriodsList = ({
                 ? () => onMovePeriod(datePeriod, 'down')
                 : undefined
             }
+            listIndex={index + 1}
             initiallyOpen={index <= 10}
             showCopyOption={showCopyOption}
           />

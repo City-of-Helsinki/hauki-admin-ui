@@ -177,6 +177,7 @@ type Props = {
   periodName?: string | null;
   showCopyOption?: boolean;
   datePeriod?: DatePeriod;
+  listIndex?: number;
 };
 
 const OpeningPeriodAccordion = ({
@@ -194,6 +195,7 @@ const OpeningPeriodAccordion = ({
   checked,
   showCopyOption = false,
   datePeriod,
+  listIndex,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -234,13 +236,19 @@ const OpeningPeriodAccordion = ({
               className="opening-period-header-checkbox"
             />
           )}
+
         <h3 className="opening-period-title opening-period-header-column">
           {datePeriodSelectState === DatePeriodSelectState.ACTIVE ? (
             <label htmlFor={`period-checkbox${dataTestPostFix}`}>
               {periodName}
             </label>
           ) : (
-            periodName
+            <>
+              {listIndex != null && (onMoveUp || onMoveDown) && (
+                <span className="opening-period-list-index">{listIndex}. </span>
+              )}
+              {periodName}
+            </>
           )}
         </h3>
         <div className="opening-period-dates opening-period-header-column">
@@ -260,18 +268,12 @@ const OpeningPeriodAccordion = ({
           {!isMobile &&
             datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
               <>
-                {(onMoveUp || onMoveDown) && datePeriod?.order != null && (
-                  <span
-                    className="opening-period-order"
-                    data-testid={`openingPeriodOrder${dataTestPostFix}`}>
-                    {datePeriod.order}
-                  </span>
-                )}
-                {onMoveUp && (
+                {(onMoveUp || onMoveDown) && (
                   <button
                     className="button-icon opening-period-action-move-up"
                     data-testid={`openingPeriodMoveUpButton${dataTestPostFix}`}
                     type="button"
+                    disabled={!onMoveUp}
                     onClick={onMoveUp}>
                     <IconArrowUp aria-hidden="true" />
                     <span className="visually-hidden">
@@ -279,11 +281,12 @@ const OpeningPeriodAccordion = ({
                     </span>
                   </button>
                 )}
-                {onMoveDown && (
+                {(onMoveUp || onMoveDown) && (
                   <button
                     className="button-icon opening-period-action-move-down"
                     data-testid={`openingPeriodMoveDownButton${dataTestPostFix}`}
                     type="button"
+                    disabled={!onMoveDown}
                     onClick={onMoveDown}>
                     <IconArrowDown aria-hidden="true" />
                     <span className="visually-hidden">
@@ -365,7 +368,7 @@ const OpeningPeriodAccordion = ({
             <AccordionIcon isOpen={isOpen} />
             <span className="visually-hidden">
               {periodName
-                ? t('ResourcePage.OpeningPeriodsSection.ShowPediod', {
+                ? t('ResourcePage.OpeningPeriodsSection.ShowPeriod', {
                     periodName,
                   })
                 : t('ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod')}
