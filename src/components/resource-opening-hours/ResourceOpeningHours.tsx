@@ -10,6 +10,7 @@ import {
   DatePeriodType,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
+import toast from '../notification/Toast';
 import {
   apiDatePeriodToDatePeriod,
   getActiveDatePeriods,
@@ -84,6 +85,43 @@ const ResourceOpeningHours = ({
   const deletePeriod = async (datePeriodId: number): Promise<void> => {
     await api.deleteDatePeriod(datePeriodId);
     fetchDatePeriods(resourceId);
+  };
+
+  const movePeriod = async (
+    datePeriods: DatePeriod[],
+    datePeriod: DatePeriod,
+    direction: 'up' | 'down'
+  ): Promise<void> => {
+    const sorted = [...datePeriods].sort((a, b) => {
+      if (a.order == null && b.order == null) return 0;
+      if (a.order == null) return 1;
+      if (b.order == null) return -1;
+      return a.order - b.order;
+    });
+    const idx = sorted.findIndex((p) => p.id === datePeriod.id);
+    const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (neighborIdx < 0 || neighborIdx >= sorted.length) return;
+
+    // Normalise to clean 0,1,2,... to prevent gaps/nulls causing duplicates
+    const normalised = sorted.map((p, i) => ({ ...p, order: i }));
+    const period = normalised[idx];
+    const neighbor = normalised[neighborIdx];
+    if (period.id == null || neighbor.id == null) return;
+
+    try {
+      await Promise.all([
+        api.patchDatePeriodOrder(period.id, neighbor.order),
+        api.patchDatePeriodOrder(neighbor.id, period.order),
+      ]);
+      fetchDatePeriods(resourceId);
+      toast.success({
+        label: t('ResourcePage.Notifications.PeriodMoveSuccess'),
+      });
+    } catch (_) {
+      toast.error({
+        label: t('ResourcePage.Notifications.PeriodMoveFailed'),
+      });
+    }
   };
 
   const holidays = getHolidays();
@@ -185,7 +223,7 @@ const ResourceOpeningHours = ({
         theme="DEFAULT"
         emptyState={t('ResourcePage.OpeningPeriodsSection.NormalEmptyState')}
         deletePeriod={deletePeriod}
-        reloadPeriods={() => fetchDatePeriods(resourceId)}
+        onMovePeriod={(dp, dir) => movePeriod(normalDatePeriods, dp, dir)}
         language={language}
         isLoading={isLoading}
         newUrl={
@@ -208,7 +246,6 @@ const ResourceOpeningHours = ({
         datePeriodConfig={datePeriodConfig}
         datePeriods={exceptionDatePeriods}
         deletePeriod={deletePeriod}
-        reloadPeriods={() => fetchDatePeriods(resourceId)}
         isLoading={isLoading}
         language={language}
         emptyState={t('ResourcePage.OpeningPeriodsSection.ExceptionEmptyState')}
@@ -234,7 +271,6 @@ const ResourceOpeningHours = ({
         datePeriodConfig={datePeriodConfig}
         datePeriods={holidayDatePeriods}
         deletePeriod={deletePeriod}
-        reloadPeriods={() => fetchDatePeriods(resourceId)}
         isLoading={isLoading}
         language={language}
         emptyState={t('ResourcePage.OpeningPeriodsSection.HolidayEmptyState')}

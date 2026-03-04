@@ -48,6 +48,8 @@
       "StateClosed": "Suljettu",
       "Modify": "Muokkaa",
       "Remove": "Poista",
+      "MoveUp": "Siirrä ylös",
+      "MoveDown": "Siirrä alas",
       "ValidUntilFurtherNotice": "Voimassa toistaiseksi",
       "ValidOnDate": "Voimassa {{startDate}}",
       "ValidFromDate": "Voimassa {{startDate}} alkaen",

@@ -33,80 +33,134 @@ const AccordionIcon = ({ isOpen }: AccordionIconProps): JSX.Element =>
 
 type OpeningPeriodActionsMenuProps = {
   editUrl?: string;
+  onCopy?: () => void;
   onDelete?: () => void;
+  onMoveDown?: () => void;
+  onMoveUp?: () => void;
   periodName?: string | null;
+  showCopyOption?: boolean;
 };
 
 const OpeningPeriodActionsMenu = React.forwardRef<
   HTMLButtonElement,
   OpeningPeriodActionsMenuProps
->(({ onDelete, editUrl, periodName }, deleteRef) => {
-  const { buttonProps, isOpen, closeAccordion } = useAccordion({
-    initiallyOpen: false,
-  });
-  const actionsMenuRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside(actionsMenuRef, closeAccordion);
-  const { t } = useTranslation();
+>(
+  (
+    {
+      onDelete,
+      onCopy,
+      editUrl,
+      periodName,
+      onMoveDown,
+      onMoveUp,
+      showCopyOption,
+    },
+    deleteRef
+  ) => {
+    const { buttonProps, isOpen, closeAccordion } = useAccordion({
+      initiallyOpen: false,
+    });
+    const actionsMenuRef = useRef<HTMLDivElement>(null);
+    useOnClickOutside(actionsMenuRef, closeAccordion);
+    const { t } = useTranslation();
 
-  return (
-    <div ref={actionsMenuRef} className="opening-period-actions-menu">
-      <button
-        ref={deleteRef}
-        className="button-icon opening-period-actions-menu-toggle"
-        type="button"
-        {...buttonProps}>
-        <IconMenuDots aria-hidden="true" />
-        <span className="visually-hidden">
-          {periodName
-            ? t('ResourcePage.OpeningPeriodsSection.OpenPeriodEditMenu', {
-                periodName,
-              })
-            : t(
-                'ResourcePage.OpeningPeriodsSection.OpenUntitledPeriodEditMenu'
-              )}
-        </span>
-      </button>
-      {isOpen && (
-        <div className="opening-period-actions-menu-items">
-          {editUrl && (
-            <Link className="opening-period-actions-menu-item" to={editUrl}>
-              {t('ResourcePage.OpeningPeriodsSection.Modify')}
-              <span className="visually-hidden">
-                {periodName
-                  ? t('ResourcePage.OpeningPeriodsSection.ModifyPeriod', {
-                      periodName,
-                    })
-                  : t(
-                      'ResourcePage.OpeningPeriodsSection.ModifyUntitledPeriod'
-                    )}
-              </span>
-            </Link>
-          )}
-          {onDelete && (
-            <button
-              className="opening-period-actions-menu-item"
-              onClick={() => {
-                closeAccordion();
-                onDelete();
-              }}
-              type="button">
-              {t('ResourcePage.OpeningPeriodsSection.Remove')}
-              <span className="visually-hidden">
-                {periodName
-                  ? t('ResourcePage.OpeningPeriodsSection.RemovePeriod', {
-                      periodName,
-                    })
-                  : t(
-                      'ResourcePage.OpeningPeriodsSection.RemoveUntitledPeriod'
-                    )}
-              </span>
-            </button>
-          )}
-        </div>
-      )}
-    </div>
-  );
-});
+    return (
+      <div ref={actionsMenuRef} className="opening-period-actions-menu">
+        <button
+          ref={deleteRef}
+          className="button-icon opening-period-actions-menu-toggle"
+          type="button"
+          {...buttonProps}>
+          <IconMenuDots aria-hidden="true" />
+          <span className="visually-hidden">
+            {periodName
+              ? t('ResourcePage.OpeningPeriodsSection.OpenPeriodEditMenu', {
+                  periodName,
+                })
+              : t(
+                  'ResourcePage.OpeningPeriodsSection.OpenUntitledPeriodEditMenu'
+                )}
+          </span>
+        </button>
+        {isOpen && (
+          <div className="opening-period-actions-menu-items">
+            {editUrl && (
+              <Link className="opening-period-actions-menu-item" to={editUrl}>
+                {t('ResourcePage.OpeningPeriodsSection.Modify')}
+                <span className="visually-hidden">
+                  {periodName
+                    ? t('ResourcePage.OpeningPeriodsSection.ModifyPeriod', {
+                        periodName,
+                      })
+                    : t(
+                        'ResourcePage.OpeningPeriodsSection.ModifyUntitledPeriod'
+                      )}
+                </span>
+              </Link>
+            )}
+
+            {onMoveUp && (
+              <button
+                className="opening-period-actions-menu-item"
+                onClick={() => {
+                  closeAccordion();
+                  onMoveUp();
+                }}
+                type="button">
+                {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
+              </button>
+            )}
+
+            {onMoveDown && (
+              <button
+                className="opening-period-actions-menu-item"
+                onClick={() => {
+                  closeAccordion();
+                  onMoveDown();
+                }}
+                type="button">
+                {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
+              </button>
+            )}
+
+            {showCopyOption && onCopy && (
+              <button
+                className="opening-period-actions-menu-item"
+                type="button"
+                onClick={() => {
+                  closeAccordion();
+                  onCopy();
+                }}>
+                {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
+              </button>
+            )}
+
+            {onDelete && (
+              <button
+                className="opening-period-actions-menu-item"
+                onClick={() => {
+                  closeAccordion();
+                  onDelete();
+                }}
+                type="button">
+                {t('ResourcePage.OpeningPeriodsSection.Remove')}
+                <span className="visually-hidden">
+                  {periodName
+                    ? t('ResourcePage.OpeningPeriodsSection.RemovePeriod', {
+                        periodName,
+                      })
+                    : t(
+                        'ResourcePage.OpeningPeriodsSection.RemoveUntitledPeriod'
+                      )}
+                </span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 type Props = {
   children: ReactNode;
@@ -206,7 +260,7 @@ const OpeningPeriodAccordion = ({
           {!isMobile &&
             datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
               <>
-                {datePeriod?.order != null && (
+                {(onMoveUp || onMoveDown) && datePeriod?.order != null && (
                   <span
                     className="opening-period-order"
                     data-testid={`openingPeriodOrder${dataTestPostFix}`}>
@@ -220,7 +274,9 @@ const OpeningPeriodAccordion = ({
                     type="button"
                     onClick={onMoveUp}>
                     <IconArrowUp aria-hidden="true" />
-                    <span className="visually-hidden">Move up</span>
+                    <span className="visually-hidden">
+                      {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
+                    </span>
                   </button>
                 )}
                 {onMoveDown && (
@@ -230,7 +286,9 @@ const OpeningPeriodAccordion = ({
                     type="button"
                     onClick={onMoveDown}>
                     <IconArrowDown aria-hidden="true" />
-                    <span className="visually-hidden">Move down</span>
+                    <span className="visually-hidden">
+                      {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
+                    </span>
                   </button>
                 )}
                 {editUrl && (
@@ -280,6 +338,10 @@ const OpeningPeriodAccordion = ({
                 onDelete={() => {
                   openModal();
                 }}
+                onMoveUp={onMoveUp}
+                onMoveDown={onMoveDown}
+                showCopyOption={showCopyOption && !!datePeriod && !!resourceId}
+                onCopy={openCopyModal}
                 periodName={periodName}
               />
             )}

@@ -1,12 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,
   Language,
   UiDatePeriodConfig,
 } from '../../common/lib/types';
-import api from '../../common/utils/api/api';
-import toast from '../notification/Toast';
 import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
 import OpeningPeriod from '../opening-period/OpeningPeriod';
 
@@ -26,7 +23,7 @@ const OpeningPeriodsList = ({
   theme,
   emptyState,
   deletePeriod,
-  reloadPeriods,
+  onMovePeriod,
   language,
   isLoading,
   newUrl,
@@ -42,14 +39,16 @@ const OpeningPeriodsList = ({
   theme: PeriodsListTheme;
   emptyState: string;
   deletePeriod: (id: number) => Promise<void>;
-  reloadPeriods?: () => void;
+  onMovePeriod?: (
+    datePeriod: DatePeriod,
+    direction: 'up' | 'down'
+  ) => Promise<void>;
   language: Language;
   showCopyOption?: boolean;
   isLoading: boolean;
   newUrl: string;
   editUrl?: (datePeriod: DatePeriod) => string;
 }): JSX.Element => {
-  const { t } = useTranslation();
   const ref = React.useRef<HTMLButtonElement>(null);
 
   const sortedDatePeriods = [...datePeriods].sort((a, b) => {
@@ -58,38 +57,6 @@ const OpeningPeriodsList = ({
     if (b.order == null) return -1;
     return a.order - b.order;
   });
-
-  const movePeriod = async (
-    datePeriod: DatePeriod,
-    direction: 'up' | 'down'
-  ): Promise<void> => {
-    const idx = sortedDatePeriods.findIndex((p) => p.id === datePeriod.id);
-    const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
-    if (neighborIdx < 0 || neighborIdx >= sortedDatePeriods.length) return;
-
-    // Normalise to clean 0,1,2,... to prevent gaps/nulls causing duplicates
-    const normalised = sortedDatePeriods.map((p, i) => ({ ...p, order: i }));
-
-    const period = normalised[idx];
-    const neighbor = normalised[neighborIdx];
-
-    if (period.id == null || neighbor.id == null) return;
-
-    try {
-      await Promise.all([
-        api.patchDatePeriodOrder(period.id, neighbor.order),
-        api.patchDatePeriodOrder(neighbor.id, period.order),
-      ]);
-      reloadPeriods?.();
-      toast.success({
-        label: t('ResourcePage.Notifications.PeriodMoveSuccess'),
-      });
-    } catch (_) {
-      toast.error({
-        label: t('ResourcePage.Notifications.PeriodMoveFailed'),
-      });
-    }
-  };
 
   return (
     <OpeningPeriodsSection
@@ -116,11 +83,13 @@ const OpeningPeriodsList = ({
               ref.current?.focus();
             }}
             onMoveUp={
-              index > 0 ? () => movePeriod(datePeriod, 'up') : undefined
+              onMovePeriod && index > 0
+                ? () => onMovePeriod(datePeriod, 'up')
+                : undefined
             }
             onMoveDown={
-              index < sortedDatePeriods.length - 1
-                ? () => movePeriod(datePeriod, 'down')
+              onMovePeriod && index < sortedDatePeriods.length - 1
+                ? () => onMovePeriod(datePeriod, 'down')
                 : undefined
             }
             initiallyOpen={index <= 10}

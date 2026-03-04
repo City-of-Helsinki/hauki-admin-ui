@@ -48,6 +48,8 @@
       "StateClosed": "Closed",
       "Modify": "Edit",
       "Remove": "Remove",
+      "MoveUp": "Move up",
+      "MoveDown": "Move down",
       "ValidUntilFurtherNotice": "Valid until further notice",
       "ValidOnDate": "Valid on {{startDate}}",
       "ValidFromDate": "Valid from {{startDate}}",

@@ -48,6 +48,8 @@
       "StateClosed": "Stängt",
       "Modify": "Redigera",
       "Remove": "Ta bort",
+      "MoveUp": "Flytta upp",
+      "MoveDown": "Flytta ner",
       "ValidUntilFurtherNotice": "Gäller tills vidare",
       "ValidOnDate": "Gäller den {{startDate}}",
       "ValidFromDate": "Gäller från {{startDate}}",
