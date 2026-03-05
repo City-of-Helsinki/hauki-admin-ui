@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Redigera den anonyma öppettiden",
       "ShowPeriod": "Visa {{periodName}}",
       "ShowUntitledPeriod": "Visa anonym",
+      "HidePeriod": "Dölj {{periodName}}",
+      "HideUntitledPeriod": "Dölj anonym",
       "RemovingPeriod": "Tar bort öppettider",
       "ConfirmRemove": "Ta bort",
       "OpenPeriodEditMenu": "Öppna {{periodName}} öppettider redigera och ta bort menyn",

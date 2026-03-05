@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Muokkaa nimettömän aukiolojakso",
       "ShowPeriod": "Näytä {{periodName}}",
       "ShowUntitledPeriod": "Näytä nimetön",
+      "HidePeriod": "Piilota {{periodName}}",
+      "HideUntitledPeriod": "Piilota nimetön",
       "RemovingPeriod": "Poistetaan aukiolojaksoa",
       "ConfirmRemove": "Poista",
       "OpenPeriodEditMenu": "Avaa {{periodName}} aukiolojakson muokkaa ja poista valikko",

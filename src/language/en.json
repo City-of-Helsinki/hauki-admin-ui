@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Edit the opening period of an anonymous person",
       "ShowPeriod": "View {{periodName}}",
       "ShowUntitledPeriod": "View anonymous",
+      "HidePeriod": "Hide {{periodName}}",
+      "HideUntitledPeriod": "Hide anonymous",
       "RemovingPeriod": "Removing the opening period",
       "ConfirmRemove": "Remove",
       "OpenPeriodEditMenu": "Open the {{periodName}} opening period's edit and remove menu",

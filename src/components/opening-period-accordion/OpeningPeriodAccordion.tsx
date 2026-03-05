@@ -372,10 +372,19 @@ const OpeningPeriodAccordion = ({
             <AccordionIcon isOpen={isOpen} />
             <span className="visually-hidden">
               {periodName
-                ? t('ResourcePage.OpeningPeriodsSection.ShowPeriod', {
-                    periodName,
-                  })
-                : t('ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod')}
+                ? t(
+                    isOpen
+                      ? 'ResourcePage.OpeningPeriodsSection.HidePeriod'
+                      : 'ResourcePage.OpeningPeriodsSection.ShowPeriod',
+                    {
+                      periodName,
+                    }
+                  )
+                : t(
+                    isOpen
+                      ? 'ResourcePage.OpeningPeriodsSection.HideUntitledPeriod'
+                      : 'ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod'
+                  )}
             </span>
           </button>
         </div>
