@@ -237,18 +237,48 @@ const OpeningPeriodAccordion = ({
             />
           )}
 
+        {(onMoveUp || onMoveDown) && (
+          <div className="opening-period-move-actions opening-period-header-column">
+            {listIndex != null && (
+              <span className="opening-period-list-index">{listIndex}. </span>
+            )}
+
+            {!isMobile && (
+              <>
+                <button
+                  className="button-icon opening-period-action-move-up"
+                  data-testid={`openingPeriodMoveUpButton${dataTestPostFix}`}
+                  type="button"
+                  disabled={!onMoveUp}
+                  onClick={onMoveUp}>
+                  <IconArrowUp aria-hidden="true" />
+                  <span className="visually-hidden">
+                    {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
+                  </span>
+                </button>
+                <button
+                  className="button-icon opening-period-action-move-down"
+                  data-testid={`openingPeriodMoveDownButton${dataTestPostFix}`}
+                  type="button"
+                  disabled={!onMoveDown}
+                  onClick={onMoveDown}>
+                  <IconArrowDown aria-hidden="true" />
+                  <span className="visually-hidden">
+                    {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
+                  </span>
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
         <h3 className="opening-period-title opening-period-header-column">
           {datePeriodSelectState === DatePeriodSelectState.ACTIVE ? (
             <label htmlFor={`period-checkbox${dataTestPostFix}`}>
               {periodName}
             </label>
           ) : (
-            <>
-              {listIndex != null && (onMoveUp || onMoveDown) && (
-                <span className="opening-period-list-index">{listIndex}. </span>
-              )}
-              {periodName}
-            </>
+            <>{periodName}</>
           )}
         </h3>
         <div className="opening-period-dates opening-period-header-column">
@@ -268,32 +298,6 @@ const OpeningPeriodAccordion = ({
           {!isMobile &&
             datePeriodSelectState !== DatePeriodSelectState.INACTIVE && (
               <>
-                {(onMoveUp || onMoveDown) && (
-                  <button
-                    className="button-icon opening-period-action-move-up"
-                    data-testid={`openingPeriodMoveUpButton${dataTestPostFix}`}
-                    type="button"
-                    disabled={!onMoveUp}
-                    onClick={onMoveUp}>
-                    <IconArrowUp aria-hidden="true" />
-                    <span className="visually-hidden">
-                      {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
-                    </span>
-                  </button>
-                )}
-                {(onMoveUp || onMoveDown) && (
-                  <button
-                    className="button-icon opening-period-action-move-down"
-                    data-testid={`openingPeriodMoveDownButton${dataTestPostFix}`}
-                    type="button"
-                    disabled={!onMoveDown}
-                    onClick={onMoveDown}>
-                    <IconArrowDown aria-hidden="true" />
-                    <span className="visually-hidden">
-                      {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
-                    </span>
-                  </button>
-                )}
                 {editUrl && (
                   <Link
                     className="button-icon opening-period-action-edit"

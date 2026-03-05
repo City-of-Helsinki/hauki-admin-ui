@@ -112,6 +112,12 @@
   gap: 0;
 }
 
+.opening-period-move-actions {
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  gap: 0;
+}
+
 @media screen and (min-width: $breakpoint-xl) {
   .opening-period-actions {
     flex: 0.65 0.65;
