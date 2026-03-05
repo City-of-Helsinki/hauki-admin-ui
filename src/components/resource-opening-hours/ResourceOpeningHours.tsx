@@ -99,20 +99,33 @@ const ResourceOpeningHours = ({
       return a.order - b.order;
     });
     const idx = sorted.findIndex((p) => p.id === datePeriod.id);
+    if (idx < 0) return;
     const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
     if (neighborIdx < 0 || neighborIdx >= sorted.length) return;
 
-    // Normalise to clean 0,1,2,... to prevent gaps/nulls causing duplicates
-    const normalised = sorted.map((p, i) => ({ ...p, order: i }));
-    const period = normalised[idx];
-    const neighbor = normalised[neighborIdx];
-    if (period.id == null || neighbor.id == null) return;
+    const reordered = [...sorted];
+    const temp = reordered[idx];
+    reordered[idx] = reordered[neighborIdx];
+    reordered[neighborIdx] = temp;
+
+    // Normalise to clean 0,1,2,... and persist changed orders
+    const normalised = reordered.map((p, i) => ({ ...p, order: i }));
+    const patches = normalised.filter((period, newIndex) => {
+      if (period.id == null) return false;
+      return (
+        sorted[newIndex]?.id !== period.id ||
+        sorted[newIndex]?.order !== newIndex
+      );
+    });
+
+    if (patches.length === 0) return;
 
     try {
-      await Promise.all([
-        api.patchDatePeriodOrder(period.id, neighbor.order),
-        api.patchDatePeriodOrder(neighbor.id, period.order),
-      ]);
+      await Promise.all(
+        patches.map((period) =>
+          api.patchDatePeriodOrder(period.id as number, period.order as number)
+        )
+      );
       fetchDatePeriods(resourceId);
       toast.success({
         label: t('ResourcePage.Notifications.PeriodMoveSuccess'),

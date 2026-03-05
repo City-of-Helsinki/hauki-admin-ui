@@ -29,7 +29,7 @@
       "ExceptionEmptyState": "No exceptional opening hours. You can add an exceptional opening hours by pressing the \"Add Exceptional opening hours +\" button.",
       "SelectNone": "Clear the selections",
       "SelectAll": "Choose all",
-      "CountSingular": "opening hours",
+      "CountSingular": "opening hour",
       "CountPlural": "opening hours",
       "LoadingText": "Searching for opening hours",
       "StatusLabelActive": "Valid now",
