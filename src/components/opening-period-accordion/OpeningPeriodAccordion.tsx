@@ -278,7 +278,7 @@ const OpeningPeriodAccordion = ({
               {periodName}
             </label>
           ) : (
-            <>{periodName}</>
+            periodName
           )}
         </h3>
         <div className="opening-period-dates opening-period-header-column">

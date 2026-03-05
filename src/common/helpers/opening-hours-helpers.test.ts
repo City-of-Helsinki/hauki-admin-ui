@@ -106,6 +106,7 @@ const apiDatePeriod = {
   name: { en: null, fi: 'Normaali aukiolo', sv: null },
   description: { en: null, fi: null, sv: null },
   override: false,
+  order: null,
   resource: 8414,
   start_date: '2022-06-06',
   time_span_groups: [
@@ -222,6 +223,7 @@ const datePeriod: DatePeriod = {
   name: { en: null, fi: 'Normaali aukiolo', sv: null },
   endDate: '31.12.2022',
   fixed: true,
+  order: null,
   startDate: '6.6.2022',
   openingHours: [
     {
@@ -578,6 +580,7 @@ describe('opening-hours-helpers', () => {
         fixed: true,
         name: { fi: 'Normaali aukiolo', sv: null, en: null },
         openingHours,
+        order: null,
         startDate: '6.6.2022',
         id: 1,
         override: false,
