@@ -76,6 +76,7 @@ test.describe('Resource page', async () => {
       .locator(
         '[data-testid="resource-opening-periods-list"] .opening-period-action-delete'
       )
+      .filter({ visible: true })
       .last();
     await removeButton.click();
     await expect(
@@ -109,6 +110,7 @@ test.describe('Resource page', async () => {
       .locator(
         '[data-testid="resource-exception-opening-periods-list"] .opening-period-action-delete'
       )
+      .filter({ visible: true })
       .last();
     await removeButton.click();
     await expect(
