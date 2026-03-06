@@ -51,7 +51,11 @@
       "Modify": "Redigera",
       "Remove": "Ta bort",
       "MoveUp": "Flytta upp",
+      "MoveUpPeriod": "Flytta upp {{periodName}}",
+      "MoveUpUntitledPeriod": "Flytta upp namnlös period",
       "MoveDown": "Flytta ner",
+      "MoveDownPeriod": "Flytta ner {{periodName}}",
+      "MoveDownUntitledPeriod": "Flytta ner namnlös period",
       "ValidUntilFurtherNotice": "Gäller tills vidare",
       "ValidOnDate": "Gäller den {{startDate}}",
       "ValidFromDate": "Gäller från {{startDate}}",
@@ -114,7 +118,9 @@
       "CopyModalText": "Använd tidigare öppettidsperiod som mall för ny. Genom att fortsätta kan du uppdatera perioden med ny information och spara den som verksamhetsställets öppettider.",
       "CopyModalSelectedPeriod": "Du har valt följande öppettidsperiod:",
       "CopyModalConfirm": "Fortsätt",
-      "SelectButton": "Välj"
+      "SelectButton": "Välj",
+      "CopyPeriod": "Välj {{periodName}}",
+      "CopyUntitledPeriod": "Välj namnlös period"
     },
     "Notifications": {
       "Error": "Fel",

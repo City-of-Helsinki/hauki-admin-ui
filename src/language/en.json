@@ -51,7 +51,11 @@
       "Modify": "Edit",
       "Remove": "Remove",
       "MoveUp": "Move up",
+      "MoveUpPeriod": "Move up {{periodName}}",
+      "MoveUpUntitledPeriod": "Move up untitled period",
       "MoveDown": "Move down",
+      "MoveDownPeriod": "Move down {{periodName}}",
+      "MoveDownUntitledPeriod": "Move down untitled period",
       "ValidUntilFurtherNotice": "Valid until further notice",
       "ValidOnDate": "Valid on {{startDate}}",
       "ValidFromDate": "Valid from {{startDate}}",
@@ -114,7 +118,9 @@
       "CopyModalText": "Use past opening hours period as a template for new. By continuing, you can update the period with new information and save it as the facility's opening hours period.",
       "CopyModalSelectedPeriod": "You have selected the following opening hours period:",
       "CopyModalConfirm": "Continue",
-      "SelectButton": "Select"
+      "SelectButton": "Select",
+      "CopyPeriod": "Select {{periodName}}",
+      "CopyUntitledPeriod": "Select untitled period"
     },
     "Notifications": {
       "Error": "Error",

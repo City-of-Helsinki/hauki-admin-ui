@@ -51,7 +51,11 @@
       "Modify": "Muokkaa",
       "Remove": "Poista",
       "MoveUp": "Siirrä ylös",
+      "MoveUpPeriod": "Siirrä ylös {{periodName}}",
+      "MoveUpUntitledPeriod": "Siirrä ylös nimetön kausi",
       "MoveDown": "Siirrä alas",
+      "MoveDownPeriod": "Siirrä alas {{periodName}}",
+      "MoveDownUntitledPeriod": "Siirrä alas nimetön kausi",
       "ValidUntilFurtherNotice": "Voimassa toistaiseksi",
       "ValidOnDate": "Voimassa {{startDate}}",
       "ValidFromDate": "Voimassa {{startDate}} alkaen",
@@ -114,7 +118,9 @@
       "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojaksoksi.",
       "CopyModalSelectedPeriod": "Olet valinnut seuraavan aukiolojakson:",
       "CopyModalConfirm": "Jatka",
-      "SelectButton": "Valitse"
+      "SelectButton": "Valitse",
+      "CopyPeriod": "Valitse {{periodName}}",
+      "CopyUntitledPeriod": "Valitse nimetön kausi"
     },
     "Notifications": {
       "Error": "Virhe",

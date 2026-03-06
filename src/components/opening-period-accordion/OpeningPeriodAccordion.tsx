@@ -108,6 +108,15 @@ const OpeningPeriodActionsMenu = React.forwardRef<
                 }}
                 type="button">
                 {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
+                <span className="visually-hidden">
+                  {periodName
+                    ? t('ResourcePage.OpeningPeriodsSection.MoveUpPeriod', {
+                        periodName,
+                      })
+                    : t(
+                        'ResourcePage.OpeningPeriodsSection.MoveUpUntitledPeriod'
+                      )}
+                </span>
               </button>
             )}
 
@@ -120,6 +129,15 @@ const OpeningPeriodActionsMenu = React.forwardRef<
                 }}
                 type="button">
                 {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
+                <span className="visually-hidden">
+                  {periodName
+                    ? t('ResourcePage.OpeningPeriodsSection.MoveDownPeriod', {
+                        periodName,
+                      })
+                    : t(
+                        'ResourcePage.OpeningPeriodsSection.MoveDownUntitledPeriod'
+                      )}
+                </span>
               </button>
             )}
 
@@ -132,6 +150,13 @@ const OpeningPeriodActionsMenu = React.forwardRef<
                   onCopy();
                 }}>
                 {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
+                <span className="visually-hidden">
+                  {periodName
+                    ? t('ResourcePastOpeningHoursPage.Main.CopyPeriod', {
+                        periodName,
+                      })
+                    : t('ResourcePastOpeningHoursPage.Main.CopyUntitledPeriod')}
+                </span>
               </button>
             )}
 
@@ -253,7 +278,13 @@ const OpeningPeriodAccordion = ({
                   onClick={onMoveUp}>
                   <IconArrowUp aria-hidden="true" />
                   <span className="visually-hidden">
-                    {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
+                    {periodName
+                      ? t('ResourcePage.OpeningPeriodsSection.MoveUpPeriod', {
+                          periodName,
+                        })
+                      : t(
+                          'ResourcePage.OpeningPeriodsSection.MoveUpUntitledPeriod'
+                        )}
                   </span>
                 </button>
                 <button
@@ -264,7 +295,13 @@ const OpeningPeriodAccordion = ({
                   onClick={onMoveDown}>
                   <IconArrowDown aria-hidden="true" />
                   <span className="visually-hidden">
-                    {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
+                    {periodName
+                      ? t('ResourcePage.OpeningPeriodsSection.MoveDownPeriod', {
+                          periodName,
+                        })
+                      : t(
+                          'ResourcePage.OpeningPeriodsSection.MoveDownUntitledPeriod'
+                        )}
                   </span>
                 </button>
               </>
@@ -362,6 +399,13 @@ const OpeningPeriodAccordion = ({
                 openCopyModal();
               }}>
               {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
+              <span className="visually-hidden">
+                {periodName
+                  ? t('ResourcePastOpeningHoursPage.Main.CopyPeriod', {
+                      periodName,
+                    })
+                  : t('ResourcePastOpeningHoursPage.Main.CopyUntitledPeriod')}
+              </span>
             </button>
           )}
           <button
