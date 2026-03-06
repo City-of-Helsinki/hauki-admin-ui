@@ -51,13 +51,6 @@ const OpeningPeriodsList = ({
 }): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
-  const sortedDatePeriods = [...datePeriods].sort((a, b) => {
-    if (a.order == null && b.order == null) return 0;
-    if (a.order == null) return 1;
-    if (b.order == null) return -1;
-    return a.order - b.order;
-  });
-
   return (
     <OpeningPeriodsSection
       addDatePeriodButtonRef={ref}
@@ -71,7 +64,7 @@ const OpeningPeriodsList = ({
       title={title}
       showCopyOption={showCopyOption}>
       {datePeriods.length > 0 ? (
-        sortedDatePeriods.map((datePeriod, index) => (
+        datePeriods.map((datePeriod, index) => (
           <OpeningPeriod
             key={datePeriod.id}
             datePeriodConfig={datePeriodConfig}
@@ -88,7 +81,7 @@ const OpeningPeriodsList = ({
                 : undefined
             }
             onMoveDown={
-              onMovePeriod && index < sortedDatePeriods.length - 1
+              onMovePeriod && index < datePeriods.length - 1
                 ? () => onMovePeriod(datePeriod, 'down')
                 : undefined
             }
