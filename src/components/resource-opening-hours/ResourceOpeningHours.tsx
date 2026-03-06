@@ -114,7 +114,8 @@ const ResourceOpeningHours = ({
       if (period.id == null) return false;
       return (
         sorted[newIndex]?.id !== period.id ||
-        sorted[newIndex]?.order !== newIndex
+        (sorted[newIndex]?.order != null &&
+          sorted[newIndex]?.order !== newIndex)
       );
     });
 
