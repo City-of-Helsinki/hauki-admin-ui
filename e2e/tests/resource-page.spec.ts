@@ -1,6 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Page, expect, test } from '@playwright/test';
-import { getResourceUrl, getResource } from '../utils';
+import {
+  getResourceUrl,
+  getResource,
+  getDatePeriodIds,
+  deleteDatePeriods,
+} from '../utils';
 
 import { testData } from '../constants';
 import { Resource } from '../../src/common/lib/types';
@@ -89,6 +94,80 @@ test.describe('Resource page', async () => {
     ).toBeVisible();
     await page.getByRole('button', { name: 'Poista', exact: true }).click();
     await expect(page.getByTestId('date-period-delete-success')).toBeVisible();
+  });
+
+  test('Add three opening hours - reorder them', async () => {
+    try {
+      const periods = [
+        { fi: 'e2e test title 1', sv: 'sommartid 1', en: 'summertime 1' },
+        { fi: 'e2e test title 2', sv: 'sommartid 2', en: 'summertime 2' },
+        { fi: 'e2e test title 3', sv: 'sommartid 3', en: 'summertime 3' },
+      ];
+
+      for (const period of periods) {
+        await page.getByRole('button', { name: 'Lisää aukioloaika +' }).click();
+        await page
+          .locator('[data-testid="opening-period-title-fi"]')
+          .fill(period.fi);
+        await page
+          .locator('[data-testid="opening-period-title-sv"]')
+          .fill(period.sv);
+        await page
+          .locator('[data-testid="opening-period-title-en"]')
+          .fill(period.en);
+        await page.getByText('24 h').click();
+        await page
+          .locator('[data-testid="submit-opening-hours-button"]')
+          .click();
+        await expect(
+          page.getByRole('heading', { name: period.fi })
+        ).toBeVisible({
+          timeout: 30 * 1000,
+        });
+      }
+
+      // Confirm that the page is loaded and ready
+      for (const period of periods) {
+        await expect(
+          page.getByRole('heading', { name: period.fi })
+        ).toBeVisible({
+          timeout: 30 * 1000,
+        });
+      }
+
+      // Test reordering: move the second period up, verify order changes
+      const list = page.locator(
+        '[data-testid="resource-opening-periods-list"]'
+      );
+      const headingsBefore = await list.locator('h3').allTextContents();
+
+      await list
+        .locator('[data-testid*="openingPeriodMoveUpButton"]')
+        .nth(1)
+        .click();
+
+      await expect(async () => {
+        const headingsAfter = await list.locator('h3').allTextContents();
+        expect(headingsAfter[0]).toBe(headingsBefore[1]);
+        expect(headingsAfter[1]).toBe(headingsBefore[0]);
+      }).toPass({ timeout: 30 * 1000 });
+
+      // Move it back down — restores original order
+      await list
+        .locator('[data-testid*="openingPeriodMoveDownButton"]')
+        .nth(0)
+        .click();
+
+      await expect(async () => {
+        const headingsRestored = await list.locator('h3').allTextContents();
+        expect(headingsRestored[0]).toBe(headingsBefore[0]);
+        expect(headingsRestored[1]).toBe(headingsBefore[1]);
+      }).toPass({ timeout: 30 * 1000 });
+    } finally {
+      // If the test fails it will leave a mess if not cleaned
+      const datePeriodIds = await getDatePeriodIds(resource.id);
+      await deleteDatePeriods(datePeriodIds);
+    }
   });
 
   test('Add and remove exceptional opening hours', async () => {

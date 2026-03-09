@@ -142,6 +142,45 @@ describe('apiRequest', () => {
     });
   });
 
+  describe('patchDatePeriodOrder', () => {
+    it('sends a PATCH request with only the order field', async () => {
+      const requestSpy = vi
+        .spyOn(axios, 'request')
+        .mockImplementation(() =>
+          Promise.resolve({ data: { id: 42, order: 3 } })
+        );
+
+      await api.patchDatePeriodOrder(42, 3);
+
+      expect(requestSpy).toHaveBeenCalledTimes(1);
+      expect(requestSpy).toHaveBeenCalledWith({
+        headers: { 'Content-Type': 'application/json' },
+        method: 'patch',
+        url: 'http://localhost:8000/v1/date_period/42/',
+        data: { order: 3 },
+        validateStatus: expect.any(Function),
+      });
+    });
+
+    it('sends null order when clearing order', async () => {
+      const requestSpy = vi
+        .spyOn(axios, 'request')
+        .mockImplementation(() =>
+          Promise.resolve({ data: { id: 7, order: null } })
+        );
+
+      await api.patchDatePeriodOrder(7, null);
+
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: 'patch',
+          url: 'http://localhost:8000/v1/date_period/7/',
+          data: { order: null },
+        })
+      );
+    });
+  });
+
   describe('getDatePeriodFormOptions', () => {
     it('should convert options to ui config', async () => {
       const datePeriodOptions = {

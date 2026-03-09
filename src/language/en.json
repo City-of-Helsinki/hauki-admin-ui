@@ -29,8 +29,8 @@
       "ExceptionEmptyState": "No exceptional opening hours. You can add an exceptional opening hours by pressing the \"Add Exceptional opening hours +\" button.",
       "SelectNone": "Clear the selections",
       "SelectAll": "Choose all",
-      "CountSingular": "Opening hours",
-      "CountPlural": "Searching opening hours",
+      "CountSingular": "opening hour",
+      "CountPlural": "opening hours",
       "LoadingText": "Searching for opening hours",
       "StatusLabelActive": "Valid now",
       "DeleteModalTitle": "Are you sure you want to delete the opening period?",
@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Edit the opening period of an anonymous person",
       "ShowPeriod": "View {{periodName}}",
       "ShowUntitledPeriod": "View anonymous",
+      "HidePeriod": "Hide {{periodName}}",
+      "HideUntitledPeriod": "Hide anonymous",
       "RemovingPeriod": "Removing the opening period",
       "ConfirmRemove": "Remove",
       "OpenPeriodEditMenu": "Open the {{periodName}} opening period's edit and remove menu",
@@ -48,6 +50,12 @@
       "StateClosed": "Closed",
       "Modify": "Edit",
       "Remove": "Remove",
+      "MoveUp": "Move up",
+      "MoveUpPeriod": "Move {{periodName}} up",
+      "MoveUpUntitledPeriod": "Move up untitled period",
+      "MoveDown": "Move down",
+      "MoveDownPeriod": "Move {{periodName}} down",
+      "MoveDownUntitledPeriod": "Move down untitled period",
       "ValidUntilFurtherNotice": "Valid until further notice",
       "ValidOnDate": "Valid on {{startDate}}",
       "ValidFromDate": "Valid from {{startDate}}",
@@ -92,7 +100,9 @@
       "ErrorNothingSelected": "Select opening hours for mass update.",
       "ErrorLoadingPeriods": "The service point's opening hours could not be loaded.",
       "PeriodRemoveSuccess": "Opening hours {{periodName}} successfully deleted.",
-      "PeriodRemoveFailed": "Failed to remove opening hours. Try again later."
+      "PeriodRemoveFailed": "Failed to remove opening hours. Try again later.",
+      "PeriodMoveSuccess": "Opening hours order updated successfully.",
+      "PeriodMoveFailed": "Failed to update opening hours order. Try again later."
     }
   },
   "ResourcePastOpeningHoursPage": {
@@ -108,7 +118,9 @@
       "CopyModalText": "Use past opening hours period as a template for new. By continuing, you can update the period with new information and save it as the facility's opening hours period.",
       "CopyModalSelectedPeriod": "You have selected the following opening hours period:",
       "CopyModalConfirm": "Continue",
-      "SelectButton": "Select"
+      "SelectButton": "Select",
+      "CopyPeriod": "Select {{periodName}}",
+      "CopyUntitledPeriod": "Select untitled period"
     },
     "Notifications": {
       "Error": "Error",

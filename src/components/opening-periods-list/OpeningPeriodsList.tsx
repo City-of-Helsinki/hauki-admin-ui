@@ -23,6 +23,7 @@ const OpeningPeriodsList = ({
   theme,
   emptyState,
   deletePeriod,
+  onMovePeriod,
   language,
   isLoading,
   newUrl,
@@ -38,6 +39,10 @@ const OpeningPeriodsList = ({
   theme: PeriodsListTheme;
   emptyState: string;
   deletePeriod: (id: number) => Promise<void>;
+  onMovePeriod?: (
+    datePeriod: DatePeriod,
+    direction: 'up' | 'down'
+  ) => Promise<void>;
   language: Language;
   showCopyOption?: boolean;
   isLoading: boolean;
@@ -70,6 +75,17 @@ const OpeningPeriodsList = ({
               await deletePeriod(datePeriodId);
               ref.current?.focus();
             }}
+            onMoveUp={
+              onMovePeriod && index > 0
+                ? () => onMovePeriod(datePeriod, 'up')
+                : undefined
+            }
+            onMoveDown={
+              onMovePeriod && index < datePeriods.length - 1
+                ? () => onMovePeriod(datePeriod, 'down')
+                : undefined
+            }
+            listIndex={index + 1}
             initiallyOpen={index <= 10}
             showCopyOption={showCopyOption}
           />

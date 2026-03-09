@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Redigera den anonyma öppettiden",
       "ShowPeriod": "Visa {{periodName}}",
       "ShowUntitledPeriod": "Visa anonym",
+      "HidePeriod": "Dölj {{periodName}}",
+      "HideUntitledPeriod": "Dölj anonym",
       "RemovingPeriod": "Tar bort öppettider",
       "ConfirmRemove": "Ta bort",
       "OpenPeriodEditMenu": "Öppna {{periodName}} öppettider redigera och ta bort menyn",
@@ -48,6 +50,12 @@
       "StateClosed": "Stängt",
       "Modify": "Redigera",
       "Remove": "Ta bort",
+      "MoveUp": "Flytta upp",
+      "MoveUpPeriod": "Flytta {{periodName}} upp",
+      "MoveUpUntitledPeriod": "Flytta upp namnlös period",
+      "MoveDown": "Flytta ner",
+      "MoveDownPeriod": "Flytta {{periodName}} ner",
+      "MoveDownUntitledPeriod": "Flytta ner namnlös period",
       "ValidUntilFurtherNotice": "Gäller tills vidare",
       "ValidOnDate": "Gäller den {{startDate}}",
       "ValidFromDate": "Gäller från {{startDate}}",
@@ -92,7 +100,9 @@
       "ErrorNothingSelected": "Välj öppettider för massuppdatering.",
       "ErrorLoadingPeriods": "Verksamhetsställets öppettider kunde inte laddas.",
       "PeriodRemoveSuccess": "Öppettider {{periodName}} framgångsrikt borttagen.",
-      "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare."
+      "PeriodRemoveFailed": "Misslyckades ta bort information om öppettider. Försök igen senare.",
+      "PeriodMoveSuccess": "Öppettidernas ordning har uppdaterats.",
+      "PeriodMoveFailed": "Det gick inte att uppdatera öppettidernas ordning. Försök igen senare."
     }
   },
   "ResourcePastOpeningHoursPage": {
@@ -108,7 +118,9 @@
       "CopyModalText": "Använd tidigare öppettidsperiod som mall för ny. Genom att fortsätta kan du uppdatera perioden med ny information och spara den som verksamhetsställets öppettider.",
       "CopyModalSelectedPeriod": "Du har valt följande öppettidsperiod:",
       "CopyModalConfirm": "Fortsätt",
-      "SelectButton": "Välj"
+      "SelectButton": "Välj",
+      "CopyPeriod": "Välj {{periodName}}",
+      "CopyUntitledPeriod": "Välj namnlös period"
     },
     "Notifications": {
       "Error": "Fel",

@@ -10,6 +10,7 @@ import {
   DatePeriodType,
 } from '../../common/lib/types';
 import api from '../../common/utils/api/api';
+import toast from '../notification/Toast';
 import {
   apiDatePeriodToDatePeriod,
   getActiveDatePeriods,
@@ -84,6 +85,57 @@ const ResourceOpeningHours = ({
   const deletePeriod = async (datePeriodId: number): Promise<void> => {
     await api.deleteDatePeriod(datePeriodId);
     fetchDatePeriods(resourceId);
+  };
+
+  const movePeriod = async (
+    datePeriods: DatePeriod[],
+    datePeriod: DatePeriod,
+    direction: 'up' | 'down'
+  ): Promise<void> => {
+    const sorted = [...datePeriods].sort((a, b) => {
+      if (a.order == null && b.order == null) return 0;
+      if (a.order == null) return 1;
+      if (b.order == null) return -1;
+      return a.order - b.order;
+    });
+    const idx = sorted.findIndex((p) => p.id === datePeriod.id);
+    if (idx < 0) return;
+    const neighborIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (neighborIdx < 0 || neighborIdx >= sorted.length) return;
+
+    const reordered = [...sorted];
+    const temp = reordered[idx];
+    reordered[idx] = reordered[neighborIdx];
+    reordered[neighborIdx] = temp;
+
+    // Normalise to clean 0,1,2,... and persist changed orders
+    const normalised = reordered.map((p, i) => ({ ...p, order: i }));
+    const patches = normalised.filter((period, newIndex) => {
+      if (period.id == null) return false;
+      return (
+        sorted[newIndex]?.id !== period.id ||
+        (sorted[newIndex]?.order != null &&
+          sorted[newIndex]?.order !== newIndex)
+      );
+    });
+
+    if (patches.length === 0) return;
+
+    try {
+      await Promise.all(
+        patches.map((period) =>
+          api.patchDatePeriodOrder(period.id as number, period.order as number)
+        )
+      );
+      fetchDatePeriods(resourceId);
+      toast.success({
+        label: t('ResourcePage.Notifications.PeriodMoveSuccess'),
+      });
+    } catch (_) {
+      toast.error({
+        label: t('ResourcePage.Notifications.PeriodMoveFailed'),
+      });
+    }
   };
 
   const holidays = getHolidays();
@@ -185,6 +237,7 @@ const ResourceOpeningHours = ({
         theme="DEFAULT"
         emptyState={t('ResourcePage.OpeningPeriodsSection.NormalEmptyState')}
         deletePeriod={deletePeriod}
+        onMovePeriod={(dp, dir) => movePeriod(normalDatePeriods, dp, dir)}
         language={language}
         isLoading={isLoading}
         newUrl={

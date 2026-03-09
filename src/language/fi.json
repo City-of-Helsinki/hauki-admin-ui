@@ -40,6 +40,8 @@
       "RemoveUntitledPeriod": "Muokkaa nimettömän aukiolojakso",
       "ShowPeriod": "Näytä {{periodName}}",
       "ShowUntitledPeriod": "Näytä nimetön",
+      "HidePeriod": "Piilota {{periodName}}",
+      "HideUntitledPeriod": "Piilota nimetön",
       "RemovingPeriod": "Poistetaan aukiolojaksoa",
       "ConfirmRemove": "Poista",
       "OpenPeriodEditMenu": "Avaa {{periodName}} aukiolojakson muokkaa ja poista valikko",
@@ -48,6 +50,12 @@
       "StateClosed": "Suljettu",
       "Modify": "Muokkaa",
       "Remove": "Poista",
+      "MoveUp": "Siirrä ylös",
+      "MoveUpPeriod": "Siirrä {{periodName}} ylös",
+      "MoveUpUntitledPeriod": "Siirrä ylös nimetön kausi",
+      "MoveDown": "Siirrä alas",
+      "MoveDownPeriod": "Siirrä {{periodName}} alas",
+      "MoveDownUntitledPeriod": "Siirrä alas nimetön kausi",
       "ValidUntilFurtherNotice": "Voimassa toistaiseksi",
       "ValidOnDate": "Voimassa {{startDate}}",
       "ValidFromDate": "Voimassa {{startDate}} alkaen",
@@ -92,7 +100,9 @@
       "ErrorNothingSelected": "Valitse aukioloajat joukkopäivitystä varten.",
       "ErrorLoadingPeriods": "Toimipisteen aukiolojaksoja ei saatu ladattua.",
       "PeriodRemoveSuccess": "Aukiolo {{periodName}} poistettu onnistuneesti.",
-      "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen."
+      "PeriodRemoveFailed": "Aukiolon poisto epäonnistui. Yritä myöhemmin uudelleen.",
+      "PeriodMoveSuccess": "Aukiolojaksojen järjestys päivitetty onnistuneesti.",
+      "PeriodMoveFailed": "Aukiolojaksojen järjestyksen päivitys epäonnistui. Yritä myöhemmin uudelleen."
     }
   },
   "ResourcePastOpeningHoursPage": {
@@ -108,7 +118,9 @@
       "CopyModalText": "Käytä mennyttä aukiolojaksoa uuden pohjana. Jatkamalla pääset päivittämään jaksoon uudet tiedot ja tallentamaan sen toimipisteen aukiolojaksoksi.",
       "CopyModalSelectedPeriod": "Olet valinnut seuraavan aukiolojakson:",
       "CopyModalConfirm": "Jatka",
-      "SelectButton": "Valitse"
+      "SelectButton": "Valitse",
+      "CopyPeriod": "Valitse {{periodName}}",
+      "CopyUntitledPeriod": "Valitse nimetön kausi"
     },
     "Notifications": {
       "Error": "Virhe",

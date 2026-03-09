@@ -25,6 +25,7 @@ import {
   DatePeriodSelectState,
   useSelectedDatePeriodsContext,
 } from '../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
+import useMobile from '../hooks/useMobile';
 import './ResourcePastOpeningHoursPage.scss';
 
 const formatLocalDate = (date: Date): string => {
@@ -61,6 +62,8 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
     () => getHolidays(new Date(currentYear - 1, 0, 1)),
     [currentYear]
   );
+
+  const isMobile = useMobile();
 
   // Set date period select state to INACTIVE to hide checkboxes and add buttons
   useEffect(() => {
@@ -165,11 +168,11 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
         resource={resource}
         language={language}
         titleAddon={t('ResourcePastOpeningHoursPage.Main.Title')}>
-        <div className="button-close">
-          <SecondaryButton size="small" onClick={returnToResourcePage}>
-            {t('ResourcePage.Main.ReturnToMainPageButton')}
-          </SecondaryButton>
-        </div>
+        <SecondaryButton
+          onClick={returnToResourcePage}
+          size={isMobile ? 'small' : 'default'}>
+          {t('ResourcePage.Main.ReturnToMainPageButton')}
+        </SecondaryButton>
       </ResourceTitle>
 
       <p className="past-opening-hours-description">

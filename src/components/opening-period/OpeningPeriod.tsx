@@ -23,7 +23,10 @@ const OpeningPeriod = ({
   language,
   deletePeriod,
   initiallyOpen = false,
+  onMoveDown,
+  onMoveUp,
   showCopyOption = false,
+  listIndex,
 }: {
   datePeriod: DatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
@@ -31,7 +34,10 @@ const OpeningPeriod = ({
   language: Language;
   deletePeriod?: (id: number) => Promise<void>;
   initiallyOpen: boolean;
+  onMoveDown?: () => void;
+  onMoveUp?: () => void;
   showCopyOption?: boolean;
+  listIndex?: number;
 }): JSX.Element => {
   const {
     selectedDatePeriods,
@@ -68,7 +74,10 @@ const OpeningPeriod = ({
       editUrl={editUrl}
       initiallyOpen={initiallyOpen}
       isActive={datePeriod.isActive}
+      onMoveDown={onMoveDown}
+      onMoveUp={onMoveUp}
       showCopyOption={showCopyOption}
+      listIndex={listIndex}
       datePeriod={datePeriod}>
       <div className="date-period-details-container">
         {datePeriod.resourceState === ResourceState.CLOSED ? (
