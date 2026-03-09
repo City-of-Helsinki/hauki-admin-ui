@@ -9,6 +9,7 @@
       "ParentResourceDescription": "Detta underobjekt finns på följande verksamhetsställena.",
       "ChildTitle": "Verksamhetsställets underobjekts",
       "ChildDescription": "Här kan du ange öppettider för de underobjekten på verksamhetsstället. Underobjekter skapas i verkamhetsställets registret.",
+      "OrderInfo": "Du kan ställa in ordningen på öppettiderna genom att trycka på piltangenterna upp eller ner bredvid rubriken. Du ser ordning som numrering. Du kan ändra tiden på torget med en penna från ikonen. Om du vill ta bort öppettiderna trycker du på papperskorgen.",
       "Resources": "Verksamhetsställena",
       "ViewPastOpeningHours": "Visa tidigare öppettider"
     },

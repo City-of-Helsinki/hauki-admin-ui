@@ -9,6 +9,7 @@
       "ParentResourceDescription": "Tämä alakohde sijaitsee seuraavissa toimipisteissä.",
       "ChildTitle": "Toimipisteen alakohteet",
       "ChildDescription": "Täällä voit määritellä toimipisteen alakohteiden aukioloaikoja. Alakohteet luodaan toimipisterekisterissä.",
+      "OrderInfo": "Voit määritellä aukioloajoille järjestyksen painamalla nuolinäppäimiä ylös tai alas otsikon vierestä. Näet järjestyksen numerointina. Pääset muokkaamaan aukioaikaa kynä ikonista. Jos haluat poistaa aukioloajan, paina roskakoria.",
       "Resources": "Toimipisteet",
       "ViewPastOpeningHours": "Näytä menneet aukioloajat"
     },

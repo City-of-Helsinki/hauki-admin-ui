@@ -201,8 +201,11 @@ const ResourcePage = ({
   return (
     <div className="resource-page">
       <ResourceTitle resource={resource} language={language} />
+
+      <p className="resource-description">{t('ResourcePage.Main.OrderInfo')}</p>
+
       {childResources.length > 0 && (
-        <p className="resource-child-resources-description">
+        <p className="resource-description">
           {t('ResourcePage.Main.Description', {
             childResourceCount: childResources.length,
           })}

@@ -9,6 +9,7 @@
       "ParentResourceDescription": "This sub-item is located in the following service points.",
       "ChildTitle": "Service point subitems",
       "ChildDescription": "Here you can define the opening hours of the service point sub-items. Subitems are created in the service point register.",
+      "OrderInfo": "You can define the order of the opening hours by pressing the up or down arrowkeys next to the title. You will see the order as numbering. You can edit the opening hours by using the pencil icon. If you want to delete the opening hours, press the trash can.",
       "Resources": "Service points",
       "ViewPastOpeningHours": "Show past opening hours"
     },
