@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.11.0...hauki-admin-ui-v1.12.0) (2026-03-09)
+
+
+### Features
+
+* Ordering of opening hours HAUKI-743 ([#481](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/481)) ([5964b7a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/5964b7a387b5ea49a0b8fa4a3dc59e0a6ef1ebd5))
+
+
+### Bug Fixes
+
+* Clicking hidden buttons ([1fec177](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/1fec177c1871b3123e2c6664300df8b9ef145e81))
+
 ## [1.11.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.10.0...hauki-admin-ui-v1.11.0) (2026-03-03)
 
 
