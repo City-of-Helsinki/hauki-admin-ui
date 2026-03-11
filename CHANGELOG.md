@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.13.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.12.0...hauki-admin-ui-v1.13.0) (2026-03-11)
+
+
+### Features
+
+* Add info text for actions ([8152f0e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8152f0eed5e798f83a013b93ebf3219940eb850d))
+
+
+### Dependencies
+
+* Bump immutable from 5.1.3 to 5.1.5 ([418ba37](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/418ba37df65318d87a47f0bfc42c8e76d7944177))
+
 ## [1.12.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.11.0...hauki-admin-ui-v1.12.0) (2026-03-09)
 
 
