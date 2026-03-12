@@ -1,6 +1,12 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Accordion, Notification, IconArrowRight, Card } from 'hds-react';
+import {
+  Accordion,
+  Notification,
+  NotificationSize,
+  IconArrowRight,
+  Card,
+} from 'hds-react';
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
@@ -222,17 +228,17 @@ const ResourcePage = ({
           text={t('ResourcePage.Main.BatchDescription')}>
           <PrimaryButton
             dataTest="gotoBatchUpdateButton"
-            iconRight={<IconArrowRight aria-hidden />}
+            iconEnd={<IconArrowRight aria-hidden />}
             onClick={gotoBatchUpdatePage}>
             {t('ResourcePage.Main.BatchContinueButton')}
           </PrimaryButton>
           {errorWhenNothingSelected && (
             <div>
               <Notification
-                dataTestId="gotoBatchUpdateErrorNotification"
+                data-testid="gotoBatchUpdateErrorNotification"
                 label={t('ResourcePage.Notifications.ErrorNothingSelected')}
                 type="error"
-                size="small"
+                size={NotificationSize.Small}
                 style={{
                   marginTop: 'var(--spacing-m)',
                 }}>
