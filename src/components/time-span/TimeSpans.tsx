@@ -118,7 +118,7 @@ const TimeSpans = ({
           <SupplementaryButton
             dataTest={getUiId([namePrefix, 'add-time-span-button'])}
             className="add-time-span-button"
-            iconLeft={<IconPlusCircle />}
+            iconStart={<IconPlusCircle />}
             onClick={(): void => {
               append(defaultTimeSpan, { shouldFocus: false });
               setTimeSpansChanged(true);

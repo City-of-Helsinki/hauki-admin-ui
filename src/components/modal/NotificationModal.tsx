@@ -43,7 +43,7 @@ export function NotificationModal({
       <Dialog.Header
         id={titleId}
         title={title}
-        iconLeft={<IconInfoCircle aria-hidden="true" />}
+        iconStart={<IconInfoCircle aria-hidden="true" />}
       />
       <Dialog.Content>{text}</Dialog.Content>
       <Dialog.ActionButtons>

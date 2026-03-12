@@ -78,7 +78,7 @@ const ResourcePeriodsCopyFieldset = ({
         } pistettä. Klikkasit "${mainResourceName}"n aukiolotietoa. Sinulle on auennut ”${mainResourceName}”n aukiolotieto muokattavaksi.`}>
         <p>{`Kun olet muokannut ${mainResourceName}n aukiolotietoa, paina alla olevaa painiketta. Aukiolotieto päivittyy joukkopäivityksessä valitsemissasi toimipisteissä.`}</p>
         <PrimaryButton
-          iconLeft={<IconCopy aria-hidden />}
+          iconStart={<IconCopy aria-hidden />}
           isLoading={isCopyLoading}
           loadingText="Aukiolotietoja kopioidaan"
           onClick={(): void => {

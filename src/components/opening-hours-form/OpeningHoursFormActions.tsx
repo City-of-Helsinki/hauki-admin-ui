@@ -22,12 +22,12 @@ const OpeningHoursFormActions = ({ isSaving }: Props): JSX.Element => {
           isLoading={isSaving}
           loadingText={t('OpeningHours.IsSubmitting')}
           type="submit"
-          size={isMobile ? 'small' : 'default'}>
+          size={isMobile ? 'small' : 'medium'}>
           {t('Common.Submit')}
         </PrimaryButton>
         <SecondaryButton
           onClick={returnToResourcePage}
-          size={isMobile ? 'small' : 'default'}>
+          size={isMobile ? 'small' : 'medium'}>
           {t('Common.Cancel')}
         </SecondaryButton>
       </div>

@@ -8,6 +8,7 @@ import {
   RadioButton,
   SelectionGroup,
   IconTrash,
+  IconSize,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, SecondaryButton } from '../components/button/Button';
@@ -230,7 +231,7 @@ const ResourceBatchUpdatePage = ({
                 onClick={() => onRemove(item.remove)}
                 type="button">
                 <IconTrash
-                  size="xs"
+                  size={IconSize.ExtraSmall}
                   aria-label={t(
                     'ResourcePage.ResourcesSection.RemoveAriaLabel'
                   )}

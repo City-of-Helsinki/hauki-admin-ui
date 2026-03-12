@@ -35,10 +35,10 @@ const OpeningHoursFormPreviewMobile = ({
       <div ref={mobilePreview}>
         <SupplementaryButton
           className="opening-hours-preview-mobile-toggle"
-          iconRight={
+          iconEnd={
             isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />
           }
-          size={isMobile ? 'small' : 'default'}
+          size={isMobile ? 'small' : 'medium'}
           {...buttonProps}>
           {t('OpeningHours.OpeningHoursFormPreview')}
         </SupplementaryButton>

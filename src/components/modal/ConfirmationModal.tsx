@@ -49,7 +49,7 @@ export function ConfirmationModal({
       <Dialog.Header
         id={titleId}
         title={title}
-        iconLeft={<IconQuestionCircle aria-hidden="true" />}
+        iconStart={<IconQuestionCircle aria-hidden="true" />}
       />
       <Dialog.Content>{text}</Dialog.Content>
       <Dialog.ActionButtons>
@@ -57,7 +57,7 @@ export function ConfirmationModal({
           isLoading={isLoading}
           loadingText={loadingText}
           onClick={onConfirm}
-          iconRight={confirmIcon}>
+          iconEnd={confirmIcon}>
           {confirmText}
         </PrimaryButton>
         <SecondaryButton onClick={onClose}>
