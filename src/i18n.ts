@@ -4,13 +4,19 @@ import fi from './language/fi.json';
 import en from './language/en.json';
 import sv from './language/sv.json';
 
+const getInitialLanguage = (): string => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const lang = urlParams.get('lang');
+  return lang && ['fi', 'sv', 'en'].includes(lang) ? lang : 'fi';
+};
+
 i18n
   .use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     debug: true,
-    lng: 'fi',
+    lng: getInitialLanguage(),
     fallbackLng: 'fi',
     interpolation: {
       escapeValue: false,
@@ -19,6 +25,10 @@ i18n
       fi: { translation: fi },
       en: { translation: en },
       sv: { translation: sv },
+    },
+    detection: {
+      order: ['localStorage', 'cookie'],
+      caches: ['localStorage', 'cookie'],
     },
   });
 

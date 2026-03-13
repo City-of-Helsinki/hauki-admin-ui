@@ -2,6 +2,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'hds-core';
+import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 import { AppContext } from './App-context';
 import urlUtils, { SearchParameters } from './common/utils/url/url';
 import {
@@ -29,8 +31,8 @@ import EditExceptionOpeningHoursPage from './pages/EditExceptionOpeningHoursPage
 import { SelectedDatePeriodsProvider } from './common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 import MatomoTracker from './components/matomo/MatomoTracker';
 import MatomoContext from './components/matomo/matomo-context';
-import CookieConsent from './components/cookie-consent/CookieConsent';
 import CookieManagement from './pages/CookieManagement';
+import useCookieConsentSettings from './components/cookie-consent/hooks/useCookieConsentSettings';
 
 type OptionalAuthTokens = AuthTokens | undefined;
 
@@ -95,6 +97,10 @@ const App = (): JSX.Element => {
     [authTokens, clearAuth]
   );
 
+  const cookieConsentProps = useCookieConsentSettings();
+
+  const { t } = useTranslation();
+
   const matomoTracker = useMemo(
     () =>
       new MatomoTracker({
@@ -110,276 +116,273 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <div className="App">
-      <AppContext.Provider value={appContextValue}>
-        <MatomoContext.Provider value={matomoTracker}>
-          <CookieConsent />
-
-          <AuthContext.Provider value={authContextValue}>
-            <Router>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <NavigationAndFooterWrapper>
-                      <Main id="main">
-                        <h1>Etusivu</h1>
-                      </Main>
-                    </NavigationAndFooterWrapper>
-                  }
-                />
-                <Route
-                  path="/not_found"
-                  element={
-                    <NavigationAndFooterWrapper>
-                      <Main id="main">
-                        <h1>Kohdetta ei löydy</h1>
-                        <p>
-                          Kohdetta ei löytynyt. Yritä myöhemmin uudestaan.
-                          Ongelman toistuessa ota yhteys sivuston ylläpitoon.
-                          Teidät on automaattisesti kirjattu ulos.
-                        </p>
-                      </Main>
-                    </NavigationAndFooterWrapper>
-                  }
-                />
-                <Route
-                  path="/unauthorized"
-                  element={
-                    <NavigationAndFooterWrapper>
-                      <Main id="main">
-                        <h1>Puutteelliset tunnukset</h1>
-                      </Main>
-                    </NavigationAndFooterWrapper>
-                  }
-                />
-                <Route
-                  path="/unauthenticated"
-                  element={
-                    <NavigationAndFooterWrapper>
-                      <Main id="main">
-                        <h1>Puuttuvat tunnukset</h1>
-                      </Main>
-                    </NavigationAndFooterWrapper>
-                  }
-                />
-                <Route
-                  path="/cookies"
-                  element={
-                    <NavigationAndFooterWrapper>
-                      <Main id="main">
-                        <CookieManagement />
-                      </Main>
-                    </NavigationAndFooterWrapper>
-                  }
-                />
-                <Route
-                  id="resource-route"
-                  path="/resource/:id"
-                  element={
-                    <PermissionResolver>
+    <CookieConsentContextProvider {...cookieConsentProps}>
+      <div className="App">
+        <AppContext.Provider value={appContextValue}>
+          <MatomoContext.Provider value={matomoTracker}>
+            <AuthContext.Provider value={authContextValue}>
+              <CookieBanner />
+              <Router>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <SelectedDatePeriodsProvider>
-                            <ResourcePage
-                              targetResourcesString={targetResourcesStr}
-                            />
-                          </SelectedDatePeriodsProvider>
+                          <h1>{t('FrontPage.FrontPage')}</h1>
                         </Main>
                       </NavigationAndFooterWrapper>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="resource-route-child"
-                  path="/resource/:id/child/:childId"
-                  element={
-                    <PermissionResolver>
+                    }
+                  />
+                  <Route
+                    path="/not_found"
+                    element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <SelectedDatePeriodsProvider>
-                            <ResourcePage
-                              targetResourcesString={targetResourcesStr}
-                            />
-                          </SelectedDatePeriodsProvider>
+                          <h1>{t('ErrorPages.NotFoundTitle')}</h1>
+                          <p>{t('ErrorPages.NotFoundBody')}</p>
                         </Main>
                       </NavigationAndFooterWrapper>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="resource-batch-update-route"
-                  path="/resource/:id/batch"
-                  element={
-                    <PermissionResolver>
+                    }
+                  />
+                  <Route
+                    path="/unauthorized"
+                    element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <SelectedDatePeriodsProvider>
-                            <ResourceBatchUpdatePage
-                              targetResourcesString={targetResourcesStr}
-                            />
-                          </SelectedDatePeriodsProvider>
+                          <h1>{t('ErrorPages.UnauthorizedTitle')}</h1>
                         </Main>
                       </NavigationAndFooterWrapper>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="resource-past-opening-hours-route"
-                  path="/resource/:id/past"
-                  element={
-                    <PermissionResolver>
+                    }
+                  />
+                  <Route
+                    path="/unauthenticated"
+                    element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <SelectedDatePeriodsProvider>
-                            <ResourcePastOpeningHoursPage />
-                          </SelectedDatePeriodsProvider>
+                          <h1>{t('ErrorPages.UnauthenticatedTitle')}</h1>
                         </Main>
                       </NavigationAndFooterWrapper>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="resource-past-opening-hours-route-child"
-                  path="/resource/:parentId/child/:id/past"
-                  element={
-                    <PermissionResolver>
+                    }
+                  />
+                  <Route
+                    path="/cookies"
+                    element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <SelectedDatePeriodsProvider>
-                            <ResourcePastOpeningHoursPage />
-                          </SelectedDatePeriodsProvider>
+                          <CookieManagement />
                         </Main>
                       </NavigationAndFooterWrapper>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="create-new-opening-period-route-child"
-                  path="/resource/:parentId/child/:id/period/new"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <AddNormalOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="create-new-opening-period-route"
-                  path="/resource/:id/period/new"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <AddNormalOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-opening-period-route-child"
-                  path="/resource/:parentId/child/:id/period/:datePeriodId"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditNormalOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-opening-period-route"
-                  path="/resource/:id/period/:datePeriodId"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditNormalOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-holidays-route-child"
-                  path="/resource/:parentId/child/:id/holidays"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditHolidaysPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-holidays-route"
-                  path="/resource/:id/holidays"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditHolidaysPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="add-exception-route-child"
-                  path="/resource/:parentId/child/:id/exception/new"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <AddExceptionOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="add-exception-route"
-                  path="/resource/:id/exception/new/"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <AddExceptionOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-exception-route-child"
-                  path="/resource/:parentId/child/:id/exception/:datePeriodId"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditExceptionOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-                <Route
-                  id="edit-exception-route"
-                  path="/resource/:id/exception/:datePeriodId"
-                  element={
-                    <PermissionResolver>
-                      <HaukiHeader />
-                      <Main id="main">
-                        <EditExceptionOpeningHoursPage />
-                      </Main>
-                    </PermissionResolver>
-                  }
-                />
-              </Routes>
-            </Router>
-          </AuthContext.Provider>
-        </MatomoContext.Provider>
-      </AppContext.Provider>
-    </div>
+                    }
+                  />
+                  <Route
+                    id="resource-route"
+                    path="/resource/:id"
+                    element={
+                      <PermissionResolver>
+                        <NavigationAndFooterWrapper>
+                          <Main id="main">
+                            <SelectedDatePeriodsProvider>
+                              <ResourcePage
+                                targetResourcesString={targetResourcesStr}
+                              />
+                            </SelectedDatePeriodsProvider>
+                          </Main>
+                        </NavigationAndFooterWrapper>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="resource-route-child"
+                    path="/resource/:id/child/:childId"
+                    element={
+                      <PermissionResolver>
+                        <NavigationAndFooterWrapper>
+                          <Main id="main">
+                            <SelectedDatePeriodsProvider>
+                              <ResourcePage
+                                targetResourcesString={targetResourcesStr}
+                              />
+                            </SelectedDatePeriodsProvider>
+                          </Main>
+                        </NavigationAndFooterWrapper>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="resource-batch-update-route"
+                    path="/resource/:id/batch"
+                    element={
+                      <PermissionResolver>
+                        <NavigationAndFooterWrapper>
+                          <Main id="main">
+                            <SelectedDatePeriodsProvider>
+                              <ResourceBatchUpdatePage
+                                targetResourcesString={targetResourcesStr}
+                              />
+                            </SelectedDatePeriodsProvider>
+                          </Main>
+                        </NavigationAndFooterWrapper>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="resource-past-opening-hours-route"
+                    path="/resource/:id/past"
+                    element={
+                      <PermissionResolver>
+                        <NavigationAndFooterWrapper>
+                          <Main id="main">
+                            <SelectedDatePeriodsProvider>
+                              <ResourcePastOpeningHoursPage />
+                            </SelectedDatePeriodsProvider>
+                          </Main>
+                        </NavigationAndFooterWrapper>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="resource-past-opening-hours-route-child"
+                    path="/resource/:parentId/child/:id/past"
+                    element={
+                      <PermissionResolver>
+                        <NavigationAndFooterWrapper>
+                          <Main id="main">
+                            <SelectedDatePeriodsProvider>
+                              <ResourcePastOpeningHoursPage />
+                            </SelectedDatePeriodsProvider>
+                          </Main>
+                        </NavigationAndFooterWrapper>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="create-new-opening-period-route-child"
+                    path="/resource/:parentId/child/:id/period/new"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <AddNormalOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="create-new-opening-period-route"
+                    path="/resource/:id/period/new"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <AddNormalOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-opening-period-route-child"
+                    path="/resource/:parentId/child/:id/period/:datePeriodId"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditNormalOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-opening-period-route"
+                    path="/resource/:id/period/:datePeriodId"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditNormalOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-holidays-route-child"
+                    path="/resource/:parentId/child/:id/holidays"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditHolidaysPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-holidays-route"
+                    path="/resource/:id/holidays"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditHolidaysPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="add-exception-route-child"
+                    path="/resource/:parentId/child/:id/exception/new"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <AddExceptionOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="add-exception-route"
+                    path="/resource/:id/exception/new/"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <AddExceptionOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-exception-route-child"
+                    path="/resource/:parentId/child/:id/exception/:datePeriodId"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditExceptionOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                  <Route
+                    id="edit-exception-route"
+                    path="/resource/:id/exception/:datePeriodId"
+                    element={
+                      <PermissionResolver>
+                        <HaukiHeader />
+                        <Main id="main">
+                          <EditExceptionOpeningHoursPage />
+                        </Main>
+                      </PermissionResolver>
+                    }
+                  />
+                </Routes>
+              </Router>
+            </AuthContext.Provider>
+          </MatomoContext.Provider>
+        </AppContext.Provider>
+      </div>
+    </CookieConsentContextProvider>
   );
 };
 

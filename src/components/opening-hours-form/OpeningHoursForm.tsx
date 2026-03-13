@@ -189,7 +189,7 @@ const OpeningHoursForm = ({
                     />
                     <div className="sort-weekdays-container">
                       <SupplementaryButton
-                        iconLeft={<IconSort />}
+                        iconStart={<IconSort />}
                         onClick={sortOpeningHours}>
                         {t('OpeningHours.SortWeekdaysContainer')}
                       </SupplementaryButton>

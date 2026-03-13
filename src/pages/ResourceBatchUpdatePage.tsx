@@ -8,13 +8,10 @@ import {
   RadioButton,
   SelectionGroup,
   IconTrash,
+  IconSize,
 } from 'hds-react';
 import { useTranslation } from 'react-i18next';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  SupplementaryButton,
-} from '../components/button/Button';
+import { PrimaryButton, SecondaryButton } from '../components/button/Button';
 import { useAppContext } from '../App-context';
 import { AuthContextProps, useAuth } from '../auth/auth-context';
 import api from '../common/utils/api/api';
@@ -229,17 +226,18 @@ const ResourceBatchUpdatePage = ({
         transform: (item: { remove: string }) => {
           return (
             <div style={{ textAlign: 'right', color: 'red' }}>
-              <SupplementaryButton
-                size="small"
-                onClick={() => onRemove(item.remove)}>
+              <button
+                className="button-icon"
+                onClick={() => onRemove(item.remove)}
+                type="button">
                 <IconTrash
-                  size="xs"
+                  size={IconSize.ExtraSmall}
                   aria-label={t(
                     'ResourcePage.ResourcesSection.RemoveAriaLabel'
                   )}
                   color="var(--color-error)"
                 />
-              </SupplementaryButton>
+              </button>
             </div>
           );
         },

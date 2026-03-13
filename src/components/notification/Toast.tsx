@@ -54,7 +54,7 @@ const renderToast = ({
         removeContainer(containerDomNode);
       }}
       closeButtonLabelText={i18n.t('Common.CloseNotification')}
-      {...(dataTestId ? { dataTestId } : {})}>
+      {...(dataTestId ? { 'data-testid': dataTestId } : {})}>
       {text}
     </Notification>
   );

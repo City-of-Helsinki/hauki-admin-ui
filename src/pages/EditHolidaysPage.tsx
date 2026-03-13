@@ -466,7 +466,7 @@ const EditHolidaysPage = (): JSX.Element => {
       <ResourceTitle language={language} resource={resource}>
         <SecondaryButton
           onClick={returnToResourcePage}
-          size={isMobile ? 'small' : 'default'}>
+          size={isMobile ? 'small' : 'medium'}>
           {t('ResourcePage.Main.ReturnToMainPageButton')}
         </SecondaryButton>
       </ResourceTitle>
