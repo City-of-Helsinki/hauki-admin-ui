@@ -1,9 +1,15 @@
-import { Checkbox, IconTrash, Select, TextInput, TimeInput } from 'hds-react';
+import {
+  Checkbox,
+  IconTrash,
+  Option,
+  Select,
+  TextInput,
+  TimeInput,
+} from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
 import React, { MutableRefObject, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  InputOption,
   Language,
   ResourceState,
   TranslatedApiChoice,
@@ -112,18 +118,21 @@ const TimeSpan = ({
           required: t('Common.Mandatory'),
         }}
         render={({ field: { onChange, value } }): JSX.Element => (
-          <Select<InputOption>
+          <Select
             disabled={disabled}
             id={resourceStateId}
-            label={t('OpeningHours.TimeSpanState')}
+            texts={{
+              label: t('OpeningHours.TimeSpanState'),
+              placeholder: t('OpeningHours.TimeSpanStatePlaceholder'),
+            }}
             options={sanitizedResourceStateOptions}
             className="time-span__resource-state-select"
-            onChange={(option: InputOption): void => onChange(option.value)}
-            placeholder={t('OpeningHours.TimeSpanStatePlaceholder')}
+            onChange={(
+              selectedOptions: Option[],
+              clickedOption: Option
+            ): void => onChange(clickedOption.value)}
             required
-            value={sanitizedResourceStateOptions.find(
-              (option) => option.value === value
-            )}
+            value={value}
           />
         )}
       />
@@ -285,9 +294,8 @@ const TimeSpan = ({
       )}
       <div className="remove-time-span-button">
         {onDelete && (
-          <SupplementaryButton iconLeft={<IconTrash />} onClick={onDelete}>
+          <SupplementaryButton iconStart={<IconTrash />} onClick={onDelete}>
             {t('OpeningHours.RemoveTimeSpanButton')}
-            <span className="visually-hidden">{groupLabel}</span>
           </SupplementaryButton>
         )}
       </div>
