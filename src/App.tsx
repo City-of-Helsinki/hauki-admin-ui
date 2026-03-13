@@ -139,12 +139,8 @@ const App = (): JSX.Element => {
                     element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <h1>Kohdetta ei löydy</h1>
-                          <p>
-                            Kohdetta ei löytynyt. Yritä myöhemmin uudestaan.
-                            Ongelman toistuessa ota yhteys sivuston ylläpitoon.
-                            Teidät on automaattisesti kirjattu ulos.
-                          </p>
+                          <h1>{t('ErrorPages.NotFoundTitle')}</h1>
+                          <p>{t('ErrorPages.NotFoundBody')}</p>
                         </Main>
                       </NavigationAndFooterWrapper>
                     }
@@ -154,7 +150,7 @@ const App = (): JSX.Element => {
                     element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <h1>Puutteelliset tunnukset</h1>
+                          <h1>{t('ErrorPages.UnauthorizedTitle')}</h1>
                         </Main>
                       </NavigationAndFooterWrapper>
                     }
@@ -164,7 +160,7 @@ const App = (): JSX.Element => {
                     element={
                       <NavigationAndFooterWrapper>
                         <Main id="main">
-                          <h1>Puuttuvat tunnukset</h1>
+                          <h1>{t('ErrorPages.UnauthenticatedTitle')}</h1>
                         </Main>
                       </NavigationAndFooterWrapper>
                     }
