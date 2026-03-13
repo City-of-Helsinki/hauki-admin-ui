@@ -38,7 +38,10 @@ const HaukiFooter = (): JSX.Element => {
             target="_blank"
             label={t('Footer.ContentLicenseLink')}
           />
-          <Footer.Link href="/cookies" label={t('Footer.CookiesLink')} />
+          <Footer.Link
+            href={`/cookies?lang=${language}`}
+            label={t('Footer.CookiesLink')}
+          />
         </Footer.Base>
       </Footer>
     </>
