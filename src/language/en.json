@@ -216,6 +216,15 @@
     "Mandatory": "Mandatory",
     "CloseNotification": "Close notification"
   },
+  "ErrorPages": {
+    "NotFoundTitle": "Item not found",
+    "NotFoundBody": "The item could not be found. Please try again later. If the problem persists, contact the site administrator. You have been automatically logged out.",
+    "UnauthorizedTitle": "Insufficient credentials",
+    "UnauthenticatedTitle": "Missing credentials"
+  },
+  "FrontPage": {
+    "FrontPage": "Front page"
+  },
   "Header": {
     "Help": "Guide",
     "LogoAlt": "City of Helsinki",

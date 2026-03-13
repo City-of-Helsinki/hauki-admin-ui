@@ -216,6 +216,15 @@
     "Mandatory": "Pakollinen",
     "CloseNotification": "Sulje ilmoitus"
   },
+  "ErrorPages": {
+    "NotFoundTitle": "Kohdetta ei löydy",
+    "NotFoundBody": "Kohdetta ei löytynyt. Yritä myöhemmin uudestaan. Ongelman toistuessa ota yhteys sivuston ylläpitoon. Teidät on automaattisesti kirjattu ulos.",
+    "UnauthorizedTitle": "Puutteelliset tunnukset",
+    "UnauthenticatedTitle": "Puuttuvat tunnukset"
+  },
+  "FrontPage": {
+    "FrontPage": "Etusivu"
+  },
   "Header": {
     "Help": "Ohje",
     "LogoAlt": "Helsingin kaupunki",

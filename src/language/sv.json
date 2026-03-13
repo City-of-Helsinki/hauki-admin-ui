@@ -216,6 +216,15 @@
     "Mandatory": "Obligatoriskt",
     "CloseNotification": "Stäng meddelandet"
   },
+  "ErrorPages": {
+    "NotFoundTitle": "Objekt hittades inte",
+    "NotFoundBody": "Objektet hittades inte. Vänligen försök igen senare. Om problemet kvarstår, kontakta webbplatsens administratör. Du har automatiskt loggats ut.",
+    "UnauthorizedTitle": "Otillräckliga uppgifter",
+    "UnauthenticatedTitle": "Saknade uppgifter"
+  },
+  "FrontPage": {
+    "FrontPage": "Framsida"
+  },
   "Header": {
     "Help": "Anvisning",
     "LogoAlt": "Helsingfors stad",
