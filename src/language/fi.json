@@ -237,5 +237,9 @@
     "AccessibilityStatementLinkUrl": "https://kaupunkialustana.hel.fi/aukiolosovellus/saavutettavuusseloste",
     "ContentLicenseLink": "Sisältölisenssi CC BY 4.0",
     "CookiesLink": "Evästeasetukset"
+  },
+  "CookieConsent": {
+    "LoginCookieDescription": "Käyttäjän kirjautumistiedot tallennetaan selaimen muistiin (local storage).",
+    "LoginCookieExpiration": "Pysyvä"
   }
 }
