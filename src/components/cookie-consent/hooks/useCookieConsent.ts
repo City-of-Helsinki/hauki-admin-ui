@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 import { ContentSource } from 'hds-react';
+import { useTranslation } from 'react-i18next';
 import { Language } from '../../../common/lib/types';
 
 type Props = {
@@ -14,6 +15,7 @@ const useCookieConsent = ({
   setLanguage,
   isModal = true,
 }: Props): { config: ContentSource } => {
+  const { t } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState<Language>(
     language ?? Language.FI
   );
@@ -43,6 +45,21 @@ const useCookieConsent = ({
   const config: ContentSource = {
     siteName: 'Aukiolot',
     currentLanguage,
+    requiredCookies: {
+      groups: [
+        {
+          commonGroup: 'login',
+          cookies: [
+            {
+              name: 'tokens',
+              hostName: globalThis.location.hostname,
+              description: t('CookieConsent.LoginCookieDescription'),
+              expiration: t('CookieConsent.LoginCookieExpiration'),
+            },
+          ],
+        },
+      ],
+    },
     optionalCookies: {
       groups: [
         {
