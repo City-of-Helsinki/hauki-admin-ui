@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { screen as shadowScreen } from 'shadow-dom-testing-library';
 import App from './App';
@@ -14,8 +14,9 @@ const setupResizeObserver = () => {
 
 const clearAllCookies = () =>
   document.cookie.split(';').forEach((c) => {
-    document.cookie =
-      c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = `${
+      c.trim().split('=')[0]
+    }=;expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
   });
 
 const realDateNow = Date.now.bind(global.Date);
@@ -28,15 +29,7 @@ beforeAll(() => {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  /*
-  Object.defineProperties(global, {
-    crypto: { value: webcrypto, writable: true },
-  });
-  */
-
   clearAllCookies();
-
-  // i18n.changeLanguage('fi');
 });
 
 afterAll(() => {
