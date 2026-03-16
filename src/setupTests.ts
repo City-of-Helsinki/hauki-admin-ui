@@ -5,6 +5,20 @@ import testSetup from './testSetup';
 // eslint-disable-next-line import/extensions, import/no-unresolved
 require('../public/test-env-config.js');
 
+// jsdom does not implement indexedDB; hds-react accesses it when saving consent
+if (!global.indexedDB) {
+  // @ts-expect-error minimal stub
+  global.indexedDB = {
+    open: () => {
+      const request: Partial<IDBOpenDBRequest> = {};
+      setTimeout(() => {
+        if (request.onerror) request.onerror(new Event('error'));
+      }, 0);
+      return request as IDBOpenDBRequest;
+    },
+  };
+}
+
 testSetup();
 
 const originalError = console.error.bind(console.error);
