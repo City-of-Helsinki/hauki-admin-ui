@@ -15,8 +15,9 @@ const useCookieConsentSettings = () => {
     onChange: (changeEvent: CookieConsentChangeEvent) => {
       const { acceptedGroups } = changeEvent;
 
-      const hasStatisticsConsent =
-        acceptedGroups.indexOf(CookieConsentGroup.STATISTICS) > -1;
+      const hasStatisticsConsent = acceptedGroups.includes(
+        CookieConsentGroup.STATISTICS
+      );
 
       if (hasStatisticsConsent) {
         // start tracking

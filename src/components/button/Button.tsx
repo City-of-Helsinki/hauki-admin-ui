@@ -102,9 +102,14 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-expanded={ariaExpanded}
         ref={ref}
         data-testid={dataTest}
-        className={`button-common primary-button ${
-          disabled && 'primary-button--is-disabled'
-        } ${className}`}
+        className={[
+          'button-common',
+          'primary-button',
+          disabled ? 'primary-button--is-disabled' : '',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         variant={isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Primary}
         onClick={onClick}
         type={type}

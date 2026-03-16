@@ -19,6 +19,28 @@ const clearAllCookies = () =>
     }=;expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
   });
 
+// Helper function to decode and parse the cookie consent cookie
+const parseConsentCookie = (cookieString: string) => {
+  const match = cookieString.match(/helfi-cookie-consents=([^;]+)/);
+  if (!match) return null;
+
+  const decoded = decodeURIComponent(match[1]);
+  return JSON.parse(decoded);
+};
+
+// Helper function to check if the cookie contains expected groups
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const hasExpectedGroups = (cookieData: any, expectedGroups: string[]) => {
+  if (!cookieData?.groups) return false;
+
+  return expectedGroups.every(
+    (group) =>
+      cookieData.groups[group] &&
+      typeof cookieData.groups[group].checksum === 'string' &&
+      typeof cookieData.groups[group].timestamp === 'number'
+  );
+};
+
 const realDateNow = Date.now.bind(global.Date);
 
 beforeAll(() => {
@@ -56,12 +78,14 @@ const waitCookieConsentModalToBeVisible = async () => {
 };
 
 const waitCookieConsentModalToBeHidden = async () => {
-  const regions = shadowScreen.queryAllByRole('region');
-  const container = regions.find(
-    (region) => region.getAttribute('id') === 'hds-cc'
-  );
+  await waitFor(() => {
+    const regions = shadowScreen.queryAllByShadowRole('region');
+    const container = regions.find(
+      (region) => region.getAttribute('id') === 'hds-cc'
+    );
 
-  await waitFor(() => expect(container).not.toBeDefined());
+    expect(container).not.toBeDefined();
+  });
 };
 
 const renderApp = async () => render(<App />);
@@ -80,14 +104,12 @@ const findAcceptOnlyNecessaryButton = async (
   });
 };
 
-const acceptOnlyNecessaryCookieText =
-  '%7B%22groups%22%3A%7B%22shared%22%3A%7B%22checksum%22%3A%22d4a12889%22%2C%22timestamp%22%3A1530518207007%7D%7D%7D';
-const acceptAllCookieText =
-  '%7B%22groups%22%3A%7B%22shared%22%3A%7B%22checksum%22%3A%22d4a12889%22%2C%22timestamp%22%3A1530518207007%7D%2C%22statistics%22%3A%7B%22checksum%22%3A%228243e9a2%22%2C%22timestamp%22%3A1530518207007%7D%7D%7D';
-
 describe('App', () => {
-  it('should show cookie consent modal if consent is not saved to cookie', async () => {
+  beforeAll(() => {
     setupResizeObserver();
+  });
+
+  it('should show cookie consent modal if consent is not saved to cookie', async () => {
     renderApp();
 
     await waitCookieConsentModalToBeVisible();
@@ -102,9 +124,12 @@ describe('App', () => {
     const acceptAllButton = await findAcceptAllButton(cookieConsentModal);
     await user.click(acceptAllButton);
 
-    expect(document.cookie).toEqual(
-      expect.stringContaining(acceptAllCookieText)
-    );
+    // Parse and validate the cookie contains all expected groups for "accept all"
+    const cookieData = parseConsentCookie(document.cookie);
+    expect(cookieData).not.toBeNull();
+    expect(
+      hasExpectedGroups(cookieData, ['login', 'shared', 'statistics'])
+    ).toBe(true);
 
     await waitCookieConsentModalToBeHidden();
   });
@@ -121,14 +146,28 @@ describe('App', () => {
 
     await user.click(acceptOnlyNecessaryButton);
 
-    expect(document.cookie).toEqual(
-      expect.stringContaining(acceptOnlyNecessaryCookieText)
-    );
+    // Parse and validate the cookie contains only necessary groups (no statistics)
+    const cookieData = parseConsentCookie(document.cookie);
+    expect(cookieData).not.toBeNull();
+    expect(hasExpectedGroups(cookieData, ['login', 'shared'])).toBe(true);
+    // Statistics should not be present for "only necessary"
+    expect(cookieData?.groups?.statistics).toBeUndefined();
     await waitCookieConsentModalToBeHidden();
   });
 
   it('should not show cookie consent modal if consent is saved', async () => {
-    document.cookie = acceptAllCookieText;
+    // Create a valid consent cookie with necessary groups
+    const consentData = {
+      groups: {
+        login: { checksum: 'test123', timestamp: Date.now() },
+        shared: { checksum: 'test789', timestamp: Date.now() },
+        statistics: { checksum: 'testABC', timestamp: Date.now() },
+      },
+    };
+
+    document.cookie = `helfi-cookie-consents=${encodeURIComponent(
+      JSON.stringify(consentData)
+    )}`;
 
     renderApp();
 

@@ -26,6 +26,32 @@
   "fallbackLanguage": "en",
   "requiredGroups": [
     {
+      "groupId": "login",
+      "title": {
+        "fi": "Kirjautuminen",
+        "sv": "Inloggning",
+        "en": "Login"
+      },
+      "description": {
+        "fi": "Kirjautumisevästeitä käytetään käyttäjän kirjautuessa palveluun.",
+        "sv": "Inloggningskakor används när användaren loggar in på tjänsten.",
+        "en": "Login cookies are used when the user logs in to the service."
+      },
+      "cookies": [
+        {
+          "name": "tokens",
+          "host": "https://aukioloajat.hel.fi",
+          "storageType": 2,
+          "description": {
+            "fi": "Käyttäjän kirjautumistiedot tallennetaan selaimen muistiin (local storage).",
+            "sv": "Användarens inloggningsuppgifter lagras i webbläsarens minne (local storage).",
+            "en": "Authentication information of the user is saved to browser's memory (local storage)."
+          },
+          "expiration": "-"
+        }
+      ]
+    },
+    {
       "groupId": "shared",
       "title": {
         "fi": "Yhteiset evästeet",
@@ -212,7 +238,7 @@
     "notificationAriaLabel": {
       "fi": "Ilmoitus",
       "sv": "Meddelande",
-      "en": "Annoucement"
+      "en": "Announcement"
     },
     "storageType1": {
       "fi": "Eväste",
