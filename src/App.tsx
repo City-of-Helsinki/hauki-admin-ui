@@ -101,19 +101,21 @@ const App = (): JSX.Element => {
 
   const { t } = useTranslation();
 
-  const matomoTracker = useMemo(
-    () =>
-      new MatomoTracker({
-        urlBase: window?._env_?.MATOMO_URL_BASE,
-        siteId: window?._env_?.MATOMO_SITE_ID,
-        srcUrl: window?._env_?.MATOMO_SRC_URL,
-        enabled: window?._env_?.MATOMO_ENABLED === 'true',
-        configurations: {
-          setDoNotTrack: true,
-        },
-      }),
-    []
-  );
+  const matomoTracker = useMemo(() => {
+    const tracker = new MatomoTracker({
+      urlBase: window?._env_?.MATOMO_URL_BASE,
+      siteId: window?._env_?.MATOMO_SITE_ID,
+      srcUrl: window?._env_?.MATOMO_SRC_URL,
+      enabled: window?._env_?.MATOMO_ENABLED === 'true',
+      configurations: {
+        setDoNotTrack: true,
+      },
+    });
+    // Require consent before any tracking occurs
+    tracker.pushInstruction('requireConsent');
+    tracker.pushInstruction('requireCookieConsent');
+    return tracker;
+  }, []);
 
   return (
     <CookieConsentContextProvider {...cookieConsentProps}>
