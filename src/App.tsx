@@ -102,6 +102,11 @@ const App = (): JSX.Element => {
   const { t } = useTranslation();
 
   const matomoTracker = useMemo(() => {
+    const isMatomoEnabled = window?._env_?.MATOMO_ENABLED === 'true';
+    if (!isMatomoEnabled) {
+      return null;
+    }
+
     const tracker = new MatomoTracker({
       urlBase: window?._env_?.MATOMO_URL_BASE,
       siteId: window?._env_?.MATOMO_SITE_ID,
