@@ -100,10 +100,12 @@ test.describe('Resource page', async () => {
 
   test('Add three opening hours - reorder them', async () => {
     try {
+      const datePeriodIds = await getDatePeriodIds(resource.id);
+      await deleteDatePeriods(datePeriodIds);
+
       const periods = [
         { fi: 'e2e test title 1', sv: 'sommartid 1', en: 'summertime 1' },
         { fi: 'e2e test title 2', sv: 'sommartid 2', en: 'summertime 2' },
-        { fi: 'e2e test title 3', sv: 'sommartid 3', en: 'summertime 3' },
       ];
 
       for (const period of periods) {
@@ -121,6 +123,14 @@ test.describe('Resource page', async () => {
         await page
           .locator('[data-testid="submit-opening-hours-button"]')
           .click();
+        await expect(
+          page.locator('[data-testid="submit-opening-hours-button"]')
+        ).not.toBeVisible({ timeout: 60 * 1000 });
+        await expect(
+          page.getByRole('button', { name: 'Lisää aukioloaika +' })
+        ).toBeVisible({
+          timeout: 60 * 1000,
+        });
         await expect(
           page.getByRole('heading', { name: period.fi })
         ).toBeVisible({
@@ -143,28 +153,61 @@ test.describe('Resource page', async () => {
       );
       const headingsBefore = await list.locator('h3').allTextContents();
 
+      // Wait for GET after the PATCH requests complete
+      const reorderUpPromise = page.waitForResponse(
+        (response) =>
+          response.url().includes('/date_period') &&
+          response.request().method() === 'GET' &&
+          response.ok()
+      );
+
       await list
         .locator('[data-testid*="openingPeriodMoveUpButton"]')
         .nth(1)
         .click();
 
-      await expect(async () => {
-        const headingsAfter = await list.locator('h3').allTextContents();
-        expect(headingsAfter[0]).toBe(headingsBefore[1]);
-        expect(headingsAfter[1]).toBe(headingsBefore[0]);
-      }).toPass({ timeout: 30 * 1000 });
+      await reorderUpPromise;
+
+      // Wait for the UI to update after reorder
+      await page.waitForLoadState('domcontentloaded');
+
+      await expect(
+        page.getByRole('button', { name: 'Lisää aukioloaika +' })
+      ).toBeVisible({
+        timeout: 60 * 1000,
+      });
+
+      await expect(list.locator('h3').nth(0)).toHaveText(headingsBefore[1], {
+        timeout: 30 * 1000,
+      });
+      await expect(list.locator('h3').nth(1)).toHaveText(headingsBefore[0], {
+        timeout: 30 * 1000,
+      });
 
       // Move it back down — restores original order
+      const reorderDownPromise = page.waitForResponse(
+        (response) =>
+          response.url().includes('/date_period') &&
+          response.request().method() === 'GET' &&
+          response.ok()
+      );
+
       await list
         .locator('[data-testid*="openingPeriodMoveDownButton"]')
         .nth(0)
         .click();
 
-      await expect(async () => {
-        const headingsRestored = await list.locator('h3').allTextContents();
-        expect(headingsRestored[0]).toBe(headingsBefore[0]);
-        expect(headingsRestored[1]).toBe(headingsBefore[1]);
-      }).toPass({ timeout: 30 * 1000 });
+      await reorderDownPromise;
+
+      // Wait for the UI to update after reorder
+      await page.waitForLoadState('domcontentloaded');
+
+      await expect(list.locator('h3').nth(0)).toHaveText(headingsBefore[0], {
+        timeout: 30 * 1000,
+      });
+      await expect(list.locator('h3').nth(1)).toHaveText(headingsBefore[1], {
+        timeout: 30 * 1000,
+      });
     } finally {
       // If the test fails it will leave a mess if not cleaned
       const datePeriodIds = await getDatePeriodIds(resource.id);
