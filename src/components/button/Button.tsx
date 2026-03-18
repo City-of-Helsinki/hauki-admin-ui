@@ -1,32 +1,33 @@
 import {
-  ButtonSize,
   Button as HDSButton,
-  ButtonSize as HDSButtonSize,
+  ButtonPresetTheme,
+  ButtonSize,
+  ButtonVariant as HDSButtonVariant,
+  LoadingSpinner,
 } from 'hds-react';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import './Button.scss';
 
 type ButtonTypeVariant = 'button' | 'submit' | 'reset' | undefined;
 
 interface ButtonProps {
-  children: ReactNode;
+  children: string;
   onClick?: () => void;
   dataTest?: string;
   className?: string;
   type?: ButtonTypeVariant;
-  iconLeft?: ReactNode;
-  iconRight?: ReactNode;
+  iconStart?: React.ReactNode;
+  iconEnd?: React.ReactNode;
   disabled?: boolean;
   isLoading?: boolean;
   loadingText?: string;
-  size?: ButtonSize;
+  size?: 'small' | 'medium';
   'aria-expanded'?: boolean;
   style?: React.CSSProperties;
 }
 
 type SecondaryButtonProps = ButtonProps & {
   light?: boolean;
-  size?: HDSButtonSize;
 };
 
 export const SecondaryButton = React.forwardRef<
@@ -41,12 +42,12 @@ export const SecondaryButton = React.forwardRef<
       onClick,
       className = '',
       type = 'button',
-      iconLeft,
-      iconRight,
+      iconStart,
+      iconEnd,
       isLoading,
       loadingText,
       light = false,
-      size = 'default',
+      size,
       'aria-expanded': ariaExpanded,
       style,
     }: SecondaryButtonProps,
@@ -59,19 +60,19 @@ export const SecondaryButton = React.forwardRef<
         className={`button-common ${
           light ? 'secondary-button-light' : 'secondary-button'
         } ${className}`}
-        theme={light ? 'default' : 'coat'}
-        size={size}
+        theme={light ? undefined : ButtonPresetTheme.Coat}
+        size={size as ButtonSize}
         data-testid={dataTest}
-        disabled={disabled}
-        variant="secondary"
+        disabled={disabled || isLoading}
+        variant={
+          isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Secondary
+        }
         onClick={onClick}
         type={type}
-        iconLeft={iconLeft}
-        iconRight={iconRight}
-        isLoading={isLoading}
-        loadingText={loadingText}
-        style={style}>
-        {children}
+        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+        iconEnd={iconEnd}
+        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
+        {isLoading && loadingText ? loadingText : children}
       </HDSButton>
     );
   }
@@ -85,12 +86,12 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       className = '',
       type = 'button',
-      iconLeft,
-      iconRight,
+      iconStart,
+      iconEnd,
       disabled,
       isLoading,
       loadingText,
-      size = 'default',
+      size,
       'aria-expanded': ariaExpanded,
       style,
     }: ButtonProps,
@@ -101,20 +102,23 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-expanded={ariaExpanded}
         ref={ref}
         data-testid={dataTest}
-        className={`button-common primary-button ${
-          disabled && 'primary-button--is-disabled'
-        } ${isLoading && 'primary-button--is-loading'} ${className}`}
-        variant="primary"
+        className={[
+          'button-common',
+          'primary-button',
+          disabled ? 'primary-button--is-disabled' : '',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        variant={isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Primary}
         onClick={onClick}
         type={type}
-        iconLeft={iconLeft}
-        iconRight={iconRight}
-        disabled={disabled}
-        isLoading={isLoading}
-        loadingText={loadingText}
-        size={size}
-        style={style}>
-        {children}
+        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+        iconEnd={iconEnd}
+        disabled={disabled || isLoading}
+        size={size as ButtonSize}
+        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
+        {isLoading && loadingText ? loadingText : children}
       </HDSButton>
     );
   }
@@ -132,11 +136,11 @@ export const SupplementaryButton = React.forwardRef<
       onClick,
       className = '',
       type = 'button',
-      iconLeft,
-      iconRight,
+      iconStart,
+      iconEnd,
       isLoading,
       loadingText,
-      size = 'default',
+      size,
       'aria-expanded': ariaExpanded,
       style,
     },
@@ -149,16 +153,16 @@ export const SupplementaryButton = React.forwardRef<
         type={type}
         data-testid={dataTest}
         className={`button-common supplementary-button ${className}`}
-        variant="supplementary"
+        variant={
+          isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Supplementary
+        }
         onClick={onClick}
-        iconLeft={iconLeft}
-        iconRight={iconRight}
-        isLoading={isLoading}
-        loadingText={loadingText}
-        disabled={disabled}
-        size={size}
-        style={style}>
-        {children}
+        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+        iconEnd={iconEnd}
+        disabled={disabled || isLoading}
+        size={size as ButtonSize}
+        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
+        {isLoading && loadingText ? loadingText : children}
       </HDSButton>
     );
   }

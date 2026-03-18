@@ -1,4 +1,4 @@
-import { Notification, Select } from 'hds-react';
+import { Notification, Option, Select } from 'hds-react';
 import { upperFirst } from 'lodash';
 import React, { Fragment, useEffect, useRef } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
@@ -167,11 +167,11 @@ const OpeningHoursWeekdays = ({
 
   const handleRuleChange =
     (i: number) =>
-    (rule: InputOption<RuleType>): void => {
+    (selectedOptions: Option[], clickedOption: Option): void => {
       const result = updateRule(
         ruleValues,
         getValues(`${namePrefix}.timeSpanGroups`),
-        rule.value,
+        clickedOption.value as RuleType,
         i
       );
 
@@ -275,15 +275,16 @@ const OpeningHoursWeekdays = ({
                 render={({ field: { value } }): JSX.Element => (
                   <>
                     {rules.length > 0 && (
-                      <Select<InputOption<RuleType>>
+                      <Select
                         className="rule-select"
-                        defaultValue={rules[0]}
-                        label={t('OpeningHours.RuleSelectLabel')}
+                        texts={{
+                          label: t('OpeningHours.RuleSelectLabel'),
+                          placeholder: t('OpeningHours.RuleSelectPlaceholder'),
+                        }}
                         onChange={handleRuleChange(i)}
                         options={rules}
-                        placeholder={t('OpeningHours.RuleSelectPlaceholder')}
                         required
-                        value={rules.find((rule) => rule.value === value.type)}
+                        value={value.type}
                       />
                     )}
                     <div

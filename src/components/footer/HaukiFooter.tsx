@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, logoFi, logoSv, Logo } from 'hds-react';
+import { Footer, logoFi, logoSv, Logo, LogoSize } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../App-context';
 import './HaukiFooter.scss';
@@ -13,7 +13,7 @@ const HaukiFooter = (): JSX.Element => {
       <div className="footer-top-padding" />
       <Footer
         className="page-footer"
-        title="Aukiolot"
+        title={t('Header.Title')}
         theme={{
           '--footer-background': 'var(--hauki-footer-background-color)',
         }}>
@@ -23,7 +23,7 @@ const HaukiFooter = (): JSX.Element => {
           logo={
             <Logo
               src={language === 'sv' ? logoSv : logoFi}
-              size="medium"
+              size={LogoSize.Medium}
               alt={t('Footer.LogoAlt')}
             />
           }
@@ -38,7 +38,10 @@ const HaukiFooter = (): JSX.Element => {
             target="_blank"
             label={t('Footer.ContentLicenseLink')}
           />
-          <Footer.Link href="/cookies" label={t('Footer.CookiesLink')} />
+          <Footer.Link
+            href={`/cookies?lang=${language}`}
+            label={t('Footer.CookiesLink')}
+          />
         </Footer.Base>
       </Footer>
     </>

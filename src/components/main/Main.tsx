@@ -1,8 +1,9 @@
 import React, { ReactNode, useEffect } from 'react';
 import './Main.scss';
-import { useCookies } from 'hds-react';
+import { useGroupConsent } from 'hds-react';
 import { useLocation } from 'react-router-dom';
 import useMatomo from '../matomo/hooks/useMatomo';
+import { CookieConsentGroup } from '../cookie-consent/hooks/useCookieConsentSettings';
 
 type MainProps = {
   id: string;
@@ -15,17 +16,18 @@ export function MainContainer({ children }: Partial<MainProps>): JSX.Element {
 
 const Main = ({ id, children }: MainProps): JSX.Element => {
   const location = useLocation();
-  const { getAllConsents } = useCookies();
   const { trackPageView } = useMatomo();
+  const statisticsConsent = useGroupConsent(CookieConsentGroup.STATISTICS);
 
+  // Track page view
   useEffect(() => {
-    if (getAllConsents().matomo) {
+    if (statisticsConsent) {
       trackPageView({
         href: window.location.href,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAllConsents, location.pathname, location.search]);
+  }, [statisticsConsent, location.pathname, location.search]);
 
   return (
     <main id={id} className="main">

@@ -22,7 +22,9 @@ test.describe('Resource page', async () => {
     page = await browser.newPage();
     await page.goto(resourceUrl);
     await expect(page.locator('body')).toContainText('Suomeksi');
-    await page.getByTestId('cookie-consent-approve-required-button').click();
+    await page
+      .getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' })
+      .click();
   });
 
   test.beforeEach(async () => {
@@ -235,7 +237,7 @@ test.describe('Resource page', async () => {
 
     await page.locator(`[data-testid="${holidayTestId}"]`).check();
     await page.getByText('Poikkeava aukioloaika').click();
-    await page.getByLabel('Auki', { exact: true }).click();
+    await page.getByText('Auki', { exact: true }).click();
     await page.getByRole('option', { name: 'Itsepalvelu' }).click();
     await page.getByText('24 h').click();
     await page.getByPlaceholder('Esim. seniorit').fill('seniorit');

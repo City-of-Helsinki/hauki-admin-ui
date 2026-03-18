@@ -170,7 +170,7 @@ const ResourcePastOpeningHoursPage = (): JSX.Element => {
         titleAddon={t('ResourcePastOpeningHoursPage.Main.Title')}>
         <SecondaryButton
           onClick={returnToResourcePage}
-          size={isMobile ? 'small' : 'default'}>
+          size={isMobile ? 'small' : 'medium'}>
           {t('ResourcePage.Main.ReturnToMainPageButton')}
         </SecondaryButton>
       </ResourceTitle>
