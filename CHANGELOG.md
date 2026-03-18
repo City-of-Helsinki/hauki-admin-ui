@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.13.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.13.0...hauki-admin-ui-v1.13.1) (2026-03-18)
+
+
+### Bug Fixes
+
+* Add login tokens to required cookies ([a39faed](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a39faed999d676514fbe72f121f82af00f85a863))
+
+
+### Dependencies
+
+* Bump flatted from 3.3.3 to 3.4.1 ([c2ea443](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c2ea44347f4a889117e121648ab1dc38604f8346))
+
 ## [1.13.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.12.0...hauki-admin-ui-v1.13.0) (2026-03-11)
 
 
