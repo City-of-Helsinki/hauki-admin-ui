@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.14.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.13.1...hauki-admin-ui-v1.14.0) (2026-03-19)
+
+
+### Features
+
+* Update HDS from v3 to v5 ([766664e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/766664eab903d40595fdf5495c75e612ff8cd00c))
+
+
+### Bug Fixes
+
+* Flaky e2e test ([fafaaf8](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/fafaaf8894487f8f6510fdcfd602d675b6e2f73f))
+
 ## [1.13.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.13.0...hauki-admin-ui-v1.13.1) (2026-03-18)
 
 
