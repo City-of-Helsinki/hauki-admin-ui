@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.0...hauki-admin-ui-v1.14.1) (2026-03-26)
+
+
+### Dependencies
+
+* Bump flatted from 3.4.1 to 3.4.2 ([350a4f7](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/350a4f740dfd295898ae9e6c017b87c700b37830))
+
 ## [1.14.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.13.1...hauki-admin-ui-v1.14.0) (2026-03-19)
 
 
