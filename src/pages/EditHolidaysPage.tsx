@@ -329,7 +329,7 @@ const EditHolidaysPage = (): JSX.Element => {
           setDatePeriodConfig(uiDatePeriodOptions);
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
+         
         console.error('Fetching data failed in holidays page:', e);
       }
     };
@@ -446,7 +446,7 @@ const EditHolidaysPage = (): JSX.Element => {
           await fetchValues(resource.id);
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
+         
         console.error(
           'Fetching data failed in holidays page - apiDatePeriods:',
           e

@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+ 
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -46,7 +46,7 @@ const HaukiHeader = (): JSX.Element => {
         showSignOutErrorNotification(t('Header.SignOutRejected'));
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
+       
       console.error('Sign out failed:', (e as Error).message);
       showSignOutErrorNotification(t('Header.SignOutFailed') + e);
     }

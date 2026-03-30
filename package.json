@@ -7,26 +7,28 @@
   },
   "dependencies": {
     "@axe-core/react": "^4.8.4",
+    "@eslint/js": "^9.39.1",
+    "@nabla/vite-plugin-eslint": "^3.0.1",
     "@sentry/react": "^10.24.0",
-    "@types/jest": "^26.0.24",
-    "@types/lodash": "4.14.192",
+    "@types/lodash": "^4.17.24",
     "@types/node": "^22.10.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-router-dom": "^5.3.2",
     "@types/testing-library__dom": "7.5.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "@vitejs/plugin-react": "^4.3.0",
-    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@typescript-eslint/parser": "^8.34.1",
+    "@vitejs/plugin-react-swc": "^4.3.0",
     "axios": "^1.13.5",
-    "babel-eslint": "^10.1.0",
     "date-fns": "2.29.3",
     "date-holidays": "^3.16.1",
     "dotenv": "^16.4.5",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-typescript-prettier": "^5.0.0",
-    "eslint-plugin-vitest-globals": "^1.5.0",
+    "eslint": "^9.39.1",
+    "eslint-config-vitest-globals": "^2.0.2",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "esrun": "^3.2.26",
+    "globals": "^17.4.0",
     "hds-core": "^5.0.0",
     "hds-design-tokens": "^5.0.0",
     "hds-react": "^5.0.0",
@@ -41,8 +43,8 @@
     "react-router-dom": "^6.30.3",
     "sass": "^1.77.2",
     "typescript": "4.9.5",
-    "vite": "^6.4.1",
-    "vite-plugin-eslint": "^1.8.1",
+    "typescript-eslint": "^8.35.0",
+    "vite": "^8.0.3",
     "vite-plugin-svgr": "^4.2.0"
   },
   "scripts": {
@@ -56,7 +58,7 @@
     "ts-check:build": "tsc --skipLibCheck --noEmit --project tsconfig.build.json",
     "ts-check:test": "tsc --skipLibCheck --noEmit --project tsconfig.test.json",
     "lint:css": "stylelint 'src/**/*.scss'",
-    "lint": "yarn lint:css && yarn ts-check:build && eslint --ext js,ts,tsx src",
+    "lint": "yarn lint:css && yarn ts-check:build && eslint src",
     "test:e2e:install": "yarn playwright install",
     "test:e2e:ci": "yarn playwright test",
     "test:e2e:start": "yarn playwright test",
@@ -77,11 +79,6 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!hds-react)/"
-    ]
-  },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
@@ -90,19 +87,20 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.0",
     "@testing-library/user-event": "^14.0.0",
-    "@vitest/coverage-istanbul": "^3.2.4",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "@vitest/coverage-istanbul": "^4.1.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^8.0.3",
     "jsdom": "^26.1.0",
     "react-test-renderer": "^18.2.0",
     "shadow-dom-testing-library": "^1.11.3",
-    "stylelint": "^16.5.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-value-no-unknown-custom-properties": "^6.0.1",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.2"
   },
   "resolutions": {
-    "braces": "^3.0.3",
-    "rollup": "^4.22.4"
+    "vite": "^8.0.3",
+    "picomatch": "4.0.4",
+    "**/@typescript-eslint/typescript-estree/minimatch": "9.0.7"
   }
 }

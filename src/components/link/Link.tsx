@@ -1,4 +1,3 @@
-import React from 'react';
 import './Link.scss';
 
 export function Link({

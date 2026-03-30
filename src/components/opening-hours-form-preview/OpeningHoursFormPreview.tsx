@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePeriod, TranslatedApiChoice } from '../../common/lib/types';
 import { formatDateRange } from '../../common/utils/date-time/format';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -22,14 +21,14 @@ vi.mock('react-i18next', () => ({
     return {
       t: (str: string) => str,
       i18n: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+         
         changeLanguage: () => new Promise(() => {}),
       },
     };
   },
   initReactI18next: {
     type: '3rdParty',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+     
     init: () => {},
   },
 }));

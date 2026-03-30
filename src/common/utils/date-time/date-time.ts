@@ -36,7 +36,7 @@ export const getEnabledWeekdays = (
     return datesBetween
       .map((date) => getNumberOfTheWeekday(date.toISOString()))
       .sort();
-  } catch (e) {
+  } catch (_e) {
     return [];
   }
 };

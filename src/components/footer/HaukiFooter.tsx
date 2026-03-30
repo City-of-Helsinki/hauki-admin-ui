@@ -1,4 +1,3 @@
-import React from 'react';
 import { Footer, logoFi, logoSv, Logo, LogoSize } from 'hds-react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../App-context';

@@ -34,7 +34,7 @@ RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
 RUN yarn update-runtime-env
 
 # Copy all files
-COPY .eslintrc.js .eslintignore tsconfig.json tsconfig.build.json index.html vite.config.mts .prettierrc.json .env* /app/
+COPY eslint.config.mjs tsconfig.json tsconfig.build.json index.html vite.config.mts vite.config.build.ts .prettierrc.json .env* /app/
 COPY ./src /app/src
 COPY ./test /app/test
 

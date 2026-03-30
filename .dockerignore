@@ -21,8 +21,8 @@
 !tsconfig.json
 !tsconfig.build.json
 !LICENSE
-!.eslintrc.js
+!eslint.config.mjs
 !.prettierrc.json
-!.eslintignore
 !index.html
 !vite.config.mts
+!vite.config.build.ts

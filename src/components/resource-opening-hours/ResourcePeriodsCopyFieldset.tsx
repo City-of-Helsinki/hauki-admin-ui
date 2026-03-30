@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Notification, IconCopy } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
@@ -64,7 +64,7 @@ const ResourcePeriodsCopyFieldset = ({
       });
       setIsCopyLoading(false);
 
-      // eslint-disable-next-line no-console
+       
       console.error(err); // For debug purposes
     }
   };

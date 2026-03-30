@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppContext } from '../../App-context';
 import { Language } from '../../common/lib/types';
 import { getWeekdayShortNameByIndexAndLang } from '../../common/utils/date-time/format';

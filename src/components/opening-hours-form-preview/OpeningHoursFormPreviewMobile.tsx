@@ -1,5 +1,5 @@
 import { IconAngleDown, IconAngleUp, useAccordion } from 'hds-react';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,

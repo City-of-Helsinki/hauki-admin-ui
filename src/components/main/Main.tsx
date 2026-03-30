@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import './Main.scss';
 import { useGroupConsent } from 'hds-react';
 import { useLocation } from 'react-router-dom';

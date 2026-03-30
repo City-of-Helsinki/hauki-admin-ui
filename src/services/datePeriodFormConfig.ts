@@ -7,7 +7,7 @@ import api from '../common/utils/api/api';
  * We need to make sure the when storing and retrieving the data
  * that it is mapped correctly. That is done in the opening-hours-helpers module.
  */
-// eslint-disable-next-line import/prefer-default-export
+ 
 export const getDatePeriodFormConfig = (): Promise<UiDatePeriodConfig> =>
   api.getDatePeriodFormConfig();
 // .then((result) => ({

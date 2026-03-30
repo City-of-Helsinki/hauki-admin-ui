@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -13,14 +12,14 @@ vi.mock('react-i18next', () => ({
     return {
       t: (str: string) => str,
       i18n: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+         
         changeLanguage: () => new Promise(() => {}),
       },
     };
   },
   initReactI18next: {
     type: '3rdParty',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+     
     init: () => {},
   },
 }));

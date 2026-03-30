@@ -14,7 +14,7 @@ import {
 } from '../../lib/types';
 import { AuthTokens, getTokens } from '../../../auth/auth-context';
 
-// eslint-disable-next-line no-underscore-dangle
+ 
 const apiBaseUrl: string = window._env_?.API_URL || 'http://localhost:8000';
 
 const resourceBasePath = '/resource';

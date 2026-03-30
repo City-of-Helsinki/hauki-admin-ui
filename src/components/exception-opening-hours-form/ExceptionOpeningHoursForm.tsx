@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePeriod, ResourceState } from '../../common/lib/types';
 import { formatDate } from '../../common/utils/date-time/format';

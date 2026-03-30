@@ -7,7 +7,7 @@ import {
   TimeInput,
 } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
-import React, { MutableRefObject, useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Language,
@@ -98,7 +98,7 @@ const TimeSpan = ({
   useEffect(() => {
     if (innerRef) {
       // The toggle-button postfix comes from HDS and if that ever changes this will break
-      // eslint-disable-next-line no-param-reassign
+       
       innerRef.current = document.getElementById(
         `${resourceStateId}-toggle-button`
       );
@@ -128,7 +128,7 @@ const TimeSpan = ({
             options={sanitizedResourceStateOptions}
             className="time-span__resource-state-select"
             onChange={(
-              selectedOptions: Option[],
+              _selectedOptions: Option[],
               clickedOption: Option
             ): void => onChange(clickedOption.value)}
             required

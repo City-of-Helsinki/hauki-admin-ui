@@ -9,7 +9,7 @@ const storeItem = <T>({
     window.sessionStorage.setItem(key, JSON.stringify(value));
     return value;
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.log(error);
     return undefined;
   }
@@ -20,7 +20,7 @@ const getItem = <T>(key: string): T | undefined => {
     const item = window.sessionStorage.getItem(key);
     return item ? JSON.parse(item) : undefined;
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.log(error);
     return undefined;
   }

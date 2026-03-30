@@ -1,6 +1,5 @@
 import { DateInput, SelectionGroup } from 'hds-react';
 import { useTranslation } from 'react-i18next';
-import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';
 import { DatePeriod, Language, ResourceState } from '../../common/lib/types';

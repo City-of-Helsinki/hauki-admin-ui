@@ -167,7 +167,7 @@ const OpeningHoursWeekdays = ({
 
   const handleRuleChange =
     (i: number) =>
-    (selectedOptions: Option[], clickedOption: Option): void => {
+    (_selectedOptions: Option[], clickedOption: Option): void => {
       const result = updateRule(
         ruleValues,
         getValues(`${namePrefix}.timeSpanGroups`),

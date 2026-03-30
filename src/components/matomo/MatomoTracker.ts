@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+ 
 import { TRACK_TYPES } from './constants';
 
 export type MatomoTrackerOptions = {
