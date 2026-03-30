@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import eslint from 'vite-plugin-eslint';
+import eslint from '@nabla/vite-plugin-eslint';
 
 export default defineConfig({
   base: '/',
@@ -10,6 +10,13 @@ export default defineConfig({
     outDir: './build',
     emptyOutDir: true,
     sourcemap: true,
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ['import'],
+      },
+    },
   },
   server: {
     host: true,

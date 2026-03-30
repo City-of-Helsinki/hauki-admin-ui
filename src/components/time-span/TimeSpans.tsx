@@ -1,5 +1,5 @@
 import { IconPlusCircle } from 'hds-react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -66,7 +66,7 @@ const TimeSpans = ({
       );
 
       if (fields.length > 1) {
-        fields.forEach((field, i) => {
+        fields.forEach((_field, i) => {
           if (i > 0) {
             remove(i);
           }

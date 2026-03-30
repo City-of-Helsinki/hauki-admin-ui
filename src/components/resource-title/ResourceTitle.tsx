@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Language, Resource } from '../../common/lib/types';
 import { isUnitResource } from '../../common/utils/resource/helper';
 import './ResourceTitle.scss';

@@ -16,6 +16,6 @@ interface Window {
     MATOMO_SITE_ID: string;
     MATOMO_ENABLED: string;
   };
-  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _paq: [string, ...any[]][];
 }

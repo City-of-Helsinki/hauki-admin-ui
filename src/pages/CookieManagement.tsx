@@ -1,4 +1,3 @@
-import React from 'react';
 import { CookieSettingsPage } from 'hds-react';
 import './CookieManagement.scss';
 

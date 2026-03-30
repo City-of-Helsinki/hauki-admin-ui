@@ -33,3 +33,4 @@ env-config.js
 
 # load tests
 load-tests/summary.html
+.eslintcache

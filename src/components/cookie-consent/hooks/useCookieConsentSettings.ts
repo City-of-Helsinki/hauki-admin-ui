@@ -19,20 +19,20 @@ const useCookieConsentSettings = () => {
         CookieConsentGroup.STATISTICS
       );
 
-      // eslint-disable-next-line no-underscore-dangle
+       
       if (!window._paq) {
         return;
       }
 
       if (hasStatisticsConsent) {
         // start tracking
-        // eslint-disable-next-line no-underscore-dangle
+         
         window._paq.push(['setConsentGiven']);
-        // eslint-disable-next-line no-underscore-dangle
+         
         window._paq.push(['setCookieConsentGiven']);
       } else {
         // tell matomo to forget consent
-        // eslint-disable-next-line no-underscore-dangle
+         
         window._paq.push(['forgetConsentGiven']);
       }
     },

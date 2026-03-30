@@ -85,7 +85,7 @@ const groupByConsecutiveDays = (
     : [];
 };
 
-// eslint-disable-next-line import/prefer-default-export
+ 
 export const openingHoursToPreviewRows = (
   openingHours: OpeningHours[]
 ): PreviewRow[] =>
@@ -122,7 +122,7 @@ export const openingHoursToPreviewRows = (
       []
     )
     // Merge rows with 'Joka viikko' days
-    .map((previewRow, idx, arr) => {
+    .map((previewRow, _idx, arr) => {
       if (previewRow.rule.type === 'week_every') {
         return previewRow;
       }
@@ -141,7 +141,7 @@ export const openingHoursToPreviewRows = (
       openingHours: groupByConsecutiveDays(previewRow.openingHours),
     }))
     // If user has selected some other rule than 'Joka viikko' it will be removed from the list
-    .filter((previewRow, idx, arr) => {
+    .filter((previewRow, _idx, arr) => {
       if (arr.length > 1 && previewRow.rule.type === 'week_every') {
         return false;
       }

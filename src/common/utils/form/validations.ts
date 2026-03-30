@@ -21,7 +21,7 @@ export const isValidDate = (date: string): string | undefined => {
   try {
     transformDateToApiFormat(date);
     return undefined;
-  } catch (e) {
+  } catch (_e) {
     return 'Tarkista päivämäärä';
   }
 };

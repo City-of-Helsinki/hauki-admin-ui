@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { useFormContext } from 'react-hook-form';

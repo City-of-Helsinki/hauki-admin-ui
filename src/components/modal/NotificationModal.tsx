@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Dialog, IconInfoCircle } from 'hds-react';
 import { PrimaryButton } from '../button/Button';
 

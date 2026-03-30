@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppContext } from '../../App-context';
 import { openingHoursToPreviewRows } from '../../common/helpers/preview-helpers';
 import {

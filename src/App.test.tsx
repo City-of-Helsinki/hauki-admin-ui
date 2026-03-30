@@ -1,15 +1,16 @@
-import React from 'react';
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { screen as shadowScreen } from 'shadow-dom-testing-library';
 import App from './App';
 
 const setupResizeObserver = () => {
-  global.ResizeObserver = vi.fn().mockImplementation(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  }));
+  global.ResizeObserver = vi.fn().mockImplementation(function () {
+    return {
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
+    };
+  });
 };
 
 const clearAllCookies = () =>

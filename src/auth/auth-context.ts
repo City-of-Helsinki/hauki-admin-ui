@@ -80,7 +80,9 @@ export type AuthContextProps = {
   clearAuth: () => void;
 };
 
-export const AuthContext: Context<{}> = createContext({});
+export const AuthContext: Context<Partial<AuthContextProps>> = createContext<
+  Partial<AuthContextProps>
+>({});
 
 export function useAuth(): Partial<AuthContextProps> {
   return useContext(AuthContext);

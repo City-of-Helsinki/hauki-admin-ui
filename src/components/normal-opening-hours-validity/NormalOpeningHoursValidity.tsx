@@ -1,5 +1,4 @@
 import { DateInput, RadioButton, SelectionGroup } from 'hds-react';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useAppContext } from '../../App-context';

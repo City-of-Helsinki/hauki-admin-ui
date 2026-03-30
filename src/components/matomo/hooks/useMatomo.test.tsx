@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { render } from '@testing-library/react';
 import * as MatomoTracker from '../MatomoTracker';
 import { MatomoProvider } from '../matomo-context';
@@ -19,13 +19,14 @@ describe('useMatomo', () => {
     const trackPageViewMock = vi.fn();
 
     vi.spyOn(MatomoTracker, 'default').mockImplementation(
-      () =>
-        ({
+      function () {
+        return {
           trackPageView: trackPageViewMock,
-        } as unknown as MatomoTracker.default)
+        } as unknown as MatomoTracker.default;
+      }
     );
 
-    // eslint-disable-next-line new-cap
+     
     const instance = new MatomoTracker.default({
       urlBase: 'https://www.hel.fi',
       siteId: 'test123',

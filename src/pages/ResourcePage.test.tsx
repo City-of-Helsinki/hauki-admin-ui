@@ -1,4 +1,4 @@
-import React, { act } from 'react';
+import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { datePeriodOptions } from '../../test/fixtures/api-options';
@@ -238,14 +238,14 @@ vi.mock('react-i18next', () => ({
     return {
       t: (str: string) => str,
       i18n: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+         
         changeLanguage: () => new Promise(() => {}),
       },
     };
   },
   initReactI18next: {
     type: '3rdParty',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+     
     init: () => {},
   },
 }));
@@ -306,7 +306,7 @@ describe(`<ResourcePage />`, () => {
 
   it('should show loading indicator', async () => {
     vi.spyOn(api, 'getResource')
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+       
       .mockImplementation(() => new Promise(() => {}));
 
     render(

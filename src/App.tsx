@@ -1,5 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'hds-core';
 import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
@@ -50,7 +49,7 @@ const getPersistentTokens = (): OptionalAuthTokens => {
 
 const App = (): JSX.Element => {
   const hasOpenerWindow =
-    document.referrer && document.referrer !== window.location.href;
+    !!document.referrer && document.referrer !== window.location.href;
 
   const closeAppWindow = useCallback((): void => {
     // A window can only close itself if it has an parent opener.
