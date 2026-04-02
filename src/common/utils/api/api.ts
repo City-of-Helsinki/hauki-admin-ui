@@ -1,4 +1,3 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as querystring from 'querystring';
 import { ParsedUrlQueryInput } from 'querystring';
 import {
@@ -68,6 +67,14 @@ interface ApiParameters extends RequestParameters {
   format: ApiResponseFormat;
 }
 
+interface FetchRequestConfig {
+  url: string;
+  method: string;
+  headers?: { [key: string]: string };
+  params?: RequestParameters;
+  data?: RequestParameters;
+}
+
 const convertApiChoiceToTranslatedApiChoice = (
   apiChoice: ApiChoice
 ): TranslatedApiChoice => {
@@ -91,31 +98,50 @@ const convertApiChoiceToTranslatedApiChoice = (
   };
 };
 
-const addTokensToRequestConfig = (
-  authTokens: AuthTokens,
-  config: AxiosRequestConfig
-): AxiosRequestConfig => {
-  return {
-    ...config,
-    headers: {
-      ...config.headers,
-      Authorization: `haukisigned ${querystring.stringify(
-        authTokens as unknown as ParsedUrlQueryInput
-      )}`,
-    },
-  };
+const buildUrl = (base: string, params?: RequestParameters): string => {
+  if (!params || Object.keys(params).length === 0) return base;
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      searchParams.append(key, String(value));
+    }
+  });
+  const query = searchParams.toString();
+  return query ? `${base}?${query}` : base;
 };
 
-async function request<T>(requestConfig: AxiosRequestConfig): Promise<T> {
-  const authTokens: AuthTokens | undefined = getTokens();
-  const config: AxiosRequestConfig = authTokens
-    ? addTokensToRequestConfig(authTokens, requestConfig)
-    : requestConfig;
+const addAuthHeader = (
+  authTokens: AuthTokens,
+  headers: { [key: string]: string }
+): { [key: string]: string } => ({
+  ...headers,
+  Authorization: `haukisigned ${querystring.stringify(
+    authTokens as unknown as ParsedUrlQueryInput
+  )}`,
+});
 
-  const response: AxiosResponse<T> = await axios.request<T, AxiosResponse<T>>(
-    config
+async function request<T>(config: FetchRequestConfig): Promise<T> {
+  const authTokens: AuthTokens | undefined = getTokens();
+  const headers: { [key: string]: string } = authTokens
+    ? addAuthHeader(authTokens, config.headers ?? {})
+    : (config.headers ?? {});
+
+  const url = buildUrl(config.url, config.params);
+  const hasBody = ['post', 'put', 'patch'].includes(
+    config.method.toLowerCase()
   );
-  return response.data;
+
+  const response = await fetch(url, {
+    method: config.method.toUpperCase(),
+    headers,
+    ...(hasBody ? { body: JSON.stringify(config.data ?? {}) } : {}),
+  });
+
+  if (response.status >= 300) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  return response.json() as Promise<T>;
 }
 
 async function apiGet<T>({ path, parameters = {} }: GetParameters): Promise<T> {
@@ -134,8 +160,6 @@ async function apiGet<T>({ path, parameters = {} }: GetParameters): Promise<T> {
   });
 }
 
-const validateStatus = (status: number): boolean => status < 300;
-
 async function apiPost<T>({
   path,
   data = {},
@@ -150,7 +174,6 @@ async function apiPost<T>({
     method: 'post',
     data,
     params: parameters,
-    validateStatus,
   });
 }
 
@@ -165,7 +188,6 @@ async function apiPut<T>({
     },
     method: 'put',
     data,
-    validateStatus,
   });
 }
 
@@ -180,7 +202,6 @@ async function apiPatch<T>({
     },
     method: 'patch',
     data,
-    validateStatus,
   });
 }
 
@@ -191,9 +212,6 @@ async function apiOptions<T>({ path }: OptionsParameters): Promise<T> {
       'Content-Type': 'application/json',
     },
     method: 'options',
-    validateStatus(status) {
-      return status < 300;
-    },
   });
 }
 
