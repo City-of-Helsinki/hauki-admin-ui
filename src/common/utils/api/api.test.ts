@@ -1,13 +1,17 @@
-import axios from 'axios';
 import api from './api';
 import * as auth from '../../../auth/auth-context';
 import { AuthTokens } from '../../../auth/auth-context';
 import { Resource, ResourceState, ResourceType } from '../../lib/types';
 
-vi.mock('axios');
+const mockFetch = vi.fn();
 
 describe('apiRequest', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', mockFetch);
+  });
+
   afterEach(() => {
+    vi.unstubAllGlobals();
     vi.clearAllMocks();
   });
 
@@ -25,31 +29,30 @@ describe('apiRequest', () => {
 
       vi.spyOn(auth, 'getTokens').mockImplementationOnce(() => mockTokens);
 
-      const requestSpy = vi
-        .spyOn(axios, 'request')
-        .mockImplementation(() => Promise.resolve({ data: 'ok' }));
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ has_permission: false }),
+      });
 
       await api.testResourcePostPermission(resourceId);
 
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-      expect(requestSpy).toHaveBeenCalledWith({
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `haukisigned hsa_username=${encodeURIComponent(
-            queryTokens.hsa_username
-          )}&hsa_created_at=${encodeURIComponent(
-            queryTokens.hsa_created_at
-          )}&hsa_valid_until=${encodeURIComponent(
-            queryTokens.hsa_valid_until
-          )}&hsa_source=${encodeURIComponent(
-            queryTokens.hsa_source
-          )}&hsa_signature=123456`,
-        },
-        method: 'post',
-        url: 'http://localhost:8000/v1/resource/tprek:8100/permission_check/',
-        data: {},
-        params: undefined,
-        validateStatus: expect.anything(),
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe(
+        'http://localhost:8000/v1/resource/tprek:8100/permission_check/'
+      );
+      expect(calledOptions.method).toBe('POST');
+      expect(calledOptions.headers).toMatchObject({
+        'Content-Type': 'application/json',
+        Authorization: `haukisigned hsa_username=${encodeURIComponent(
+          queryTokens.hsa_username
+        )}&hsa_created_at=${encodeURIComponent(
+          queryTokens.hsa_created_at
+        )}&hsa_valid_until=${encodeURIComponent(
+          queryTokens.hsa_valid_until
+        )}&hsa_source=${encodeURIComponent(
+          queryTokens.hsa_source
+        )}&hsa_signature=123456`,
       });
     });
   });
@@ -82,21 +85,22 @@ describe('apiRequest', () => {
         resource_type: ResourceType.UNIT,
       };
 
-      const requestSpy = vi
-        .spyOn(axios, 'request')
-        .mockImplementation(() => Promise.resolve({ data: mockResource }));
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve(mockResource),
+      });
 
       const response = await api.getResource('tprek:8100');
 
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-
-      expect(requestSpy).toHaveBeenCalledWith({
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe(
+        'http://localhost:8000/v1/resource/tprek:8100/?format=json'
+      );
+      expect(calledOptions).toMatchObject({
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        method: 'get',
-        params: { format: 'json' },
-        url: 'http://localhost:8000/v1/resource/tprek:8100/',
       });
-
       expect(response).toBe(mockResource);
     });
   });
@@ -122,62 +126,56 @@ describe('apiRequest', () => {
         time_span_groups: [],
       };
 
-      const requestSpy = vi
-        .spyOn(axios, 'request')
-        .mockImplementation(() =>
-          Promise.resolve({ data: { ...periodTobeCreated, id: 100 } })
-        );
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ ...periodTobeCreated, id: 100 }),
+      });
 
       await api.postDatePeriod(periodTobeCreated);
 
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-
-      expect(requestSpy).toHaveBeenCalledWith({
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe('http://localhost:8000/v1/date_period/');
+      expect(calledOptions).toMatchObject({
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        method: 'post',
-        url: 'http://localhost:8000/v1/date_period/',
-        data: periodTobeCreated,
-        validateStatus: expect.any(Function),
+        body: JSON.stringify(periodTobeCreated),
       });
     });
   });
 
   describe('patchDatePeriodOrder', () => {
     it('sends a PATCH request with only the order field', async () => {
-      const requestSpy = vi
-        .spyOn(axios, 'request')
-        .mockImplementation(() =>
-          Promise.resolve({ data: { id: 42, order: 3 } })
-        );
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ id: 42, order: 3 }),
+      });
 
       await api.patchDatePeriodOrder(42, 3);
 
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-      expect(requestSpy).toHaveBeenCalledWith({
-        headers: { 'Content-Type': 'application/json' },
-        method: 'patch',
-        url: 'http://localhost:8000/v1/date_period/42/',
-        data: { order: 3 },
-        validateStatus: expect.any(Function),
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe('http://localhost:8000/v1/date_period/42/');
+      expect(calledOptions).toMatchObject({
+        method: 'PATCH',
+        body: JSON.stringify({ order: 3 }),
       });
     });
 
     it('sends null order when clearing order', async () => {
-      const requestSpy = vi
-        .spyOn(axios, 'request')
-        .mockImplementation(() =>
-          Promise.resolve({ data: { id: 7, order: null } })
-        );
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ id: 7, order: null }),
+      });
 
       await api.patchDatePeriodOrder(7, null);
 
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          method: 'patch',
-          url: 'http://localhost:8000/v1/date_period/7/',
-          data: { order: null },
-        })
-      );
+      const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe('http://localhost:8000/v1/date_period/7/');
+      expect(calledOptions).toMatchObject({
+        method: 'PATCH',
+        body: JSON.stringify({ order: null }),
+      });
     });
   });
 
@@ -256,9 +254,10 @@ describe('apiRequest', () => {
         },
       };
 
-      vi.spyOn(axios, 'request').mockImplementation(() =>
-        Promise.resolve({ data: datePeriodOptions })
-      );
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve(datePeriodOptions),
+      });
 
       const response = await api.getDatePeriodFormConfig();
       expect(response).toEqual({
