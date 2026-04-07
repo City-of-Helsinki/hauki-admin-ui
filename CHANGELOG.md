@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.14.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.1...hauki-admin-ui-v1.14.2) (2026-04-07)
+
+
+### Bug Fixes
+
+* Missing 204 status handling ([b3f6b0c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b3f6b0cee2411689e23b7fb125b4ad87e0233767))
+* Remove axios and use fetch ([15b8491](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/15b8491bdba90f7daf2bd8027749103c3188ddde))
+* Remove CRA service worker ([ded0644](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/ded06444538ff24c1bee526d5ef1e2a1ddcef2e2))
+* Update and fix dependencies ([08a084b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/08a084b1524d804c6c65a0e94d6a2e8b6acfd962))
+
+
+### Dependencies
+
+* Bump lodash from 4.17.23 to 4.18.1 ([c96fb99](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c96fb9975260f6c924cfba49e97a24dda74259cb))
+* Bump vite from 8.0.3 to 8.0.5 ([00b0891](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/00b0891dcd878c5f3bbb804f53f7fc05ddef2252))
+
 ## [1.14.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.0...hauki-admin-ui-v1.14.1) (2026-03-26)
 
 
