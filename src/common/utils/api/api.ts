@@ -141,6 +141,10 @@ async function request<T>(config: FetchRequestConfig): Promise<T> {
     throw new Error(`Request failed with status ${response.status}`);
   }
 
+  if (response.status === 204) {
+    return undefined as unknown as T;
+  }
+
   return response.json() as Promise<T>;
 }
 
