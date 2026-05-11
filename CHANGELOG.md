@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.2...hauki-admin-ui-v1.14.3) (2026-05-11)
+
+
+### Dependencies
+
+* Bump fast-uri from 3.0.6 to 3.1.2 ([0c9b345](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0c9b34553a52798adc6123362ffcd0d13fed4065))
+* Bump postcss from 8.5.8 to 8.5.14 ([bd4d9d7](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/bd4d9d72be774bc8049204cfec20d4cb2f58bc10))
+
 ## [1.14.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.1...hauki-admin-ui-v1.14.2) (2026-04-07)
 
 
