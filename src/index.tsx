@@ -13,15 +13,15 @@ declare global {
   }
 }
 
-if (window._env_?.SENTRY_DSN) {
+if (
+  window._env_?.SENTRY_DSN &&
+  window._env_?.SENTRY_ENVIRONMENT !== 'local'
+) {
   Sentry.init({
     dsn: window._env_.SENTRY_DSN,
     environment: window._env_.SENTRY_ENVIRONMENT,
     release: window._env_.SENTRY_RELEASE,
-    tracesSampleRate:
-      window._env_.SENTRY_ENV === 'local'
-        ? 0
-        : window._env_.SENTRY_TRACES_SAMPLE_RATE,
+    tracesSampleRate: window._env_.SENTRY_TRACES_SAMPLE_RATE,
     tracePropagationTargets: window._env_.SENTRY_TRACE_PROPAGATION_TARGETS,
     replaysSessionSampleRate: window._env_.SENTRY_REPLAYS_SESSION_SAMPLE_RATE,
     replaysOnErrorSampleRate: window._env_.SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE,
