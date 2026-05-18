@@ -25,6 +25,9 @@ report/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
+.yarn/
+.yarnrc.yml
 
 # temporary env files
 public/env-config.js

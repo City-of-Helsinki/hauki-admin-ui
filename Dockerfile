@@ -5,23 +5,22 @@ FROM registry.access.redhat.com/ubi9/nodejs-22 AS staticbuilder
 WORKDIR /app
 
 USER root
-RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
-RUN yum -y install yarn
 
 # Offical image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
 ENV NPM_CONFIG_LOGLEVEL warn
+
+# Install pnpm via corepack into a shared location so non-root users can use it
+ENV COREPACK_HOME=/usr/local/share/corepack
+RUN corepack enable && corepack prepare pnpm@11.1.2 --activate \
+    && chmod -R a+rX "$COREPACK_HOME"
 
 # set our node environment, either development or production
 # defaults to production, compose overrides this to development on build and run
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-# Yarn
-ENV YARN_VERSION 1.19.1
-RUN yarn policies set-version $YARN_VERSION
-
 # Install dependencies
-COPY package.json yarn.lock /app/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml /app/
 COPY ./scripts /app/scripts
 COPY ./public /app/public
 
@@ -30,8 +29,8 @@ RUN chown -R default:root /app
 # Use non-root user
 USER default
 
-RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
-RUN yarn update-runtime-env
+RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
+RUN pnpm update-runtime-env
 
 # Copy all files
 COPY eslint.config.mjs tsconfig.json tsconfig.build.json index.html vite.config.mts vite.config.build.ts .prettierrc.json .env* /app/
@@ -43,11 +42,11 @@ ARG REACT_APP_SENTRY_RELEASE
 ENV REACT_APP_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
 
 # Build application
-RUN yarn build
+RUN pnpm build
 
 # Process nginx configuration with APP_VERSION substitution
 COPY nginx/nginx.conf /app/nginx.conf.template
-RUN export APP_VERSION=$(yarn --silent app:version | tr -d '\n') && \
+RUN export APP_VERSION=$(pnpm --silent app:version | tr -d '\n') && \
     envsubst '${APP_VERSION},${REACT_APP_RELEASE}' < /app/nginx.conf.template > /app/nginx.conf
 
 # =============================
