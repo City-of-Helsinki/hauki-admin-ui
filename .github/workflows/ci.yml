@@ -12,5 +12,5 @@ jobs:
     uses: City-of-Helsinki/.github/.github/workflows/ci-pnpm-node.yml@main
     secrets: inherit
     with:
-      node-version: 22.x
+      node-version: 24.x
       extra-commands: pnpm update-runtime-env

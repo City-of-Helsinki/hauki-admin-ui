@@ -8,7 +8,7 @@ UI for managing opening hours in Hauki.
 
 ### Prerequisites
 
-- Node 22.x (`nvm use`)
+- Node 24.x (`nvm use`)
 - pnpm (`corepack enable` to use the version pinned in package.json)
 - Git
 - Docker
