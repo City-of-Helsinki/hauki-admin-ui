@@ -38,6 +38,8 @@ resources:
     # Azure DevOps repository
     - repository: hauki-pipelines
       type: git
+      ref: HAUKI-785-migrate-yarn-to-pnpm
+
       # Azure DevOps project/repository
       name: hauki/hauki-pipelines
 
