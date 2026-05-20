@@ -12,9 +12,12 @@ COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --chown=default:root ./scripts ./scripts
 COPY --chown=default:root ./public ./public
 
-# 2. Install dependencies
-# (env-config.js is generated at container start by the base image's env.sh)
+# 2. Install dependencies and create a build-time public/env-config.js
+# (Vite's HTML plugin resolves <script src="/env-config.js"> in index.html
+# against public/ at build time. The file's *contents* are overwritten at
+# container start by the base image's env.sh with the real runtime values.)
 RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
+RUN pnpm update-runtime-env
 
 # 3. Copy remaining source files
 COPY --chown=default:root index.html vite.config.mts vite.config.build.ts eslint.config.mjs tsconfig.json tsconfig.build.json .prettierrc.json .env* ./
