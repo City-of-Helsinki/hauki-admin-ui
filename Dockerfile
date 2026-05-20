@@ -12,9 +12,9 @@ COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --chown=default:root ./scripts ./scripts
 COPY --chown=default:root ./public ./public
 
-# 2. Install dependencies and prepare runtime env config
+# 2. Install dependencies
+# (env-config.js is generated at container start by the base image's env.sh)
 RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
-RUN pnpm update-runtime-env
 
 # 3. Copy remaining source files
 COPY --chown=default:root index.html vite.config.mts vite.config.build.ts eslint.config.mjs tsconfig.json tsconfig.build.json .prettierrc.json .env* ./
@@ -23,7 +23,7 @@ COPY --chown=default:root ./test ./test
 
 # 4. Build
 ARG REACT_APP_SENTRY_RELEASE
-ENV APP_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
+ENV SENTRY_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
 RUN pnpm build
 
 
@@ -33,7 +33,7 @@ RUN pnpm build
 FROM helsinki.azurecr.io/ubi10/nginx-126-spa-standard AS production
 
 ARG REACT_APP_SENTRY_RELEASE
-ENV APP_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
+ENV SENTRY_RELEASE=${REACT_APP_SENTRY_RELEASE:-""}
 
 # Copy compiled assets
 COPY --from=staticbuilder /app/build /usr/share/nginx/html
