@@ -51,7 +51,7 @@ RUN export APP_VERSION=$(yarn --silent app:version | tr -d '\n') && \
     envsubst '${APP_VERSION},${REACT_APP_RELEASE}' < /app/nginx.conf.template > /app/nginx.conf
 
 # =============================
-FROM registry.access.redhat.com/ubi9/nginx-120 as production
+FROM registry.access.redhat.com/ubi9/nginx-124 as production
 # =============================
 
 USER root
