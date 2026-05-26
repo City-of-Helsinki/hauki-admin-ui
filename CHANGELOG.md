@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.3...hauki-admin-ui-v1.14.4) (2026-05-26)
+
+
+### Bug Fixes
+
+* Update Dockerfile to fix CVE-2026-42945 ([dc9861b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/dc9861b3e17b74e959078d004fa0564f1f2eb99d))
+
 ## [1.14.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.2...hauki-admin-ui-v1.14.3) (2026-05-11)
 
 
