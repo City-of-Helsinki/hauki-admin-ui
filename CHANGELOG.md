@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.4...hauki-admin-ui-v1.15.0) (2026-05-27)
+
+
+### Features
+
+* Migrate from yarn to pnpm and adopt Helsinki base images ([70bc832](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/70bc8328934b28998a6a9e72affa0cc86902ea58)), closes [#503](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/503)
+
 ## [1.14.4](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.3...hauki-admin-ui-v1.14.4) (2026-05-26)
 
 
