@@ -9,4 +9,4 @@ services:
       - .env
       - .env.local
     ports:
-      - '3000:8000'
+      - '3000:8080'

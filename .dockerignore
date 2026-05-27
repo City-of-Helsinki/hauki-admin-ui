@@ -10,14 +10,15 @@
 !scripts*
 !src*
 !test*
-!nginx*
+!.prod*
 
 #################################################
 # Whitelisted files
 #################################################
 !.env
 !package.json
-!yarn.lock
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
 !tsconfig.json
 !tsconfig.build.json
 !LICENSE
