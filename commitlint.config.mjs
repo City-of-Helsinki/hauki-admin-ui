@@ -1,9 +1,7 @@
 const conventionalCommitHeaderPattern = /^[a-z]+(\(.+\))?!?: .+/;
 
-module.exports = {
-  extends: [
-    '@commitlint/config-conventional'
-  ],
+export default {
+  extends: ['@commitlint/config-conventional'],
   ignores: [
     (message) => message.includes('Signed-off-by: dependabot[bot]'),
     (message) => {
@@ -15,20 +13,9 @@ module.exports = {
     }
   ],
   rules: {
-    'header-max-length': [
-      2,
-      'always',
-      72
-    ],
-    'body-max-line-length': [
-      2,
-      'always',
-      72
-    ],
-    'body-leading-blank': [
-      2,
-      'always'
-    ],
+    'header-max-length': [2, 'always', 72],
+    'body-max-line-length': [2, 'always', 72],
+    'body-leading-blank': [2, 'always'],
     'type-enum': [
       2,
       'always',
