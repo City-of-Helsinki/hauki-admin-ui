@@ -4,6 +4,8 @@ import { formatDateRange } from '../../common/utils/date-time/format';
 import OpeningHoursPreview from '../opening-hours-preview/OpeningHoursPreview';
 import './OpeningHoursFormPreview.scss';
 
+import type { JSX } from "react";
+
 const OpeningHoursFormPreview = ({
   datePeriod,
   resourceStates,

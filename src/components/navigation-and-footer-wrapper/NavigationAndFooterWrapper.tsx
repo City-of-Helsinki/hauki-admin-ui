@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import HaukiHeader from '../header/HaukiHeader';
 import HaukiFooter from '../footer/HaukiFooter';
 

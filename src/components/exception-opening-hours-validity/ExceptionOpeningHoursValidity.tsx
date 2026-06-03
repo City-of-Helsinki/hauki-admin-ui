@@ -12,6 +12,8 @@ import { defaultTimeSpanGroup } from '../../constants';
 import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
 import './ExceptionOpeningHoursValidity.scss';
 
+import type { JSX } from "react";
+
 const ExceptionOpeningHoursValidity = (): JSX.Element => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();

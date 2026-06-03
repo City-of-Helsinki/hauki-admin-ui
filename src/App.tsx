@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, type JSX } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'hds-core';
 import { CookieBanner, CookieConsentContextProvider } from 'hds-react';

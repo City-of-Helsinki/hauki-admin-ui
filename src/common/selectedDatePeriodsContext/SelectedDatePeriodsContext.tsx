@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
+  type JSX,
 } from 'react';
 import store from '../utils/storage/sessionStorage';
 import { DatePeriod } from '../lib/types';
@@ -29,9 +30,11 @@ export const SelectedDatePeriodsContext = createContext<
   SelectedDatePeriodsContextType | undefined
 >(undefined);
 
-export const SelectedDatePeriodsProvider: React.FC<{
+export const SelectedDatePeriodsProvider = ({
+  children,
+}: {
   children: React.ReactNode;
-}> = ({ children }) => {
+}): JSX.Element => {
   const [selectedDatePeriods, setSelectedDatePeriods] = useState<DatePeriod[]>(
     () => {
       const storedDatePeriods: DatePeriod[] =

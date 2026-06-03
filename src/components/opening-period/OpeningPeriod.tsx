@@ -15,6 +15,8 @@ import {
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
+import type { JSX } from "react";
+
 const OpeningPeriod = ({
   datePeriod,
   datePeriodConfig,

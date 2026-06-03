@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Accordion,

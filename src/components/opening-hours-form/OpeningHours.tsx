@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type JSX } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import {
   alignOpeningHoursWeekdaysToDateRange,
@@ -14,7 +14,7 @@ type Props = {
 
 const OpeningHours = ({ resourceStates, rules }: Props): JSX.Element => {
   const [dropInRow, setDropInRow] = useState<number>();
-  const offsetTop = useRef<number>();
+  const offsetTop = useRef<number>(undefined);
   const { control, getValues, setValue, watch } = useFormContext<DatePeriod>();
   const [startDate, endDate] = watch(['startDate', 'endDate']);
   const { insert, fields, remove } = useFieldArray({

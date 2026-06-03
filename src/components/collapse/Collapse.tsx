@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, type JSX } from 'react';
 import { IconAngleDown, IconAngleUp } from 'hds-react';
 import './Collapse.scss';
 

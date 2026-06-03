@@ -11,6 +11,8 @@ import { createWeekdaysStringFromIndices } from '../../common/utils/date-time/fo
 import { uiRuleLabels } from '../../constants';
 import './OpeningHoursPreview.scss';
 
+import type { JSX } from "react";
+
 const shouldHideOpeningHours = (timeSpan: TTimeSpan, idx: number): boolean =>
   !timeSpan.start_time &&
   !timeSpan.end_time &&

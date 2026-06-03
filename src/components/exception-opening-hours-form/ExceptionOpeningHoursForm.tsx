@@ -6,6 +6,8 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
+import type { JSX } from "react";
+
 const ExceptionOpeningHoursForm = ({
   copyFrom,
   ...props

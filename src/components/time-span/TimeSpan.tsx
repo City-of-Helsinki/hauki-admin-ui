@@ -7,7 +7,7 @@ import {
   TimeInput,
 } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { MutableRefObject, useEffect } from 'react';
+import { MutableRefObject, useEffect, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Language,

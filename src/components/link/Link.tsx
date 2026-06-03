@@ -1,5 +1,7 @@
 import './Link.scss';
 
+import type { JSX } from "react";
+
 export function Link({
   href,
   text,

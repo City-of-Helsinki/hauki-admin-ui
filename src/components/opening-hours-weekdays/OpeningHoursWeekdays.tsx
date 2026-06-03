@@ -1,6 +1,6 @@
 import { Notification, Option, Select } from 'hds-react';
 import { upperFirst } from 'lodash';
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {

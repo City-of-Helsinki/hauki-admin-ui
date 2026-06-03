@@ -9,6 +9,8 @@ import {
 } from '../../common/utils/form/validations';
 import './NormalOpeningHoursValidity.scss';
 
+import type { JSX } from "react";
+
 const NormalOpeningHoursValidity = (): JSX.Element => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();

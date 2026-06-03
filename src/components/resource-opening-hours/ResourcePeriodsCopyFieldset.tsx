@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 import { Notification, IconCopy } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {

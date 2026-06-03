@@ -6,6 +6,8 @@ import ExceptionOpeningHoursForm from '../components/exception-opening-hours-for
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
 import useResource from '../services/useResource';
 
+import type { JSX } from "react";
+
 const AddExceptionOpeningHoursPage = (): JSX.Element => {
   const { id: resourceId } = useParams<{
     id?: string;

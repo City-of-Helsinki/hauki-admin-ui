@@ -6,6 +6,8 @@ import {
 } from '../../common/lib/types';
 import { TimeSpan } from '../opening-hours-preview/OpeningHoursPreview';
 
+import type { JSX } from "react";
+
 type Props = {
   datePeriod?: DatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;

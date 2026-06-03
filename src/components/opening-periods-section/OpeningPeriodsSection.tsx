@@ -1,5 +1,5 @@
 import { Checkbox, LoadingSpinner } from 'hds-react';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
