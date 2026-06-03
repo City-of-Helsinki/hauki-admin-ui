@@ -110,8 +110,8 @@ importers:
         specifier: ^7.76.1
         version: 7.76.1(react@19.2.6)
       react-i18next:
-        specifier: 15.5.0
-        version: 15.5.0(i18next@23.7.11)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+        specifier: ^15.7.4
+        version: 15.7.4(i18next@23.7.11)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3)
       react-router-dom:
         specifier: ^6.30.3
         version: 6.30.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -3147,17 +3147,20 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
 
-  react-i18next@15.5.0:
-    resolution: {integrity: sha512-TK8wpr48D54RlVbwOugOqu4y7A30CRT9kJFQArubT22/fnDuAonFFX1TxETJLZWjF/USTLp8LUwRVk/NoAjpwg==}
+  react-i18next@15.7.4:
+    resolution: {integrity: sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw==}
     peerDependencies:
-      i18next: '>= 23.2.3'
+      i18next: '>= 23.4.0'
       react: '>= 16.8.0'
       react-dom: '*'
       react-native: '*'
+      typescript: ^5
     peerDependenciesMeta:
       react-dom:
         optional: true
       react-native:
+        optional: true
+      typescript:
         optional: true
 
   react-is@16.13.1:
@@ -6898,7 +6901,7 @@ snapshots:
     dependencies:
       react: 19.2.6
 
-  react-i18next@15.5.0(i18next@23.7.11)(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
+  react-i18next@15.7.4(i18next@23.7.11)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.28.6
       html-parse-stringify: 3.0.1
@@ -6906,6 +6909,7 @@ snapshots:
       react: 19.2.6
     optionalDependencies:
       react-dom: 19.2.6(react@19.2.6)
+      typescript: 5.9.3
 
   react-is@16.13.1: {}
 
