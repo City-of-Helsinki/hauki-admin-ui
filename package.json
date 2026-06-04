@@ -8,7 +8,6 @@
   },
   "packageManager": "pnpm@11.1.2",
   "dependencies": {
-    "@axe-core/react": "^4.11.3",
     "@eslint/js": "^9.39.1",
     "@nabla/vite-plugin-eslint": "^3.0.1",
     "@sentry/react": "^10.24.0",
@@ -83,6 +82,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
+    "@axe-core/playwright": "^4.11.0",
     "@playwright/test": "^1.58.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.4.2",

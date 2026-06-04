@@ -1,9 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 import './index.scss';
-import axe from '@axe-core/react';
 import App from './App';
 
 declare global {
@@ -31,10 +28,6 @@ if (
     ],
     integrations: [Sentry.browserTracingIntegration()],
   });
-}
-
-if (window._env_?.USE_AXE === 'true') {
-  axe(React, ReactDOM, 1000);
 }
 
 const container = document.getElementById('root');
