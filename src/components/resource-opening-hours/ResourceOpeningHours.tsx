@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { partition } from 'lodash';
 import { Notification } from 'hds-react';
@@ -33,7 +33,7 @@ const ResourceOpeningHours = ({
   language: Language;
   parentId?: number;
   resource: Resource;
-}): JSX.Element | null => {
+}) => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
   const [datePeriodConfig, setDatePeriodConfig] =

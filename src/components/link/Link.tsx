@@ -1,6 +1,5 @@
 import './Link.scss';
 
-import type { JSX } from "react";
 
 export function Link({
   href,
@@ -10,7 +9,7 @@ export function Link({
   href: string;
   text: string;
   dataTest?: string;
-}): JSX.Element {
+}) {
   return (
     <a data-testid={dataTest} href={href} className="custom-link">
       {text}
@@ -24,7 +23,7 @@ export function ExternalLink({
 }: {
   href: string;
   text: string;
-}): JSX.Element {
+}) {
   return (
     <a
       href={href}

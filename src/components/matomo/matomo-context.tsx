@@ -1,4 +1,4 @@
-import React, { createContext, type JSX } from 'react';
+import React, { createContext } from 'react';
 import { MatomoTrackerInstance } from './types';
 
 export type MatomoProviderProps = {
@@ -11,7 +11,7 @@ const MatomoContext = createContext<MatomoTrackerInstance | null>(null);
 export const MatomoProvider = ({
   children,
   value,
-}: MatomoProviderProps): JSX.Element => {
+}: MatomoProviderProps) => {
   const Context = MatomoContext;
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

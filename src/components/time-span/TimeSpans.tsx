@@ -1,5 +1,5 @@
 import { IconPlusCircle } from 'hds-react';
-import { useEffect, useRef, useState, type JSX } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -35,7 +35,7 @@ const TimeSpans = ({
   openingHoursIdx: number;
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const namePrefix =
     `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans` as const;

@@ -1,9 +1,8 @@
 import { CookieSettingsPage } from 'hds-react';
 import './CookieManagement.scss';
 
-import type { JSX } from "react";
 
-const CookieManagement = (): JSX.Element => (
+const CookieManagement = () => (
   <div className="cookie-management">
     <CookieSettingsPage />
   </div>

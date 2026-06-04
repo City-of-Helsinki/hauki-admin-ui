@@ -1,4 +1,4 @@
-import { ReactNode, useState, type JSX } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, IconQuestionCircle } from 'hds-react';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
@@ -40,7 +40,7 @@ export function ConfirmationModal({
   text: string | ReactNode;
   title: string;
   confirmIcon?: string | ReactNode;
-}): JSX.Element | null {
+}) {
   const { t } = useTranslation();
   const titleId = 'confirmation-modal-title';
 

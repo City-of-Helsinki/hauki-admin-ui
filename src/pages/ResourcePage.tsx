@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState, type JSX } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Accordion,
@@ -32,7 +32,7 @@ const ResourceSection = ({
 }: {
   id: string;
   children: ReactNode;
-}): JSX.Element => <section id={id}>{children}</section>;
+}) => <section id={id}>{children}</section>;
 
 const ResourceDetailsSection = ({
   id,
@@ -42,7 +42,7 @@ const ResourceDetailsSection = ({
   id: string;
   title: string;
   children: ReactNode;
-}): JSX.Element => (
+}) => (
   <ResourceSection id={id}>
     <Collapse isOpen collapseContentId={`${id}-section`} title={title}>
       {children}
@@ -54,7 +54,7 @@ const ResourcePage = ({
   targetResourcesString,
 }: {
   targetResourcesString?: string;
-}): JSX.Element => {
+}) => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
   const [resource, setResource] = useState<Resource | undefined>(undefined);

@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import {
   DatePeriod,
   Language,
@@ -7,7 +7,7 @@ import {
 import OpeningPeriodsSection from '../opening-periods-section/OpeningPeriodsSection';
 import OpeningPeriod from '../opening-period/OpeningPeriod';
 
-const OpeningPeriodsEmptyState = ({ text }: { text: string }): JSX.Element => (
+const OpeningPeriodsEmptyState = ({ text }: { text: string }) => (
   <p className="opening-periods-not-found">{text}</p>
 );
 
@@ -48,7 +48,7 @@ const OpeningPeriodsList = ({
   isLoading: boolean;
   newUrl: string;
   editUrl?: (datePeriod: DatePeriod) => string;
-}): JSX.Element => {
+}) => {
   const ref = React.useRef<HTMLButtonElement>(null);
 
   return (

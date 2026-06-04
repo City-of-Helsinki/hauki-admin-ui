@@ -17,7 +17,6 @@ import {
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-import type { JSX } from "react";
 
 const findHolidayDatePeriod = (holiday: Holiday, datePeriods: DatePeriod[]) =>
   datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
@@ -30,7 +29,7 @@ export const UpcomingHolidayNotification = ({
   datePeriodConfig?: UiDatePeriodConfig;
   datePeriods: DatePeriod[];
   holidays: Holiday[];
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const nextHoliday = holidays.find(isHoliday);
@@ -66,7 +65,7 @@ const HolidaysTable = ({
   datePeriods: DatePeriod[];
   holidays: Holiday[];
   initiallyOpen: boolean;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { selectedDatePeriods, toggleDatePeriod, datePeriodSelectState } =

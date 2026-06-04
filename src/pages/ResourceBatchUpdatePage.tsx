@@ -1,5 +1,5 @@
  
-import React, { useEffect, useState, type JSX } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Notification,
@@ -54,7 +54,7 @@ export type ResourceWithOrigins = Resource & {
 
 const ResourceBatchUpdatePage = ({
   targetResourcesString,
-}: ResourceBatchUpdatePageProps): JSX.Element => {
+}: ResourceBatchUpdatePageProps) => {
   const {
     hasOpenerWindow,
     closeAppWindow,

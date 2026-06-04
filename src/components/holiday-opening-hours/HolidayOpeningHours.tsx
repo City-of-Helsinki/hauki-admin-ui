@@ -6,7 +6,6 @@ import {
 } from '../../common/lib/types';
 import { TimeSpan } from '../opening-hours-preview/OpeningHoursPreview';
 
-import type { JSX } from "react";
 
 type Props = {
   datePeriod?: DatePeriod;
@@ -16,7 +15,7 @@ type Props = {
 const HolidayOpeningHours = ({
   datePeriod,
   datePeriodConfig,
-}: Props): JSX.Element => {
+}: Props) => {
   const { t } = useTranslation();
   if (datePeriod) {
     return (

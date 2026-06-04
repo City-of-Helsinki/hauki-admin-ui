@@ -7,9 +7,8 @@ import useResource from '../services/useResource';
 import useDatePeriod from '../services/useDatePeriod';
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
 
-import type { JSX } from "react";
 
-const EditNormalOpeningHoursPage = (): JSX.Element => {
+const EditNormalOpeningHoursPage = () => {
   const { t } = useTranslation();
 
   const { id: resourceId, datePeriodId } = useParams<{

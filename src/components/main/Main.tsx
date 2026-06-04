@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, type JSX } from 'react';
+import { ReactNode, useEffect } from 'react';
 import './Main.scss';
 import { useGroupConsent } from 'hds-react';
 import { useLocation } from 'react-router-dom';
@@ -10,11 +10,11 @@ type MainProps = {
   children: ReactNode;
 };
 
-export function MainContainer({ children }: Partial<MainProps>): JSX.Element {
+export function MainContainer({ children }: Partial<MainProps>) {
   return <div className="main-container">{children}</div>;
 }
 
-const Main = ({ id, children }: MainProps): JSX.Element => {
+const Main = ({ id, children }: MainProps) => {
   const location = useLocation();
   const { trackPageView } = useMatomo();
   const statisticsConsent = useGroupConsent(CookieConsentGroup.STATISTICS);

@@ -5,13 +5,12 @@ import './OpeningHoursTitles.scss';
 import { LanguageStrings } from '../../common/lib/types';
 import { toCharCount } from '../../common/utils/form/form';
 
-import type { JSX } from "react";
 
 type Props = {
   placeholders: LanguageStrings;
 };
 
-const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
+const OpeningHoursTitles = ({ placeholders }: Props) => {
   const { t } = useTranslation();
 
   const nameMaxLength = 100;
@@ -29,7 +28,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           render={({
             field: { ref, name, onChange, onBlur, value },
             fieldState: { error },
-          }): JSX.Element => (
+          }) => (
             <TextInput
               aria-describedby="title-fi-helper-text"
               data-testid="opening-period-title-fi"
@@ -53,7 +52,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           render={({
             field: { ref, name, onChange, onBlur, value },
             fieldState: { error },
-          }): JSX.Element => (
+          }) => (
             <TextInput
               data-testid="opening-period-title-sv"
               errorText={error?.message}
@@ -76,7 +75,7 @@ const OpeningHoursTitles = ({ placeholders }: Props): JSX.Element => {
           render={({
             field: { ref, name, onChange, onBlur, value },
             fieldState: { error },
-          }): JSX.Element => (
+          }) => (
             <TextInput
               data-testid="opening-period-title-en"
               errorText={error?.message}

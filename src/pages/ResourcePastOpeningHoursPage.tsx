@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type JSX } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Notification } from 'hds-react';
 import { useParams } from 'react-router-dom';
@@ -36,7 +36,7 @@ const formatLocalDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-const ResourcePastOpeningHoursPage = (): JSX.Element => {
+const ResourcePastOpeningHoursPage = () => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
   const { t } = useTranslation();

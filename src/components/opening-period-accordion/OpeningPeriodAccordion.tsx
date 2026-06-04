@@ -11,7 +11,7 @@ import {
   StatusLabel,
   useAccordion,
 } from 'hds-react';
-import React, { ReactNode, useRef, useState, type JSX } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
@@ -28,7 +28,7 @@ type AccordionIconProps = {
   isOpen: boolean;
 };
 
-const AccordionIcon = ({ isOpen }: AccordionIconProps): JSX.Element =>
+const AccordionIcon = ({ isOpen }: AccordionIconProps) =>
   isOpen ? <IconAngleUp aria-hidden /> : <IconAngleDown aria-hidden />;
 
 type OpeningPeriodActionsMenuProps = {
@@ -51,7 +51,7 @@ const OpeningPeriodActionsMenu = ({
   onMoveUp,
   showCopyOption,
   ref: deleteRef,
-}: OpeningPeriodActionsMenuProps): JSX.Element => {
+}: OpeningPeriodActionsMenuProps) => {
   const { buttonProps, isOpen, closeAccordion } = useAccordion({
     initiallyOpen: false,
   });
@@ -220,7 +220,7 @@ const OpeningPeriodAccordion = ({
   showCopyOption = false,
   datePeriod,
   listIndex,
-}: Props): JSX.Element => {
+}: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id: resourceId, parentId } = useParams<{

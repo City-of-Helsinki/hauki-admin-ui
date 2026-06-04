@@ -4,7 +4,6 @@ import { formatDateRange } from '../../common/utils/date-time/format';
 import OpeningHoursPreview from '../opening-hours-preview/OpeningHoursPreview';
 import './OpeningHoursFormPreview.scss';
 
-import type { JSX } from "react";
 
 const OpeningHoursFormPreview = ({
   datePeriod,
@@ -17,7 +16,7 @@ const OpeningHoursFormPreview = ({
   resourceStates: TranslatedApiChoice[];
   tabIndex?: number;
   className?: string;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
 
   return (

@@ -7,9 +7,8 @@ import useResource from '../services/useResource';
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
 import useDatePeriod from '../services/useDatePeriod';
 
-import type { JSX } from "react";
 
-const EditExceptionOpeningHoursPage = (): JSX.Element => {
+const EditExceptionOpeningHoursPage = () => {
   const { id: resourceId, datePeriodId } = useParams<{
     id?: string;
     datePeriodId?: string;

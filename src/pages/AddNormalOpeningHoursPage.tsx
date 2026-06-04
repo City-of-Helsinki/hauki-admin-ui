@@ -6,9 +6,8 @@ import NormalOpeningHoursForm from '../components/normal-opening-hours-form/Norm
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
 import useResource from '../services/useResource';
 
-import type { JSX } from "react";
 
-const AddNormalOpeningHoursPage = (): JSX.Element => {
+const AddNormalOpeningHoursPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const copyFrom = location.state?.copyFrom as DatePeriod | undefined;

@@ -1,4 +1,4 @@
-import { useState, type JSX } from 'react';
+import { useState } from 'react';
 import { Notification, IconCopy } from 'hds-react';
 import api from '../../common/utils/api/api';
 import {
@@ -24,7 +24,7 @@ const ResourcePeriodsCopyFieldset = ({
   onChange,
 }: TargetResourcesProps & {
   onChange: (value: TargetResourcesProps | undefined) => void;
-}): JSX.Element => {
+}) => {
   const { hasOpenerWindow, closeAppWindow } = useAppContext();
   const [isCopyLoading, setIsCopyLoading] = useState<boolean>(false);
 

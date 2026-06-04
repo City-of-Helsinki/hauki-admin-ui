@@ -7,14 +7,13 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
-import type { JSX } from "react";
 
 const NormalOpeningHoursForm = ({
   copyFrom,
   ...props
 }: Omit<OpeningHoursFormProps, 'config'> & {
   copyFrom?: DatePeriod;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
 
   const config: FormConfig = {

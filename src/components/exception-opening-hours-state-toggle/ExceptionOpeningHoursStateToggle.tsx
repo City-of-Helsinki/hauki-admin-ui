@@ -1,4 +1,4 @@
-import { ReactNode, useState, type JSX } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RadioButton, SelectionGroup } from 'hds-react';
 import { useFormContext } from 'react-hook-form';
@@ -18,7 +18,7 @@ const ExceptionOpeningHoursStateToggle = ({
   initiallyOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState<boolean>(initiallyOpen);
   const { watch } = useFormContext<DatePeriod>();

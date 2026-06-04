@@ -12,9 +12,8 @@ import { defaultTimeSpanGroup } from '../../constants';
 import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
 import './ExceptionOpeningHoursValidity.scss';
 
-import type { JSX } from "react";
 
-const ExceptionOpeningHoursValidity = (): JSX.Element => {
+const ExceptionOpeningHoursValidity = () => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { getValues, setValue, watch } = useFormContext<DatePeriod>();
@@ -41,7 +40,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
-              }): JSX.Element => (
+              }) => (
                 <DateInput
                   id="exception-start-date"
                   className="exception-date"
@@ -82,7 +81,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
-              }): JSX.Element => (
+              }) => (
                 <DateInput
                   id="exception-end-date"
                   className="exception-date"

@@ -11,7 +11,6 @@ import { createWeekdaysStringFromIndices } from '../../common/utils/date-time/fo
 import { uiRuleLabels } from '../../constants';
 import './OpeningHoursPreview.scss';
 
-import type { JSX } from "react";
 
 const shouldHideOpeningHours = (timeSpan: TTimeSpan, idx: number): boolean =>
   !timeSpan.start_time &&
@@ -39,7 +38,7 @@ const TimeSpanState = ({
   language: Language;
   resourceStates: TranslatedApiChoice[];
   timeSpan?: TTimeSpan;
-}): JSX.Element | null => {
+}) => {
   if (!timeSpan) {
     return <>Tuntematon</>;
   }
@@ -66,7 +65,7 @@ export const TimeSpan = ({
   idx: number;
   resourceStates: TranslatedApiChoice[];
   timeSpan?: TTimeSpan;
-}): JSX.Element | null => {
+}) => {
   const { language = Language.FI } = useAppContext();
   if (!timeSpan) {
     return null;
@@ -121,7 +120,7 @@ const TimeSpanRow = ({
   label?: string;
   resourceStates: TranslatedApiChoice[];
   timeSpan?: TTimeSpan;
-}): JSX.Element => (
+}) => (
   <tr className={className}>
     <td className="opening-hours-preview-table__day-column">{label}</td>
     <td
@@ -139,7 +138,7 @@ const OpeningHoursPreview = ({
 }: {
   openingHours: OpeningHours[];
   resourceStates: TranslatedApiChoice[];
-}): JSX.Element => {
+}) => {
   const { language = Language.FI } = useAppContext();
 
   return (

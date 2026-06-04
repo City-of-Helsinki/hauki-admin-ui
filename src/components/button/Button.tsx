@@ -5,7 +5,7 @@ import {
   ButtonVariant as HDSButtonVariant,
   LoadingSpinner,
 } from 'hds-react';
-import React, { type JSX } from 'react';
+import React from 'react';
 import './Button.scss';
 
 type ButtonTypeVariant = 'button' | 'submit' | 'reset' | undefined;
@@ -47,7 +47,7 @@ export const SecondaryButton = ({
   'aria-expanded': ariaExpanded,
   style,
   ref,
-}: SecondaryButtonProps): JSX.Element => {
+}: SecondaryButtonProps) => {
   return (
     <HDSButton
       aria-expanded={ariaExpanded}
@@ -86,7 +86,7 @@ export const PrimaryButton = ({
   'aria-expanded': ariaExpanded,
   style,
   ref,
-}: ButtonProps): JSX.Element => {
+}: ButtonProps) => {
   return (
     <HDSButton
       aria-expanded={ariaExpanded}
@@ -129,7 +129,7 @@ export const SupplementaryButton = ({
   'aria-expanded': ariaExpanded,
   style,
   ref,
-}: ButtonProps): JSX.Element => {
+}: ButtonProps) => {
   return (
     <HDSButton
       aria-expanded={ariaExpanded}

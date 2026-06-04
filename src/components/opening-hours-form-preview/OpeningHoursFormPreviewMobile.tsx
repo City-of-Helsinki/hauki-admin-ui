@@ -1,5 +1,5 @@
 import { IconAngleDown, IconAngleUp, useAccordion } from 'hds-react';
-import { useRef, type JSX } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DatePeriod,
@@ -21,7 +21,7 @@ type Props = {
 const OpeningHoursFormPreviewMobile = ({
   datePeriod,
   resourceStates,
-}: Props): JSX.Element => {
+}: Props) => {
   const { isOpen, buttonProps, closeAccordion } = useAccordion({
     initiallyOpen: false,
   });

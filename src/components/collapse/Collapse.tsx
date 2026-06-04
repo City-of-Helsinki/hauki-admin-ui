@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, type JSX } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { IconAngleDown, IconAngleUp } from 'hds-react';
 import './Collapse.scss';
 
@@ -26,7 +26,7 @@ const CollapseButton = ({
   isOpen,
   toggleOpen,
   children,
-}: CollapseButtonProps): JSX.Element => {
+}: CollapseButtonProps) => {
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
     if (event.keyCode === 13) {
       toggleOpen();
@@ -57,7 +57,7 @@ const Collapse = ({
   title,
   children,
   isOpen,
-}: CollapseProps): JSX.Element => {
+}: CollapseProps) => {
   const buttonId = `${collapseContentId}-button`;
   const [isOpenState, setOpen] = useState<boolean>(isOpen);
 

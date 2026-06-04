@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState, type JSX } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Language, Resource } from '../../common/lib/types';
 import { isUnitResource } from '../../common/utils/resource/helper';
 import './ResourceTitle.scss';
@@ -18,7 +18,7 @@ const ResourceTitle = ({
   language,
   resource,
   titleAddon,
-}: Props): JSX.Element => {
+}: Props) => {
   const [titleIsOnTop, setTitleIsOnTop] = useState(false);
   const [scrollHandlerDisabled, setDisableScroll] = useState(false);
   const ref = useRef<HTMLHeadingElement>(null);

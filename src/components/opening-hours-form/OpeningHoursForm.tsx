@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IconSort } from 'hds-react';
@@ -71,7 +71,7 @@ const OpeningHoursForm = ({
   datePeriodConfig: UiDatePeriodConfig;
   submitFn: (values: ApiDatePeriod) => Promise<ApiDatePeriod>;
   resource: Resource;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const defaultValues: DatePeriod = datePeriod

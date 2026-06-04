@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState, type JSX } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import {
   Navigate,
   useLocation,
@@ -13,7 +13,7 @@ const PermissionResolver = ({
   children,
 }: {
   children?: ReactNode;
-}): JSX.Element => {
+}) => {
   const { authTokens, clearAuth }: Partial<AuthContextProps> = useAuth();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();

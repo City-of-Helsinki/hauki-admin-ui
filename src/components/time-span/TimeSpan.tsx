@@ -7,7 +7,7 @@ import {
   TimeInput,
 } from 'hds-react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { MutableRefObject, useEffect, type JSX } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Language,
@@ -51,7 +51,7 @@ const TimeSpan = ({
   openingHoursIdx,
   resourceStates,
   timeSpanGroupIdx,
-}: Props): JSX.Element => {
+}: Props) => {
   const { t } = useTranslation();
   const namePrefix =
     `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans.${i}` as const;
@@ -117,7 +117,7 @@ const TimeSpan = ({
         rules={{
           required: t('Common.Mandatory'),
         }}
-        render={({ field: { onChange, value } }): JSX.Element => (
+        render={({ field: { onChange, value } }) => (
           <Select
             disabled={disabled}
             id={resourceStateId}
@@ -140,7 +140,7 @@ const TimeSpan = ({
         <>
           <Controller
             defaultValue={item?.full_day ?? false}
-            render={({ field }): JSX.Element => (
+            render={({ field }) => (
               <div className="time-span__full-day-checkbox-container">
                 <Checkbox
                   className="time-span__full-day-checkbox"
@@ -165,7 +165,7 @@ const TimeSpan = ({
                   control={control}
                   name={`${namePrefix}.start_time`}
                   defaultValue={item?.start_time ?? ''}
-                  render={({ field, fieldState }): JSX.Element => (
+                  render={({ field, fieldState }) => (
                     <TimeInput
                       disabled={disabled}
                       errorText={fieldState.error?.message}
@@ -189,7 +189,7 @@ const TimeSpan = ({
                   control={control}
                   name={`${namePrefix}.end_time`}
                   defaultValue={item?.end_time ?? ''}
-                  render={({ field, fieldState }): JSX.Element => (
+                  render={({ field, fieldState }) => (
                     <TimeInput
                       disabled={disabled}
                       errorText={fieldState.error?.message}
@@ -224,7 +224,7 @@ const TimeSpan = ({
               render={({
                 field: { name, onChange, onBlur, value },
                 fieldState: { error },
-              }): JSX.Element => (
+              }) => (
                 <TextInput
                   errorText={error?.message}
                   helperText={toCharCount(descriptionMaxLength, value)}
@@ -248,7 +248,7 @@ const TimeSpan = ({
               render={({
                 field: { name, onChange, onBlur, value },
                 fieldState: { error },
-              }): JSX.Element => (
+              }) => (
                 <TextInput
                   errorText={error?.message}
                   helperText={toCharCount(descriptionMaxLength, value)}
@@ -272,7 +272,7 @@ const TimeSpan = ({
               render={({
                 field: { name, onChange, onBlur, value },
                 fieldState: { error },
-              }): JSX.Element => (
+              }) => (
                 <TextInput
                   errorText={error?.message}
                   helperText={toCharCount(descriptionMaxLength, value)}

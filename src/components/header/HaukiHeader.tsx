@@ -1,5 +1,5 @@
  
-import React, { type JSX } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   IconCrossCircleFill,
@@ -19,7 +19,7 @@ import toast from '../notification/Toast';
 import { Language } from '../../common/lib/types';
 import { languageOptions } from '../../constants';
 
-const HaukiHeader = (): JSX.Element => {
+const HaukiHeader = () => {
   const { hasOpenerWindow, closeAppWindow, language, setLanguage } =
     useAppContext();
   const authProps: Partial<AuthContextProps> = useAuth();

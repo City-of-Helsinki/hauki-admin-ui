@@ -1,4 +1,4 @@
-import { ReactNode, useState, type JSX } from 'react';
+import { ReactNode, useState } from 'react';
 import { Dialog, IconInfoCircle } from 'hds-react';
 import { PrimaryButton } from '../button/Button';
 
@@ -35,7 +35,7 @@ export function NotificationModal({
   onClose: () => void;
   text: string | ReactNode;
   title: string;
-}): JSX.Element | null {
+}) {
   const titleId = 'notification-modal-title';
 
   return (

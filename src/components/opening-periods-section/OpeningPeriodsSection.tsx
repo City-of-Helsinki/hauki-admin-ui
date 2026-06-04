@@ -1,5 +1,5 @@
 import { Checkbox, LoadingSpinner } from 'hds-react';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { DatePeriod } from '../../common/lib/types';
@@ -36,7 +36,7 @@ const OpeningPeriodsSection = ({
   title,
   theme,
   showCopyOption = false,
-}: Props): JSX.Element => {
+}: Props) => {
   const navigate = useNavigate();
   const {
     selectedDatePeriods,
