@@ -30,13 +30,10 @@ const ExceptionOpeningHoursValidity = () => {
           className="exception-opening-hours-validity__title"
           label={t('OpeningHours.ExceptionOpeningHoursValidity')}
           required>
-          <div className="exception-opening-hours-validity__dates">
-            {/* HDS SelectionGroup keys its children by props.id, so give
-                each field a stable id to avoid a missing-key warning. */}
+          <div id="exception-date-fields" className="exception-opening-hours-validity__dates">
             <Controller
               defaultValue={startDate ?? ''}
               name="startDate"
-              {...{ id: 'exception-start-date-field' }}
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
@@ -77,7 +74,6 @@ const ExceptionOpeningHoursValidity = () => {
             <Controller
               defaultValue={endDate ?? ''}
               name="endDate"
-              {...{ id: 'exception-end-date-field' }}
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
