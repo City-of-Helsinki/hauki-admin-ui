@@ -54,7 +54,7 @@ export type ResourceWithOrigins = Resource & {
 
 const ResourceBatchUpdatePage = ({
   targetResourcesString,
-}: ResourceBatchUpdatePageProps): JSX.Element => {
+}: ResourceBatchUpdatePageProps) => {
   const {
     hasOpenerWindow,
     closeAppWindow,

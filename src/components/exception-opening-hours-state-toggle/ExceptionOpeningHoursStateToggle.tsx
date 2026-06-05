@@ -18,7 +18,7 @@ const ExceptionOpeningHoursStateToggle = ({
   initiallyOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState<boolean>(initiallyOpen);
   const { watch } = useFormContext<DatePeriod>();

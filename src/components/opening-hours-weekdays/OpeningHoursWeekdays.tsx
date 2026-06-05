@@ -63,7 +63,7 @@ const OpeningHoursWeekdays = ({
   resourceStates: TranslatedApiChoice[];
   rules: Rule[];
   onDayChange: (day: number, checked: boolean, offsetTop: number) => void;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const namePrefix = `openingHours.${openingHoursIdx}` as const;
   const { language = Language.FI } = useAppContext();
@@ -231,7 +231,7 @@ const OpeningHoursWeekdays = ({
               control={control}
               defaultValue={item.weekdays ?? []}
               name={`openingHours.${openingHoursIdx}.weekdays`}
-              render={(): JSX.Element => (
+              render={() => (
                 <>
                   {[1, 2, 3, 4, 5, 6, 7]
                     .sort(byDateRange(startDate, endDate))
@@ -272,7 +272,7 @@ const OpeningHoursWeekdays = ({
                 rules={{
                   required: t('Common.Mandatory'),
                 }}
-                render={({ field: { value } }): JSX.Element => (
+                render={({ field: { value } }) => (
                   <>
                     {rules.length > 0 && (
                       <Select

@@ -18,7 +18,7 @@ const ResourceTitle = ({
   language,
   resource,
   titleAddon,
-}: Props): JSX.Element => {
+}: Props) => {
   const [titleIsOnTop, setTitleIsOnTop] = useState(false);
   const [scrollHandlerDisabled, setDisableScroll] = useState(false);
   const ref = useRef<HTMLHeadingElement>(null);

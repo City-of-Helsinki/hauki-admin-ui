@@ -4,6 +4,7 @@ import { getWeekdayShortNameByIndexAndLang } from '../../common/utils/date-time/
 import { getUiId } from '../../common/utils/form/form';
 import './DayCheckbox.scss';
 
+
 const DayCheckbox = ({
   currentDay,
   disabled,
@@ -16,7 +17,7 @@ const DayCheckbox = ({
   namePrefix: string;
   onChange: (checked: boolean) => void;
   checked?: boolean;
-}): JSX.Element => {
+}) => {
   const { language } = useAppContext();
   const id = getUiId([namePrefix, 'weekdays', currentDay]);
 

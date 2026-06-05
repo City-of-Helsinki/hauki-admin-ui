@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const NavigationAndFooterWrapper = ({ children }: Props): JSX.Element => (
+const NavigationAndFooterWrapper = ({ children }: Props) => (
   <>
     <HaukiHeader />
     {children}

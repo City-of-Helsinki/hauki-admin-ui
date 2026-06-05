@@ -4,11 +4,12 @@ import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
 import './OpeningHoursFormActions.scss';
 
+
 type Props = {
   isSaving: boolean;
 };
 
-const OpeningHoursFormActions = ({ isSaving }: Props): JSX.Element => {
+const OpeningHoursFormActions = ({ isSaving }: Props) => {
   const { t } = useTranslation();
   const isMobile = useMobile();
   const returnToResourcePage = useReturnToResourcePage();

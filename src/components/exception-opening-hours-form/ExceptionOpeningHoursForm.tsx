@@ -6,12 +6,13 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
+
 const ExceptionOpeningHoursForm = ({
   copyFrom,
   ...props
 }: Omit<OpeningHoursFormProps, 'config'> & {
   copyFrom?: DatePeriod;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
 
   const config: FormConfig = {

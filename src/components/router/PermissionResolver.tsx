@@ -13,7 +13,7 @@ const PermissionResolver = ({
   children,
 }: {
   children?: ReactNode;
-}): JSX.Element => {
+}) => {
   const { authTokens, clearAuth }: Partial<AuthContextProps> = useAuth();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();

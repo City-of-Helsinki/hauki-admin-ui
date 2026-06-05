@@ -78,7 +78,7 @@ const HolidayForm = ({
   datePeriodConfig: UiDatePeriodConfig;
   actions: FormActions;
   onClose: () => void;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { name, date: holidayDate } = holiday;
   const [isSaving, setIsSaving] = useState(false);
@@ -179,7 +179,7 @@ const HolidayListItem = ({
   value?: DatePeriod;
   datePeriodConfig: UiDatePeriodConfig;
   actions: FormActions;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const [checked, setChecked] = useState<boolean>(!!value);
@@ -300,7 +300,7 @@ const HolidayListItem = ({
   );
 };
 
-const EditHolidaysPage = (): JSX.Element => {
+const EditHolidaysPage = () => {
   const { t } = useTranslation();
   const [resource, setResource] = useState<Resource>();
   const [holidayValues, setHolidayValues] = useState<

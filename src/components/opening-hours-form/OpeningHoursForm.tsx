@@ -71,7 +71,7 @@ const OpeningHoursForm = ({
   datePeriodConfig: UiDatePeriodConfig;
   submitFn: (values: ApiDatePeriod) => Promise<ApiDatePeriod>;
   resource: Resource;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const defaultValues: DatePeriod = datePeriod

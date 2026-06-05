@@ -40,7 +40,7 @@ export function ConfirmationModal({
   text: string | ReactNode;
   title: string;
   confirmIcon?: string | ReactNode;
-}): JSX.Element | null {
+}) {
   const { t } = useTranslation();
   const titleId = 'confirmation-modal-title';
 

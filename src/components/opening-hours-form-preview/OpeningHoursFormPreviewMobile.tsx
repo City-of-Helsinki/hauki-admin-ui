@@ -21,7 +21,7 @@ type Props = {
 const OpeningHoursFormPreviewMobile = ({
   datePeriod,
   resourceStates,
-}: Props): JSX.Element => {
+}: Props) => {
   const { isOpen, buttonProps, closeAccordion } = useAccordion({
     initiallyOpen: false,
   });

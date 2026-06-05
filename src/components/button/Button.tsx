@@ -24,146 +24,130 @@ interface ButtonProps {
   size?: 'small' | 'medium';
   'aria-expanded'?: boolean;
   style?: React.CSSProperties;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 type SecondaryButtonProps = ButtonProps & {
   light?: boolean;
 };
 
-export const SecondaryButton = React.forwardRef<
-  HTMLButtonElement,
-  SecondaryButtonProps
->(
-  (
-    {
-      children,
-      dataTest,
-      disabled,
-      onClick,
-      className = '',
-      type = 'button',
-      iconStart,
-      iconEnd,
-      isLoading,
-      loadingText,
-      light = false,
-      size,
-      'aria-expanded': ariaExpanded,
-      style,
-    }: SecondaryButtonProps,
-    ref
-  ): JSX.Element => {
-    return (
-      <HDSButton
-        aria-expanded={ariaExpanded}
-        ref={ref}
-        className={`button-common ${
-          light ? 'secondary-button-light' : 'secondary-button'
-        } ${className}`}
-        theme={light ? undefined : ButtonPresetTheme.Coat}
-        size={size as ButtonSize}
-        data-testid={dataTest}
-        disabled={disabled || isLoading}
-        variant={
-          isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Secondary
-        }
-        onClick={onClick}
-        type={type}
-        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
-        iconEnd={iconEnd}
-        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
-        {isLoading && loadingText ? loadingText : children}
-      </HDSButton>
-    );
-  }
-);
+export const SecondaryButton = ({
+  children,
+  dataTest,
+  disabled,
+  onClick,
+  className = '',
+  type = 'button',
+  iconStart,
+  iconEnd,
+  isLoading,
+  loadingText,
+  light = false,
+  size,
+  'aria-expanded': ariaExpanded,
+  style,
+  ref,
+}: SecondaryButtonProps) => {
+  return (
+    <HDSButton
+      aria-expanded={ariaExpanded}
+      ref={ref}
+      className={`button-common ${
+        light ? 'secondary-button-light' : 'secondary-button'
+      } ${className}`}
+      theme={light ? undefined : ButtonPresetTheme.Coat}
+      size={size as ButtonSize}
+      data-testid={dataTest}
+      disabled={disabled || isLoading}
+      variant={isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Secondary}
+      onClick={onClick}
+      type={type}
+      iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+      iconEnd={iconEnd}
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
+    >
+      {isLoading && loadingText ? loadingText : children}
+    </HDSButton>
+  );
+};
 
-export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      children,
-      dataTest,
-      onClick,
-      className = '',
-      type = 'button',
-      iconStart,
-      iconEnd,
-      disabled,
-      isLoading,
-      loadingText,
-      size,
-      'aria-expanded': ariaExpanded,
-      style,
-    }: ButtonProps,
-    ref
-  ): JSX.Element => {
-    return (
-      <HDSButton
-        aria-expanded={ariaExpanded}
-        ref={ref}
-        data-testid={dataTest}
-        className={[
-          'button-common',
-          'primary-button',
-          disabled ? 'primary-button--is-disabled' : '',
-          className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        variant={isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Primary}
-        onClick={onClick}
-        type={type}
-        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
-        iconEnd={iconEnd}
-        disabled={disabled || isLoading}
-        size={size as ButtonSize}
-        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
-        {isLoading && loadingText ? loadingText : children}
-      </HDSButton>
-    );
-  }
-);
+export const PrimaryButton = ({
+  children,
+  dataTest,
+  onClick,
+  className = '',
+  type = 'button',
+  iconStart,
+  iconEnd,
+  disabled,
+  isLoading,
+  loadingText,
+  size,
+  'aria-expanded': ariaExpanded,
+  style,
+  ref,
+}: ButtonProps) => {
+  return (
+    <HDSButton
+      aria-expanded={ariaExpanded}
+      ref={ref}
+      data-testid={dataTest}
+      className={[
+        'button-common',
+        'primary-button',
+        disabled ? 'primary-button--is-disabled' : '',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      variant={isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Primary}
+      onClick={onClick}
+      type={type}
+      iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+      iconEnd={iconEnd}
+      disabled={disabled || isLoading}
+      size={size as ButtonSize}
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
+    >
+      {isLoading && loadingText ? loadingText : children}
+    </HDSButton>
+  );
+};
 
-export const SupplementaryButton = React.forwardRef<
-  HTMLButtonElement,
-  ButtonProps
->(
-  (
-    {
-      children,
-      dataTest,
-      disabled,
-      onClick,
-      className = '',
-      type = 'button',
-      iconStart,
-      iconEnd,
-      isLoading,
-      loadingText,
-      size,
-      'aria-expanded': ariaExpanded,
-      style,
-    },
-    ref
-  ): JSX.Element => {
-    return (
-      <HDSButton
-        aria-expanded={ariaExpanded}
-        ref={ref}
-        type={type}
-        data-testid={dataTest}
-        className={`button-common supplementary-button ${className}`}
-        variant={
-          isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Supplementary
-        }
-        onClick={onClick}
-        iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
-        iconEnd={iconEnd}
-        disabled={disabled || isLoading}
-        size={size as ButtonSize}
-        style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
-        {isLoading && loadingText ? loadingText : children}
-      </HDSButton>
-    );
-  }
-);
+export const SupplementaryButton = ({
+  children,
+  dataTest,
+  disabled,
+  onClick,
+  className = '',
+  type = 'button',
+  iconStart,
+  iconEnd,
+  isLoading,
+  loadingText,
+  size,
+  'aria-expanded': ariaExpanded,
+  style,
+  ref,
+}: ButtonProps) => {
+  return (
+    <HDSButton
+      aria-expanded={ariaExpanded}
+      ref={ref}
+      type={type}
+      data-testid={dataTest}
+      className={`button-common supplementary-button ${className}`}
+      variant={
+        isLoading ? HDSButtonVariant.Clear : HDSButtonVariant.Supplementary
+      }
+      onClick={onClick}
+      iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
+      iconEnd={iconEnd}
+      disabled={disabled || isLoading}
+      size={size as ButtonSize}
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
+    >
+      {isLoading && loadingText ? loadingText : children}
+    </HDSButton>
+  );
+};

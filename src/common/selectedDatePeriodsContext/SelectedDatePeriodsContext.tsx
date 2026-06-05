@@ -29,9 +29,11 @@ export const SelectedDatePeriodsContext = createContext<
   SelectedDatePeriodsContextType | undefined
 >(undefined);
 
-export const SelectedDatePeriodsProvider: React.FC<{
+export const SelectedDatePeriodsProvider = ({
+  children,
+}: {
   children: React.ReactNode;
-}> = ({ children }) => {
+}) => {
   const [selectedDatePeriods, setSelectedDatePeriods] = useState<DatePeriod[]>(
     () => {
       const storedDatePeriods: DatePeriod[] =

@@ -12,9 +12,9 @@ type Props = {
   rules: Rule[];
 };
 
-const OpeningHours = ({ resourceStates, rules }: Props): JSX.Element => {
+const OpeningHours = ({ resourceStates, rules }: Props) => {
   const [dropInRow, setDropInRow] = useState<number>();
-  const offsetTop = useRef<number>();
+  const offsetTop = useRef<number>(undefined);
   const { control, getValues, setValue, watch } = useFormContext<DatePeriod>();
   const [startDate, endDate] = watch(['startDate', 'endDate']);
   const { insert, fields, remove } = useFieldArray({

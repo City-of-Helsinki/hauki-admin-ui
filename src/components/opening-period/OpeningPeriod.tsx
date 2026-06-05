@@ -15,6 +15,7 @@ import {
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
+
 const OpeningPeriod = ({
   datePeriod,
   datePeriodConfig,
@@ -37,7 +38,7 @@ const OpeningPeriod = ({
   onMoveUp?: () => void;
   showCopyOption?: boolean;
   listIndex?: number;
-}): JSX.Element => {
+}) => {
   const {
     selectedDatePeriods,
     toggleDatePeriod,

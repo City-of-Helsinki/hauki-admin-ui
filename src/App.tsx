@@ -47,7 +47,7 @@ const getPersistentTokens = (): OptionalAuthTokens => {
   return getTokens();
 };
 
-const App = (): JSX.Element => {
+const App = () => {
   const hasOpenerWindow =
     !!document.referrer && document.referrer !== window.location.href;
 

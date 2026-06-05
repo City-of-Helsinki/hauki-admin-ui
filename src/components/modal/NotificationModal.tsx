@@ -35,7 +35,7 @@ export function NotificationModal({
   onClose: () => void;
   text: string | ReactNode;
   title: string;
-}): JSX.Element | null {
+}) {
   const titleId = 'notification-modal-title';
 
   return (

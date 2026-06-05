@@ -9,7 +9,8 @@ import {
 } from '../../common/utils/form/validations';
 import './NormalOpeningHoursValidity.scss';
 
-const NormalOpeningHoursValidity = (): JSX.Element => {
+
+const NormalOpeningHoursValidity = () => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { control, getValues, watch } = useFormContext<DatePeriod>();
@@ -20,7 +21,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
       <Controller
         control={control}
         name="fixed"
-        render={({ field: { name, onChange, value } }): JSX.Element => (
+        render={({ field: { name, onChange, value } }) => (
           <>
             <SelectionGroup
               className="opening-hours-validity__title"
@@ -55,7 +56,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                 render={({
                   field: startDateField,
                   fieldState,
-                }): JSX.Element => (
+                }) => (
                   <DateInput
                     ref={startDateField.ref}
                     className="opening-hours-validity__date"
@@ -91,7 +92,7 @@ const NormalOpeningHoursValidity = (): JSX.Element => {
                   render={({
                     field: endDateField,
                     fieldState,
-                  }): JSX.Element => (
+                  }) => (
                     <DateInput
                       ref={endDateField.ref}
                       className="opening-hours-validity__date"

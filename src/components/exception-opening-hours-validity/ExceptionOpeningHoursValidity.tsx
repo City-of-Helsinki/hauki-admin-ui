@@ -12,7 +12,8 @@ import { defaultTimeSpanGroup } from '../../constants';
 import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
 import './ExceptionOpeningHoursValidity.scss';
 
-const ExceptionOpeningHoursValidity = (): JSX.Element => {
+
+const ExceptionOpeningHoursValidity = () => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
   const { getValues, setValue, watch } = useFormContext<DatePeriod>();
@@ -29,14 +30,14 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
           className="exception-opening-hours-validity__title"
           label={t('OpeningHours.ExceptionOpeningHoursValidity')}
           required>
-          <div className="exception-opening-hours-validity__dates">
+          <div id="exception-date-fields" className="exception-opening-hours-validity__dates">
             <Controller
               defaultValue={startDate ?? ''}
               name="startDate"
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
-              }): JSX.Element => (
+              }) => (
                 <DateInput
                   id="exception-start-date"
                   className="exception-date"
@@ -76,7 +77,7 @@ const ExceptionOpeningHoursValidity = (): JSX.Element => {
               render={({
                 field: { name, onBlur, onChange, ref, value },
                 fieldState,
-              }): JSX.Element => (
+              }) => (
                 <DateInput
                   id="exception-end-date"
                   className="exception-date"

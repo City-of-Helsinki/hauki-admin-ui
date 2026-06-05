@@ -35,7 +35,7 @@ const TimeSpans = ({
   openingHoursIdx: number;
   resourceStates: TranslatedApiChoice[];
   timeSpanGroupIdx: number;
-}): JSX.Element => {
+}) => {
   const { t } = useTranslation();
   const namePrefix =
     `openingHours.${openingHoursIdx}.timeSpanGroups.${timeSpanGroupIdx}.timeSpans` as const;

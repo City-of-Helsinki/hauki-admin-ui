@@ -36,7 +36,7 @@ const OpeningPeriodsSection = ({
   title,
   theme,
   showCopyOption = false,
-}: Props): JSX.Element => {
+}: Props) => {
   const navigate = useNavigate();
   const {
     selectedDatePeriods,

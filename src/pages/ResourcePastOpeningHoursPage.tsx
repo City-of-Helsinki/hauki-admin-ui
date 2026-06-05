@@ -36,7 +36,7 @@ const formatLocalDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-const ResourcePastOpeningHoursPage = (): JSX.Element => {
+const ResourcePastOpeningHoursPage = () => {
   const { language: contextLanguage } = useAppContext();
   const language = contextLanguage || Language.FI;
   const { t } = useTranslation();

@@ -33,7 +33,7 @@ const ResourceOpeningHours = ({
   language: Language;
   parentId?: number;
   resource: Resource;
-}): JSX.Element | null => {
+}) => {
   const resourceId = resource.id;
   const [error, setError] = useState<Error | undefined>(undefined);
   const [datePeriodConfig, setDatePeriodConfig] =
