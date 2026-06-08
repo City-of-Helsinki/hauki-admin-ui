@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.15.0...hauki-admin-ui-v1.16.0) (2026-06-08)
+
+
+### Features
+
+* Upgrade to React 19 and HDS 6 (HAUKI-747) ([#510](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/510)) ([be54b21](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/be54b215510eab52a46c14627f15b5ddcfb8305f))
+
+
+### Bug Fixes
+
+* Switch to @vitejs/plugin-react ([#512](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/512)) ([81d6a9a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/81d6a9ae36c992169dc4d19628ed19a485f4d635))
+
 ## [1.15.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.14.4...hauki-admin-ui-v1.15.0) (2026-05-27)
 
 
