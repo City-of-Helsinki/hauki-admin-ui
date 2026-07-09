@@ -66,6 +66,7 @@ const OpeningHours = ({ resourceStates, rules }: Props) => {
 
   return (
     <>
+      {/* eslint-disable-next-line react-hooks/refs */}
       {fields.map((field, i) => (
         <OpeningHoursWeekdays
           key={field.id}

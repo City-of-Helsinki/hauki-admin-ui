@@ -87,6 +87,7 @@ const OpeningHoursForm = ({
   const {
     resourceState: { options: resourceStates = [] },
   } = datePeriodConfig;
+  // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch();
   const { fixed, startDate, endDate } = formValues;
   const { isDirty: endDateDirty } = getFieldState('endDate', form.formState);

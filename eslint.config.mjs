@@ -2,17 +2,12 @@ import js from '@eslint/js';
 import tsEslint from 'typescript-eslint';
 import tsParser from '@typescript-eslint/parser';
 import globals from 'globals';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import react from 'eslint-plugin-react';
+import eslintReact from '@eslint-react/eslint-plugin';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import vitestGlobals from 'eslint-config-vitest-globals/flat';
 import importPlugin from 'eslint-plugin-import-x';
 import { defineConfig } from 'eslint/config';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export default defineConfig([
   {
@@ -28,18 +23,15 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tsEslint.configs.recommended,
-      react.configs.flat.recommended,
-      react.configs.flat['jsx-runtime'],
+      eslintReact.configs['recommended-typescript'],
       importPlugin.flatConfigs.recommended,
       jsxA11yPlugin.flatConfigs.recommended,
-      reactHooksPlugin.configs['recommended-latest'],
+      reactHooksPlugin.configs.flat['recommended-latest'],
       vitestGlobals(),
     ],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: ['./tsconfig.json'],
-        tsconfigRootDir: __dirname,
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {
@@ -54,9 +46,6 @@ export default defineConfig([
       },
     },
     settings: {
-      react: {
-        version: 'detect',
-      },
       'import-x/extensions': ['.js', '.jsx', '.ts', '.tsx'],
       'import-x/parsers': {
         '@typescript-eslint/parser': ['.ts', '.tsx'],
@@ -100,23 +89,16 @@ export default defineConfig([
         },
       ],
       '@typescript-eslint/ban-ts-comment': 1,
-      'react/no-array-index-key': 0,
-      'react/prop-types': 0,
-      'react/require-default-props': 0,
-      'react/destructuring-assignment': 0,
-      'react/static-property-placement': 0,
-      'react/function-component-definition': [
-        2,
-        {
-          namedComponents: ['arrow-function', 'function-declaration'],
-          unnamedComponents: 'arrow-function',
-        },
-      ],
-      'react/jsx-props-no-spreading': 0,
-      'react/jsx-no-constructed-context-values': 0,
-      'react/no-unstable-nested-components': 0,
-      'react/jsx-no-useless-fragment': 0,
-      'react/display-name': 0,
+      '@eslint-react/use-state': 0,
+      '@eslint-react/no-context-provider': 0,
+      '@eslint-react/no-use-context': 0,
+      '@eslint-react/set-state-in-effect': 0,
+      '@eslint-react/purity': 0,
+      '@eslint-react/exhaustive-deps': 0,
+      '@eslint-react/naming-convention-ref-name': 0,
+      '@eslint-react/no-array-index-key': 0,
+      '@eslint-react/web-api-no-leaked-event-listener': 0,
+      'react-hooks/set-state-in-effect': 0,
       'jsx-a11y/alt-text': 0,
       'jsx-a11y/label-has-associated-control': [
         'error',

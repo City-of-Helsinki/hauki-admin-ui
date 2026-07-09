@@ -138,6 +138,7 @@ const OpeningPeriodsSection = ({
         </div>
       ) : (
         <ul className="opening-periods-list" data-testid={id}>
+          {/* eslint-disable-next-line @eslint-react/no-children-map */}
           {React.Children.map(children, (child) => (
             <li>{child}</li>
           ))}
