@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.16.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.0...hauki-admin-ui-v1.16.1) (2026-08-07)
+
+
+### Dependencies
+
+* Bump babel/core Refs: RATY-357 ([88b1edb](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/88b1edb41b702d5594a196546c0c7eed9d77b685))
+* Bump brace-expansion Refs: RATY-357 ([e132715](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/e132715a8b2fa7fadd934a405d85d667e447350d))
+* Bump esbuild Refs: RATY-357 ([fc97a26](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/fc97a26565e4a6045d64bdda33dd894bbc09d235))
+* Bump eslint to v10 Refs: RATY-357 ([511dd4b](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/511dd4bc6c2c98d18684580d4ad2446c4e1c6b48))
+* Bump js-yaml Refs: RATY-357 ([dcef9f4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/dcef9f490c7f0d593860cedc6614f041ec29d61b))
+* Bump react-router Refs: RATY-357 ([f967f91](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/f967f91526a9941eff351d64bd689df6b83b691c))
+* Bump vite from 8.0.5 to 8.0.16 ([9001502](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/900150275eca2f37fb6581f4fb21a92dfb161466))
+
 ## [1.16.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.15.0...hauki-admin-ui-v1.16.0) (2026-06-08)
 
 
