@@ -17,6 +17,18 @@ import { AuthTokens, getTokens } from '../../../auth/auth-context';
 const apiBaseUrl: string = window._env_?.API_URL || 'http://localhost:8000';
 
 const resourceBasePath = '/resource';
+// Resource ids are either a numeric primary key or a namespaced external id,
+// e.g. 'tprek:8100'. Ids come from the route, so validate the shape before
+// interpolating them into a request path.
+const resourceIdPattern = /^(\d+|[a-z0-9_-]+:[a-zA-Z0-9_.-]+)$/;
+
+const validResourceId = (id: string): string => {
+  if (!resourceIdPattern.test(id)) {
+    throw new Error(`Invalid resource id: ${id}`);
+  }
+  return id;
+};
+
 const datePeriodBasePath = '/date_period';
 const authRequiredTest = '/auth_required_test';
 const invalidateAuthPath = '/invalidate_signature';
@@ -252,8 +264,8 @@ export default {
     return successResponse.success;
   },
 
-  getResource: (id: string): Promise<Resource> =>
-    apiGet<Resource>({ path: `${resourceBasePath}/${id}` }),
+  getResource: async (id: string): Promise<Resource> =>
+    apiGet<Resource>({ path: `${resourceBasePath}/${validResourceId(id)}` }),
 
   getResources: (ids: string[]): Promise<Resource[]> =>
     apiGet<{ results: Resource[] }>({
@@ -399,7 +411,9 @@ export default {
 
   testResourcePostPermission: async (resourceId: string): Promise<boolean> => {
     const permission = await apiPost<PermissionResponse>({
-      path: `${resourceBasePath}/${resourceId}/permission_check`,
+      path: `${resourceBasePath}/${validResourceId(
+        resourceId
+      )}/permission_check`,
     });
     return permission.has_permission;
   },
