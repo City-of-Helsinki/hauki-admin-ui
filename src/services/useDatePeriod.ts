@@ -11,7 +11,7 @@ const useDatePeriod = (
     const fetchData = async (): Promise<void> => {
       if (datePeriodId) {
         const apiDatePeriod = await api.getDatePeriod(
-          parseInt(datePeriodId, 10)
+          Number.parseInt(datePeriodId, 10)
         );
         setDatePeriod(apiDatePeriod);
       }

@@ -65,19 +65,11 @@ const groupByConsecutiveDays = (
 
   return groups[0].length > 0
     ? groups
-        .reduce(
-          (result, group) => [
-            ...result,
-            group.reduce((newOpeningHour: PreviewOpeningHours, openingHour) => {
-              return {
-                ...openingHour,
-                weekdays: [...newOpeningHour.weekdays, ...openingHour.weekdays],
-              };
-            }),
-          ],
-          []
-        )
-        .map((openingHour: PreviewOpeningHours) => ({
+        .map((group) => ({
+          ...group[0],
+          weekdays: group.flatMap((openingHour) => openingHour.weekdays),
+        }))
+        .map((openingHour) => ({
           ...openingHour,
           timeSpans: [...openingHour.timeSpans].sort(byStartTime),
         }))
@@ -85,7 +77,6 @@ const groupByConsecutiveDays = (
     : [];
 };
 
- 
 export const openingHoursToPreviewRows = (
   openingHours: OpeningHours[]
 ): PreviewRow[] =>
