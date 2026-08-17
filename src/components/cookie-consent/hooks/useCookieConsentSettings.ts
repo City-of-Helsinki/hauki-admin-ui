@@ -19,20 +19,19 @@ const useCookieConsentSettings = () => {
         CookieConsentGroup.STATISTICS
       );
 
-       
       if (!window._paq) {
         return;
       }
 
       if (hasStatisticsConsent) {
         // start tracking
-         
+
         window._paq.push(['setConsentGiven']);
-         
+
         window._paq.push(['setCookieConsentGiven']);
       } else {
         // tell matomo to forget consent
-         
+
         window._paq.push(['forgetConsentGiven']);
       }
     },

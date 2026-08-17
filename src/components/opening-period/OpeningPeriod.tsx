@@ -15,7 +15,6 @@ import {
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-
 const OpeningPeriod = ({
   datePeriod,
   datePeriodConfig,

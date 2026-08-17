@@ -9,7 +9,6 @@ import {
 } from '../../common/utils/form/validations';
 import './NormalOpeningHoursValidity.scss';
 
-
 const NormalOpeningHoursValidity = () => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
@@ -53,10 +52,7 @@ const NormalOpeningHoursValidity = () => {
                   required: t('Common.Mandatory'),
                   validate: isValidDate,
                 }}
-                render={({
-                  field: startDateField,
-                  fieldState,
-                }) => (
+                render={({ field: startDateField, fieldState }) => (
                   <DateInput
                     ref={startDateField.ref}
                     className="opening-hours-validity__date"
@@ -89,10 +85,7 @@ const NormalOpeningHoursValidity = () => {
                       endDateAfterStartDate: endDateAfterStartDate(getValues),
                     },
                   }}
-                  render={({
-                    field: endDateField,
-                    fieldState,
-                  }) => (
+                  render={({ field: endDateField, fieldState }) => (
                     <DateInput
                       ref={endDateField.ref}
                       className="opening-hours-validity__date"

@@ -1,6 +1,5 @@
 import './Link.scss';
 
-
 export function Link({
   href,
   text,
@@ -17,13 +16,7 @@ export function Link({
   );
 }
 
-export function ExternalLink({
-  href,
-  text,
-}: {
-  href: string;
-  text: string;
-}) {
+export function ExternalLink({ href, text }: { href: string; text: string }) {
   return (
     <a
       href={href}

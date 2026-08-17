@@ -1,4 +1,3 @@
- 
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -46,7 +45,6 @@ const HaukiHeader = () => {
         showSignOutErrorNotification(t('Header.SignOutRejected'));
       }
     } catch (e) {
-       
       console.error('Sign out failed:', (e as Error).message);
       showSignOutErrorNotification(t('Header.SignOutFailed') + e);
     }

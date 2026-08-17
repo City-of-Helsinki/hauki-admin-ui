@@ -4,7 +4,6 @@ import useReturnToResourcePage from '../../hooks/useReturnToResourcePage';
 import { PrimaryButton, SecondaryButton } from '../button/Button';
 import './OpeningHoursFormActions.scss';
 
-
 type Props = {
   isSaving: boolean;
 };

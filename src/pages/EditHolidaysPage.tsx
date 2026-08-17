@@ -329,7 +329,6 @@ const EditHolidaysPage = () => {
           setDatePeriodConfig(uiDatePeriodOptions);
         }
       } catch (e) {
-         
         console.error('Fetching data failed in holidays page:', e);
       }
     };
@@ -446,7 +445,6 @@ const EditHolidaysPage = () => {
           await fetchValues(resource.id);
         }
       } catch (e) {
-         
         console.error(
           'Fetching data failed in holidays page - apiDatePeriods:',
           e

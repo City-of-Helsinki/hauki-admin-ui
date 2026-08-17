@@ -13,12 +13,7 @@ type Props = {
   titleAddon?: string;
 };
 
-const ResourceTitle = ({
-  children,
-  language,
-  resource,
-  titleAddon,
-}: Props) => {
+const ResourceTitle = ({ children, language, resource, titleAddon }: Props) => {
   const [titleIsOnTop, setTitleIsOnTop] = useState(false);
   const [scrollHandlerDisabled, setDisableScroll] = useState(false);
   const ref = useRef<HTMLHeadingElement>(null);

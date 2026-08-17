@@ -65,8 +65,7 @@ const OpeningPeriodActionsMenu = ({
         ref={deleteRef}
         className="button-icon opening-period-actions-menu-toggle"
         type="button"
-        {...buttonProps}
-      >
+        {...buttonProps}>
         <IconMenuDots aria-hidden="true" />
         <span className="visually-hidden">
           {periodName
@@ -102,8 +101,7 @@ const OpeningPeriodActionsMenu = ({
                 closeAccordion();
                 onMoveUp();
               }}
-              type="button"
-            >
+              type="button">
               {t('ResourcePage.OpeningPeriodsSection.MoveUp')}
               <span className="visually-hidden">
                 {periodName
@@ -124,8 +122,7 @@ const OpeningPeriodActionsMenu = ({
                 closeAccordion();
                 onMoveDown();
               }}
-              type="button"
-            >
+              type="button">
               {t('ResourcePage.OpeningPeriodsSection.MoveDown')}
               <span className="visually-hidden">
                 {periodName
@@ -146,8 +143,7 @@ const OpeningPeriodActionsMenu = ({
               onClick={() => {
                 closeAccordion();
                 onCopy();
-              }}
-            >
+              }}>
               {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
               <span className="visually-hidden">
                 {periodName
@@ -166,8 +162,7 @@ const OpeningPeriodActionsMenu = ({
                 closeAccordion();
                 onDelete();
               }}
-              type="button"
-            >
+              type="button">
               {t('ResourcePage.OpeningPeriodsSection.Remove')}
               <span className="visually-hidden">
                 {periodName
@@ -248,8 +243,7 @@ const OpeningPeriodAccordion = ({
   return (
     <div
       className="opening-period"
-      data-testid={`openingPeriod${dataTestPostFix}`}
-    >
+      data-testid={`openingPeriod${dataTestPostFix}`}>
       <div className="opening-period-header">
         {toggleChecked !== undefined &&
           datePeriodSelectState === DatePeriodSelectState.ACTIVE && (
@@ -275,8 +269,7 @@ const OpeningPeriodAccordion = ({
                   data-testid={`openingPeriodMoveUpButton${dataTestPostFix}`}
                   type="button"
                   disabled={!onMoveUp}
-                  onClick={onMoveUp}
-                >
+                  onClick={onMoveUp}>
                   <IconArrowUp aria-hidden="true" />
                   <span className="visually-hidden">
                     {periodName
@@ -293,8 +286,7 @@ const OpeningPeriodAccordion = ({
                   data-testid={`openingPeriodMoveDownButton${dataTestPostFix}`}
                   type="button"
                   disabled={!onMoveDown}
-                  onClick={onMoveDown}
-                >
+                  onClick={onMoveDown}>
                   <IconArrowDown aria-hidden="true" />
                   <span className="visually-hidden">
                     {periodName
@@ -328,8 +320,7 @@ const OpeningPeriodAccordion = ({
               aria-label={t(
                 'ResourcePage.OpeningPeriodsSection.StatusLabelActive'
               )}
-              type="info"
-            >
+              type="info">
               {t('ResourcePage.OpeningPeriodsSection.StatusLabelActive')}
             </StatusLabel>
           )}
@@ -342,8 +333,7 @@ const OpeningPeriodAccordion = ({
                   <Link
                     className="button-icon opening-period-action-edit"
                     data-testid={`openingPeriodEditLink${dataTestPostFix}`}
-                    to={editUrl}
-                  >
+                    to={editUrl}>
                     <IconPenLine aria-hidden="true" />
                     <span className="visually-hidden">
                       {periodName
@@ -362,8 +352,7 @@ const OpeningPeriodAccordion = ({
                     className="button-icon opening-period-action-delete"
                     data-testid={`openingPeriodDeleteLink${dataTestPostFix}`}
                     type="button"
-                    onClick={openModal}
-                  >
+                    onClick={openModal}>
                     <IconTrash aria-hidden="true" />
                     <span className="visually-hidden">
                       {periodName
@@ -402,8 +391,7 @@ const OpeningPeriodAccordion = ({
               onClick={() => {
                 if (!datePeriod || !resourceId) return;
                 openCopyModal();
-              }}
-            >
+              }}>
               {t('ResourcePastOpeningHoursPage.Main.SelectButton')}
               <span className="visually-hidden">
                 {periodName
@@ -418,8 +406,7 @@ const OpeningPeriodAccordion = ({
             className="button-icon"
             data-testid={`openingPeriodAccordionButton${dataTestPostFix}`}
             type="button"
-            {...buttonProps}
-          >
+            {...buttonProps}>
             <AccordionIcon isOpen={isOpen} />
             <span className="visually-hidden">
               {periodName

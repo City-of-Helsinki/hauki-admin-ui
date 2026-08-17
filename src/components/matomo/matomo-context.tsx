@@ -8,10 +8,7 @@ export type MatomoProviderProps = {
 
 const MatomoContext = createContext<MatomoTrackerInstance | null>(null);
 
-export const MatomoProvider = ({
-  children,
-  value,
-}: MatomoProviderProps) => {
+export const MatomoProvider = ({ children, value }: MatomoProviderProps) => {
   const Context = MatomoContext;
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
