@@ -103,6 +103,51 @@ describe('apiRequest', () => {
       });
       expect(response).toBe(mockResource);
     });
+
+    it('fetches resource by numeric id', async () => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({}),
+      });
+
+      await api.getResource('1186');
+
+      const [calledUrl] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe(
+        'http://localhost:8000/v1/resource/1186/?format=json'
+      );
+    });
+
+    it('rejects ids that would tamper with the request url', async () => {
+      const invalidIds = [
+        '../../secret',
+        '..%2F..%2Fsecret',
+        'tprek:8100/../..',
+        '1?ordering=name',
+        '1#fragment',
+        '//evil.com',
+        'tprek:',
+        '',
+      ];
+
+      await Promise.all(
+        invalidIds.map((id) =>
+          expect(api.getResource(id)).rejects.toThrow('Invalid resource id')
+        )
+      );
+
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('testResourcePostPermission', () => {
+    it('rejects ids that would tamper with the request url', async () => {
+      await expect(
+        api.testResourcePostPermission('../../secret')
+      ).rejects.toThrow('Invalid resource id');
+
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
   });
 
   describe('postDatePeriod', () => {
