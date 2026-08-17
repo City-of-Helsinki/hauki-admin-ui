@@ -19,6 +19,17 @@ if (!global.indexedDB) {
   };
 }
 
+// jsdom does not implement ResizeObserver; hds-react uses it in eg. Select
+if (!global.ResizeObserver) {
+  global.ResizeObserver = class {
+    observe(): void {}
+
+    unobserve(): void {}
+
+    disconnect(): void {}
+  };
+}
+
 testSetup();
 
 const originalError = console.error.bind(console.error);

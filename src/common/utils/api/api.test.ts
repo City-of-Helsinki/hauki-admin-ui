@@ -55,6 +55,20 @@ describe('apiRequest', () => {
         )}&hsa_signature=123456`,
       });
     });
+
+    it('returns undefined for a 204 response', async () => {
+      mockFetch.mockResolvedValueOnce({ status: 204 });
+
+      await expect(api.deleteDatePeriod(42)).resolves.toBeUndefined();
+    });
+
+    it('throws when the response status is an error', async () => {
+      mockFetch.mockResolvedValueOnce({ status: 500 });
+
+      await expect(api.getDatePeriod(42)).rejects.toThrow(
+        'Request failed with status 500'
+      );
+    });
   });
 
   describe('getResource', () => {
@@ -147,6 +161,235 @@ describe('apiRequest', () => {
       ).rejects.toThrow('Invalid resource id');
 
       expect(mockFetch).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('resource endpoints', () => {
+    const mockJson = (body: unknown): void => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve(body),
+      });
+    };
+
+    const calledUrl = (): URL => new URL(mockFetch.mock.calls[0][0]);
+
+    const calledParams = (): Record<string, string> =>
+      Object.fromEntries(calledUrl().searchParams);
+
+    it('fetches several resources by ids', async () => {
+      mockJson({ results: [{ id: 1 }, { id: 2 }] });
+
+      const response = await api.getResources(['tprek:8100', 'tprek:8101']);
+
+      expect(calledUrl().pathname).toBe('/v1/resource/');
+      expect(calledParams()).toEqual({
+        resource_ids: 'tprek:8100,tprek:8101',
+        format: 'json',
+      });
+      expect(response).toEqual([{ id: 1 }, { id: 2 }]);
+    });
+
+    it('fetches child resources by parent id', async () => {
+      mockJson({ results: [{ id: 2 }] });
+
+      const response = await api.getChildResourcesByParentId(1186);
+
+      expect(calledUrl().pathname).toBe('/v1/resource/');
+      expect(calledParams()).toEqual({ parent: '1186', format: 'json' });
+      expect(response).toEqual([{ id: 2 }]);
+    });
+
+    it('fetches parent resources by child id', async () => {
+      mockJson({ results: [{ id: 1 }] });
+
+      const response = await api.getParentResourcesByChildId(1186);
+
+      expect(calledUrl().pathname).toBe('/v1/resource/');
+      expect(calledParams()).toEqual({ child: '1186', format: 'json' });
+      expect(response).toEqual([{ id: 1 }]);
+    });
+
+    it('checks resource permission with a namespaced id', async () => {
+      mockJson({ has_permission: true });
+
+      const response = await api.testResourcePostPermission('tprek:8100');
+
+      expect(response).toBe(true);
+    });
+
+    it('copies date periods to target resources', async () => {
+      mockJson({ has_permission: true });
+
+      await api.copyDatePeriods(1186, ['tprek:8101', 'tprek:8102'], true, [
+        '1',
+        '2',
+      ]);
+
+      expect(calledUrl().pathname).toBe('/v1/resource/1186/copy_date_periods/');
+      expect(calledParams()).toEqual({
+        replace: 'true',
+        target_resources: 'tprek:8101,tprek:8102',
+        date_period_ids: '1,2',
+      });
+    });
+
+    it('omits date period ids when copying every period', async () => {
+      mockJson({ has_permission: false });
+
+      await api.copyDatePeriods(1186, ['tprek:8101'], false);
+
+      expect(calledParams()).toEqual({
+        replace: 'false',
+        target_resources: 'tprek:8101',
+      });
+    });
+  });
+
+  describe('date period endpoints', () => {
+    const datePeriod = {
+      id: 42,
+      resource: 1186,
+      name: { fi: 'nimi', sv: null, en: null },
+      description: { fi: 'kuvaus', sv: null, en: null },
+      start_date: '2020-10-27',
+      end_date: '2020-10-28',
+      resource_state: ResourceState.OPEN,
+      override: false,
+      time_span_groups: [],
+    };
+
+    const mockJson = (body: unknown): void => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve(body),
+      });
+    };
+
+    const called = (): [URL, Record<string, unknown>] => [
+      new URL(mockFetch.mock.calls[0][0]),
+      mockFetch.mock.calls[0][1],
+    ];
+
+    it('fetches active date periods for a resource', async () => {
+      mockJson([datePeriod]);
+
+      await api.getDatePeriods(1186);
+
+      const [url] = called();
+      expect(url.pathname).toBe('/v1/date_period/');
+      expect(Object.fromEntries(url.searchParams)).toEqual({
+        resource: '1186',
+        end_date_gte: '-1d',
+        format: 'json',
+      });
+    });
+
+    it('fetches past date periods for a resource', async () => {
+      mockJson([datePeriod]);
+
+      await api.getPastDatePeriods(1186);
+
+      const [url] = called();
+      expect(Object.fromEntries(url.searchParams)).toEqual({
+        resource: '1186',
+        end_date_lt: '0d',
+        format: 'json',
+      });
+    });
+
+    it('limits past date periods with an end date', async () => {
+      mockJson([datePeriod]);
+
+      await api.getPastDatePeriods(1186, '2020-01-01');
+
+      const [url] = called();
+      expect(Object.fromEntries(url.searchParams)).toEqual({
+        resource: '1186',
+        end_date_lt: '0d',
+        end_date_gte: '2020-01-01',
+        format: 'json',
+      });
+    });
+
+    it('fetches a single date period', async () => {
+      mockJson(datePeriod);
+
+      const response = await api.getDatePeriod(42);
+
+      const [url, options] = called();
+      expect(url.pathname).toBe('/v1/date_period/42/');
+      expect(options).toMatchObject({ method: 'GET' });
+      expect(response).toEqual(datePeriod);
+    });
+
+    it('replaces a date period with PUT', async () => {
+      mockJson(datePeriod);
+
+      await api.putDatePeriod(datePeriod);
+
+      const [url, options] = called();
+      expect(url.pathname).toBe('/v1/date_period/42/');
+      expect(options).toMatchObject({
+        method: 'PUT',
+        body: JSON.stringify(datePeriod),
+      });
+    });
+
+    it('updates a date period with PATCH', async () => {
+      mockJson(datePeriod);
+
+      await api.patchDatePeriod(datePeriod);
+
+      const [url, options] = called();
+      expect(url.pathname).toBe('/v1/date_period/42/');
+      expect(options).toMatchObject({
+        method: 'PATCH',
+        body: JSON.stringify(datePeriod),
+      });
+    });
+
+    it('deletes a date period', async () => {
+      mockJson({ success: true });
+
+      const response = await api.deleteDatePeriod(42);
+
+      const [url, options] = called();
+      expect(url.pathname).toBe('/v1/date_period/42/');
+      expect(options).toMatchObject({ method: 'DELETE' });
+      expect(response).toEqual({ success: true });
+    });
+  });
+
+  describe('auth endpoints', () => {
+    it('invalidates the signature without the version prefix', async () => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ success: true }),
+      });
+
+      const response = await api.invalidateAuth();
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toBe('http://localhost:8000/invalidate_signature/');
+      expect(options).toMatchObject({ method: 'POST' });
+      expect(response).toBe(true);
+    });
+
+    it('calls the auth test endpoint', async () => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () =>
+          Promise.resolve({ message: 'ok', username: 'admin@hel.fi' }),
+      });
+
+      const response = await api.testAuth();
+
+      const [url] = mockFetch.mock.calls[0];
+      expect(url).toBe(
+        'http://localhost:8000/v1/auth_required_test/?format=json'
+      );
+      expect(response).toEqual({ message: 'ok', username: 'admin@hel.fi' });
     });
   });
 
