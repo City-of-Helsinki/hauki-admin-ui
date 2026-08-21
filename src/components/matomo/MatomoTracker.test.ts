@@ -1,4 +1,3 @@
- 
 import MatomoTracker, { MatomoTrackerOptions } from './MatomoTracker';
 
 describe('MatomoTracker', () => {

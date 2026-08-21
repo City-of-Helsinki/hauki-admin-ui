@@ -7,7 +7,6 @@ import useResource from '../services/useResource';
 import useDatePeriod from '../services/useDatePeriod';
 import useDatePeriodConfig from '../services/useDatePeriodConfig';
 
-
 const EditNormalOpeningHoursPage = () => {
   const { t } = useTranslation();
 

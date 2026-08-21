@@ -64,7 +64,6 @@ const ResourcePeriodsCopyFieldset = ({
       });
       setIsCopyLoading(false);
 
-       
       console.error(err); // For debug purposes
     }
   };

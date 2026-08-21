@@ -9,11 +9,7 @@ import { AuthContextProps, useAuth } from '../../auth/auth-context';
 import api from '../../common/utils/api/api';
 import Main from '../main/Main';
 
-const PermissionResolver = ({
-  children,
-}: {
-  children?: ReactNode;
-}) => {
+const PermissionResolver = ({ children }: { children?: ReactNode }) => {
   const { authTokens, clearAuth }: Partial<AuthContextProps> = useAuth();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();

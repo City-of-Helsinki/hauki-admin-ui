@@ -12,7 +12,6 @@ import { defaultTimeSpanGroup } from '../../constants';
 import ExceptionOpeningHoursStateToggle from '../exception-opening-hours-state-toggle/ExceptionOpeningHoursStateToggle';
 import './ExceptionOpeningHoursValidity.scss';
 
-
 const ExceptionOpeningHoursValidity = () => {
   const { t } = useTranslation();
   const { language = Language.FI } = useAppContext();
@@ -30,7 +29,9 @@ const ExceptionOpeningHoursValidity = () => {
           className="exception-opening-hours-validity__title"
           label={t('OpeningHours.ExceptionOpeningHoursValidity')}
           required>
-          <div id="exception-date-fields" className="exception-opening-hours-validity__dates">
+          <div
+            id="exception-date-fields"
+            className="exception-opening-hours-validity__dates">
             <Controller
               defaultValue={startDate ?? ''}
               name="startDate"

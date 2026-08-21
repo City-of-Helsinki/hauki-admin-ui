@@ -161,14 +161,13 @@ vi.mock('react-i18next', () => ({
     return {
       t: (str: string) => str,
       i18n: {
-         
         changeLanguage: () => new Promise(() => {}),
       },
     };
   },
   initReactI18next: {
     type: '3rdParty',
-     
+
     init: () => {},
   },
 }));
@@ -227,9 +226,9 @@ describe(`<ResourceBatchUpdatePage />`, () => {
   });
 
   it('should show loading indicator', async () => {
-    vi.spyOn(api, 'getResource')
-       
-      .mockImplementation(() => new Promise(() => {}));
+    vi.spyOn(api, 'getResource').mockImplementation(
+      () => new Promise(() => {})
+    );
 
     renderPage();
 

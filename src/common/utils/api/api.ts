@@ -13,7 +13,6 @@ import {
 } from '../../lib/types';
 import { AuthTokens, getTokens } from '../../../auth/auth-context';
 
- 
 const apiBaseUrl: string = window._env_?.API_URL || 'http://localhost:8000';
 
 const resourceBasePath = '/resource';
@@ -136,7 +135,7 @@ async function request<T>(config: FetchRequestConfig): Promise<T> {
   const authTokens: AuthTokens | undefined = getTokens();
   const headers: { [key: string]: string } = authTokens
     ? addAuthHeader(authTokens, config.headers ?? {})
-    : (config.headers ?? {});
+    : config.headers ?? {};
 
   const url = buildUrl(config.url, config.params);
   const hasBody = ['post', 'put', 'patch'].includes(

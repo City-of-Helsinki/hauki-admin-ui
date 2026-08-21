@@ -6,7 +6,6 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
-
 const ExceptionOpeningHoursForm = ({
   copyFrom,
   ...props

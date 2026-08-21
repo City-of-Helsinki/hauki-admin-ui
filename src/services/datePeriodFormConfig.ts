@@ -7,7 +7,7 @@ import api from '../common/utils/api/api';
  * We need to make sure the when storing and retrieving the data
  * that it is mapped correctly. That is done in the opening-hours-helpers module.
  */
- 
+
 export const getDatePeriodFormConfig = (): Promise<UiDatePeriodConfig> =>
   api.getDatePeriodFormConfig();
 // .then((result) => ({

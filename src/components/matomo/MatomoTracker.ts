@@ -1,4 +1,3 @@
- 
 import { TRACK_TYPES } from './constants';
 
 export type MatomoTrackerOptions = {

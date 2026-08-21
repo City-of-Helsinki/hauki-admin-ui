@@ -17,7 +17,6 @@ import {
   useSelectedDatePeriodsContext,
 } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 
-
 const findHolidayDatePeriod = (holiday: Holiday, datePeriods: DatePeriod[]) =>
   datePeriods.find((dp) => isHolidayOrEve(dp, [holiday]));
 

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../App-context';
 import './HaukiFooter.scss';
 
-
 const HaukiFooter = () => {
   const { language } = useAppContext();
   const { t } = useTranslation();

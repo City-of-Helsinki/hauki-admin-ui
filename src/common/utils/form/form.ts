@@ -1,6 +1,5 @@
 import { Choice, InputOption, Language } from '../../lib/types';
 
- 
 export const choiceToOption =
   (language: Language) =>
   <T = string>(choice: Choice<T>): InputOption<T> => ({

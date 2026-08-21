@@ -18,15 +18,12 @@ describe('useMatomo', () => {
   it('should trackPageView', () => {
     const trackPageViewMock = vi.fn();
 
-    vi.spyOn(MatomoTracker, 'default').mockImplementation(
-      function () {
-        return {
-          trackPageView: trackPageViewMock,
-        } as unknown as MatomoTracker.default;
-      }
-    );
+    vi.spyOn(MatomoTracker, 'default').mockImplementation(function () {
+      return {
+        trackPageView: trackPageViewMock,
+      } as unknown as MatomoTracker.default;
+    });
 
-     
     const instance = new MatomoTracker.default({
       urlBase: 'https://www.hel.fi',
       siteId: 'test123',

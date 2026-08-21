@@ -7,7 +7,6 @@ import OpeningHoursForm, {
   OpeningHoursFormProps,
 } from '../opening-hours-form/OpeningHoursForm';
 
-
 const NormalOpeningHoursForm = ({
   copyFrom,
   ...props

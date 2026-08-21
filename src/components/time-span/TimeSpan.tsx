@@ -98,7 +98,7 @@ const TimeSpan = ({
   useEffect(() => {
     if (innerRef) {
       // The toggle-button postfix comes from HDS and if that ever changes this will break
-       
+
       innerRef.current = document.getElementById(
         `${resourceStateId}-toggle-button`
       );

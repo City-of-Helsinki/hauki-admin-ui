@@ -64,8 +64,7 @@ export const SecondaryButton = ({
       type={type}
       iconStart={isLoading ? <LoadingSpinner small /> : iconStart}
       iconEnd={iconEnd}
-      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
-    >
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
       {isLoading && loadingText ? loadingText : children}
     </HDSButton>
   );
@@ -107,8 +106,7 @@ export const PrimaryButton = ({
       iconEnd={iconEnd}
       disabled={disabled || isLoading}
       size={size as ButtonSize}
-      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
-    >
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
       {isLoading && loadingText ? loadingText : children}
     </HDSButton>
   );
@@ -145,8 +143,7 @@ export const SupplementaryButton = ({
       iconEnd={iconEnd}
       disabled={disabled || isLoading}
       size={size as ButtonSize}
-      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}
-    >
+      style={{ cursor: isLoading ? 'wait' : undefined, ...style }}>
       {isLoading && loadingText ? loadingText : children}
     </HDSButton>
   );

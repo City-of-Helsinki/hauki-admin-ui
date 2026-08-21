@@ -5,7 +5,6 @@ import './OpeningHoursTitles.scss';
 import { LanguageStrings } from '../../common/lib/types';
 import { toCharCount } from '../../common/utils/form/form';
 
-
 type Props = {
   placeholders: LanguageStrings;
 };

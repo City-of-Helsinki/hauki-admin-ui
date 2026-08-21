@@ -6,16 +6,12 @@ import {
 } from '../../common/lib/types';
 import { TimeSpan } from '../opening-hours-preview/OpeningHoursPreview';
 
-
 type Props = {
   datePeriod?: DatePeriod;
   datePeriodConfig?: UiDatePeriodConfig;
 };
 
-const HolidayOpeningHours = ({
-  datePeriod,
-  datePeriodConfig,
-}: Props) => {
+const HolidayOpeningHours = ({ datePeriod, datePeriodConfig }: Props) => {
   const { t } = useTranslation();
   if (datePeriod) {
     return (

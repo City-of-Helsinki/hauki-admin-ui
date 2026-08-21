@@ -9,7 +9,6 @@ const storeItem = <T>({
     window.localStorage.setItem(key, JSON.stringify(value));
     return value;
   } catch (error) {
-     
     console.log(error);
     return undefined;
   }
@@ -20,7 +19,6 @@ const getItem = <T>(key: string): T | undefined => {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : undefined;
   } catch (error) {
-     
     console.log(error);
     return undefined;
   }

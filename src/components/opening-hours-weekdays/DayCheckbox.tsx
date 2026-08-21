@@ -4,7 +4,6 @@ import { getWeekdayShortNameByIndexAndLang } from '../../common/utils/date-time/
 import { getUiId } from '../../common/utils/form/form';
 import './DayCheckbox.scss';
 
-
 const DayCheckbox = ({
   currentDay,
   disabled,

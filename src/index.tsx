@@ -10,10 +10,7 @@ declare global {
   }
 }
 
-if (
-  window._env_?.SENTRY_DSN &&
-  window._env_?.SENTRY_ENVIRONMENT !== 'local'
-) {
+if (window._env_?.SENTRY_DSN && window._env_?.SENTRY_ENVIRONMENT !== 'local') {
   Sentry.init({
     dsn: window._env_.SENTRY_DSN,
     environment: window._env_.SENTRY_ENVIRONMENT,
