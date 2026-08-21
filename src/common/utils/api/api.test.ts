@@ -69,6 +69,38 @@ describe('apiRequest', () => {
         'Request failed with status 500'
       );
     });
+
+    it('keeps tainted parameter values inside the query string', async () => {
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ results: [] }),
+      });
+
+      await api.getChildResourcesByParentId(
+        'https://evil.example.com/steal' as unknown as number
+      );
+
+      const [calledUrl] = mockFetch.mock.calls[0];
+      expect(new URL(calledUrl).origin).toBe('http://localhost:8000');
+    });
+
+    it('supports a relative API_URL served from the page origin', async () => {
+      vi.stubGlobal('_env_', { API_URL: '/api' });
+      vi.resetModules();
+      const { default: relativeApi } = await import('./api');
+
+      mockFetch.mockResolvedValueOnce({
+        status: 200,
+        json: () => Promise.resolve({ results: [] }),
+      });
+
+      await relativeApi.getChildResourcesByParentId(42);
+
+      const [calledUrl] = mockFetch.mock.calls[0];
+      expect(calledUrl).toBe(
+        `${window.location.origin}/api/v1/resource/?parent=42&format=json`
+      );
+    });
   });
 
   describe('getResource', () => {
