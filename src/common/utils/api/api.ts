@@ -14,6 +14,10 @@ import {
 import { AuthTokens, getTokens } from '../../../auth/auth-context';
 
 const apiBaseUrl: string = window._env_?.API_URL || 'http://localhost:8000';
+// Values that reach the query string come back from API responses, so pin the
+// destination origin instead of trusting the caller's base string. API_URL may
+// be relative (same-origin reverse proxy), so resolve it against the page.
+const apiOrigin = new URL(apiBaseUrl, window.location.origin).origin;
 
 const resourceBasePath = '/resource';
 // Resource ids are either a numeric primary key or a namespaced external id,
@@ -110,15 +114,16 @@ const convertApiChoiceToTranslatedApiChoice = (
 };
 
 const buildUrl = (base: string, params?: RequestParameters): string => {
-  if (!params || Object.keys(params).length === 0) return base;
-  const searchParams = new URLSearchParams();
-  Object.entries(params).forEach(([key, value]) => {
+  const url = new URL(base, apiOrigin);
+  if (url.origin !== apiOrigin) {
+    throw new Error(`Refusing to send a request outside ${apiOrigin}`);
+  }
+  Object.entries(params ?? {}).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
-      searchParams.append(key, String(value));
+      url.searchParams.append(key, String(value));
     }
   });
-  const query = searchParams.toString();
-  return query ? `${base}?${query}` : base;
+  return url.toString();
 };
 
 const addAuthHeader = (
