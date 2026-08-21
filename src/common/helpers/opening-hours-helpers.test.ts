@@ -5,10 +5,12 @@ import {
 import { DatePeriod, OpeningHours, ResourceState } from '../lib/types';
 import {
   apiDatePeriodToDatePeriod,
+  areStartAndEndTimesAllowed,
   datePeriodToApiDatePeriod,
   datePeriodToRules,
   getActiveDatePeriods,
   alignOpeningHoursWeekdaysToDateRange,
+  isDescriptionAllowed,
   isHolidayOrEve,
   updateRule,
   updateWeekday,
@@ -1146,5 +1148,37 @@ describe('updateRule', () => {
     ).toEqual({
       updated: [],
     });
+  });
+});
+
+describe('isDescriptionAllowed', () => {
+  it('is not allowed when the resource has no opening hours', () => {
+    expect(isDescriptionAllowed(ResourceState.NO_OPENING_HOURS)).toBe(false);
+  });
+
+  it('is allowed for every other resource state', () => {
+    expect(isDescriptionAllowed(ResourceState.OPEN)).toBe(true);
+    expect(isDescriptionAllowed(ResourceState.CLOSED)).toBe(true);
+  });
+});
+
+describe('areStartAndEndTimesAllowed', () => {
+  it('is allowed when the resource state is unknown', () => {
+    expect(areStartAndEndTimesAllowed(0, undefined)).toBe(true);
+  });
+
+  it('is allowed for a state with actual opening hours', () => {
+    expect(areStartAndEndTimesAllowed(0, ResourceState.OPEN)).toBe(true);
+  });
+
+  it('is not allowed for the first time span when closed', () => {
+    expect(areStartAndEndTimesAllowed(0, ResourceState.CLOSED)).toBe(false);
+    expect(areStartAndEndTimesAllowed(0, ResourceState.NO_OPENING_HOURS)).toBe(
+      false
+    );
+  });
+
+  it('is allowed for later time spans even when closed', () => {
+    expect(areStartAndEndTimesAllowed(1, ResourceState.CLOSED)).toBe(true);
   });
 });

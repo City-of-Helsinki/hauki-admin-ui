@@ -10,7 +10,7 @@ export const choiceToOption =
 export const getUiId = (parts: Array<string | number>): string =>
   parts
     .map((s) => `${s}`)
-    .map((s) => s.replace(/\./g, '-'))
+    .map((s) => s.replaceAll('.', '-'))
     .join('-');
 
 export const toCharCount = (maxLength: number, value?: string): string =>
