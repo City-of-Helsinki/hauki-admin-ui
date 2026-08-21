@@ -44,9 +44,7 @@ describe('useOnClickOutside', () => {
 
   it('does nothing while the ref is unattached', () => {
     const onClickOutside = vi.fn();
-    render(
-      <TestComponent onClickOutside={onClickOutside} attachRef={false} />
-    );
+    render(<TestComponent onClickOutside={onClickOutside} attachRef={false} />);
 
     fireEvent.mouseDown(screen.getByTestId('outside'));
 

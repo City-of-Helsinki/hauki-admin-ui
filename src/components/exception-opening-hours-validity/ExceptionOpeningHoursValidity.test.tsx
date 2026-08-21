@@ -74,7 +74,9 @@ describe('ExceptionOpeningHoursValidity', () => {
       </Wrapper>
     );
 
-    expect(screen.getByTestId('exception-start-date')).toHaveValue('01.01.2024');
+    expect(screen.getByTestId('exception-start-date')).toHaveValue(
+      '01.01.2024'
+    );
     expect(screen.getByTestId('exception-end-date')).toHaveValue('10.01.2024');
   });
 
