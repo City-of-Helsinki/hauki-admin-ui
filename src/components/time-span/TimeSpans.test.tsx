@@ -97,12 +97,8 @@ describe('TimeSpans', () => {
   it('shows the start and end times of an open time span', () => {
     renderTimeSpans();
 
-    expect(
-      screen.getByText('OpeningHours.TimeSpanBegins')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('OpeningHours.TimeSpanEnds')
-    ).toBeInTheDocument();
+    expect(screen.getByText('OpeningHours.TimeSpanBegins')).toBeInTheDocument();
+    expect(screen.getByText('OpeningHours.TimeSpanEnds')).toBeInTheDocument();
   });
 
   it('hides the time range for a full day time span', () => {
