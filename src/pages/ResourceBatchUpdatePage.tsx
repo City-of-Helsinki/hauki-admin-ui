@@ -51,6 +51,19 @@ export type ResourceWithOrigins = Resource & {
   }[];
 };
 
+// Target resource ids are namespaced, e.g. 'tprek:8215'.
+const hasMatchingOrigin = (
+  resource: ResourceWithOrigins,
+  targetResourceId: string
+): boolean => {
+  const [dataSourceId, originId] = targetResourceId.split(':');
+
+  return resource.origins.some(
+    (origin) =>
+      origin.data_source.id === dataSourceId && origin.origin_id === originId
+  );
+};
+
 const ResourceBatchUpdatePage = ({
   targetResourcesString,
 }: ResourceBatchUpdatePageProps) => {
@@ -272,11 +285,7 @@ const ResourceBatchUpdatePage = ({
             .map((id) => ({
               id,
               resource: resourcesWithOrigins.find((res) =>
-                res.origins.some(
-                  (origin) =>
-                    origin.data_source.id === id.split(':')[0] &&
-                    origin.origin_id === id.split(':')[1]
-                )
+                hasMatchingOrigin(res, id)
               ),
             }))
             .filter((r) => r.resource)
