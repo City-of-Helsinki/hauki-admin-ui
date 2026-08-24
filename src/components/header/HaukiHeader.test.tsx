@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import api from '../../common/utils/api/api';
 import { AppContext } from '../../App-context';
-import { AuthContext } from '../../auth/auth-context';
+import { AuthContext, AuthTokens } from '../../auth/auth-context';
 import HaukiHeader from './HaukiHeader';
 
 vi.mock('react-i18next', () => ({
@@ -22,6 +22,17 @@ vi.mock('react-i18next', () => ({
     init: () => {},
   },
 }));
+
+const testAuthTokens: AuthTokens = {
+  hsa_source: 'tprek',
+  hsa_username: 'tester',
+  hsa_created_at: '2026-01-01T00:00:00.000Z',
+  hsa_valid_until: '2026-01-08T00:00:00.000Z',
+  hsa_resource: 'tprek:8215',
+  hsa_organization: 'tprek:83e74666-0836-4c1d-948a-4b34a8b90301',
+  hsa_signature: 'test-signature',
+  hsa_has_organization_rights: 'true',
+};
 
 vi.mock('react-router-dom', async (importOriginal) => {
   const mod = await importOriginal();
@@ -51,7 +62,7 @@ describe('<HaukiHeader>', () => {
         <AppContext.Provider value={{ hasOpenerWindow: true, closeAppWindow }}>
           <AuthContext.Provider
             value={{
-              authTokens: { hsa_username: 'tester' },
+              authTokens: testAuthTokens,
               clearAuth: vi.fn(),
             }}>
             <HaukiHeader />
@@ -86,7 +97,7 @@ describe('<HaukiHeader>', () => {
       <Router>
         <AppContext.Provider value={{ hasOpenerWindow: true, closeAppWindow }}>
           <AuthContext.Provider
-            value={{ authTokens: { name: 'tester' }, clearAuth: vi.fn() }}>
+            value={{ authTokens: testAuthTokens, clearAuth: vi.fn() }}>
             <HaukiHeader />
           </AuthContext.Provider>
         </AppContext.Provider>
