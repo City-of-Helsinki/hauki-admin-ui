@@ -64,6 +64,31 @@ const hasMatchingOrigin = (
   );
 };
 
+const RemoveResourceButton = ({
+  onRemove,
+  resourceId,
+}: {
+  onRemove: (id: string) => void;
+  resourceId: string;
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div style={{ textAlign: 'right', color: 'red' }}>
+      <button
+        className="button-icon"
+        onClick={() => onRemove(resourceId)}
+        type="button">
+        <IconTrash
+          size={IconSize.ExtraSmall}
+          aria-label={t('ResourcePage.ResourcesSection.RemoveAriaLabel')}
+          color="var(--color-error)"
+        />
+      </button>
+    </div>
+  );
+};
+
 const ResourceBatchUpdatePage = ({
   targetResourcesString,
 }: ResourceBatchUpdatePageProps) => {
@@ -235,24 +260,9 @@ const ResourceBatchUpdatePage = ({
       {
         key: 'remove',
         headerName: '',
-        transform: (item: { remove: string }) => {
-          return (
-            <div style={{ textAlign: 'right', color: 'red' }}>
-              <button
-                className="button-icon"
-                onClick={() => onRemove(item.remove)}
-                type="button">
-                <IconTrash
-                  size={IconSize.ExtraSmall}
-                  aria-label={t(
-                    'ResourcePage.ResourcesSection.RemoveAriaLabel'
-                  )}
-                  color="var(--color-error)"
-                />
-              </button>
-            </div>
-          );
-        },
+        transform: (item: { remove: string }) => (
+          <RemoveResourceButton onRemove={onRemove} resourceId={item.remove} />
+        ),
       },
     ],
     rows: targetResourceData?.targetResources?.map((res) => ({
