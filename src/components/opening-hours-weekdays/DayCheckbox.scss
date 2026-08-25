@@ -30,19 +30,24 @@ label.day-label {
 
   & input[type='checkbox']:checked ~ .day-option {
     background-color: var(--color-coat-of-arms);
-    color: white;
+    color: var(--color-white);
     transition-property: background-color, border-color, color;
     transition-duration: 85ms;
     transition-timing-function: ease-out;
   }
 
+  // The offset keeps the ring on the container background, where it reaches
+  // 8.59:1. Directly on the chip it would fail WCAG 1.4.11 against the checked
+  // (1.73:1) and disabled (2.18:1) backgrounds. Not --color-focus-outline on
+  // purpose: that token is the same blue as the checked background.
   & input[type='checkbox']:focus ~ .day-option {
     outline: blue solid 2px;
+    outline-offset: 2px;
   }
 
   & input[type='checkbox']:disabled ~ .day-option {
-    background: gray;
-    color: white;
+    background: var(--color-black-50);
+    color: var(--color-white);
   }
 
   & input[type='checkbox']:checked ~ .day-option:hover {
