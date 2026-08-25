@@ -181,6 +181,21 @@ const OpeningPeriodActionsMenu = ({
   );
 };
 
+// The toggle label varies on two axes: open state and whether the period has a
+// name. Kept as four explicit keys rather than a composed string so each one
+// stays greppable and visible to translators.
+const toggleLabelKey = (hasPeriodName: boolean, isOpen: boolean): string => {
+  if (hasPeriodName) {
+    return isOpen
+      ? 'ResourcePage.OpeningPeriodsSection.HidePeriod'
+      : 'ResourcePage.OpeningPeriodsSection.ShowPeriod';
+  }
+
+  return isOpen
+    ? 'ResourcePage.OpeningPeriodsSection.HideUntitledPeriod'
+    : 'ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod';
+};
+
 type Props = {
   children: ReactNode;
   dateRange: ReactNode;
@@ -409,20 +424,7 @@ const OpeningPeriodAccordion = ({
             {...buttonProps}>
             <AccordionIcon isOpen={isOpen} />
             <span className="visually-hidden">
-              {periodName
-                ? t(
-                    isOpen
-                      ? 'ResourcePage.OpeningPeriodsSection.HidePeriod'
-                      : 'ResourcePage.OpeningPeriodsSection.ShowPeriod',
-                    {
-                      periodName,
-                    }
-                  )
-                : t(
-                    isOpen
-                      ? 'ResourcePage.OpeningPeriodsSection.HideUntitledPeriod'
-                      : 'ResourcePage.OpeningPeriodsSection.ShowUntitledPeriod'
-                  )}
+              {t(toggleLabelKey(!!periodName, isOpen), { periodName })}
             </span>
           </button>
         </div>
