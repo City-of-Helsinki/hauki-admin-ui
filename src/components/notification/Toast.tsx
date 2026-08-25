@@ -15,11 +15,9 @@ type ToastProps = {
 };
 
 const removeContainer = (container: HTMLDivElement): void => {
-  setTimeout(() => {
-    if (container && container.parentElement) {
-      container.parentElement.removeChild(container);
-    }
-  }, 1000);
+  // remove() detaches the node if it is still attached and is a no-op
+  // otherwise, so no parent check is needed.
+  setTimeout(() => container.remove(), 1000);
 };
 
 const renderToast = ({
