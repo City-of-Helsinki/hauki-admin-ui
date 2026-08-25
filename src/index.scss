@@ -36,6 +36,12 @@ fieldset {
   min-width: min-content;
 }
 
+// Groups converted from <div role="group"> to <fieldset>. The rule above sets
+// min-width: min-content, which would stop them shrinking on narrow viewports.
+.group-fieldset {
+  min-inline-size: 0;
+}
+
 label {
   font-family: HelsinkiGrotesk-Medium, Arial, sans-serif;
 }

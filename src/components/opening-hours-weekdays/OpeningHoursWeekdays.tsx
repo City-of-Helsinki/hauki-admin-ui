@@ -189,9 +189,9 @@ const OpeningHoursWeekdays = ({
     };
 
   return (
-    <div
+    <fieldset
+      className="group-fieldset"
       style={{ zIndex: isMoving ? 1 : undefined }}
-      role="group"
       aria-label={t('OpeningHours.WeekdayGroupAria', {
         openingHoursIdx: openingHoursIdx + 1,
       })}>
@@ -205,9 +205,8 @@ const OpeningHoursWeekdays = ({
             </div>
             <div>{formatDateRange({ startDate, endDate })}</div>
           </div>
-          <div
-            className="weekdays"
-            role="group"
+          <fieldset
+            className="weekdays group-fieldset"
             aria-labelledby={getUiId([namePrefix, 'weekdays'])}>
             {removedDay && (
               <Notification
@@ -260,9 +259,9 @@ const OpeningHoursWeekdays = ({
                 </>
               )}
             />
-          </div>
+          </fieldset>
         </div>
-        <div className="opening-hours-group" role="group">
+        <fieldset className="opening-hours-group group-fieldset">
           {fields.map((field, i) => (
             <Fragment key={field.id}>
               <Controller
@@ -287,8 +286,8 @@ const OpeningHoursWeekdays = ({
                         value={value.type}
                       />
                     )}
-                    <div
-                      role="group"
+                    <fieldset
+                      className="group-fieldset"
                       aria-label={
                         weekdayGroup +
                         (value.type === 'week_every'
@@ -302,15 +301,15 @@ const OpeningHoursWeekdays = ({
                         resourceStates={resourceStates}
                         timeSpanGroupIdx={i}
                       />
-                    </div>
+                    </fieldset>
                   </>
                 )}
               />
             </Fragment>
           ))}
-        </div>
+        </fieldset>
       </div>
-    </div>
+    </fieldset>
   );
 };
 
