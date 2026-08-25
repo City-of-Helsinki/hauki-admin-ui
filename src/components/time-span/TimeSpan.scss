@@ -1,10 +1,17 @@
 @import 'hds-design-tokens/lib/all.scss';
 
+// Rendered as a <fieldset> for grouping semantics. Reset the user-agent border,
+// padding and margin, and the min-inline-size floor that would otherwise stop
+// the grid from shrinking on narrow viewports.
 .time-span {
   align-items: flex-start;
+  border: 0;
   display: grid;
   gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
 }
 
 @media screen and (min-width: $breakpoint-s) {

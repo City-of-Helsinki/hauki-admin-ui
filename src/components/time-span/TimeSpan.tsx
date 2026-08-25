@@ -106,9 +106,8 @@ const TimeSpan = ({
   }, [innerRef, resourceStateId]);
 
   return (
-    <div
+    <fieldset
       className="time-span time-span--with-extra-fields"
-      role="group"
       aria-label={groupLabel}>
       <Controller
         defaultValue={item?.resource_state ?? ResourceState.OPEN}
@@ -299,7 +298,7 @@ const TimeSpan = ({
           </SupplementaryButton>
         )}
       </div>
-    </div>
+    </fieldset>
   );
 };
 
