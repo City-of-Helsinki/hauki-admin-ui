@@ -142,58 +142,58 @@ const OpeningHoursPreview = ({
 
   return (
     <>
-      {openingHoursToPreviewRows(openingHours).map(
-        (previewRow, previewRowIdx) => (
-          <table
-            key={`preview-row-${previewRowIdx}`}
-            className="opening-hours-preview-table">
-            {previewRow.rule.type === 'week_every' ? null : (
-              <caption className="opening-hours-preview-table__caption">
-                {uiRuleLabels[previewRow.rule.type][language]}
-              </caption>
+      {openingHoursToPreviewRows(openingHours).map((previewRow) => (
+        <table
+          key={previewRow.rule.type}
+          className="opening-hours-preview-table">
+          {previewRow.rule.type === 'week_every' ? null : (
+            <caption className="opening-hours-preview-table__caption">
+              {uiRuleLabels[previewRow.rule.type][language]}
+            </caption>
+          )}
+          <thead className="opening-hours-preview-table__header visually-hidden">
+            <tr>
+              <th
+                className="opening-hours-preview-table__day-column"
+                scope="col">
+                Päivä
+              </th>
+              <th
+                className="opening-hours-preview-table__time-span-column"
+                scope="col">
+                Aukioloaika
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {previewRow.openingHours.map((openingHour, openingHourIdx) =>
+              openingHour.timeSpans.map((timeSpan, timeSpanIdx) => (
+                <TimeSpanRow
+                  key={`${openingHour.weekdays.join(
+                    '-'
+                  )}-${openingHourIdx}-${timeSpanIdx}`}
+                  className={
+                    openingHourIdx % 2 === 0
+                      ? 'time-span-row--odd'
+                      : 'time-span-row--even'
+                  }
+                  idx={timeSpanIdx}
+                  label={
+                    timeSpanIdx === 0
+                      ? createWeekdaysStringFromIndices(
+                          openingHour.weekdays,
+                          language
+                        )
+                      : ''
+                  }
+                  resourceStates={resourceStates}
+                  timeSpan={timeSpan}
+                />
+              ))
             )}
-            <thead className="opening-hours-preview-table__header visually-hidden">
-              <tr>
-                <th
-                  className="opening-hours-preview-table__day-column"
-                  scope="col">
-                  Päivä
-                </th>
-                <th
-                  className="opening-hours-preview-table__time-span-column"
-                  scope="col">
-                  Aukioloaika
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {previewRow.openingHours.map((openingHour, openingHourIdx) =>
-                openingHour.timeSpans.map((timeSpan, timeSpanIdx) => (
-                  <TimeSpanRow
-                    key={`time-span-row-${timeSpanIdx}`}
-                    className={
-                      openingHourIdx % 2 === 0
-                        ? 'time-span-row--odd'
-                        : 'time-span-row--even'
-                    }
-                    idx={timeSpanIdx}
-                    label={
-                      timeSpanIdx === 0
-                        ? createWeekdaysStringFromIndices(
-                            openingHour.weekdays,
-                            language
-                          )
-                        : ''
-                    }
-                    resourceStates={resourceStates}
-                    timeSpan={timeSpan}
-                  />
-                ))
-              )}
-            </tbody>
-          </table>
-        )
-      )}
+          </tbody>
+        </table>
+      ))}
     </>
   );
 };
