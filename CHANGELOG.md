@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.16.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.1...hauki-admin-ui-v1.16.2) (2026-09-07)
+
+
+### Bug Fixes
+
+* Detach the toast container with remove() ([4f8eccf](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/4f8eccf97610a84f06ff2334b4c52339ab2fa707))
+* Extract the accordion toggle label key ([a81546a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a81546ae27ba57a725b94610b27827ade24044fa))
+* Give the opening hours preview stable row keys ([4b94ef3](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/4b94ef38a47b5e6b862a3aa06b83a86634b7baef))
+* Linter issues ([966cee0](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/966cee0ff643b8a98e9de83b183e7f9b0350d079))
+* Move the remove button out of the batch update page ([478b9cc](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/478b9cceb4fd0e3a6527d0b73e1c188ee244af01))
+* Offset the day checkbox focus ring and use colour tokens ([10234fd](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/10234fdb3e739e947ada66fb881c908fa222c3ec))
+* Prettier HAUKI-819 ([#519](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/519)) ([8c41d6c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8c41d6c58bba620574d7054cc4c750c5fdd6fe6e))
+* Reduce callback nesting in batch update page ([2df7686](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/2df7686925ea6179ff8bed673cb6f5d3f083c201))
+* Sonar code coverage HAUKI-816 ([#518](https://github.com/City-of-Helsinki/hauki-admin-ui/issues/518)) ([be5c469](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/be5c469585f8d60a9ca4922501b74a326372acb5))
+* Sonar issues ([c5393ce](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c5393cef869eca0532ecad0e0f8092ded10db509))
+* Sonar security issue ([90b6085](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/90b6085005215c54440d024e6646d2b4c033be64))
+* Sonar security issue ([dcb8a52](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/dcb8a525379216b558dd77881d665f3942eda2f0))
+* Type the mousedown event in useOnClickOutside ([856c660](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/856c660bb0cc08c1a27c76c85718590e90212307))
+* Use a fieldset to group time span fields ([0a50a22](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0a50a22cb27d97b05d72d79df27f6b4722d458c2))
+* Use fieldsets to group weekday opening hours ([a1b2dc2](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a1b2dc2cb5e1c424fad6a4652e0047e6d3aa1b9a))
+
 ## [1.16.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.0...hauki-admin-ui-v1.16.1) (2026-08-07)
 
 
