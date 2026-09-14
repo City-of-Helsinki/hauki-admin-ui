@@ -1,5 +1,12 @@
 # Block installation of dependencies released less than 1 week ago (supply-chain hardening)
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - baseline-browser-mapping@2.11.22
+  - electron-to-chromium@1.5.426
+  - nanoid@3.3.19
+  - node-releases@2.0.55
+  - obug@2.2.1
+  - update-browserslist-db@1.3.3
 
 allowBuilds:
   "@parcel/watcher": true
