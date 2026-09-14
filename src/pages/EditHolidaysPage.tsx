@@ -2,7 +2,7 @@ import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, IconPenLine, LoadingSpinner } from 'hds-react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import {
   ApiDatePeriod,
   Language,

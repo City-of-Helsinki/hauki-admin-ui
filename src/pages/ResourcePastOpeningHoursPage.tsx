@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Notification } from 'hds-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { partition } from 'lodash';
 import { SecondaryButton } from '../components/button/Button';
 import useReturnToResourcePage from '../hooks/useReturnToResourcePage';

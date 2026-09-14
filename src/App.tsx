@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router';
 import 'hds-core';
 import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
 import { useTranslation } from 'react-i18next';

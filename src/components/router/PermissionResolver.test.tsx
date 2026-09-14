@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router';
 import { render, screen, waitFor } from '@testing-library/react';
 import api from '../../common/utils/api/api';
 import * as AuthContext from '../../auth/auth-context';
@@ -16,8 +16,8 @@ const testTokens: AuthTokens = {
   hsa_has_organization_rights: 'true',
 };
 
-vi.mock('react-router-dom', async () => {
-  const mod = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual('react-router');
 
   return {
     ...mod,

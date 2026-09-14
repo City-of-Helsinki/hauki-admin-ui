@@ -1,6 +1,6 @@
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router';
 import api from '../../common/utils/api/api';
 import { AppContext } from '../../App-context';
 import { AuthContext, AuthTokens } from '../../auth/auth-context';
@@ -34,7 +34,7 @@ const testAuthTokens: AuthTokens = {
   hsa_has_organization_rights: 'true',
 };
 
-vi.mock('react-router-dom', async (importOriginal) => {
+vi.mock('react-router', async (importOriginal) => {
   const mod = await importOriginal();
 
   return {

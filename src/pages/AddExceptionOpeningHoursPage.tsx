@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router';
 import { DatePeriod } from '../common/lib/types';
 import api from '../common/utils/api/api';
 import ExceptionOpeningHoursForm from '../components/exception-opening-hours-form/ExceptionOpeningHoursForm';

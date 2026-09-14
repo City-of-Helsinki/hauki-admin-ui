@@ -13,7 +13,7 @@ import {
 } from 'hds-react';
 import React, { ReactNode, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router';
 import { DatePeriod } from '../../common/lib/types';
 import { ConfirmationModal, useModal } from '../modal/ConfirmationModal';
 import toast from '../notification/Toast';

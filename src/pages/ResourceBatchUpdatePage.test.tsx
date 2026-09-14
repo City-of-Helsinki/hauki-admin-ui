@@ -1,5 +1,5 @@
 import { act } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router';
 import {
   render,
   screen,
@@ -182,8 +182,8 @@ vi.mock('../services/useDatePeriodConfig', () => ({
   })),
 }));
 
-vi.mock('react-router-dom', async () => {
-  const mod = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual('react-router');
 
   return {
     ...mod,
