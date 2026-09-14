@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react';
 import './Main.scss';
 import { useGroupConsent } from 'hds-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import useMatomo from '../matomo/hooks/useMatomo';
 import { CookieConsentGroup } from '../cookie-consent/hooks/useCookieConsentSettings';
 

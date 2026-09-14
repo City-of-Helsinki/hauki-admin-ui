@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router';
 
 const useReturnToResourcePage = (): (() => void) => {
   const navigate = useNavigate();

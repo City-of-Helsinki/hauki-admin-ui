@@ -1,13 +1,13 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import * as routerMock from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router';
+import * as routerMock from 'react-router';
 import useGoToResourceBatchUpdatePage from './useGoToResourceBatchUpdatePage';
 
 const mockNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const mod = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual('react-router');
 
   return {
     ...mod,

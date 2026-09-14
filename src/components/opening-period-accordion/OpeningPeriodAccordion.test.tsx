@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router';
 import { SelectedDatePeriodsProvider } from '../../common/selectedDatePeriodsContext/SelectedDatePeriodsContext';
 import OpeningPeriodAccordion from './OpeningPeriodAccordion';
 
@@ -23,8 +23,8 @@ vi.mock('react-i18next', () => ({
 // Default to desktop — avoids useMobile's useEffect reading window.innerWidth = 0 in jsdom
 vi.mock('../../hooks/useMobile', () => ({ default: () => false }));
 
-vi.mock('react-router-dom', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('react-router-dom')>();
+vi.mock('react-router', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react-router')>();
   return {
     ...actual,
     useParams: () => ({ id: '123', parentId: undefined }),

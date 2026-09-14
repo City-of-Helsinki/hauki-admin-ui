@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router';
 import { datePeriodOptions } from '../../../test/fixtures/api-options';
 import { datePeriod } from '../../../test/fixtures/date-period';
 import {

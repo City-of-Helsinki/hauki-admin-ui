@@ -7,7 +7,7 @@ import {
   IconArrowRight,
   Card,
 } from 'hds-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useAppContext } from '../App-context';
 import api from '../common/utils/api/api';
 import { Language, Resource } from '../common/lib/types';

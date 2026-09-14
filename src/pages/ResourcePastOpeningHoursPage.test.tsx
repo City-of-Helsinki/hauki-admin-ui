@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router';
 import { datePeriodOptions } from '../../test/fixtures/api-options';
 import {
   ApiDatePeriod,
@@ -118,8 +118,8 @@ vi.mock('react-i18next', () => ({
   },
 }));
 
-vi.mock('react-router-dom', async () => {
-  const mod = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual('react-router');
 
   return {
     ...mod,
