@@ -39,7 +39,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.76.1",
     "react-i18next": "^15.7.4",
-    "react-router-dom": "^6.30.4",
+    "react-router-dom": "^6.30.6",
     "sass": "^1.77.2",
     "tsx": "^4.22.4",
     "typescript": "5.9.3",
