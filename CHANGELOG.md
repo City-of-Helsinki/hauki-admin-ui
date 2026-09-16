@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.16.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.2...hauki-admin-ui-v1.16.3) (2026-09-16)
+
+
+### Dependencies
+
+* Bump vitest from 4.1.2 to 4.1.11 ([0efcbf3](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/0efcbf368c2a6261d89fd5afbe25227ca41ead4c))
+* MinimumReleaseAgeExclude packages Refs: RATY-357 ([d9019da](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/d9019dae87c667d122c534d84ea8f53f2d92e1a1))
+
 ## [1.16.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.1...hauki-admin-ui-v1.16.2) (2026-09-14)
 
 
