@@ -27,9 +27,9 @@ It is also possible to configure API's URL by setting env variable API_URL, for 
 
 1. Export required environment variables:
 
-    ```shell
-    export HAUKI_KEY=<HAUKI_KEY> HAUKI_USER=<HAUKI_USER> HAUKI_ORGANIZATION=<HAUKI_ORGANIZATION> HAUKI_RESOURCE=<HAUKI_RESOURCE> HAUKI_SOURCE=<HAUKI_SOURCE>
-    ```
+   ```shell
+   export HAUKI_KEY=<HAUKI_KEY> HAUKI_USER=<HAUKI_USER> HAUKI_ORGANIZATION=<HAUKI_ORGANIZATION> HAUKI_RESOURCE=<HAUKI_RESOURCE> HAUKI_SOURCE=<HAUKI_SOURCE>
+   ```
 
 2. Install dependencies:
 
@@ -86,7 +86,6 @@ specification, and line length is limited to 72 characters.
 
 [commitlint](https://github.com/conventional-changelog/commitlint) checks every new commit for the correct format.
 
-
 ## RELEASE
 
 ### Publish to Dev environment
@@ -109,6 +108,7 @@ It creates release PR based on commits messages. Merge of the PR will trigger a 
 Release-please update the package.json version number automatically and it is included to release PR.
 
 #### Publish to production environments
+
 Publishing to production requires manual approval in the DevOps release pipeline.
 
 ## OTHER AVAILABLE SCRIPTS
@@ -149,6 +149,27 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Vite guide](https://vitejs.dev/guide/).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## License
+
+The source code in this repository is licensed under the MIT License; see
+[LICENSE](./LICENSE). The licenses of the third-party code included in the
+production build are listed in `third-party-licenses.txt`, which is generated
+during the build and served from the root of the deployed application. The
+same information is emitted alongside it as `oss-licenses.json`, for license
+audit tooling.
+
+The MIT License covers source code only. The following file is **not**
+covered by it:
+
+| File                       | Rights holder and terms                                                                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `public/hauki-favicon.ico` | City of Helsinki. The City of Helsinki logo, which is a registered trademark; see [content-license.txt](./public/content-license.txt), linked from the footer. |
+
+The Helsinki Grotesk typeface used by the user interface is proprietary and
+licensed by Camelot Typefaces. No font files are stored in this repository;
+they are loaded at runtime from a City of Helsinki service. See
+[\_font.scss](./src/_font.scss).
 
 # Known issues
 
