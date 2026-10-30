@@ -46,4 +46,4 @@ extends:
     # configMap: # pod environment variables
     #   DEBUG: 1
     ## Used tool version
-    # nodeVersion: 22
+    # nodeVersion: 24
