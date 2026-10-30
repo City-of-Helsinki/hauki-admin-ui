@@ -262,6 +262,10 @@ test.describe('Resource page', async () => {
     await expect(page.getByTestId('holiday-form-success')).toBeVisible({
       timeout: 30 * 1000,
     });
+    // Wait for the saved holiday to replace the form after the refetch
+    await expect(
+      page.locator('[data-testid="submit-opening-hours-button"]')
+    ).not.toBeVisible({ timeout: 30 * 1000 });
     await page.locator(`[data-testid="${holidayTestId}"]`).click();
     await expect(page.locator('#confirmation-modal')).toBeVisible();
 
@@ -290,6 +294,10 @@ test.describe('Resource page', async () => {
     await expect(page.getByTestId('holiday-form-success')).toBeVisible({
       timeout: 30 * 1000,
     });
+    // Wait for the saved holiday to replace the form after the refetch
+    await expect(
+      page.locator('[data-testid="submit-opening-hours-button"]')
+    ).not.toBeVisible({ timeout: 30 * 1000 });
     await page.locator(`[data-testid="${holidayTestId}"]`).click();
     await expect(
       page.getByRole('heading', { name: 'Oletko varma että haluat' })
