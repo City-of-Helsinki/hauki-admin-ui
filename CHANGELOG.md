@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.17.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.3...hauki-admin-ui-v1.17.0) (2026-10-31)
+
+
+### Features
+
+* Generate third-party license notices at build time ([6351a9e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/6351a9ee1b2ab0c82382357f035139bbaa1cc65d))
+
+
+### Bug Fixes
+
+* Update playwright to support ubuntu 26.04 ci agents ([8e1fe4f](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8e1fe4f3f316f63227e6c55ccdf9e03191098e87))
+* Use latest Node.js 24 LTS Refs: HAUKI-845 ([23d774a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/23d774aa47b9581bee70abda86f7992d1570a8ae))
+* Wait for saved holiday before deleting it in e2e tests ([3c77c8c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3c77c8caf6e0631cd4acd9bedc8deea3fe749f11))
+
+
+### Dependencies
+
+* Bump brace-expansion from 5.0.9 to 5.0.12 ([b6516f4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b6516f49cf3eb874097fb729af1e48b3e238eb6f))
+* Update pnpm to 11.28.7 Refs: HAUKI-845 ([a1a0c0a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a1a0c0af5cc38c762e6d94b8244b603e0ada2d0f))
+
 ## [1.16.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.2...hauki-admin-ui-v1.16.3) (2026-09-16)
 
 
