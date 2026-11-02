@@ -2,11 +2,23 @@ export type SearchParameters = { [key: string]: string | string[] };
 
 const parseSearchParameters = (queryStr: string): SearchParameters => {
   const params = new URLSearchParams(queryStr.replace('?', ''));
+  const grouped = new Map<string, string[]>();
 
-  return Array.from(params.keys()).reduce<SearchParameters>((acc, key) => {
-    const values = params.getAll(key);
-    return { ...acc, [key]: values.length > 1 ? values : values[0] };
-  }, {});
+  params.forEach((value, key) => {
+    const values = grouped.get(key);
+    if (values) {
+      values.push(value);
+    } else {
+      grouped.set(key, [value]);
+    }
+  });
+
+  return Object.fromEntries(
+    Array.from(grouped, ([key, values]) => [
+      key,
+      values.length > 1 ? values : values[0],
+    ])
+  ) as SearchParameters;
 };
 
 export default { parseSearchParameters };
