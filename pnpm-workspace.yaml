@@ -16,7 +16,7 @@ allowBuilds:
 
 overrides:
   "@humanfs/node": 0.16.8
-  vite: ^8.0.5
+  vite: ^8.3.5
   picomatch: 4.0.4
   "@typescript-eslint/typescript-estree>minimatch": 9.0.7
   "brace-expansion@^1": "^5.0.9"
