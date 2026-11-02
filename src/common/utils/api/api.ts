@@ -1,5 +1,3 @@
-import * as querystring from 'querystring';
-import { ParsedUrlQueryInput } from 'querystring';
 import {
   ApiChoice,
   ApiDatePeriod,
@@ -131,9 +129,9 @@ const addAuthHeader = (
   headers: { [key: string]: string }
 ): { [key: string]: string } => ({
   ...headers,
-  Authorization: `haukisigned ${querystring.stringify(
-    authTokens as unknown as ParsedUrlQueryInput
-  )}`,
+  Authorization: `haukisigned ${new URLSearchParams(
+    authTokens as unknown as Record<string, string>
+  ).toString()}`,
 });
 
 async function request<T>(config: FetchRequestConfig): Promise<T> {

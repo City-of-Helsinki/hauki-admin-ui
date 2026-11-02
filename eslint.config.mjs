@@ -5,7 +5,6 @@ import globals from 'globals';
 import eslintReact from '@eslint-react/eslint-plugin';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-import vitestGlobals from 'eslint-config-vitest-globals/flat';
 import importPlugin from 'eslint-plugin-import-x';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import { defineConfig } from 'eslint/config';
@@ -28,7 +27,6 @@ export default defineConfig([
       importPlugin.flatConfigs.recommended,
       jsxA11yPlugin.flatConfigs.recommended,
       reactHooksPlugin.configs.flat['recommended-latest'],
-      vitestGlobals(),
       // Must stay last so it disables stylistic rules that conflict with Prettier.
       eslintConfigPrettier,
     ],
@@ -45,7 +43,7 @@ export default defineConfig([
         ...globals.browser,
         ...globals.node,
         ...globals.es2021,
-        cy: true,
+        ...globals.vitest,
       },
     },
     settings: {

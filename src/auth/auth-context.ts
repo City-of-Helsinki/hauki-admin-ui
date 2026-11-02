@@ -1,5 +1,3 @@
-/// <reference types="node"/>
-import querystring, { ParsedUrlQuery } from 'querystring';
 import { Context, createContext, useContext } from 'react';
 import storage from '../common/utils/storage/storage';
 
@@ -53,12 +51,9 @@ export const getTokens = (): AuthTokens | undefined =>
   storage.getItem<AuthTokens | undefined>(tokenStorageKey);
 
 export const parseAuthParams = (queryStr: string): AuthTokens | undefined => {
-  const queryParams: ParsedUrlQuery = querystring.parse(
-    queryStr.replace('?', '')
-  );
+  const queryParams = new URLSearchParams(queryStr.replace('?', ''));
   const authParams = authKeys.reduce((acc, key) => {
-    const paramValue: string | string[] | undefined = queryParams[key];
-    const value = typeof paramValue === 'string' ? paramValue : paramValue?.[0];
+    const value = queryParams.get(key);
     if (value) {
       return { ...acc, [key]: decodeURIComponent(value) };
     }
