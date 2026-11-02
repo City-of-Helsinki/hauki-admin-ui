@@ -47,9 +47,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.0
         version: 19.2.3(@types/react@19.2.15)
-      '@types/testing-library__dom':
-        specifier: 7.5.0
-        version: 7.5.0
       '@typescript-eslint/parser':
         specifier: ^8.62.1
         version: 8.62.1(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
@@ -68,9 +65,6 @@ importers:
       eslint:
         specifier: ^10.6.0
         version: 10.6.0(jiti@1.21.7)(supports-color@7.2.0)
-      eslint-config-vitest-globals:
-        specifier: ^2.0.2
-        version: 2.0.2(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))
       eslint-plugin-import-x:
         specifier: ^4.17.1
         version: 4.17.1(@typescript-eslint/utils@8.62.1(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))(supports-color@7.2.0)
@@ -98,9 +92,6 @@ importers:
       prettier:
         specifier: ^2.1.1
         version: 2.8.8
-      querystring:
-        specifier: ^0.2.1
-        version: 0.2.1
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -1251,10 +1242,6 @@ packages:
   '@types/react@19.2.15':
     resolution: {integrity: sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==}
 
-  '@types/testing-library__dom@7.5.0':
-    resolution: {integrity: sha512-mj1aH4cj3XUpMEgVpognma5kHVtbm6U6cHZmEFzCRiXPvKkuHrFr3+yXdGLXvfFRBaQIVshPGHI+hGTOJlhS/g==}
-    deprecated: This is a stub types definition. testing-library__dom provides its own type definitions, so you do not need this installed.
-
   '@typescript-eslint/eslint-plugin@8.62.1':
     resolution: {integrity: sha512-4EQM77WgVNxj7OkL/5b/D/xZsw00G577+UriYTC7JF5opcF3T2AuoeY7ueLaZgSVjSgCS6yOAJB5bRGLPSJUzA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -1997,11 +1984,6 @@ packages:
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
-
-  eslint-config-vitest-globals@2.0.2:
-    resolution: {integrity: sha512-eLllf12kOtVeBxz/ruFnXcKN1ZtSBp2FwiFD6ifgmymMj9xxlfOpGR9hJQAJ3gF8ajy26PcmU8PRzLBXIWzGZA==}
-    peerDependencies:
-      eslint: '>=8.0.0'
 
   eslint-import-context@0.1.9:
     resolution: {integrity: sha512-K9Hb+yRaGAGUbwjhFNHvSmmkZs9+zbuoe3kFQ4V1wYjrepUFYM2dZAfNtjbbj3qsPfUfsA68Bx/ICWQMi+C8Eg==}
@@ -3148,11 +3130,6 @@ packages:
   qified@0.9.0:
     resolution: {integrity: sha512-4q61YgkHbY6gmwkqm0BsxyLDO3UYdrdiJTJ7JiaZb3xpW1duxn135SB7KqUEkCiuu5O4W+TtwEWP2VjmSRanvA==}
     engines: {node: '>=20'}
-
-  querystring@0.2.1:
-    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
-    engines: {node: '>=0.4.x'}
-    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -4971,10 +4948,6 @@ snapshots:
     dependencies:
       csstype: 3.2.3
 
-  '@types/testing-library__dom@7.5.0':
-    dependencies:
-      '@testing-library/dom': 10.4.1
-
   '@typescript-eslint/eslint-plugin@8.62.1(@typescript-eslint/parser@8.62.1(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
@@ -5754,10 +5727,6 @@ snapshots:
   escape-string-regexp@4.0.0: {}
 
   eslint-config-prettier@10.1.8(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0)):
-    dependencies:
-      eslint: 10.6.0(jiti@1.21.7)(supports-color@7.2.0)
-
-  eslint-config-vitest-globals@2.0.2(eslint@10.6.0(jiti@1.21.7)(supports-color@7.2.0)):
     dependencies:
       eslint: 10.6.0(jiti@1.21.7)(supports-color@7.2.0)
 
@@ -6963,8 +6932,6 @@ snapshots:
   qified@0.9.0:
     dependencies:
       hookified: 2.1.1
-
-  querystring@0.2.1: {}
 
   queue-microtask@1.2.3: {}
 

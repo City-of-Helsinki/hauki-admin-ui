@@ -1,13 +1,12 @@
-import querystring from 'querystring';
-
 export type SearchParameters = { [key: string]: string | string[] };
 
 const parseSearchParameters = (queryStr: string): SearchParameters => {
-  const parsed = querystring.parse(queryStr.replace('?', ''));
+  const params = new URLSearchParams(queryStr.replace('?', ''));
 
-  return Object.fromEntries(
-    Object.entries(parsed).filter(([, value]) => value !== undefined)
-  ) as SearchParameters;
+  return Array.from(params.keys()).reduce<SearchParameters>((acc, key) => {
+    const values = params.getAll(key);
+    return { ...acc, [key]: values.length > 1 ? values : values[0] };
+  }, {});
 };
 
 export default { parseSearchParameters };
