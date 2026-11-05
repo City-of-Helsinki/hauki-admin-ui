@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.17.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.3...hauki-admin-ui-v1.17.0) (2026-11-05)
+
+
+### Features
+
+* Generate third-party license notices at build time ([6351a9e](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/6351a9ee1b2ab0c82382357f035139bbaa1cc65d))
+
+
+### Bug Fixes
+
+* Update playwright to support ubuntu 26.04 ci agents ([8e1fe4f](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/8e1fe4f3f316f63227e6c55ccdf9e03191098e87))
+* Use latest Node.js 24 LTS Refs: HAUKI-845 ([23d774a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/23d774aa47b9581bee70abda86f7992d1570a8ae))
+* Wait for saved holiday before deleting it in e2e tests ([3c77c8c](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/3c77c8caf6e0631cd4acd9bedc8deea3fe749f11))
+
+
+### Performance Improvements
+
+* Parse search parameters in a single pass ([7458468](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/7458468a588234471365d271ae284ce7c35dd52d))
+
+
+### Dependencies
+
+* Bump brace-expansion from 5.0.9 to 5.0.12 ([b6516f4](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/b6516f49cf3eb874097fb729af1e48b3e238eb6f))
+* Bump fast-uri from 3.1.6 to 3.1.9 ([ba8e086](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/ba8e0862ee0d5b9528c89f281cace9949a35366b))
+* Bump zod from 4.4.3 to 4.6.7 ([fae6266](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/fae6266663383b7d87aacc3ff8823d6b72196dc1))
+* Remove stale pnpm overrides and workspace settings ([c8ff420](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c8ff420919875e06ce1de74db841a6f5267a837b))
+* Remove unused and deprecated dependencies ([831cb58](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/831cb5874cdf5508011b326bdfe61f2c2c9cb35b))
+* Update pnpm to 11.28.7 Refs: HAUKI-845 ([a1a0c0a](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/a1a0c0af5cc38c762e6d94b8244b603e0ada2d0f))
+* Update vite, vitest and vulnerable transitive dependencies ([59e4eff](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/59e4eff51a93d1cf1fc385bfe5d7dde50a6c0dd2))
+
 ## [1.16.3](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.2...hauki-admin-ui-v1.16.3) (2026-09-16)
 
 
