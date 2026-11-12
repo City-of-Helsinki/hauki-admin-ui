@@ -5,6 +5,21 @@ import './OpeningHoursTitles.scss';
 import { LanguageStrings } from '../../common/lib/types';
 import { toCharCount } from '../../common/utils/form/form';
 
+const titlesHelperTextId = 'opening-hours-titles-helper-text';
+
+// HDS TextInput replaces its own aria-describedby (helper and error text ids) with a passed one
+// and does not set aria-invalid, so both are set here to keep errors announced (WCAG 3.3.1).
+const titleA11yProps = (id: string, invalid: boolean) => ({
+  'aria-describedby': [
+    `${id}-helper`,
+    invalid && `${id}-error`,
+    titlesHelperTextId,
+  ]
+    .filter(Boolean)
+    .join(' '),
+  'aria-invalid': invalid,
+});
+
 type Props = {
   placeholders: LanguageStrings;
 };
@@ -29,7 +44,7 @@ const OpeningHoursTitles = ({ placeholders }: Props) => {
             fieldState: { error },
           }) => (
             <TextInput
-              aria-describedby="title-fi-helper-text"
+              {...titleA11yProps('title-fi', !!error)}
               data-testid="opening-period-title-fi"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
@@ -53,6 +68,7 @@ const OpeningHoursTitles = ({ placeholders }: Props) => {
             fieldState: { error },
           }) => (
             <TextInput
+              {...titleA11yProps('title-sv', !!error)}
               data-testid="opening-period-title-sv"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
@@ -76,6 +92,7 @@ const OpeningHoursTitles = ({ placeholders }: Props) => {
             fieldState: { error },
           }) => (
             <TextInput
+              {...titleA11yProps('title-en', !!error)}
               data-testid="opening-period-title-en"
               errorText={error?.message}
               helperText={toCharCount(nameMaxLength, value)}
@@ -92,7 +109,7 @@ const OpeningHoursTitles = ({ placeholders }: Props) => {
           )}
         />
       </div>
-      <p className="titles-helper-text" id="title-fi-helper-text">
+      <p className="titles-helper-text" id={titlesHelperTextId}>
         {t('OpeningHours.TitlesHelperText')}
       </p>
     </div>
