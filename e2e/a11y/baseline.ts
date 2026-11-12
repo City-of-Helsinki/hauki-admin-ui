@@ -6,7 +6,7 @@
  *
  * A baseline records known (pre-existing) axe violations per scan so legacy repos can block new
  * violations without first fixing all existing ones. A violation is identified by its rule id and
- * the axe selector of the failing element.
+ * the axe selector of the failing element, with CSS module hashes removed from class names.
  */
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -48,8 +48,33 @@ const targetToString = (target: readonly unknown[]): string =>
     )
     .join(' | ');
 
+/*
+ * CSS module class names carry a build hash that changes when the styles or the dependency
+ * version change, which would make a baselined violation look new:
+ * - HDS (hds-react): `Breadcrumb-module_link__wWMWR`, `breadcrumb_hds-breadcrumb__link__mrCFF`
+ * - Vite apps: `_inputWrapper_1hrnq_8` (`_[local]_[hash]_[line]`)
+ */
+const HDS_MODULE_CLASS =
+  /\.([A-Za-z][A-Za-z0-9]*-module_[A-Za-z0-9-]+|[a-z][a-z0-9-]*_hds-[A-Za-z0-9_-]*?)__[A-Za-z0-9_-]{5}(?![A-Za-z0-9_-])/g;
+const VITE_MODULE_CLASS =
+  /\._([A-Za-z][A-Za-z0-9-]*)_[a-z0-9]{5}_\d+(?![A-Za-z0-9_-])/g;
+const QUOTED = /("[^"]*"|'[^']*')/;
+
+/** Removes CSS module hashes from class names in a selector; quoted attribute values are kept. */
+export const stripClassHashes = (selector: string): string =>
+  selector
+    .split(QUOTED)
+    .map((part, i) =>
+      i % 2 === 1
+        ? part
+        : part
+            .replace(HDS_MODULE_CLASS, '.$1')
+            .replace(VITE_MODULE_CLASS, '._$1')
+    )
+    .join('');
+
 export const fingerprint = (ruleId: string, node: ViolationNode): string =>
-  `${ruleId} ${targetToString(node.target)}`;
+  `${ruleId} ${stripClassHashes(targetToString(node.target))}`;
 
 export const fingerprintsOf = (violations: readonly Violation[]): string[] =>
   [
