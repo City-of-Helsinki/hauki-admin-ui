@@ -1,0 +1,76 @@
+# Local e2e + accessibility test stack: hauki API with seeded e2e test data, and Playwright running
+# against a production build of this app. Start with `pnpm test:e2e:docker` (e2e/docker/run.sh).
+#
+# Expects the hauki backend checked out next to this repo (override with HAUKI_API_PATH).
+# Everything here is local-only test configuration; none of these values are used in any
+# deployed environment.
+name: hauki-admin-ui-e2e
+
+x-e2e-signing-key: &e2e-signing-key ${E2E_SIGNED_AUTH_KEY:-local-e2e-only-signing-key}
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: hauki
+      POSTGRES_PASSWORD: hauki
+      POSTGRES_DB: hauki
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'hauki']
+      interval: 2s
+      retries: 30
+
+  hauki-api:
+    build:
+      context: ${HAUKI_API_PATH:-../hauki}
+      target: development
+    command: ['start_django_development_server']
+    environment:
+      DEBUG: 'true'
+      ALLOWED_HOSTS: '*'
+      DATABASE_URL: postgres://hauki:hauki@db/hauki
+      WAIT_FOR_IT_ADDRESS: db
+      APPLY_MIGRATIONS: 'true'
+      INITIAL_TEST_DATA: 'true'
+      E2E_SIGNED_AUTH_KEY: *e2e-signing-key
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'python',
+          '-c',
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/v1/')",
+        ]
+      interval: 3s
+      retries: 60
+
+  e2e:
+    image: mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION:?set by e2e/docker/run.sh}-noble
+    ipc: host
+    working_dir: /app
+    entrypoint: ['bash', '/src/e2e/docker/run-in-container.sh']
+    environment:
+      CI: 'true'
+      PNPM_VERSION: ${PNPM_VERSION:?set by e2e/docker/run.sh}
+      pnpm_config_store_dir: /pnpm-store
+      API_URL: http://hauki-api:8000
+      E2E_TESTS_ENV_URL: http://localhost:3000
+      HAUKI_KEY: *e2e-signing-key
+      A11Y_UPDATE_BASELINE: ${A11Y_UPDATE_BASELINE:-}
+    volumes:
+      - .:/src:ro
+      - node-modules:/app/node_modules
+      - pnpm-store:/pnpm-store
+      - ./report:/app/report
+      - ./test-results:/app/test-results
+      - ./e2e/a11y-baseline:/app/e2e/a11y-baseline
+    depends_on:
+      hauki-api:
+        condition: service_healthy
+
+volumes:
+  node-modules:
+  pnpm-store:
