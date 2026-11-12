@@ -124,6 +124,32 @@ See the section about [writing tests](https://vitest.dev/guide/#writing-tests) f
 
 Runs Playwright (e2e) tests locally. Requires the same set of HAUKI env variables as running service locally.
 
+### `pnpm test:e2e:docker`
+
+Runs the e2e and accessibility tests in Docker against a fresh local stack (`compose.e2e.yaml`):
+Postgres, the hauki API with seeded e2e test data, and Playwright in the official Playwright image
+testing a production build of this app. No env variables needed.
+
+- Requires the [hauki](https://github.com/City-of-Helsinki/hauki) backend checked out next to this
+  repo (override the path with `HAUKI_API_PATH`).
+- Playwright arguments are passed through, e.g.
+  `pnpm test:e2e:docker e2e/tests/accessibility.spec.ts --project=chromium`.
+- `KEEP_E2E_STACK=1` leaves the API and database running after the tests.
+- Reports are written to `report/` and `test-results/`.
+
+#### Accessibility tests
+
+`e2e/tests/accessibility.spec.ts` scans pages and UI states with axe against WCAG 2.1 A/AA and
+fails on violations. Known, not yet fixed violations can be recorded in a baseline
+(`e2e/a11y-baseline/`), so that only new violations fail:
+
+```
+A11Y_UPDATE_BASELINE=1 pnpm test:e2e:docker e2e/tests/accessibility.spec.ts
+```
+
+Review the resulting baseline diff like any other change. Baselined violations that no longer
+occur are reported in the test results so the baseline can be shrunk.
+
 ### `pnpm build`
 
 Builds the app for production to the `build` folder.<br />

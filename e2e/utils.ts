@@ -76,7 +76,7 @@ export const deleteDatePeriods = async (ids: number[]) => {
 
   await Promise.all(
     ids.map(async (id) => {
-      const url = `${apiUrl}/v1/date_period/${id}`;
+      const url = `${apiUrl}/v1/date_period/${id}/`;
 
       const response = await fetch(url, {
         method: 'delete',
