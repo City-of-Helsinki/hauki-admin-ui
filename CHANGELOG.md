@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.17.0...hauki-admin-ui-v1.17.1) (2026-11-18)
+
+
+### Bug Fixes
+
+* Update env-config.js script version to v2 ([c705a46](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/c705a467ff7516962ea0e72d236734be937b1c0b))
+
 ## [1.17.0](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.16.3...hauki-admin-ui-v1.17.0) (2026-11-05)
 
 
