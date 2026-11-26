@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.17.2](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.17.1...hauki-admin-ui-v1.17.2) (2026-11-26)
+
+
+### Bug Fixes
+
+* Expose title field errors to assistive technology ([5e20e69](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/5e20e69edde2a5b6de075555d079e776f6dbf8b1))
+
+
+### Dependencies
+
+* Bump i18next from 23.7.11 to 26.3.4 ([7a65a72](https://github.com/City-of-Helsinki/hauki-admin-ui/commit/7a65a7291eafc60bb5c8bb929bd8316f29c36df1))
+
 ## [1.17.1](https://github.com/City-of-Helsinki/hauki-admin-ui/compare/hauki-admin-ui-v1.17.0...hauki-admin-ui-v1.17.1) (2026-11-18)
 
 
