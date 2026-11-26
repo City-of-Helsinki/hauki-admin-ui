@@ -59,6 +59,7 @@
     "test:e2e:install": "pnpm exec playwright install",
     "test:e2e:ci": "pnpm exec playwright test",
     "test:e2e:start": "pnpm exec playwright test",
+    "test:e2e:docker": "./e2e/docker/run.sh",
     "update-runtime-env": "tsx --tsconfig=./scripts/tsconfig.json scripts/update-runtime-env.ts",
     "clear-babel-cache": "rm -rf ./node_modules/.cache/@babel",
     "open-local": "./scripts/open_local.sh",
